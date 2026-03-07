@@ -1,4 +1,4 @@
-import PokemonGrid from '@/components/PokemonGrid'
+import PokemonGrid from '@/components/pokemon/PokemonGrid'
 
 export default function Home() {
   return (

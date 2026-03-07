@@ -2,19 +2,20 @@
 
 import { useState } from 'react'
 
+import type { Pokemon } from '@/types/pokemon'
+
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
 import { getTypeColor } from '@/lib/pokemon'
-import type { Pokemon } from '@/types/pokemon'
 
-import { Input } from './ui/input'
+import { Input } from '../ui/input'
 import { PokemonModal } from './PokemonModal'
 
 export default function PokemonGrid() {
   const { debouncedSearch, search, setSearch } = useSearch()
   const { isFetchingNextPage, pokemon, sentinelRef, status } =
     usePokemon(debouncedSearch)
-  const [selected, setSelected] = useState<Pokemon | null>(null)
+  const [selected, setSelected] = useState<null | Pokemon>(null)
 
   return (
     <div className="mx-auto max-w-7xl p-4">
