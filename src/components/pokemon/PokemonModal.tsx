@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import type { Pokemon } from '@/types/pokemon'
 
 import { getTypeColor } from '@/lib/pokemon'
@@ -26,7 +28,7 @@ export function PokemonModal({
         <div
           className={`relative overflow-hidden rounded-lg ${getTypeColor(pokemon.types[0] ?? '')}`}
         >
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-white/10" />
           <div className="relative p-6">
             <DialogHeader>
               <DialogTitle className="capitalize text-white">
@@ -36,11 +38,13 @@ export function PokemonModal({
 
             <div className="flex flex-col gap-4">
               {pokemon.imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   alt={pokemon.name}
                   className="mx-auto h-40 w-40 object-contain"
+                  height={128}
+                  loading="lazy"
                   src={pokemon.imageUrl}
+                  width={128}
                 />
               )}
 

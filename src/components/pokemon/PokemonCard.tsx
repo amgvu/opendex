@@ -14,12 +14,10 @@ export function PokemonCard({
       className={`relative cursor-pointer overflow-hidden rounded-xl p-4 shadow-sm transition-shadow hover:shadow-md ${getTypeColor(pokemon.types[0] ?? '')}`}
       onClick={onClick}
     >
-      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-white/20" />
       <div className="relative flex items-start justify-between">
         <p className="font-semibold capitalize text-white">{pokemon.name}</p>
-        <span className="text-xs font-medium text-white/70">
-          #{pokemon.id}
-        </span>
+        <span className="text-xs font-medium text-white/70">#{pokemon.id}</span>
       </div>
       <div className="relative mt-2 flex flex-wrap gap-1">
         {pokemon.types.map((type: string) => (
