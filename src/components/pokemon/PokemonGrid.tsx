@@ -55,7 +55,8 @@ export default function PokemonGrid() {
               display: 'grid',
               gap: 16,
               gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-              height: row.size - 16,
+              height: row.size,
+              paddingBottom: 16,
               transform: `translateY(${row.start}px)`
             }}
           >
