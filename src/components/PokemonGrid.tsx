@@ -1,17 +1,20 @@
 'use client'
 
-import type { Pokemon } from '@/types/pokemon'
+import { useState } from 'react'
 
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
 import { getTypeColor } from '@/lib/pokemon'
+import type { Pokemon } from '@/types/pokemon'
 
 import { Input } from './ui/input'
+import { PokemonModal } from './PokemonModal'
 
 export default function PokemonGrid() {
   const { debouncedSearch, search, setSearch } = useSearch()
   const { isFetchingNextPage, pokemon, sentinelRef, status } =
     usePokemon(debouncedSearch)
+  const [selected, setSelected] = useState<Pokemon | null>(null)
 
   return (
     <div className="mx-auto max-w-7xl p-4">
@@ -33,7 +36,11 @@ export default function PokemonGrid() {
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {pokemon.map((p: Pokemon) => (
-          <div className="rounded-xl border bg-card p-4 shadow-sm" key={p.id}>
+          <div
+            className="cursor-pointer rounded-xl border bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
+            key={p.id}
+            onClick={() => setSelected(p)}
+          >
             <p className="font-semibold capitalize">{p.name}</p>
             <div className="mt-2 flex flex-wrap gap-1">
               {p.types.map((type: string) => (
@@ -56,6 +63,8 @@ export default function PokemonGrid() {
           Loading more...
         </p>
       )}
+
+      <PokemonModal onClose={() => setSelected(null)} pokemon={selected} />
     </div>
   )
 }
