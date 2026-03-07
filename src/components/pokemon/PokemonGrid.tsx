@@ -6,9 +6,8 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
-import { getTypeColor } from '@/lib/pokemon'
-
 import { Input } from '../ui/input'
+import { PokemonCard } from './PokemonCard'
 import { PokemonModal } from './PokemonModal'
 
 export default function PokemonGrid() {
@@ -37,23 +36,7 @@ export default function PokemonGrid() {
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {pokemon.map((p: Pokemon) => (
-          <div
-            className="cursor-pointer rounded-xl border bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
-            key={p.id}
-            onClick={() => setSelected(p)}
-          >
-            <p className="font-semibold capitalize">{p.name}</p>
-            <div className="mt-2 flex flex-wrap gap-1">
-              {p.types.map((type: string) => (
-                <span
-                  className={`rounded-full px-2 py-0.5 text-xs font-medium text-white ${getTypeColor(type)}`}
-                  key={type}
-                >
-                  {type}
-                </span>
-              ))}
-            </div>
-          </div>
+          <PokemonCard key={p.id} onClick={() => setSelected(p)} pokemon={p} />
         ))}
       </div>
 
