@@ -22,7 +22,7 @@ export function PokemonCard({
         aria-hidden="true"
         className="absolute -bottom-4 -right-4 opacity-20 grayscale"
         height={96}
-        src="/pokemon-icon.svg"
+        src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
         width={96}
       />
       <div className="relative flex items-start justify-between">

@@ -41,10 +41,10 @@ export function PokemonModal({
                 <Image
                   alt={pokemon.name}
                   className="mx-auto h-40 w-40 object-contain"
-                  height={128}
+                  height={96}
                   loading="lazy"
                   src={pokemon.imageUrl}
-                  width={128}
+                  width={96}
                 />
               )}
 
