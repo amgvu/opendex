@@ -9,13 +9,12 @@ import { useSearch } from '@/hooks/useSearch'
 
 import { Input } from '../ui/input'
 import { PokemonCard } from './PokemonCard'
-import { PokemonModal } from './PokemonModal'
 
 export default function PokemonGrid() {
   const { debouncedSearch, search, setSearch } = useSearch()
   const { isFetchingNextPage, pokemon, sentinelRef, status } =
     usePokemon(debouncedSearch)
-  const [selected, setSelected] = useState<null | Pokemon>(null)
+  const [selectedId, setSelectedId] = useState<null | number>(null)
 
   return (
     <div className="mx-auto max-w-7xl p-4">
@@ -37,19 +36,21 @@ export default function PokemonGrid() {
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {pokemon.map((p: Pokemon) => (
-          <PokemonCard key={p.id} onClick={() => setSelected(p)} pokemon={p} />
+          <PokemonCard
+            active={selectedId === p.id}
+            key={p.id}
+            onClick={() => setSelectedId(p.id)}
+            onClose={() => setSelectedId(null)}
+            pokemon={p}
+          />
         ))}
       </div>
 
       <div className="h-8" ref={sentinelRef} />
 
       {isFetchingNextPage && (
-        <p className="py-4 text-center text-muted-foreground">
-          Loading more...
-        </p>
+        <p className="py-4 text-center text-muted-foreground">Loading more...</p>
       )}
-
-      <PokemonModal onClose={() => setSelected(null)} pokemon={selected} />
     </div>
   )
 }
