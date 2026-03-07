@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import type { Pokemon } from '@/types/pokemon'
 
 import { getTypeColor } from '@/lib/pokemon'
@@ -15,6 +17,14 @@ export function PokemonCard({
       onClick={onClick}
     >
       <div className="absolute inset-0 bg-white/20" />
+      <Image
+        alt=""
+        aria-hidden="true"
+        className="absolute -bottom-4 -right-4 opacity-20 grayscale"
+        height={96}
+        src="/pokemon-icon.svg"
+        width={96}
+      />
       <div className="relative flex items-start justify-between">
         <p className="font-semibold capitalize text-white">{pokemon.name}</p>
         <span className="text-xs font-medium text-white/70">#{pokemon.id}</span>
