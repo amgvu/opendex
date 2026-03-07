@@ -1,4 +1,6 @@
-import type { NextRequest} from 'next/server';
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/require-await */
+import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
