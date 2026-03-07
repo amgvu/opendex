@@ -28,7 +28,7 @@ export function PokemonModal({
         <div
           className={`relative overflow-hidden rounded-lg ${getTypeColor(pokemon.types[0] ?? '')}`}
         >
-          <div className="absolute inset-0 bg-white/10" />
+          <div className="absolute inset-0 bg-white/15" />
           <div className="relative p-6">
             <DialogHeader>
               <DialogTitle className="capitalize text-white">

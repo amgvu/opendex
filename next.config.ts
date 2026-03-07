@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       {
         hostname: 'loremflickr.com',
         protocol: 'https'
+      },
+      {
+        hostname: 'raw.githubusercontent.com',
+        protocol: 'https'
       }
     ]
   }

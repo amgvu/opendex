@@ -16,7 +16,7 @@ export function PokemonCard({
       className={`relative cursor-pointer overflow-hidden rounded-xl p-4 shadow-sm transition-shadow hover:shadow-md ${getTypeColor(pokemon.types[0] ?? '')}`}
       onClick={onClick}
     >
-      <div className="absolute inset-0 bg-white/20" />
+      <div className="absolute inset-0 bg-white/15" />
       <Image
         alt=""
         aria-hidden="true"
