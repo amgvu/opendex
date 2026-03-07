@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useId, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -43,128 +44,138 @@ export function PokemonCard({
 
   return (
     <>
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-10 bg-black/40"
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-          />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {active && (
-          <div className="fixed inset-0 z-50 grid place-items-center p-4">
-            <motion.div
-              className={`relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
-              layoutId={`card-${pokemon.id}-${id}`}
-              ref={ref}
-            >
-              <div className="absolute inset-0 bg-black/30" />
-              <div className="relative p-6">
-                <div className="mb-4 flex items-start justify-between">
-                  <div>
-                    <motion.h2
-                      className="text-2xl font-bold capitalize text-white"
-                      layoutId={`name-${pokemon.id}-${id}`}
-                    >
-                      {pokemon.name}
-                    </motion.h2>
-                    <span className="text-sm text-white/60">#{pokemon.id}</span>
-                  </div>
-                  <motion.div
-                    className="flex flex-wrap gap-1"
-                    layoutId={`types-${pokemon.id}-${id}`}
-                  >
-                    {pokemon.types.map(type => (
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium text-white ${getTypeColor(type)}`}
-                        key={type}
+      {createPortal(
+        <AnimatePresence>
+          {active && (
+            <>
+              <motion.div
+                animate={{ opacity: 1 }}
+                className="fixed inset-0 z-40 bg-black/40"
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+              />
+              <div className="fixed inset-0 z-50 grid place-items-center p-4">
+                <motion.div
+                  className={`relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
+                  layoutId={`card-${pokemon.id}-${id}`}
+                  ref={ref}
+                >
+                  <div className="absolute inset-0 bg-black/30" />
+                  <div className="relative p-6">
+                    <div className="mb-4 flex items-start justify-between">
+                      <div>
+                        <motion.h2
+                          className="text-2xl font-bold capitalize text-white"
+                          layoutId={`name-${pokemon.id}-${id}`}
+                        >
+                          {pokemon.name}
+                        </motion.h2>
+                        <span className="text-sm text-white/60">
+                          #{pokemon.id}
+                        </span>
+                      </div>
+                      <motion.div
+                        className="flex flex-wrap gap-1"
+                        layoutId={`types-${pokemon.id}-${id}`}
                       >
-                        {type}
-                      </span>
-                    ))}
-                    {pokemon.isLegendary && (
-                      <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs font-medium text-black">
-                        Legendary
-                      </span>
+                        {pokemon.types.map(type => (
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-xs font-medium text-white ${getTypeColor(type)}`}
+                            key={type}
+                          >
+                            {type}
+                          </span>
+                        ))}
+                        {pokemon.isLegendary && (
+                          <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs font-medium text-black">
+                            Legendary
+                          </span>
+                        )}
+                      </motion.div>
+                    </div>
+
+                    {pokemon.imageUrl && (
+                      <motion.div
+                        animate={{ opacity: 1 }}
+                        className="mb-4 flex justify-center"
+                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                      >
+                        <Image
+                          alt={pokemon.name}
+                          className="h-40 w-40 object-contain drop-shadow-lg"
+                          height={160}
+                          src={pokemon.imageUrl}
+                          width={160}
+                        />
+                      </motion.div>
                     )}
-                  </motion.div>
-                </div>
 
-                {pokemon.imageUrl && (
-                  <motion.div
-                    className="mb-4 flex justify-center"
-                    layoutId={`image-${pokemon.id}-${id}`}
-                  >
-                    <Image
-                      alt={pokemon.name}
-                      className="h-40 w-40 object-contain drop-shadow-lg"
-                      height={160}
-                      src={pokemon.imageUrl}
-                      width={160}
-                    />
-                  </motion.div>
-                )}
+                    <motion.p
+                      animate={{ opacity: 1 }}
+                      className="mb-4 text-sm text-white/70"
+                      exit={{ opacity: 0 }}
+                      initial={{ opacity: 0 }}
+                    >
+                      {pokemon.description}
+                    </motion.p>
 
-                <motion.p
-                  animate={{ opacity: 1 }}
-                  className="mb-4 text-sm text-white/70"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                >
-                  {pokemon.description}
-                </motion.p>
+                    <motion.div
+                      animate={{ opacity: 1 }}
+                      className="flex flex-col gap-2"
+                      exit={{ opacity: 0 }}
+                      initial={{ opacity: 0 }}
+                    >
+                      <StatBar label="HP" value={pokemon.hp} />
+                      <StatBar label="Attack" value={pokemon.attack} />
+                      <StatBar label="Defense" value={pokemon.defense} />
+                      <StatBar
+                        label="Sp. Attack"
+                        value={pokemon.specialAttack}
+                      />
+                      <StatBar
+                        label="Sp. Defense"
+                        value={pokemon.specialDefense}
+                      />
+                      <StatBar label="Speed" value={pokemon.speed} />
+                    </motion.div>
 
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  className="flex flex-col gap-2"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                >
-                  <StatBar label="HP" value={pokemon.hp} />
-                  <StatBar label="Attack" value={pokemon.attack} />
-                  <StatBar label="Defense" value={pokemon.defense} />
-                  <StatBar label="Sp. Attack" value={pokemon.specialAttack} />
-                  <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
-                  <StatBar label="Speed" value={pokemon.speed} />
-                </motion.div>
-
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  className="mt-4 grid grid-cols-3 gap-2 text-sm"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                >
-                  <div className="flex flex-col">
-                    <span className="text-white/60">Height</span>
-                    <span className="font-medium text-white">
-                      {pokemon.height.toFixed(1)}m
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white/60">Weight</span>
-                    <span className="font-medium text-white">
-                      {pokemon.weight.toFixed(1)} lbs
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white/60">Gen</span>
-                    <span className="font-medium text-white">
-                      {pokemon.generation}
-                    </span>
+                    <motion.div
+                      animate={{ opacity: 1 }}
+                      className="mt-4 grid grid-cols-3 gap-2 text-sm"
+                      exit={{ opacity: 0 }}
+                      initial={{ opacity: 0 }}
+                    >
+                      <div className="flex flex-col">
+                        <span className="text-white/60">Height</span>
+                        <span className="font-medium text-white">
+                          {pokemon.height.toFixed(1)}m
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-white/60">Weight</span>
+                        <span className="font-medium text-white">
+                          {pokemon.weight.toFixed(1)} lbs
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-white/60">Gen</span>
+                        <span className="font-medium text-white">
+                          {pokemon.generation}
+                        </span>
+                      </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       <motion.div
-        className={`relative cursor-pointer overflow-hidden rounded-xl p-4 shadow-sm transition-shadow hover:shadow-md ${typeColor}`}
+        className={`relative h-full cursor-pointer overflow-hidden rounded-xl p-3 shadow-sm transition-shadow hover:shadow-md ${typeColor}`}
         layoutId={`card-${pokemon.id}-${id}`}
         onClick={onClick}
       >
@@ -179,7 +190,7 @@ export function PokemonCard({
         />
         <div className="relative flex items-start justify-between">
           <motion.p
-            className="text-xl font-semibold capitalize text-white"
+            className="text-sm font-semibold capitalize text-white"
             layoutId={`name-${pokemon.id}-${id}`}
           >
             {pokemon.name}

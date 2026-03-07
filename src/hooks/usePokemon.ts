@@ -39,5 +39,5 @@ export function usePokemon(search: string) {
   const pokemon: Pokemon[] =
     data?.pages.flatMap((page: PokemonResponse) => page.data) ?? []
 
-  return { isFetchingNextPage, pokemon, sentinelRef, status }
+  return { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, sentinelRef, status }
 }
