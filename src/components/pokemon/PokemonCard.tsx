@@ -59,6 +59,7 @@ export function PokemonCard({
                   className={`relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
                   layoutId={`card-${pokemon.id}-${id}`}
                   ref={ref}
+                  transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <div className="absolute inset-0 bg-black/30" />
                   <div className="relative p-6">
@@ -67,6 +68,10 @@ export function PokemonCard({
                         <motion.h2
                           className="text-2xl font-bold capitalize text-white"
                           layoutId={`name-${pokemon.id}-${id}`}
+                          transition={{
+                            duration: 0.25,
+                            ease: [0.32, 0.72, 0, 1]
+                          }}
                         >
                           {pokemon.name}
                         </motion.h2>
@@ -77,6 +82,10 @@ export function PokemonCard({
                       <motion.div
                         className="flex flex-wrap gap-1"
                         layoutId={`types-${pokemon.id}-${id}`}
+                        transition={{
+                          duration: 0.25,
+                          ease: [0.32, 0.72, 0, 1]
+                        }}
                       >
                         {pokemon.types.map(type => (
                           <span
@@ -178,6 +187,7 @@ export function PokemonCard({
         className={`relative h-full cursor-pointer overflow-hidden rounded-xl p-3 shadow-sm transition-shadow hover:shadow-md ${typeColor}`}
         layoutId={`card-${pokemon.id}-${id}`}
         onClick={onClick}
+        transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
       >
         <div className="absolute inset-0 bg-white/15" />
         <Image
@@ -192,6 +202,7 @@ export function PokemonCard({
           <motion.p
             className="text-sm font-semibold capitalize text-white"
             layoutId={`name-${pokemon.id}-${id}`}
+            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
           >
             {pokemon.name}
           </motion.p>
@@ -202,6 +213,7 @@ export function PokemonCard({
         <motion.div
           className="relative mt-2 flex flex-wrap gap-1"
           layoutId={`types-${pokemon.id}-${id}`}
+          transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
         >
           {pokemon.types.map((type: string) => (
             <span
