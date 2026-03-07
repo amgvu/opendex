@@ -6,6 +6,7 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
+
 import { Input } from '../ui/input'
 import { PokemonCard } from './PokemonCard'
 import { PokemonModal } from './PokemonModal'
