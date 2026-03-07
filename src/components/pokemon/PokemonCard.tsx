@@ -184,10 +184,12 @@ export function PokemonCard({
       )}
 
       <motion.div
+        animate={{ opacity: 1 }}
         className={`relative h-full cursor-pointer overflow-hidden rounded-xl p-3 shadow-sm transition-shadow hover:shadow-md ${typeColor}`}
+        initial={{ opacity: 0 }}
         layoutId={`card-${pokemon.id}-${id}`}
         onClick={onClick}
-        transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+        transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1], opacity: { duration: 0.4 } }}
       >
         <div className="absolute inset-0 bg-white/15" />
         <Image
