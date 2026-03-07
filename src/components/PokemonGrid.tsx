@@ -1,55 +1,17 @@
 'use client'
 
-import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
-import { useEffect, useRef, useState } from 'react'
-
 import type { Pokemon } from '@/types/pokemon'
 
-import { fetchPokemon, type PokemonResponse } from '@/lib/api'
+import { usePokemon } from '@/hooks/usePokemon'
+import { useSearch } from '@/hooks/useSearch'
 import { getTypeColor } from '@/lib/pokemon'
 
 import { Input } from './ui/input'
 
 export default function PokemonGrid() {
-  const [search, setSearch] = useState('')
-  const [debouncedSearch, setDebouncedSearch] = useState('')
-  const sentinelRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedSearch(search), 300)
-    return () => clearTimeout(timer)
-  }, [search])
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-    useInfiniteQuery({
-      getNextPageParam: (lastPage: PokemonResponse) =>
-        lastPage.pagination.hasNext ? lastPage.pagination.page + 1 : undefined,
-      initialPageParam: 1,
-      placeholderData: keepPreviousData,
-      queryFn: ({ pageParam }: { pageParam: number }) =>
-        fetchPokemon(pageParam, debouncedSearch),
-      queryKey: ['pokemon', debouncedSearch]
-    })
-
-  useEffect(() => {
-    const sentinel = sentinelRef.current
-    if (!sentinel) return
-
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          void fetchNextPage()
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    observer.observe(sentinel)
-    return () => observer.disconnect()
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
-
-  const pokemon: Pokemon[] =
-    data?.pages.flatMap((page: PokemonResponse) => page.data) ?? []
+  const { debouncedSearch, search, setSearch } = useSearch()
+  const { isFetchingNextPage, pokemon, sentinelRef, status } =
+    usePokemon(debouncedSearch)
 
   return (
     <div className="mx-auto max-w-7xl p-4">
