@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, animate, motion, useMotionValue, useTransform } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject } from 'react'
+import { type RefObject, useEffect } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -105,6 +105,7 @@ export function ExpandedCard({
                     className="mb-4 flex justify-center"
                     exit={{ opacity: 0 }}
                     initial={{ opacity: 0 }}
+                    transition={{ delay: 0.15, duration: 0.2 }}
                   >
                     <Image
                       alt={pokemon.name}
@@ -121,6 +122,7 @@ export function ExpandedCard({
                   className="mb-4 text-sm text-white/70"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
+                  transition={{ delay: 0.15, duration: 0.2 }}
                 >
                   {pokemon.description}
                 </motion.p>
@@ -130,6 +132,7 @@ export function ExpandedCard({
                   className="flex flex-col gap-2"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
+                  transition={{ delay: 0.15, duration: 0.2 }}
                 >
                   <StatBar label="HP" value={pokemon.hp} />
                   <StatBar label="Attack" value={pokemon.attack} />
@@ -144,6 +147,7 @@ export function ExpandedCard({
                   className="mt-4 grid grid-cols-3 gap-2 text-sm"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
+                  transition={{ delay: 0.15, duration: 0.15 }}
                 >
                   <div className="flex flex-col">
                     <span className="text-white/60">Height</span>
@@ -175,16 +179,30 @@ export function ExpandedCard({
 
 function StatBar({ label, value }: { label: string; value: number }) {
   const pct = Math.round((value / STAT_MAX) * 100)
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, v => Math.round(v))
+
+  useEffect(() => {
+    const controls = animate(count, value, {
+      delay: 0.15,
+      duration: 0.3,
+      ease: 'easeOut'
+    })
+    return controls.stop
+  }, [count, value])
+
   return (
     <div className="flex items-center gap-3 text-sm">
       <span className="w-20 shrink-0 text-white/70">{label}</span>
-      <span className="w-8 shrink-0 text-right font-medium text-white">
-        {value}
-      </span>
+      <motion.span className="w-8 shrink-0 text-right font-medium text-white">
+        {rounded}
+      </motion.span>
       <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/20">
-        <div
-          className="h-full rounded-full bg-white/70 transition-all"
-          style={{ width: `${pct}%` }}
+        <motion.div
+          animate={{ width: `${pct}%` }}
+          className="h-full rounded-full bg-white/70"
+          initial={{ width: '0%' }}
+          transition={{ delay: 0.15, duration: 0.3, ease: 'easeOut' }}
         />
       </div>
     </div>
