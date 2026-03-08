@@ -1,6 +1,7 @@
 'use client'
 
-import { useId, useRef } from 'react'
+import { LayoutGroup } from 'motion/react'
+import { memo, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -11,7 +12,7 @@ import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 import { DefaultCard } from './DefaultCard'
 import { ExpandedCard } from './ExpandedCard'
 
-export function PokemonCard({
+export const PokemonCard = memo(function PokemonCard({
   active,
   onClick,
   onClose,
@@ -29,7 +30,7 @@ export function PokemonCard({
   useBodyScrollLock(active, onClose)
 
   return (
-    <>
+    <LayoutGroup id={`pokemon-${pokemon.id}`}>
       {createPortal(
         <ExpandedCard active={active} id={id} pokemon={pokemon} ref={ref} />,
         document.body
@@ -40,6 +41,6 @@ export function PokemonCard({
         onClick={onClick}
         pokemon={pokemon}
       />
-    </>
+    </LayoutGroup>
   )
-}
+}, (prev, next) => prev.active === next.active && prev.pokemon === next.pokemon)
