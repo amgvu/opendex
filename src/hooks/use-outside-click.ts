@@ -5,9 +5,7 @@ export function useOutsideClick(
   callback: () => void
 ) {
   const callbackRef = useRef(callback)
-  useEffect(() => {
-    callbackRef.current = callback
-  })
+  callbackRef.current = callback
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {

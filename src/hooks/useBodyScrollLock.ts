@@ -1,9 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function useBodyScrollLock(active: boolean, onClose: () => void) {
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
+
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') onCloseRef.current()
     }
     if (active) {
       const scrollbarWidth =
@@ -16,5 +19,5 @@ export function useBodyScrollLock(active: boolean, onClose: () => void) {
       document.body.style.paddingRight = ''
     }
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [active, onClose])
+  }, [active])
 }

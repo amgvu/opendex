@@ -1,13 +1,10 @@
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
-import { useEffect, useRef } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { fetchPokemon, type PokemonResponse } from '@/lib/api'
 
 export function usePokemon(search: string, sortBy: string, sortOrder: string) {
-  const sentinelRef = useRef<HTMLDivElement>(null)
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
       getNextPageParam: (lastPage: PokemonResponse) =>
@@ -19,25 +16,8 @@ export function usePokemon(search: string, sortBy: string, sortOrder: string) {
       queryKey: ['pokemon', search, sortBy, sortOrder]
     })
 
-  useEffect(() => {
-    const sentinel = sentinelRef.current
-    if (!sentinel) return
-
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          void fetchNextPage()
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    observer.observe(sentinel)
-    return () => observer.disconnect()
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
-
   const pokemon: Pokemon[] =
     data?.pages.flatMap((page: PokemonResponse) => page.data) ?? []
 
-  return { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, sentinelRef, status }
+  return { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status }
 }
