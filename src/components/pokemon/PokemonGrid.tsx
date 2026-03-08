@@ -77,7 +77,7 @@ export default function PokemonGrid() {
       </AnimatePresence>
       <div className="mx-auto max-w-7xl p-4">
         <Input
-          className="mb-6"
+          className="mb-4"
           onChange={e => setSearch(e.target.value)}
           placeholder="Search Pokemon..."
           type="text"
@@ -85,12 +85,14 @@ export default function PokemonGrid() {
         />
 
         <button
-          className="mb-3 flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted/70"
+          className="mb-4 flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted/70"
           onClick={() => setDrawerOpen(o => !o)}
         >
           <TbAdjustments size={14} />
           Sort &amp; Filter
-          <span className={`rounded-full bg-foreground px-1.5 py-0.5 text-xs text-background transition-opacity ${activeCount > 0 ? 'opacity-100' : 'opacity-0'}`}>
+          <span
+            className={`rounded-full bg-foreground px-1.5 py-0.5 text-xs text-background transition-opacity ${activeCount > 0 ? 'opacity-100' : 'opacity-0'}`}
+          >
             {activeCount || 0}
           </span>
         </button>
@@ -104,7 +106,7 @@ export default function PokemonGrid() {
               initial={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
             >
-              <div className="pt-2">
+              <div>
                 <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                   Sort
                 </p>

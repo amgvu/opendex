@@ -23,14 +23,18 @@ export function FilterControls({
   return (
     <div className="mb-4 flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="w-12 text-xs font-semibold text-muted-foreground">Type</span>
+        <span className="w-12 text-xs font-semibold text-muted-foreground">
+          Type
+        </span>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               className="h-8 gap-1 px-3 text-xs font-semibold"
               variant="outline"
             >
-              {selectedTypes.length > 0 ? `${selectedTypes.length} selected` : 'Any'}
+              {selectedTypes.length > 0
+                ? `${selectedTypes.length} selected`
+                : 'Any'}
               <ChevronDown size={12} />
             </Button>
           </PopoverTrigger>
@@ -58,7 +62,9 @@ export function FilterControls({
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <span className="w-12 text-xs font-semibold text-muted-foreground">Gen</span>
+        <span className="w-12 text-xs font-semibold text-muted-foreground">
+          Gen
+        </span>
         <div className="flex flex-wrap gap-1">
           {ALL_GENS.map(gen => {
             const active = selectedGens.includes(gen)
