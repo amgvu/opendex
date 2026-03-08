@@ -1,13 +1,13 @@
 export type SortField =
-  | 'id'
-  | 'name'
-  | 'type'
-  | 'hp'
   | 'attack'
   | 'defense'
+  | 'hp'
+  | 'id'
+  | 'name'
   | 'specialAttack'
   | 'specialDefense'
   | 'speed'
+  | 'type'
 
 export type SortOrder = 'asc' | 'desc'
 

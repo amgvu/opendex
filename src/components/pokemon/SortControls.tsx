@@ -5,13 +5,13 @@ import type { SortField, SortOrder } from '@/types/sort'
 import { SORT_FIELDS } from '@/types/sort'
 
 export function SortControls({
+  onSort,
   sortBy,
-  sortOrder,
-  onSort
+  sortOrder
 }: {
+  onSort: (field: SortField) => void
   sortBy: SortField
   sortOrder: SortOrder
-  onSort: (field: SortField) => void
 }) {
   return (
     <div className="mb-4 flex flex-wrap gap-1">

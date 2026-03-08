@@ -6,6 +6,8 @@ import { NextResponse } from 'next/server'
 
 import pokemonData from '@/data/pokemon.json'
 
+const queryCache = new Map<string, (typeof pokemonData)>()
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -15,31 +17,7 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'id'
     const sortOrder = searchParams.get('sortOrder') || 'asc'
 
-    let filteredPokemon = [...pokemonData]
-
-    if (search) {
-      filteredPokemon = filteredPokemon.filter(
-        pokemon =>
-          pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
-          pokemon.types.some(type =>
-            type.toLowerCase().includes(search.toLowerCase())
-          ) ||
-          String(pokemon.id) === search
-      )
-    }
-
-    filteredPokemon.sort((a, b) => {
-      const aVal = sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
-      const bVal = sortBy === 'type' ? (b.types[0] ?? '') : b[sortBy as keyof typeof b]
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return sortOrder === 'asc'
-          ? aVal.localeCompare(bVal)
-          : bVal.localeCompare(aVal)
-      }
-      return sortOrder === 'asc'
-        ? (aVal as number) - (bVal as number)
-        : (bVal as number) - (aVal as number)
-    })
+    const filteredPokemon = getFilteredSorted(search, sortBy, sortOrder)
 
     // Calculate pagination
     const total = filteredPokemon.length
@@ -66,4 +44,33 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     )
   }
+}
+
+function getFilteredSorted(search: string, sortBy: string, sortOrder: string) {
+  const key = `${search}|${sortBy}|${sortOrder}`
+  if (queryCache.has(key)) return queryCache.get(key)!
+
+  const term = search.toLowerCase()
+  let result = search
+    ? pokemonData.filter(
+        p =>
+          p.name.toLowerCase().includes(term) ||
+          p.types.some(t => t.toLowerCase().includes(term)) ||
+          String(p.id) === search
+      )
+    : [...pokemonData]
+
+  result.sort((a, b) => {
+    const aVal = sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
+    const bVal = sortBy === 'type' ? (b.types[0] ?? '') : b[sortBy as keyof typeof b]
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      return sortOrder === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+    }
+    return sortOrder === 'asc'
+      ? (aVal as number) - (bVal as number)
+      : (bVal as number) - (aVal as number)
+  })
+
+  queryCache.set(key, result)
+  return result
 }

@@ -7,13 +7,15 @@ import { fetchPokemon, type PokemonResponse } from '@/lib/api'
 export function usePokemon(search: string, sortBy: string, sortOrder: string) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
+      gcTime: Infinity,
       getNextPageParam: (lastPage: PokemonResponse) =>
         lastPage.pagination.hasNext ? lastPage.pagination.page + 1 : undefined,
       initialPageParam: 1,
       placeholderData: keepPreviousData,
       queryFn: ({ pageParam }: { pageParam: number }) =>
         fetchPokemon(pageParam, search, sortBy, sortOrder),
-      queryKey: ['pokemon', search, sortBy, sortOrder]
+      queryKey: ['pokemon', search, sortBy, sortOrder],
+      staleTime: Infinity
     })
 
   const pokemon: Pokemon[] =

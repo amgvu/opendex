@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Pokemon } from '@/types/pokemon'
 
 export type PokemonResponse = {
@@ -36,5 +35,5 @@ export async function fetchPokemon(
     throw new Error('Failed to fetch Pokemon')
   }
 
-  return res.json()
+  return res.json() as Promise<PokemonResponse>
 }

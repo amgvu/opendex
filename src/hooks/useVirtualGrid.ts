@@ -27,7 +27,6 @@ export function useVirtualGrid(
   const virtualizer = useWindowVirtualizer({
     count: rowCount,
     estimateSize: useCallback(() => CARD_HEIGHT + GAP, []),
-    measureElement: useCallback(() => CARD_HEIGHT + GAP, []),
     overscan: 5
   })
 
