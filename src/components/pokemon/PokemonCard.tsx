@@ -3,8 +3,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useId, useRef } from 'react'
-import { IoMdStar } from 'react-icons/io'
 import { createPortal } from 'react-dom'
+import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -92,7 +92,10 @@ export function PokemonCard({
                           {pokemon.isLegendary && (
                             <motion.div
                               layoutId={`star-${pokemon.id}-${id}`}
-                              transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                              transition={{
+                                duration: 0.25,
+                                ease: [0.32, 0.72, 0, 1]
+                              }}
                             >
                               <IoMdStar className="text-yellow-400" size={22} />
                             </motion.div>
