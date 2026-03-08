@@ -114,6 +114,10 @@ export function ExpandedCard({
                     className="relative mb-4 flex justify-center"
                     exit={{ opacity: 0 }}
                     initial={{ opacity: 0 }}
+                    onClick={() => {
+                      setGifMounted(true)
+                      setHovered(h => !h)
+                    }}
                     onHoverEnd={() => setHovered(false)}
                     onHoverStart={() => {
                       setHovered(true)
