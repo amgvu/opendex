@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useId, useRef } from 'react'
+import { IoMdStar } from 'react-icons/io'
 import { createPortal } from 'react-dom'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -34,7 +35,8 @@ export function PokemonCard({
       if (e.key === 'Escape') onClose()
     }
     if (active) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth
       document.body.style.overflow = 'hidden'
       document.body.style.paddingRight = `${scrollbarWidth}px`
       window.addEventListener('keydown', onKeyDown)
@@ -65,19 +67,37 @@ export function PokemonCard({
                   transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <div className="absolute inset-0 bg-black/30" />
+                  <Image
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute -bottom-16 -right-24 opacity-10 grayscale"
+                    height={512}
+                    src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
+                    width={512}
+                  />
                   <div className="relative p-6">
                     <div className="mb-4 flex items-start justify-between">
                       <div>
-                        <motion.h2
-                          className="text-2xl font-bold capitalize text-white"
-                          layoutId={`name-${pokemon.id}-${id}`}
-                          transition={{
-                            duration: 0.25,
-                            ease: [0.32, 0.72, 0, 1]
-                          }}
-                        >
-                          {pokemon.name}
-                        </motion.h2>
+                        <div className="flex items-center gap-1.5">
+                          <motion.h2
+                            className="text-2xl font-bold capitalize text-white"
+                            layoutId={`name-${pokemon.id}-${id}`}
+                            transition={{
+                              duration: 0.25,
+                              ease: [0.32, 0.72, 0, 1]
+                            }}
+                          >
+                            {pokemon.name}
+                          </motion.h2>
+                          {pokemon.isLegendary && (
+                            <motion.div
+                              layoutId={`star-${pokemon.id}-${id}`}
+                              transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                            >
+                              <IoMdStar className="text-yellow-400" size={22} />
+                            </motion.div>
+                          )}
+                        </div>
                         <span className="text-sm text-white/60">
                           #{pokemon.id}
                         </span>
@@ -188,7 +208,7 @@ export function PokemonCard({
 
       <motion.div
         animate={{ opacity: active ? 0 : 1 }}
-        className={`relative h-full cursor-pointer overflow-hidden rounded-xl p-3 shadow-sm transition-shadow hover:shadow-md ${typeColor}`}
+        className={`relative h-full cursor-pointer overflow-hidden rounded-xl p-3 ${typeColor}`}
         initial={{ opacity: 0 }}
         layoutId={`card-${pokemon.id}-${id}`}
         onClick={onClick}
@@ -197,6 +217,11 @@ export function PokemonCard({
           ease: [0.32, 0.72, 0, 1],
           opacity: { duration: 0.25 }
         }}
+        whileHover={
+          active
+            ? undefined
+            : { transition: { duration: 0.1, ease: 'easeOut' }, y: -3 }
+        }
       >
         <div className="absolute inset-0 bg-white/15" />
         <Image
@@ -233,6 +258,15 @@ export function PokemonCard({
             </span>
           ))}
         </motion.div>
+        {pokemon.isLegendary && (
+          <motion.div
+            className="absolute bottom-2 right-2"
+            layoutId={`star-${pokemon.id}-${id}`}
+            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+          >
+            <IoMdStar className="text-yellow-400" size={18} />
+          </motion.div>
+        )}
       </motion.div>
     </>
   )
