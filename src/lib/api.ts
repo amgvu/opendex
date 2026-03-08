@@ -16,7 +16,9 @@ export async function fetchPokemon(
   page: number,
   search: string = '',
   sortBy: string = 'id',
-  sortOrder: string = 'asc'
+  sortOrder: string = 'asc',
+  types: string[] = [],
+  gens: number[] = []
 ): Promise<PokemonResponse> {
   const params = new URLSearchParams({
     limit: '20',
@@ -25,9 +27,9 @@ export async function fetchPokemon(
     sortOrder
   })
 
-  if (search) {
-    params.set('search', search)
-  }
+  if (search) params.set('search', search)
+  if (types.length > 0) params.set('types', types.join(','))
+  if (gens.length > 0) params.set('gens', gens.join(','))
 
   const res = await fetch(`/api/pokemon?${params}`)
 

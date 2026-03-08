@@ -1,11 +1,13 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { TbAdjustments } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { useCardNavigation } from '@/hooks/useCardNavigation'
+import { useFilters } from '@/hooks/useFilters'
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
 import { useSelectedPokemon } from '@/hooks/useSelectedPokemon'
@@ -13,19 +15,29 @@ import { useSort } from '@/hooks/useSort'
 import { useVirtualGrid } from '@/hooks/useVirtualGrid'
 
 import { Input } from '../ui/input'
+import { FilterControls } from './FilterControls'
 import { GridStatus } from './GridStatus'
 import { PokemonCard } from './PokemonCard'
 import { SortControls } from './SortControls'
 
 export default function PokemonGrid() {
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const { debouncedSearch, search, setSearch } = useSearch()
   const { sortBy, sortOrder, updateSort } = useSort()
+  const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
+
+  const activeCount =
+    selectedTypes.length +
+    selectedGens.length +
+    (sortBy !== 'id' || sortOrder !== 'asc' ? 1 : 0)
   const { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status } =
-    usePokemon(debouncedSearch, sortBy, sortOrder)
+    usePokemon(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
   const { onNext, onPrev } = useCardNavigation({
-    fetchNextPage: () => { void fetchNextPage() },
+    fetchNextPage: () => {
+      void fetchNextPage()
+    },
     hasNextPage,
     isFetchingNextPage,
     pokemon,
@@ -33,7 +45,9 @@ export default function PokemonGrid() {
     setSelectedId
   })
 
-  const onLoadMore = () => { void fetchNextPage() }
+  const onLoadMore = () => {
+    void fetchNextPage()
+  }
 
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
@@ -70,11 +84,48 @@ export default function PokemonGrid() {
           value={search}
         />
 
-        <SortControls
-          onSort={updateSort}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-        />
+        <button
+          className="mb-3 flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted/70"
+          onClick={() => setDrawerOpen(o => !o)}
+        >
+          <TbAdjustments size={14} />
+          Sort &amp; Filter
+          <span className={`rounded-full bg-foreground px-1.5 py-0.5 text-xs text-background transition-opacity ${activeCount > 0 ? 'opacity-100' : 'opacity-0'}`}>
+            {activeCount || 0}
+          </span>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {drawerOpen && (
+            <motion.div
+              animate={{ height: 'auto', opacity: 1 }}
+              className="overflow-hidden"
+              exit={{ height: 0, opacity: 0 }}
+              initial={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+            >
+              <div className="pt-2">
+                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
+                  Sort
+                </p>
+                <SortControls
+                  onSort={updateSort}
+                  sortBy={sortBy}
+                  sortOrder={sortOrder}
+                />
+                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
+                  Filter
+                </p>
+                <FilterControls
+                  onToggleGen={toggleGen}
+                  onToggleType={toggleType}
+                  selectedGens={selectedGens}
+                  selectedTypes={selectedTypes}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <GridStatus
           empty={status === 'success' && pokemon.length === 0}

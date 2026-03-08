@@ -16,8 +16,10 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search') || ''
     const sortBy = searchParams.get('sortBy') || 'id'
     const sortOrder = searchParams.get('sortOrder') || 'asc'
+    const types = searchParams.get('types')?.split(',').filter(Boolean) ?? []
+    const gens = searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
 
-    const filteredPokemon = getFilteredSorted(search, sortBy, sortOrder)
+    const filteredPokemon = getFilteredSorted(search, sortBy, sortOrder, types, gens)
 
     // Calculate pagination
     const total = filteredPokemon.length
@@ -46,8 +48,14 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function getFilteredSorted(search: string, sortBy: string, sortOrder: string) {
-  const key = `${search}|${sortBy}|${sortOrder}`
+function getFilteredSorted(
+  search: string,
+  sortBy: string,
+  sortOrder: string,
+  types: string[],
+  gens: number[]
+) {
+  const key = `${search}|${sortBy}|${sortOrder}|${types.join(',')}|${gens.join(',')}`
   if (queryCache.has(key)) return queryCache.get(key)!
 
   const term = search.toLowerCase()
@@ -59,6 +67,13 @@ function getFilteredSorted(search: string, sortBy: string, sortOrder: string) {
           String(p.id) === search
       )
     : [...pokemonData]
+
+  if (types.length > 0) {
+    result = result.filter(p => types.every(t => p.types.includes(t)))
+  }
+  if (gens.length > 0) {
+    result = result.filter(p => gens.includes(p.generation))
+  }
 
   result.sort((a, b) => {
     const aVal = sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
