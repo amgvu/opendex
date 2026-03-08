@@ -1,4 +1,10 @@
-import { AnimatePresence, animate, motion, useMotionValue, useTransform } from 'motion/react'
+import {
+  animate,
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useTransform
+} from 'motion/react'
 import Image from 'next/image'
 import { type RefObject, useEffect } from 'react'
 import { IoMdStar } from 'react-icons/io'

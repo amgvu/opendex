@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -23,6 +23,13 @@ export default function PokemonGrid() {
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
   const onLoadMore = useCallback(() => void fetchNextPage(), [fetchNextPage])
+
+  useEffect(() => {
+    const selected = pokemon.find(p => p.id === selectedId)
+    document.title = selected
+      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Finnydex`
+      : 'Finnydex'
+  }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, totalHeight, virtualItems } = useVirtualGrid(
     pokemon,
