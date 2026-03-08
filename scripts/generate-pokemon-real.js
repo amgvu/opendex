@@ -44,6 +44,7 @@ async function fetchPokemon(id) {
     hp: stats['hp'],
     id: pokemon.id,
     imageUrl: `https://play.pokemonshowdown.com/sprites/ani/${species.name.replace(/-/g, '')}.gif`,
+    officialUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
     isLegendary: species.is_legendary || species.is_mythical,
     name: pokemon.name,
     specialAttack: stats['special-attack'],

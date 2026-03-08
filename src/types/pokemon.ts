@@ -7,6 +7,7 @@ export type Pokemon = {
   hp: number
   id: number
   imageUrl: string
+  officialUrl: string
   isLegendary?: boolean
   name: string
   specialAttack: number

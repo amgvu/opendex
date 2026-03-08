@@ -27,8 +27,9 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const [imgSrc, setImgSrc] = useState(pokemon.imageUrl)
-  const fallbackSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+  const [hovered, setHovered] = useState(false)
+  const [gifMounted, setGifMounted] = useState(false)
+  const [gifReady, setGifReady] = useState(false)
 
   return (
     <AnimatePresence>
@@ -110,19 +111,40 @@ export function ExpandedCard({
                 {pokemon.imageUrl && (
                   <motion.div
                     animate={{ opacity: 1 }}
-                    className="mb-4 flex justify-center"
+                    className="relative mb-4 flex justify-center"
                     exit={{ opacity: 0 }}
                     initial={{ opacity: 0 }}
+                    onHoverEnd={() => setHovered(false)}
+                    onHoverStart={() => {
+                      setHovered(true)
+                      setGifMounted(true)
+                    }}
                     transition={{ delay: 0.15, duration: 0.2 }}
                   >
-                    <Image
-                      alt={pokemon.name}
-                      className="h-50 w-50 object-contain drop-shadow-2xl"
-                      height={160}
-                      onError={() => setImgSrc(fallbackSrc)}
-                      src={imgSrc}
-                      width={160}
-                    />
+                    <motion.div
+                      animate={{ opacity: hovered && gifReady ? 0 : 1 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <Image
+                        alt={pokemon.name}
+                        className="h-50 w-50 object-contain drop-shadow-2xl"
+                        height={200}
+                        src={pokemon.officialUrl}
+                        unoptimized
+                        width={200}
+                      />
+                    </motion.div>
+                    {gifMounted && (
+                      <motion.img
+                        alt=""
+                        animate={{ opacity: hovered && gifReady ? 1 : 0 }}
+                        className="absolute h-50 w-50 object-contain drop-shadow-2xl"
+                        initial={{ opacity: 0 }}
+                        onLoad={() => setGifReady(true)}
+                        src={pokemon.imageUrl}
+                        transition={{ duration: 0.15 }}
+                      />
+                    )}
                   </motion.div>
                 )}
 
