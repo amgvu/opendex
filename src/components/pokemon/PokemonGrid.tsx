@@ -1,5 +1,7 @@
 'use client'
 
+import { useCallback } from 'react'
+
 import type { Pokemon } from '@/types/pokemon'
 
 import { usePokemon } from '@/hooks/usePokemon'
@@ -17,9 +19,11 @@ export default function PokemonGrid() {
     usePokemon(debouncedSearch)
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
+  const onLoadMore = useCallback(() => void fetchNextPage(), [fetchNextPage])
+
   const { columns, getRowPokemon, totalHeight, virtualItems } = useVirtualGrid(
     pokemon,
-    () => void fetchNextPage(),
+    onLoadMore,
     hasNextPage,
     isFetchingNextPage
   )
