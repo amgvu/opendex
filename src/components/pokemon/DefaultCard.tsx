@@ -44,7 +44,7 @@ export function DefaultCard({
       />
       <div className="relative flex items-start justify-between">
         <motion.p
-          className="text-sm font-semibold capitalize text-white"
+          className="text-lg font-semibold capitalize text-white"
           layoutId={`name-${pokemon.id}-${id}`}
           transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
         >

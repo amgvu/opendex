@@ -43,9 +43,7 @@ async function fetchPokemon(id) {
     height: parseFloat((pokemon.height / 10).toFixed(1)),
     hp: stats['hp'],
     id: pokemon.id,
-    imageUrl:
-      pokemon.sprites.other['official-artwork'].front_default ??
-      pokemon.sprites.front_default,
+    imageUrl: `https://play.pokemonshowdown.com/sprites/ani/${species.name.replace(/-/g, '')}.gif`,
     isLegendary: species.is_legendary || species.is_mythical,
     name: pokemon.name,
     specialAttack: stats['special-attack'],

@@ -6,7 +6,7 @@ import {
   useTransform
 } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject, useEffect } from 'react'
+import { type RefObject, useEffect, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -27,6 +27,8 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
+  const [imgSrc, setImgSrc] = useState(pokemon.imageUrl)
+  const fallbackSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
 
   return (
     <AnimatePresence>
@@ -117,7 +119,8 @@ export function ExpandedCard({
                       alt={pokemon.name}
                       className="h-50 w-50 object-contain drop-shadow-2xl"
                       height={160}
-                      src={pokemon.imageUrl}
+                      onError={() => setImgSrc(fallbackSrc)}
+                      src={imgSrc}
                       width={160}
                     />
                   </motion.div>

@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
       {
         hostname: 'raw.githubusercontent.com',
         protocol: 'https'
+      },
+      {
+        hostname: 'play.pokemonshowdown.com',
+        protocol: 'https'
       }
     ]
   }
