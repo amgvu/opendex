@@ -11,6 +11,7 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
+import { useGifHover } from '@/hooks/useGifHover'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 const STAT_MAX = 255
@@ -31,9 +32,8 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const [hovered, setHovered] = useState(false)
-  const [gifMounted, setGifMounted] = useState(false)
-  const [gifReady, setGifReady] = useState(false)
+  const { gifMounted, gifReady, hovered, onClick, onPointerLeave, onPointerMove, setGifReady } =
+    useGifHover()
   const [dragging, setDragging] = useState(false)
 
   return (
@@ -124,18 +124,9 @@ export function ExpandedCard({
                     className="relative mb-4 flex justify-center"
                     exit={{ opacity: 0 }}
                     initial={{ opacity: 0 }}
-                    onClick={() => {
-                      setGifMounted(true)
-                      setHovered(h => !h)
-                    }}
-                    onPointerLeave={e => {
-                      if (e.pointerType === 'mouse') setHovered(false)
-                    }}
-                    onPointerMove={e => {
-                      if (e.pointerType !== 'mouse') return
-                      setGifMounted(true)
-                      setHovered(true)
-                    }}
+                    onClick={onClick}
+                    onPointerLeave={onPointerLeave}
+                    onPointerMove={onPointerMove}
                     transition={{ delay: 0.15, duration: 0.2 }}
                   >
                     <motion.div

@@ -1,10 +1,11 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
+import { useCardNavigation } from '@/hooks/useCardNavigation'
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
 import { useSelectedPokemon } from '@/hooks/useSelectedPokemon'
@@ -23,51 +24,16 @@ export default function PokemonGrid() {
     usePokemon(debouncedSearch, sortBy, sortOrder)
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
-  const selectedIndex = pokemon.findIndex(p => p.id === selectedId)
-  const pendingNextRef = useRef(false)
-
-  const onNext = useCallback(() => {
-    const next = pokemon[selectedIndex + 1]
-    if (next) {
-      setSelectedId(next.id)
-    } else if (hasNextPage && !isFetchingNextPage) {
-      pendingNextRef.current = true
-      void fetchNextPage()
-    }
-  }, [
-    selectedIndex,
-    pokemon,
+  const { onNext, onPrev } = useCardNavigation({
+    fetchNextPage: () => { void fetchNextPage() },
     hasNextPage,
     isFetchingNextPage,
-    fetchNextPage,
+    pokemon,
+    selectedId,
     setSelectedId
-  ])
+  })
 
-  const onPrev = useCallback(() => {
-    const prev = pokemon[selectedIndex - 1]
-    if (prev) setSelectedId(prev.id)
-  }, [selectedIndex, pokemon, setSelectedId])
-
-  useEffect(() => {
-    if (!pendingNextRef.current) return
-    const next = pokemon[selectedIndex + 1]
-    if (next) {
-      pendingNextRef.current = false
-      setSelectedId(next.id)
-    }
-  }, [pokemon, selectedIndex, setSelectedId])
-
-  useEffect(() => {
-    if (!selectedId) return
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'ArrowRight') onNext()
-      if (e.key === 'ArrowLeft') onPrev()
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [selectedId, onNext, onPrev])
-
-  const onLoadMore = useCallback(() => void fetchNextPage(), [fetchNextPage])
+  const onLoadMore = () => { void fetchNextPage() }
 
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
