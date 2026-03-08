@@ -23,7 +23,8 @@ export async function GET(request: NextRequest) {
           pokemon.types.some(type =>
             type.toLowerCase().includes(search.toLowerCase())
           ) ||
-          pokemon.description.toLowerCase().includes(search.toLowerCase())
+          String(pokemon.id) === search //||
+        //pokemon.description.toLowerCase().includes(search.toLowerCase())
       )
     }
 

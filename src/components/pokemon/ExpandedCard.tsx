@@ -5,7 +5,7 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { getTypeColor } from '@/lib/pokemon'
+import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 const STAT_MAX = 255
 
@@ -74,7 +74,9 @@ export function ExpandedCard({
                         </motion.div>
                       )}
                     </div>
-                    <span className="text-sm text-white/60">#{pokemon.id}</span>
+                    <span className="text-sm tracking-wide text-white/60">
+                      {formatPokedexId(pokemon.id)}
+                    </span>
                   </div>
                   <motion.div
                     className="flex flex-wrap gap-1"
@@ -106,7 +108,7 @@ export function ExpandedCard({
                   >
                     <Image
                       alt={pokemon.name}
-                      className="h-40 w-40 object-contain drop-shadow-lg"
+                      className="h-50 w-50 object-contain drop-shadow-2xl"
                       height={160}
                       src={pokemon.imageUrl}
                       width={160}

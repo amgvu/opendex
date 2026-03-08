@@ -4,7 +4,7 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { getTypeColor } from '@/lib/pokemon'
+import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 export function DefaultCard({
   active,
@@ -50,7 +50,9 @@ export function DefaultCard({
         >
           {pokemon.name}
         </motion.p>
-        <span className="text-xs font-semibold text-white">#{pokemon.id}</span>
+        <span className="text-xs tracking-wide font-semibold text-white">
+          {formatPokedexId(pokemon.id)}
+        </span>
       </div>
       <motion.div
         className="relative mt-2 flex flex-wrap gap-1"

@@ -22,3 +22,6 @@ export const colors: Record<string, string> = {
 export const getTypeColor = (type: string) => {
   return colors[type] || 'bg-slate-400 hover:bg-slate-500'
 }
+
+export const formatPokedexId = (id: number) =>
+  `#${String(id).padStart(4, '0')}`
