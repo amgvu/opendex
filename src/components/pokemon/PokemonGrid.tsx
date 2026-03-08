@@ -7,16 +7,19 @@ import type { Pokemon } from '@/types/pokemon'
 import { usePokemon } from '@/hooks/usePokemon'
 import { useSearch } from '@/hooks/useSearch'
 import { useSelectedPokemon } from '@/hooks/useSelectedPokemon'
+import { useSort } from '@/hooks/useSort'
 import { useVirtualGrid } from '@/hooks/useVirtualGrid'
 
 import { Input } from '../ui/input'
 import { GridStatus } from './GridStatus'
 import { PokemonCard } from './PokemonCard'
+import { SortControls } from './SortControls'
 
 export default function PokemonGrid() {
   const { debouncedSearch, search, setSearch } = useSearch()
+  const { sortBy, sortOrder, updateSort } = useSort()
   const { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status } =
-    usePokemon(debouncedSearch)
+    usePokemon(debouncedSearch, sortBy, sortOrder)
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
   const onLoadMore = useCallback(() => void fetchNextPage(), [fetchNextPage])
@@ -37,6 +40,8 @@ export default function PokemonGrid() {
         type="text"
         value={search}
       />
+
+      <SortControls onSort={updateSort} sortBy={sortBy} sortOrder={sortOrder} />
 
       <GridStatus
         empty={status === 'success' && pokemon.length === 0}

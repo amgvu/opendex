@@ -12,21 +12,34 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '20')
     const search = searchParams.get('search') || ''
+    const sortBy = searchParams.get('sortBy') || 'id'
+    const sortOrder = searchParams.get('sortOrder') || 'asc'
 
-    let filteredPokemon = pokemonData
+    let filteredPokemon = [...pokemonData]
 
-    // Apply search filter if provided
     if (search) {
-      filteredPokemon = pokemonData.filter(
+      filteredPokemon = filteredPokemon.filter(
         pokemon =>
           pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
           pokemon.types.some(type =>
             type.toLowerCase().includes(search.toLowerCase())
           ) ||
-          String(pokemon.id) === search //||
-        //pokemon.description.toLowerCase().includes(search.toLowerCase())
+          String(pokemon.id) === search
       )
     }
+
+    filteredPokemon.sort((a, b) => {
+      const aVal = sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
+      const bVal = sortBy === 'type' ? (b.types[0] ?? '') : b[sortBy as keyof typeof b]
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return sortOrder === 'asc'
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal)
+      }
+      return sortOrder === 'asc'
+        ? (aVal as number) - (bVal as number)
+        : (bVal as number) - (aVal as number)
+    })
 
     // Calculate pagination
     const total = filteredPokemon.length

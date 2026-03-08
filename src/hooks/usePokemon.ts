@@ -5,7 +5,7 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { fetchPokemon, type PokemonResponse } from '@/lib/api'
 
-export function usePokemon(search: string) {
+export function usePokemon(search: string, sortBy: string, sortOrder: string) {
   const sentinelRef = useRef<HTMLDivElement>(null)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
@@ -15,8 +15,8 @@ export function usePokemon(search: string) {
       initialPageParam: 1,
       placeholderData: keepPreviousData,
       queryFn: ({ pageParam }: { pageParam: number }) =>
-        fetchPokemon(pageParam, search),
-      queryKey: ['pokemon', search]
+        fetchPokemon(pageParam, search, sortBy, sortOrder),
+      queryKey: ['pokemon', search, sortBy, sortOrder]
     })
 
   useEffect(() => {

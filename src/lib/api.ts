@@ -15,11 +15,15 @@ export type PokemonResponse = {
 
 export async function fetchPokemon(
   page: number,
-  search: string = ''
+  search: string = '',
+  sortBy: string = 'id',
+  sortOrder: string = 'asc'
 ): Promise<PokemonResponse> {
   const params = new URLSearchParams({
     limit: '20',
-    page: String(page)
+    page: String(page),
+    sortBy,
+    sortOrder
   })
 
   if (search) {
