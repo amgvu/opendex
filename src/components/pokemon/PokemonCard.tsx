@@ -16,11 +16,15 @@ export const PokemonCard = memo(function PokemonCard({
   active,
   onClick,
   onClose,
+  onNext,
+  onPrev,
   pokemon
 }: {
   active: boolean
   onClick: () => void
   onClose: () => void
+  onNext: () => void
+  onPrev: () => void
   pokemon: Pokemon
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -32,7 +36,14 @@ export const PokemonCard = memo(function PokemonCard({
   return (
     <LayoutGroup id={`pokemon-${pokemon.id}`}>
       {createPortal(
-        <ExpandedCard active={active} id={id} pokemon={pokemon} ref={ref} />,
+        <ExpandedCard
+          active={active}
+          id={id}
+          onNext={onNext}
+          onPrev={onPrev}
+          pokemon={pokemon}
+          ref={ref}
+        />,
         document.body
       )}
       <DefaultCard

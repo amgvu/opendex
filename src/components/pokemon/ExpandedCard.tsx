@@ -18,11 +18,15 @@ const STAT_MAX = 255
 export function ExpandedCard({
   active,
   id,
+  onNext,
+  onPrev,
   pokemon,
   ref
 }: {
   active: boolean
   id: string
+  onNext: () => void
+  onPrev: () => void
   pokemon: Pokemon
   ref: RefObject<HTMLDivElement | null>
 }) {
@@ -30,21 +34,25 @@ export function ExpandedCard({
   const [hovered, setHovered] = useState(false)
   const [gifMounted, setGifMounted] = useState(false)
   const [gifReady, setGifReady] = useState(false)
+  const [dragging, setDragging] = useState(false)
 
   return (
     <AnimatePresence>
       {active && (
         <>
-          <motion.div
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-40 bg-black/40"
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-          />
           <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
-              className={`relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
+              className={`relative w-full max-w-md cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.1}
               layoutId={`card-${pokemon.id}-${id}`}
+              onDragEnd={(_, info) => {
+                setDragging(false)
+                if (info.offset.x < -50) onNext()
+                else if (info.offset.x > 50) onPrev()
+              }}
+              onDragStart={() => setDragging(true)}
               ref={ref}
               transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
             >
@@ -57,7 +65,9 @@ export function ExpandedCard({
                 src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
                 width={512}
               />
-              <div className="relative p-6">
+              <div
+                className={`relative p-6 ${dragging ? 'select-none' : 'select-text'}`}
+              >
                 <div className="mb-4 flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-1.5">
@@ -118,10 +128,13 @@ export function ExpandedCard({
                       setGifMounted(true)
                       setHovered(h => !h)
                     }}
-                    onHoverEnd={() => setHovered(false)}
-                    onHoverStart={() => {
-                      setHovered(true)
+                    onPointerLeave={e => {
+                      if (e.pointerType === 'mouse') setHovered(false)
+                    }}
+                    onPointerMove={e => {
+                      if (e.pointerType !== 'mouse') return
                       setGifMounted(true)
+                      setHovered(true)
                     }}
                     transition={{ delay: 0.15, duration: 0.2 }}
                   >
@@ -142,7 +155,7 @@ export function ExpandedCard({
                       <motion.img
                         alt=""
                         animate={{ opacity: hovered && gifReady ? 1 : 0 }}
-                        className="absolute h-50 w-50 object-contain drop-shadow-2xl"
+                        className="absolute h-50 w-50 object-contain"
                         initial={{ opacity: 0 }}
                         onLoad={() => setGifReady(true)}
                         src={pokemon.imageUrl}
