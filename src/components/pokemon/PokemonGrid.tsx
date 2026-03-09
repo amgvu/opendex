@@ -72,6 +72,7 @@ export default function PokemonGrid() {
             className="fixed inset-0 z-40 bg-black/40"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
+            onClick={() => setSelectedId(null)}
           />
         )}
       </AnimatePresence>

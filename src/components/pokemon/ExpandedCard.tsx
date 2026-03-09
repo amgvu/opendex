@@ -68,9 +68,9 @@ export function ExpandedCard({
                 alt=""
                 aria-hidden="true"
                 className="absolute -bottom-16 -right-24 opacity-10 grayscale"
-                height={512}
+                height={384}
                 src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
-                width={512}
+                width={384}
               />
               <div
                 className={`relative p-6 ${dragging ? 'select-none' : 'select-text'}`}
