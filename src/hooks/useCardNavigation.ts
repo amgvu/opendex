@@ -19,8 +19,17 @@ export function useCardNavigation({
 }) {
   const selectedIndex = pokemon.findIndex(p => p.id === selectedId)
   const pendingNextRef = useRef(false)
+  const lastNavTimeRef = useRef(0)
+
+  const canNavigate = () => {
+    const now = Date.now()
+    if (now - lastNavTimeRef.current < 100) return false
+    lastNavTimeRef.current = now
+    return true
+  }
 
   const onNext = useCallback(() => {
+    if (!canNavigate()) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
       setSelectedId(next.id)
@@ -38,6 +47,7 @@ export function useCardNavigation({
   ])
 
   const onPrev = useCallback(() => {
+    if (!canNavigate()) return
     const prev = pokemon[selectedIndex - 1]
     if (prev) setSelectedId(prev.id)
   }, [pokemon, selectedIndex, setSelectedId])
