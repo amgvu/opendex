@@ -5,7 +5,10 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
+import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
+
+import { TypeBadge } from './TypeBadge'
 
 export function DefaultCard({
   active,
@@ -30,7 +33,7 @@ export function DefaultCard({
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
       onHoverStart={() => { if (!active) setHovered(true) }}
-      transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+      transition={CARD_TRANSITION}
     >
       <div className="absolute inset-0 bg-white/15" />
       <Image
@@ -44,7 +47,7 @@ export function DefaultCard({
       <motion.div
         className="absolute -bottom-6 left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
-        transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+        transition={CARD_TRANSITION}
       >
         <Image
           alt={pokemon.name}
@@ -60,7 +63,7 @@ export function DefaultCard({
         <motion.p
           className="text-lg font-semibold capitalize text-white"
           layoutId={`name-${pokemon.id}-${id}`}
-          transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+          transition={CARD_TRANSITION}
         >
           {pokemon.name}
         </motion.p>
@@ -71,22 +74,17 @@ export function DefaultCard({
       <motion.div
         className="relative mt-2 flex flex-wrap gap-1"
         layoutId={`types-${pokemon.id}-${id}`}
-        transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+        transition={CARD_TRANSITION}
       >
         {pokemon.types.map((type: string) => (
-          <span
-            className={`rounded-full px-2 py-0.5 text-xs font-medium text-white ${getTypeColor(type)}`}
-            key={type}
-          >
-            {type}
-          </span>
+          <TypeBadge key={type} type={type} />
         ))}
       </motion.div>
       {pokemon.isLegendary && (
         <motion.div
           className="absolute bottom-2 right-2"
           layoutId={`star-${pokemon.id}-${id}`}
-          transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+          transition={CARD_TRANSITION}
         >
           <IoMdStar className="text-yellow-400" size={18} />
         </motion.div>

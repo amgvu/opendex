@@ -1,20 +1,16 @@
-import {
-  animate,
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useTransform
-} from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject, useEffect, useLayoutEffect, useState } from 'react'
+import { type RefObject, useLayoutEffect, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { useGifHover } from '@/hooks/useGifHover'
+import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
-const STAT_MAX = 255
+import { StatBar } from './StatBar'
+import { TypeBadge } from './TypeBadge'
 
 export function ExpandedCard({
   active,
@@ -66,7 +62,7 @@ export function ExpandedCard({
               }}
               onDragStart={() => setDragging(true)}
               ref={ref}
-              transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+              transition={CARD_TRANSITION}
             >
               <div className="absolute inset-0 bg-black/30" />
               <Image
@@ -86,10 +82,7 @@ export function ExpandedCard({
                       <motion.h2
                         className="text-2xl font-bold capitalize text-white"
                         layoutId={`name-${pokemon.id}-${id}`}
-                        transition={{
-                          duration: 0.25,
-                          ease: [0.32, 0.72, 0, 1]
-                        }}
+                        transition={CARD_TRANSITION}
                       >
                         {pokemon.name}
                       </motion.h2>
@@ -105,22 +98,17 @@ export function ExpandedCard({
                         </motion.div>
                       )}
                     </div>
-                    <span className="text-sm tracking-wide text-white/60">
+                    <span className="text-sm tracking-wide font-semibold text-white/60">
                       {formatPokedexId(pokemon.id)}
                     </span>
                   </div>
                   <motion.div
                     className="flex flex-wrap gap-1"
                     layoutId={`types-${pokemon.id}-${id}`}
-                    transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                    transition={CARD_TRANSITION}
                   >
                     {pokemon.types.map(type => (
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium text-white ${getTypeColor(type)}`}
-                        key={type}
-                      >
-                        {type}
-                      </span>
+                      <TypeBadge key={type} type={type} />
                     ))}
                     {pokemon.isLegendary && (
                       <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs font-medium text-black">
@@ -137,10 +125,12 @@ export function ExpandedCard({
                     onClick={onClick}
                     onPointerLeave={onPointerLeave}
                     onPointerMove={onPointerMove}
-                    transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                    transition={CARD_TRANSITION}
                   >
                     <motion.div
-                      animate={{ opacity: !imageLoaded ? 0 : hovered && gifReady ? 0 : 1 }}
+                      animate={{
+                        opacity: !imageLoaded ? 0 : hovered && gifReady ? 0 : 1
+                      }}
                       transition={{ duration: 0.2 }}
                     >
                       <Image
@@ -226,34 +216,3 @@ export function ExpandedCard({
   )
 }
 
-function StatBar({ label, value }: { label: string; value: number }) {
-  const pct = Math.round((value / STAT_MAX) * 100)
-  const count = useMotionValue(0)
-  const rounded = useTransform(count, v => Math.round(v))
-
-  useEffect(() => {
-    const controls = animate(count, value, {
-      delay: 0.15,
-      duration: 0.3,
-      ease: 'easeOut'
-    })
-    return controls.stop
-  }, [count, value])
-
-  return (
-    <div className="flex items-center gap-3 text-sm">
-      <span className="w-20 shrink-0 text-white/70">{label}</span>
-      <motion.span className="w-8 shrink-0 text-right font-medium text-white">
-        {rounded}
-      </motion.span>
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/20">
-        <motion.div
-          animate={{ width: `${pct}%` }}
-          className="h-full rounded-full bg-white/70"
-          initial={{ width: '0%' }}
-          transition={{ delay: 0.15, duration: 0.3, ease: 'easeOut' }}
-        />
-      </div>
-    </div>
-  )
-}
