@@ -50,7 +50,13 @@ export default function PokemonGrid() {
   }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
-    useVirtualGrid(pokemon, selectedId, onLoadMore, hasNextPage, isFetchingNextPage)
+    useVirtualGrid(
+      pokemon,
+      selectedId,
+      onLoadMore,
+      hasNextPage,
+      isFetchingNextPage
+    )
 
   return (
     <>
