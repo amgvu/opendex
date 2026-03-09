@@ -32,8 +32,15 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const { gifMounted, gifReady, hovered, onClick, onPointerLeave, onPointerMove, setGifReady } =
-    useGifHover()
+  const {
+    gifMounted,
+    gifReady,
+    hovered,
+    onClick,
+    onPointerLeave,
+    onPointerMove,
+    setGifReady
+  } = useGifHover()
   const [dragging, setDragging] = useState(false)
 
   return (
@@ -120,14 +127,12 @@ export function ExpandedCard({
 
                 {pokemon.imageUrl && (
                   <motion.div
-                    animate={{ opacity: 1 }}
                     className="relative mb-4 flex justify-center"
-                    exit={{ opacity: 0 }}
-                    initial={{ opacity: 0 }}
+                    layoutId={`image-${pokemon.id}-${id}`}
                     onClick={onClick}
                     onPointerLeave={onPointerLeave}
                     onPointerMove={onPointerMove}
-                    transition={{ delay: 0.15, duration: 0.2 }}
+                    transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
                   >
                     <motion.div
                       animate={{ opacity: hovered && gifReady ? 0 : 1 }}
@@ -136,10 +141,9 @@ export function ExpandedCard({
                       <Image
                         alt={pokemon.name}
                         className="h-50 w-50 object-contain drop-shadow-2xl"
-                        height={200}
+                        height={384}
                         src={pokemon.officialUrl}
-                        unoptimized
-                        width={200}
+                        width={384}
                       />
                     </motion.div>
                     {gifMounted && (
