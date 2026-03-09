@@ -165,9 +165,9 @@ export default function PokemonGrid() {
         </div>
 
         {isFetchingNextPage && (
-          <p className="py-4 text-center text-muted-foreground">
-            Loading more...
-          </p>
+          <div className="flex justify-center py-4">
+            <img alt="Loading" className="h-8 w-8 animate-spin grayscale" src="/pokemon-icon.svg" />
+          </div>
         )}
       </div>
     </>
