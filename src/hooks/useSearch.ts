@@ -1,14 +1,11 @@
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import { useUrlSync } from './useUrlSync'
 
 export function useSearch(delay = 300) {
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const searchParamsRef = useRef(searchParams)
-  const routerRef = useRef(router)
-
-  searchParamsRef.current = searchParams
-  routerRef.current = router
+  const { routerRef, searchParamsRef } = useUrlSync()
 
   const initialSearch = searchParams.get('search') ?? ''
   const [search, setSearch] = useState(initialSearch)
@@ -26,11 +23,7 @@ export function useSearch(delay = 300) {
       routerRef.current.replace(`?${params.toString()}`, { scroll: false })
     }, delay)
     return () => clearTimeout(timer)
-  }, [search, delay])
+  }, [search, delay, routerRef, searchParamsRef])
 
-  const updateSearch = useCallback((value: string) => {
-    setSearch(value)
-  }, [])
-
-  return { debouncedSearch, search, setSearch: updateSearch }
+  return { debouncedSearch, search, setSearch }
 }

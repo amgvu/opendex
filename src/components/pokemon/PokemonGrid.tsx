@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -23,24 +23,18 @@ export default function PokemonGrid() {
   const { sortBy, sortOrder, updateSort } = useSort()
   const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
 
-  const { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status } =
+  const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
     usePokemon(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
   const { onNext, onPrev } = useCardNavigation({
-    fetchNextPage: () => {
-      void fetchNextPage()
-    },
+    fetchNextPage: loadMore,
     hasNextPage,
     isFetchingNextPage,
     pokemon,
     selectedId,
     setSelectedId
   })
-
-  const onLoadMore = useCallback(() => {
-    void fetchNextPage()
-  }, [fetchNextPage])
 
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
@@ -50,13 +44,7 @@ export default function PokemonGrid() {
   }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
-    useVirtualGrid(
-      pokemon,
-      selectedId,
-      onLoadMore,
-      hasNextPage,
-      isFetchingNextPage
-    )
+    useVirtualGrid(pokemon, selectedId, loadMore, hasNextPage, isFetchingNextPage)
 
   return (
     <>

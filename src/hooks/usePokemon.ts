@@ -1,4 +1,5 @@
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
+import { useCallback } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -26,6 +27,7 @@ export function usePokemon(
     })
 
   const pokemon: Pokemon[] = data ?? []
+  const loadMore = useCallback(() => { void fetchNextPage() }, [fetchNextPage])
 
-  return { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status }
+  return { hasNextPage, isFetchingNextPage, loadMore, pokemon, status }
 }

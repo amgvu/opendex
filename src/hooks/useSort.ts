@@ -1,16 +1,13 @@
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useCallback, useState } from 'react'
 
 import type { SortField, SortOrder } from '@/types/sort'
 
+import { useUrlSync } from './useUrlSync'
+
 export function useSort() {
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const searchParamsRef = useRef(searchParams)
-  const routerRef = useRef(router)
-
-  searchParamsRef.current = searchParams
-  routerRef.current = router
+  const { routerRef, searchParamsRef } = useUrlSync()
 
   const [sortBy, setSortBy] = useState<SortField>(
     (searchParams.get('sortBy') as SortField) ?? 'id'
@@ -35,7 +32,7 @@ export function useSort() {
       params.set('sortOrder', newOrder)
     }
     routerRef.current.replace(`?${params.toString()}`, { scroll: false })
-  }, [sortBy, sortOrder])
+  }, [sortBy, sortOrder, routerRef, searchParamsRef])
 
   return { sortBy, sortOrder, updateSort }
 }
