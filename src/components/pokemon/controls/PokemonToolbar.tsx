@@ -42,7 +42,7 @@ export function PokemonToolbar({
     (sortBy !== 'id' || sortOrder !== 'asc' ? 1 : 0)
 
   return (
-    <div className="mb-4 space-y-3">
+    <div className="space-y-3">
       {/* Search + mobile drawer trigger */}
       <div className="flex gap-2">
         <Input
@@ -53,7 +53,7 @@ export function PokemonToolbar({
           value={search}
         />
         <Drawer>
-          <DrawerTrigger className="relative inline-flex cursor-pointer items-center gap-2 rounded-md border bg-background px-3 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground lg:hidden">
+          <DrawerTrigger className="relative inline-flex cursor-pointer items-center gap-2 rounded-md border bg-background px-3 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground xl:hidden">
             <TbAdjustments size={16} />
             {activeCount > 0 && (
               <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-[10px] font-bold text-background">
@@ -93,7 +93,7 @@ export function PokemonToolbar({
       </div>
 
       {/* Desktop static controls */}
-      <div className="hidden flex-wrap items-center gap-3 lg:flex">
+      <div className="hidden flex-wrap items-center gap-3 xl:flex">
         <SortControls
           onSort={onUpdateSort}
           sortBy={sortBy}

@@ -65,31 +65,34 @@ export default function PokemonGrid() {
           />
         )}
       </AnimatePresence>
-      <div className="mx-auto max-w-7xl p-4">
-        <div className="mb-6 flex items-center gap-2">
-          <Image
-            alt=""
-            aria-hidden="true"
-            className="h-8 w-8"
-            height={64}
-            src="/pokemon-icon.svg"
-            unoptimized
-            width={64}
+      <div className="fixed inset-x-0 top-0 z-30 border-b bg-background/80 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-4 py-3">
+          <div className="mb-3 flex items-center gap-1.5">
+            <Image
+              alt=""
+              aria-hidden="true"
+              className="h-5 w-5"
+              height={64}
+              src="/pokemon-icon.svg"
+              unoptimized
+              width={64}
+            />
+            <h1 className="text-lg font-bold tracking-tight">Finnédex</h1>
+          </div>
+          <PokemonToolbar
+            onToggleGen={toggleGen}
+            onToggleType={toggleType}
+            onUpdateSearch={setSearch}
+            onUpdateSort={updateSort}
+            search={search}
+            selectedGens={selectedGens}
+            selectedTypes={selectedTypes}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
           />
-          <h1 className="text-2xl font-bold tracking-tight">Finnédex</h1>
         </div>
-        <PokemonToolbar
-          onToggleGen={toggleGen}
-          onToggleType={toggleType}
-          onUpdateSearch={setSearch}
-          onUpdateSort={updateSort}
-          search={search}
-          selectedGens={selectedGens}
-          selectedTypes={selectedTypes}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-        />
-
+      </div>
+      <div className="mx-auto max-w-7xl p-4 pt-32 xl:pt-40">
         <GridStatus
           empty={status === 'success' && pokemon.length === 0}
           status={status}
