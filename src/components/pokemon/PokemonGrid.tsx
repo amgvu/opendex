@@ -92,7 +92,7 @@ export default function PokemonGrid() {
           />
         </div>
       </div>
-      <div className="mx-auto max-w-7xl p-4 pt-30 xl:pt-40">
+      <div className="mx-auto max-w-7xl p-4 pt-32 xl:pt-40">
         <GridStatus
           empty={status === 'success' && pokemon.length === 0}
           status={status}
