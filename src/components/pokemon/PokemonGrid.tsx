@@ -52,8 +52,8 @@ export default function PokemonGrid() {
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
     document.title = selected
-      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Finnydex`
-      : 'Finnydex'
+      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Finnédex`
+      : 'Finnédex'
   }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, totalHeight, virtualItems } = useVirtualGrid(
@@ -77,6 +77,10 @@ export default function PokemonGrid() {
         )}
       </AnimatePresence>
       <div className="mx-auto max-w-7xl p-4">
+        <div className="mb-6 flex items-center gap-2">
+          <img alt="" aria-hidden="true" className="h-8 w-8" src="/pokemon-icon.svg" />
+          <h1 className="text-2xl font-bold tracking-tight">Finnédex</h1>
+        </div>
         <Input
           className="mb-4"
           onChange={e => setSearch(e.target.value)}
