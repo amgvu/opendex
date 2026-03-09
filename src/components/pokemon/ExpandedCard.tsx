@@ -140,6 +140,7 @@ export function ExpandedCard({
                         onLoad={() => setImageLoaded(true)}
                         sizes="200px"
                         src={pokemon.officialUrl}
+                        unoptimized
                         width={384}
                       />
                     </motion.div>

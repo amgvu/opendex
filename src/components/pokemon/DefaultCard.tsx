@@ -32,7 +32,9 @@ export function DefaultCard({
       layoutId={`card-${pokemon.id}-${id}`}
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
-      onHoverStart={() => { if (!active) setHovered(true) }}
+      onHoverStart={() => {
+        if (!active) setHovered(true)
+      }}
       transition={CARD_TRANSITION}
     >
       <div className="absolute inset-0 bg-white/15" />
@@ -45,7 +47,7 @@ export function DefaultCard({
         width={96}
       />
       <motion.div
-        className="absolute -bottom-6 left-28 h-28 w-28"
+        className="absolute -bottom-6 left-24 md:-bottom-6 md:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
         transition={CARD_TRANSITION}
       >
@@ -56,6 +58,7 @@ export function DefaultCard({
           loading="lazy"
           sizes="112px"
           src={pokemon.officialUrl}
+          unoptimized
           width={128}
         />
       </motion.div>
