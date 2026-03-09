@@ -6,7 +6,7 @@ import {
   useTransform
 } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject, useEffect, useState } from 'react'
+import { type RefObject, useEffect, useLayoutEffect, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -42,6 +42,11 @@ export function ExpandedCard({
     setGifReady
   } = useGifHover()
   const [dragging, setDragging] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  useLayoutEffect(() => {
+    setImageLoaded(false)
+  }, [pokemon.id])
 
   return (
     <AnimatePresence>
@@ -135,13 +140,14 @@ export function ExpandedCard({
                     transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
                   >
                     <motion.div
-                      animate={{ opacity: hovered && gifReady ? 0 : 1 }}
-                      transition={{ duration: 0.15 }}
+                      animate={{ opacity: !imageLoaded ? 0 : hovered && gifReady ? 0 : 1 }}
+                      transition={{ duration: 0.2 }}
                     >
                       <Image
                         alt={pokemon.name}
                         className="h-50 w-50 object-contain drop-shadow-2xl"
                         height={384}
+                        onLoad={() => setImageLoaded(true)}
                         src={pokemon.officialUrl}
                         width={384}
                       />
