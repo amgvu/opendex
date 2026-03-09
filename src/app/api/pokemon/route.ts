@@ -1,23 +1,28 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-/* eslint-disable @typescript-eslint/require-await */
 import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
 import pokemonData from '@/data/pokemon.json'
 
-export async function GET(request: NextRequest) {
+export function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const search = searchParams.get('search') || ''
-    const sortBy = searchParams.get('sortBy') || 'id'
-    const sortOrder = searchParams.get('sortOrder') || 'asc'
+    const page = parseInt(searchParams.get('page') ?? '1')
+    const limit = parseInt(searchParams.get('limit') ?? '20')
+    const search = searchParams.get('search') ?? ''
+    const sortBy = searchParams.get('sortBy') ?? 'id'
+    const sortOrder = searchParams.get('sortOrder') ?? 'asc'
     const types = searchParams.get('types')?.split(',').filter(Boolean) ?? []
-    const gens = searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
+    const gens =
+      searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
 
-    const filteredPokemon = getFilteredSorted(search, sortBy, sortOrder, types, gens)
+    const filteredPokemon = getFilteredSorted(
+      search,
+      sortBy,
+      sortOrder,
+      types,
+      gens
+    )
 
     // Calculate pagination
     const total = filteredPokemon.length
@@ -79,10 +84,14 @@ function getFilteredSorted(
   }
 
   result.sort((a, b) => {
-    const aVal = sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
-    const bVal = sortBy === 'type' ? (b.types[0] ?? '') : b[sortBy as keyof typeof b]
+    const aVal =
+      sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
+    const bVal =
+      sortBy === 'type' ? (b.types[0] ?? '') : b[sortBy as keyof typeof b]
     if (typeof aVal === 'string' && typeof bVal === 'string') {
-      return sortOrder === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+      return sortOrder === 'asc'
+        ? aVal.localeCompare(bVal)
+        : bVal.localeCompare(aVal)
     }
     return sortOrder === 'asc'
       ? (aVal as number) - (bVal as number)
