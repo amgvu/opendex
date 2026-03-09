@@ -21,11 +21,11 @@ export function usePokemon(
       queryFn: ({ pageParam }: { pageParam: number }) =>
         fetchPokemon(pageParam, search, sortBy, sortOrder, types, gens),
       queryKey: ['pokemon', search, sortBy, sortOrder, types, gens],
+      select: data => data.pages.flatMap((page: PokemonResponse) => page.data),
       staleTime: Infinity
     })
 
-  const pokemon: Pokemon[] =
-    data?.pages.flatMap((page: PokemonResponse) => page.data) ?? []
+  const pokemon: Pokemon[] = data ?? []
 
   return { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status }
 }

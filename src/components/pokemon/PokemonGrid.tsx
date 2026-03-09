@@ -1,6 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
+import Image from 'next/image'
 import { useCallback, useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -48,12 +49,8 @@ export default function PokemonGrid() {
       : 'Finnédex'
   }, [selectedId, pokemon])
 
-  const { columns, getRowPokemon, totalHeight, virtualItems } = useVirtualGrid(
-    pokemon,
-    onLoadMore,
-    hasNextPage,
-    isFetchingNextPage
-  )
+  const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
+    useVirtualGrid(pokemon, onLoadMore, hasNextPage, isFetchingNextPage)
 
   return (
     <>
@@ -70,11 +67,13 @@ export default function PokemonGrid() {
       </AnimatePresence>
       <div className="mx-auto max-w-7xl p-4">
         <div className="mb-6 flex items-center gap-2">
-          <img
+          <Image
             alt=""
             aria-hidden="true"
             className="h-8 w-8"
+            height={64}
             src="/pokemon-icon.svg"
+            width={64}
           />
           <h1 className="text-2xl font-bold tracking-tight">Finnédex</h1>
         </div>
@@ -99,12 +98,13 @@ export default function PokemonGrid() {
           {virtualItems.map(row => (
             <div
               className="absolute left-0 top-0 w-full"
+              data-index={row.index}
               key={row.index}
+              ref={measureElement}
               style={{
                 display: 'grid',
                 gap: 16,
                 gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-                height: row.size,
                 paddingBottom: 16,
                 transform: `translateY(${row.start}px)`
               }}
@@ -126,10 +126,12 @@ export default function PokemonGrid() {
 
         {isFetchingNextPage && (
           <div className="flex justify-center py-4">
-            <img
+            <Image
               alt="Loading"
               className="h-8 w-8 animate-spin grayscale"
+              height={64}
               src="/pokemon-icon.svg"
+              width={64}
             />
           </div>
         )}

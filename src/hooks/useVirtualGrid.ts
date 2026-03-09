@@ -42,6 +42,7 @@ export function useVirtualGrid(
   return {
     columns,
     getRowPokemon,
+    measureElement: virtualizer.measureElement,
     totalHeight: virtualizer.getTotalSize(),
     virtualItems
   }
