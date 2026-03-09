@@ -5,15 +5,18 @@ export function useBodyScrollLock(active: boolean, onClose: () => void) {
   onCloseRef.current = onClose
 
   useEffect(() => {
+    if (!active) return
+
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onCloseRef.current()
     }
-    if (active) {
-      document.documentElement.style.overflow = 'hidden'
-      window.addEventListener('keydown', onKeyDown)
-    } else {
+
+    document.documentElement.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
       document.documentElement.style.overflow = ''
+      window.removeEventListener('keydown', onKeyDown)
     }
-    return () => window.removeEventListener('keydown', onKeyDown)
   }, [active])
 }
