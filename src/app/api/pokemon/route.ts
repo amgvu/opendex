@@ -6,8 +6,6 @@ import { NextResponse } from 'next/server'
 
 import pokemonData from '@/data/pokemon.json'
 
-const queryCache = new Map<string, (typeof pokemonData)>()
-
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -62,15 +60,13 @@ function getFilteredSorted(
   types: string[],
   gens: number[]
 ) {
-  const key = `${search}|${sortBy}|${sortOrder}|${types.join(',')}|${gens.join(',')}`
-  if (queryCache.has(key)) return queryCache.get(key)!
-
   const term = search.toLowerCase()
   let result = search
     ? pokemonData.filter(
         p =>
           p.name.toLowerCase().includes(term) ||
           p.types.some(t => t.toLowerCase().includes(term)) ||
+          p.description.toLowerCase().includes(term) ||
           String(p.id) === search
       )
     : [...pokemonData]
@@ -93,6 +89,5 @@ function getFilteredSorted(
       : (bVal as number) - (aVal as number)
   })
 
-  queryCache.set(key, result)
   return result
 }
