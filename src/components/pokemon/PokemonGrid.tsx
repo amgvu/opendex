@@ -65,7 +65,7 @@ export default function PokemonGrid() {
           />
         )}
       </AnimatePresence>
-      <div className="fixed inset-x-0 top-0 z-30 border-b bg-background/80 backdrop-blur-sm">
+      <div className="fixed inset-x-0 top-0 z-30  bg-background/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <div className="mb-3 flex items-center gap-1.5">
             <Image
@@ -92,7 +92,7 @@ export default function PokemonGrid() {
           />
         </div>
       </div>
-      <div className="mx-auto max-w-7xl p-4 pt-32 xl:pt-40">
+      <div className="mx-auto max-w-7xl p-4 pt-30 xl:pt-40">
         <GridStatus
           empty={status === 'success' && pokemon.length === 0}
           status={status}
