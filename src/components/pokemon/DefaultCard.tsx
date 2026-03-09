@@ -42,6 +42,14 @@ export function DefaultCard({
         src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
         width={96}
       />
+      <Image
+        alt={pokemon.name}
+        className="absolute h-28 w-28 -bottom-6 -right-2 object-contain drop-shadow-md"
+        height={80}
+        loading="lazy"
+        src={pokemon.officialUrl}
+        width={80}
+      />
       <div className="relative flex items-start justify-between">
         <motion.p
           className="text-lg font-semibold capitalize text-white"
