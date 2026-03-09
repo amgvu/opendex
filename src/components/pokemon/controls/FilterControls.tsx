@@ -2,9 +2,9 @@ import { ChevronDown } from 'lucide-react'
 
 import { colors, getTypeColor } from '@/lib/pokemon'
 
-import { Button } from '../ui/button'
-import { Checkbox } from '../ui/checkbox'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { Button } from '../../ui/button'
+import { Checkbox } from '../../ui/checkbox'
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover'
 
 const ALL_TYPES = Object.keys(colors).sort()
 const ALL_GENS = [1, 2, 3, 4, 5, 6, 7, 8, 9]

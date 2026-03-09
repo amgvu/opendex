@@ -3,7 +3,8 @@ import { TbArrowDown, TbArrowUp } from 'react-icons/tb'
 import type { SortField, SortOrder } from '@/types/sort'
 
 import { SORT_FIELDS } from '@/types/sort'
-import { Button } from '../ui/button'
+
+import { Button } from '../../ui/button'
 
 export function SortControls({
   onSort,
@@ -26,7 +27,12 @@ export function SortControls({
             variant={active ? 'default' : 'secondary'}
           >
             {label}
-            {active && (sortOrder === 'asc' ? <TbArrowUp size={12} /> : <TbArrowDown size={12} />)}
+            {active &&
+              (sortOrder === 'asc' ? (
+                <TbArrowUp size={12} />
+              ) : (
+                <TbArrowDown size={12} />
+              ))}
           </Button>
         )
       })}

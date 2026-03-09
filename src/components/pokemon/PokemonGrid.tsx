@@ -14,9 +14,9 @@ import { useSelectedPokemon } from '@/hooks/useSelectedPokemon'
 import { useSort } from '@/hooks/useSort'
 import { useVirtualGrid } from '@/hooks/useVirtualGrid'
 
+import { PokemonCard } from './card/PokemonCard'
+import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
-import { PokemonCard } from './PokemonCard'
-import { PokemonToolbar } from './PokemonToolbar'
 
 export default function PokemonGrid() {
   const { debouncedSearch, search, setSearch } = useSearch()
@@ -44,7 +44,13 @@ export default function PokemonGrid() {
   }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
-    useVirtualGrid(pokemon, selectedId, loadMore, hasNextPage, isFetchingNextPage)
+    useVirtualGrid(
+      pokemon,
+      selectedId,
+      loadMore,
+      hasNextPage,
+      isFetchingNextPage
+    )
 
   return (
     <>

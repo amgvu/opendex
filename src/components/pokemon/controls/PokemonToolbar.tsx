@@ -10,8 +10,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '../ui/drawer'
-import { Input } from '../ui/input'
+} from '../../ui/drawer'
+import { Input } from '../../ui/input'
 import { FilterControls } from './FilterControls'
 import { SortControls } from './SortControls'
 

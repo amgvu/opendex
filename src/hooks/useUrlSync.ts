@@ -10,5 +10,5 @@ export function useUrlSync() {
   searchParamsRef.current = searchParams
   routerRef.current = router
 
-  return { searchParamsRef, routerRef }
+  return { routerRef, searchParamsRef }
 }
