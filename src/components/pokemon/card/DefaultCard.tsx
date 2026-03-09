@@ -48,7 +48,7 @@ export function DefaultCard({
         width={96}
       />
       <motion.div
-        className="absolute -bottom-6 left-24 xl:left-28 h-28 w-28"
+        className="absolute -bottom-6 left-20 sm:left-22 md:left-24 lg:left-26 xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
         transition={CARD_TRANSITION}
       >
@@ -65,13 +65,13 @@ export function DefaultCard({
       </motion.div>
       <div className="relative flex items-start justify-between">
         <motion.p
-          className="text-lg font-semibold capitalize text-white"
+          className="text-sm sm:text-base lg:text-lg font-semibold capitalize text-white"
           layoutId={`name-${pokemon.id}-${id}`}
           transition={CARD_TRANSITION}
         >
           {pokemon.name}
         </motion.p>
-        <span className="text-xs tracking-wide font-semibold text-white">
+        <span className="text-[10px] sm:text-xs tracking-wide font-semibold text-white">
           {formatPokedexId(pokemon.id)}
         </span>
       </div>
