@@ -23,6 +23,8 @@ export function DefaultCard({
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
+  const [iconLoaded, setIconLoaded] = useState(false)
 
   return (
     <motion.div
@@ -38,30 +40,42 @@ export function DefaultCard({
       transition={CARD_TRANSITION}
     >
       <div className="absolute inset-0 bg-white/15" />
-      <Image
-        alt=""
-        aria-hidden="true"
-        className="absolute -bottom-4 -right-4 opacity-20 grayscale"
-        height={96}
-        src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
-        unoptimized
-        width={96}
-      />
+      <motion.div
+        animate={{ opacity: iconLoaded ? 0.3 : 0 }}
+        className="absolute -bottom-4 -right-4 grayscale"
+        transition={{ duration: 0.3 }}
+      >
+        <Image
+          alt=""
+          aria-hidden="true"
+          height={96}
+          onLoad={() => setIconLoaded(true)}
+          src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
+          unoptimized
+          width={96}
+        />
+      </motion.div>
       <motion.div
         className="absolute -bottom-4 left-16 sm:left-22 md:left-24 lg:left-26 xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
         transition={CARD_TRANSITION}
       >
-        <Image
-          alt={pokemon.name}
-          className="h-28 w-28 object-contain drop-shadow-md"
-          height={128}
-          loading="lazy"
-          sizes="112px"
-          src={pokemon.officialUrl}
-          unoptimized
-          width={128}
-        />
+        <motion.div
+          animate={{ opacity: imageLoaded ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Image
+            alt={pokemon.name}
+            className="h-28 w-28 object-contain drop-shadow-md"
+            height={128}
+            loading="lazy"
+            onLoad={() => setImageLoaded(true)}
+            sizes="112px"
+            src={pokemon.officialUrl}
+            unoptimized
+            width={128}
+          />
+        </motion.div>
       </motion.div>
       <div className="relative flex items-start justify-between">
         <motion.p
