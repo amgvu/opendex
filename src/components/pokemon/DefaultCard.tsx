@@ -1,6 +1,5 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -19,7 +18,6 @@ export function DefaultCard({
   pokemon: Pokemon
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const [imageLoaded, setImageLoaded] = useState(false)
 
   return (
     <motion.div
@@ -49,21 +47,15 @@ export function DefaultCard({
         layoutId={`image-${pokemon.id}-${id}`}
         transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
       >
-        <motion.div
-          animate={{ opacity: imageLoaded ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Image
-            alt={pokemon.name}
-            className="h-28 w-28 object-contain drop-shadow-md"
-            height={128}
-            loading="lazy"
-            onLoad={() => setImageLoaded(true)}
-            sizes="112px"
-            src={pokemon.officialUrl}
-            width={128}
-          />
-        </motion.div>
+        <Image
+          alt={pokemon.name}
+          className="h-28 w-28 object-contain drop-shadow-md"
+          height={128}
+          loading="lazy"
+          sizes="112px"
+          src={pokemon.officialUrl}
+          width={128}
+        />
       </motion.div>
       <div className="relative flex items-start justify-between">
         <motion.p
