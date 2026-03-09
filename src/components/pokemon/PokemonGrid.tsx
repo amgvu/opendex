@@ -39,8 +39,8 @@ export default function PokemonGrid() {
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
     document.title = selected
-      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Finnédex`
-      : 'Finnédex'
+      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Pokédex`
+      : 'Pokédex'
   }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
@@ -77,7 +77,7 @@ export default function PokemonGrid() {
               unoptimized
               width={64}
             />
-            <h1 className="text-lg font-bold tracking-tight">Finnédex</h1>
+            <h1 className="text-lg font-bold tracking-tight">Pokédex</h1>
           </div>
           <PokemonToolbar
             onToggleGen={toggleGen}
