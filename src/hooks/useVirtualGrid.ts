@@ -1,7 +1,9 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
+
+import { useResponsiveColumns } from './useResponsiveColumns'
 
 const CARD_HEIGHT = 80
 const GAP = 16
@@ -12,15 +14,7 @@ export function useVirtualGrid(
   hasNextPage: boolean,
   isFetchingNextPage: boolean
 ) {
-  const [columns, setColumns] = useState(getColumnCount)
-
-  useEffect(() => {
-    function handleResize() {
-      setColumns(getColumnCount())
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const columns = useResponsiveColumns()
 
   const rowCount = Math.ceil(pokemon.length / columns)
 
@@ -53,10 +47,3 @@ export function useVirtualGrid(
   }
 }
 
-function getColumnCount() {
-  if (typeof window === 'undefined') return 5
-  if (window.innerWidth >= 1024) return 5
-  if (window.innerWidth >= 768) return 4
-  if (window.innerWidth >= 640) return 3
-  return 2
-}
