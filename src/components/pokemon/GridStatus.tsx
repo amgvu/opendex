@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 export function GridStatus({
   empty,
   status

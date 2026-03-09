@@ -21,15 +21,15 @@ export function FilterControls({
   selectedTypes: string[]
 }) {
   return (
-    <div className="mb-4 flex flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="w-12 text-xs font-semibold text-muted-foreground">
+    <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap items-center">
+        <span className="w-8 text-xs font-semibold text-muted-foreground">
           Type
         </span>
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              className="h-8 gap-1 px-3 text-xs font-semibold"
+              className="h-8 px-3 text-xs font-semibold"
               variant="outline"
             >
               {selectedTypes.length > 0
@@ -61,27 +61,21 @@ export function FilterControls({
         </Popover>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="w-12 text-xs font-semibold text-muted-foreground">
+      <div className="flex flex-wrap items-center">
+        <span className="w-8 text-xs font-semibold text-muted-foreground">
           Gen
         </span>
         <div className="flex flex-wrap gap-1">
-          {ALL_GENS.map(gen => {
-            const active = selectedGens.includes(gen)
-            return (
-              <button
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  active
-                    ? 'bg-foreground text-background'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                }`}
-                key={gen}
-                onClick={() => onToggleGen(gen)}
-              >
-                {gen}
-              </button>
-            )
-          })}
+          {ALL_GENS.map(gen => (
+            <Button
+              key={gen}
+              onClick={() => onToggleGen(gen)}
+              size="sm"
+              variant={selectedGens.includes(gen) ? 'default' : 'secondary'}
+            >
+              {gen}
+            </Button>
+          ))}
         </div>
       </div>
     </div>
