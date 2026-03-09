@@ -1,5 +1,5 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -10,6 +10,7 @@ const GAP = 16
 
 export function useVirtualGrid(
   pokemon: Pokemon[],
+  selectedId: null | number,
   onLoadMore: () => void,
   hasNextPage: boolean,
   isFetchingNextPage: boolean
@@ -38,6 +39,39 @@ export function useVirtualGrid(
     const start = rowIndex * columns
     return pokemon.slice(start, start + columns)
   }
+
+  function scrollToRow(pokemonIndex: number) {
+    const rowIndex = Math.floor(pokemonIndex / columns)
+    virtualizer.scrollToIndex(rowIndex, { align: 'center', behavior: 'smooth' })
+  }
+
+  const pokemonRef = useRef(pokemon)
+  pokemonRef.current = pokemon
+  const columnsRef = useRef(columns)
+  columnsRef.current = columns
+  const virtualItemsRef = useRef(virtualItems)
+  virtualItemsRef.current = virtualItems
+  const scrollToRowRef = useRef(scrollToRow)
+  scrollToRowRef.current = scrollToRow
+
+  useEffect(() => {
+    if (selectedId === null) return
+    const idx = pokemonRef.current.findIndex(p => p.id === selectedId)
+    if (idx === -1) return
+    const rowIndex = Math.floor(idx / columnsRef.current)
+    const virtualRow = virtualItemsRef.current.find(item => item.index === rowIndex)
+    if (!virtualRow) {
+      scrollToRowRef.current(idx)
+      return
+    }
+    const buffer = virtualRow.size * 2
+    const viewportTop = window.scrollY + buffer
+    const viewportBottom = window.scrollY + window.innerHeight - buffer
+    const isVisible =
+      virtualRow.start < viewportBottom &&
+      virtualRow.start + virtualRow.size > viewportTop
+    if (!isVisible) scrollToRowRef.current(idx)
+  }, [selectedId])
 
   return {
     columns,
