@@ -18,8 +18,8 @@ import { SortControls } from './SortControls'
 export function PokemonToolbar({
   onToggleGen,
   onToggleType,
-  onUpdateSort,
   onUpdateSearch,
+  onUpdateSort,
   search,
   selectedGens,
   selectedTypes,
@@ -28,8 +28,8 @@ export function PokemonToolbar({
 }: {
   onToggleGen: (gen: number) => void
   onToggleType: (type: string) => void
-  onUpdateSort: (field: SortField) => void
   onUpdateSearch: (value: string) => void
+  onUpdateSort: (field: SortField) => void
   search: string
   selectedGens: number[]
   selectedTypes: string[]
@@ -67,11 +67,19 @@ export function PokemonToolbar({
             </DrawerHeader>
             <div className="space-y-4 p-4 pt-0">
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">Sort</p>
-                <SortControls onSort={onUpdateSort} sortBy={sortBy} sortOrder={sortOrder} />
+                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
+                  Sort
+                </p>
+                <SortControls
+                  onSort={onUpdateSort}
+                  sortBy={sortBy}
+                  sortOrder={sortOrder}
+                />
               </div>
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">Filter</p>
+                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
+                  Filter
+                </p>
                 <FilterControls
                   onToggleGen={onToggleGen}
                   onToggleType={onToggleType}
@@ -86,7 +94,11 @@ export function PokemonToolbar({
 
       {/* Desktop static controls */}
       <div className="hidden flex-wrap items-center gap-3 lg:flex">
-        <SortControls onSort={onUpdateSort} sortBy={sortBy} sortOrder={sortOrder} />
+        <SortControls
+          onSort={onUpdateSort}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+        />
         <div className="h-4 w-px bg-border" />
         <FilterControls
           onToggleGen={onToggleGen}

@@ -48,7 +48,7 @@ export function DefaultCard({
         width={96}
       />
       <motion.div
-        className="absolute -bottom-6 left-24 lg:left-28 h-28 w-28"
+        className="absolute -bottom-6 left-24 xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
         transition={CARD_TRANSITION}
       >
