@@ -138,6 +138,7 @@ export function ExpandedCard({
                         className="h-50 w-50 object-contain drop-shadow-2xl"
                         height={384}
                         onLoad={() => setImageLoaded(true)}
+                        sizes="200px"
                         src={pokemon.officialUrl}
                         width={384}
                       />

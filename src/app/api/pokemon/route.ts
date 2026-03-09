@@ -28,17 +28,24 @@ export async function GET(request: NextRequest) {
     const endIndex = startIndex + limit
     const paginatedPokemon = filteredPokemon.slice(startIndex, endIndex)
 
-    return NextResponse.json({
-      data: paginatedPokemon,
-      pagination: {
-        hasNext: page < totalPages,
-        hasPrev: page > 1,
-        limit,
-        page,
-        total,
-        totalPages
+    return NextResponse.json(
+      {
+        data: paginatedPokemon,
+        pagination: {
+          hasNext: page < totalPages,
+          hasPrev: page > 1,
+          limit,
+          page,
+          total,
+          totalPages
+        }
+      },
+      {
+        headers: {
+          'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400'
+        }
       }
-    })
+    )
   } catch (error) {
     console.error('Error fetching Pokemon:', error)
     return NextResponse.json(

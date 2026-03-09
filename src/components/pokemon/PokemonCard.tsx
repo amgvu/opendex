@@ -30,7 +30,7 @@ export const PokemonCard = memo(function PokemonCard({
   const ref = useRef<HTMLDivElement>(null)
   const id = useId()
 
-  useOutsideClick(ref, onClose)
+  useOutsideClick(ref, onClose, active)
   useBodyScrollLock(active, onClose)
 
   return (

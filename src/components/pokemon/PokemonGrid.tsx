@@ -1,8 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
-import { TbAdjustments } from 'react-icons/tb'
+import { useCallback, useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -14,22 +13,15 @@ import { useSelectedPokemon } from '@/hooks/useSelectedPokemon'
 import { useSort } from '@/hooks/useSort'
 import { useVirtualGrid } from '@/hooks/useVirtualGrid'
 
-import { Input } from '../ui/input'
-import { FilterControls } from './FilterControls'
 import { GridStatus } from './GridStatus'
 import { PokemonCard } from './PokemonCard'
-import { SortControls } from './SortControls'
+import { PokemonToolbar } from './PokemonToolbar'
 
 export default function PokemonGrid() {
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const { debouncedSearch, search, setSearch } = useSearch()
   const { sortBy, sortOrder, updateSort } = useSort()
   const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
 
-  const activeCount =
-    selectedTypes.length +
-    selectedGens.length +
-    (sortBy !== 'id' || sortOrder !== 'asc' ? 1 : 0)
   const { fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, status } =
     usePokemon(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
   const { selectedId, setSelectedId } = useSelectedPokemon()
@@ -45,9 +37,9 @@ export default function PokemonGrid() {
     setSelectedId
   })
 
-  const onLoadMore = () => {
+  const onLoadMore = useCallback(() => {
     void fetchNextPage()
-  }
+  }, [fetchNextPage])
 
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
@@ -78,61 +70,25 @@ export default function PokemonGrid() {
       </AnimatePresence>
       <div className="mx-auto max-w-7xl p-4">
         <div className="mb-6 flex items-center gap-2">
-          <img alt="" aria-hidden="true" className="h-8 w-8" src="/pokemon-icon.svg" />
+          <img
+            alt=""
+            aria-hidden="true"
+            className="h-8 w-8"
+            src="/pokemon-icon.svg"
+          />
           <h1 className="text-2xl font-bold tracking-tight">Finnédex</h1>
         </div>
-        <Input
-          className="mb-4"
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search Pokemon..."
-          type="text"
-          value={search}
+        <PokemonToolbar
+          onToggleGen={toggleGen}
+          onToggleType={toggleType}
+          onUpdateSearch={setSearch}
+          onUpdateSort={updateSort}
+          search={search}
+          selectedGens={selectedGens}
+          selectedTypes={selectedTypes}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
         />
-
-        <button
-          className="mb-4 flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted/70"
-          onClick={() => setDrawerOpen(o => !o)}
-        >
-          <TbAdjustments size={14} />
-          Sort &amp; Filter
-          <span
-            className={`rounded-full bg-foreground px-1.5 py-0.5 text-xs text-background transition-opacity ${activeCount > 0 ? 'opacity-100' : 'opacity-0'}`}
-          >
-            {activeCount || 0}
-          </span>
-        </button>
-
-        <AnimatePresence initial={false}>
-          {drawerOpen && (
-            <motion.div
-              animate={{ height: 'auto', opacity: 1 }}
-              className="overflow-hidden"
-              exit={{ height: 0, opacity: 0 }}
-              initial={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-            >
-              <div>
-                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
-                  Sort
-                </p>
-                <SortControls
-                  onSort={updateSort}
-                  sortBy={sortBy}
-                  sortOrder={sortOrder}
-                />
-                <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
-                  Filter
-                </p>
-                <FilterControls
-                  onToggleGen={toggleGen}
-                  onToggleType={toggleType}
-                  selectedGens={selectedGens}
-                  selectedTypes={selectedTypes}
-                />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         <GridStatus
           empty={status === 'success' && pokemon.length === 0}
@@ -170,7 +126,11 @@ export default function PokemonGrid() {
 
         {isFetchingNextPage && (
           <div className="flex justify-center py-4">
-            <img alt="Loading" className="h-8 w-8 animate-spin grayscale" src="/pokemon-icon.svg" />
+            <img
+              alt="Loading"
+              className="h-8 w-8 animate-spin grayscale"
+              src="/pokemon-icon.svg"
+            />
           </div>
         )}
       </div>
