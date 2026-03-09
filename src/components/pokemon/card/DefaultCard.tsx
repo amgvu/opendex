@@ -27,7 +27,7 @@ export function DefaultCard({
   return (
     <motion.div
       animate={{ opacity: active ? 0 : 1, y: !active && hovered ? -3 : 0 }}
-      className={`relative h-20 cursor-pointer overflow-hidden rounded-xl p-3 [transform:translateZ(0)] ${typeColor}`}
+      className={`relative h-20 cursor-pointer rounded-xl p-3 [clip-path:inset(0_round_0.75rem)] ${typeColor}`}
       initial={{ opacity: 0 }}
       layoutId={`card-${pokemon.id}-${id}`}
       onClick={onClick}
@@ -48,7 +48,7 @@ export function DefaultCard({
         width={96}
       />
       <motion.div
-        className="absolute -bottom-6 left-20 sm:left-22 md:left-24 lg:left-26 xl:left-28 h-28 w-28"
+        className="absolute -bottom-4 left-16 sm:left-22 md:left-24 lg:left-26 xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
         transition={CARD_TRANSITION}
       >
