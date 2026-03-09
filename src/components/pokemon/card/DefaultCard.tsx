@@ -27,7 +27,7 @@ export function DefaultCard({
   return (
     <motion.div
       animate={{ opacity: active ? 0 : 1, y: !active && hovered ? -3 : 0 }}
-      className={`relative h-20 cursor-pointer overflow-hidden rounded-xl p-3 ${typeColor}`}
+      className={`relative h-20 cursor-pointer overflow-hidden rounded-xl p-3 [transform:translateZ(0)] ${typeColor}`}
       initial={{ opacity: 0 }}
       layoutId={`card-${pokemon.id}-${id}`}
       onClick={onClick}

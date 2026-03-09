@@ -64,15 +64,15 @@ export function ExpandedCard({
               ref={ref}
               transition={CARD_TRANSITION}
             >
-              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute inset-0 bg-black/25" />
               <Image
                 alt=""
                 aria-hidden="true"
-                className="absolute -bottom-16 -right-24 opacity-10 grayscale"
-                height={384}
+                className="absolute -bottom-24 -right-32 opacity-10 grayscale"
+                height={512}
                 src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
                 unoptimized
-                width={384}
+                width={512}
               />
               <div
                 className={`relative p-6 ${dragging ? 'select-none' : 'select-text'}`}
@@ -95,8 +95,14 @@ export function ExpandedCard({
                             ease: [0.32, 0.72, 0, 1]
                           }}
                         >
-                          <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
-                          <IoMdStar className="text-yellow-400 hidden xl:block" size={26} />
+                          <IoMdStar
+                            className="text-yellow-400 xl:hidden"
+                            size={22}
+                          />
+                          <IoMdStar
+                            className="text-yellow-400 hidden xl:block"
+                            size={26}
+                          />
                         </motion.div>
                       )}
                     </div>
@@ -219,4 +225,3 @@ export function ExpandedCard({
     </AnimatePresence>
   )
 }
-
