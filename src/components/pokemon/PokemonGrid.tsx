@@ -100,7 +100,7 @@ export default function PokemonGrid() {
               className="absolute left-0 top-0 w-full"
               data-index={row.index}
               key={row.index}
-              ref={measureElement}
+              ref={measureElement as (node: HTMLDivElement | null) => void}
               style={{
                 display: 'grid',
                 gap: 16,
