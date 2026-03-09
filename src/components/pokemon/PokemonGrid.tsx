@@ -8,7 +8,7 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { useCardNavigation } from '@/hooks/useCardNavigation'
 import { useFilters } from '@/hooks/useFilters'
-import { usePokemon } from '@/hooks/usePokemon'
+import { usePokemonQuery } from '@/hooks/usePokemonQuery'
 import { useSearch } from '@/hooks/useSearch'
 import { useSelectedPokemon } from '@/hooks/useSelectedPokemon'
 import { useSort } from '@/hooks/useSort'
@@ -24,7 +24,7 @@ export default function PokemonGrid() {
   const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
 
   const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
-    usePokemon(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
+    usePokemonQuery(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
   const { onNext, onPrev } = useCardNavigation({

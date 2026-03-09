@@ -5,7 +5,7 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { fetchPokemon, type PokemonResponse } from '@/lib/api'
 
-export function usePokemon(
+export function usePokemonQuery(
   search: string,
   sortBy: string,
   sortOrder: string,
