@@ -50,7 +50,7 @@ export function ExpandedCard({
         <>
           <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
-              className={`relative w-full max-w-md cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
+              className={`relative w-full max-w-md xl:max-w-xl cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
@@ -81,7 +81,7 @@ export function ExpandedCard({
                   <div>
                     <div className="flex items-center gap-1.5">
                       <motion.h2
-                        className="text-2xl font-bold capitalize text-white"
+                        className="text-2xl xl:text-3xl font-bold capitalize text-white"
                         layoutId={`name-${pokemon.id}-${id}`}
                         transition={CARD_TRANSITION}
                       >
@@ -95,11 +95,12 @@ export function ExpandedCard({
                             ease: [0.32, 0.72, 0, 1]
                           }}
                         >
-                          <IoMdStar className="text-yellow-400" size={22} />
+                          <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
+                          <IoMdStar className="text-yellow-400 hidden xl:block" size={26} />
                         </motion.div>
                       )}
                     </div>
-                    <span className="text-sm tracking-wide font-semibold text-white/60">
+                    <span className="text-sm xl:text-base tracking-wide font-semibold text-white/60">
                       {formatPokedexId(pokemon.id)}
                     </span>
                   </div>
@@ -136,7 +137,7 @@ export function ExpandedCard({
                     >
                       <Image
                         alt={pokemon.name}
-                        className="h-50 w-50 object-contain drop-shadow-2xl"
+                        className="h-36 w-36 xl:h-64 xl:w-64 object-contain drop-shadow-2xl"
                         height={384}
                         onLoad={() => setImageLoaded(true)}
                         sizes="200px"
@@ -149,7 +150,7 @@ export function ExpandedCard({
                       <motion.img
                         alt=""
                         animate={{ opacity: hovered && gifReady ? 1 : 0 }}
-                        className="absolute h-50 w-50 object-contain"
+                        className="absolute h-36 w-36 xl:h-64 xl:w-64 object-contain"
                         initial={{ opacity: 0 }}
                         onLoad={() => setGifReady(true)}
                         src={pokemon.imageUrl}
@@ -161,7 +162,7 @@ export function ExpandedCard({
 
                 <motion.p
                   animate={{ opacity: 1 }}
-                  className="mb-4 text-sm text-white/70"
+                  className="mb-4 text-sm xl:text-base text-white/70"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
@@ -186,7 +187,7 @@ export function ExpandedCard({
 
                 <motion.div
                   animate={{ opacity: 1 }}
-                  className="mt-4 grid grid-cols-3 gap-2 text-sm"
+                  className="mt-4 grid grid-cols-3 gap-2 text-sm xl:text-base"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{ delay: 0.15, duration: 0.15 }}

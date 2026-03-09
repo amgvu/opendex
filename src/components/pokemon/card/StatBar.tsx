@@ -18,8 +18,8 @@ export function StatBar({ label, value }: { label: string; value: number }) {
   }, [count, value])
 
   return (
-    <div className="flex items-center gap-3 text-sm">
-      <span className="w-20 shrink-0 text-white/70">{label}</span>
+    <div className="flex items-center gap-3 text-sm xl:text-base">
+      <span className="w-20 xl:w-24 shrink-0 text-white/70">{label}</span>
       <motion.span className="w-8 shrink-0 text-right font-medium text-white">
         {rounded}
       </motion.span>
