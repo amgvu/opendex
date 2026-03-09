@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
+import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -18,20 +19,18 @@ export function DefaultCard({
   pokemon: Pokemon
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
+  const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
-      animate={{ opacity: active ? 0 : 1 }}
+      animate={{ opacity: active ? 0 : 1, y: !active && hovered ? -3 : 0 }}
       className={`relative h-full cursor-pointer overflow-hidden rounded-xl p-3 ${typeColor}`}
       initial={{ opacity: 0 }}
       layoutId={`card-${pokemon.id}-${id}`}
       onClick={onClick}
+      onHoverEnd={() => setHovered(false)}
+      onHoverStart={() => { if (!active) setHovered(true) }}
       transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-      whileHover={
-        active
-          ? undefined
-          : { transition: { duration: 0.1, ease: 'easeOut' }, y: -3 }
-      }
     >
       <div className="absolute inset-0 bg-white/15" />
       <Image
