@@ -73,6 +73,7 @@ export default function PokemonGrid() {
             className="h-8 w-8"
             height={64}
             src="/pokemon-icon.svg"
+            unoptimized
             width={64}
           />
           <h1 className="text-2xl font-bold tracking-tight">Finnédex</h1>

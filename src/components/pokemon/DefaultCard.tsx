@@ -44,6 +44,7 @@ export function DefaultCard({
         className="absolute -bottom-4 -right-4 opacity-20 grayscale"
         height={96}
         src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
+        unoptimized
         width={96}
       />
       <motion.div

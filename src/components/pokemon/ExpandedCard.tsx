@@ -71,6 +71,7 @@ export function ExpandedCard({
                 className="absolute -bottom-16 -right-24 opacity-10 grayscale"
                 height={384}
                 src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
+                unoptimized
                 width={384}
               />
               <div
