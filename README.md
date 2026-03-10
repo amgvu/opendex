@@ -1,7 +1,7 @@
 # Opendex — Pokemon Explorer
 
 
-https://github.com/user-attachments/assets/dea0f25a-b66f-41c9-b77c-a6201012ceb8
+https://github.com/user-attachments/assets/1d9500da-f40c-4107-9067-539e67db6ede
 
 
 ## Overview
