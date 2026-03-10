@@ -17,8 +17,8 @@ export function useFoilTilt(ref: RefObject<HTMLDivElement | null>, dragging: boo
     const x = ((e.clientX - rect.left) / rect.width) * 100
     const y = ((e.clientY - rect.top) / rect.height) * 100
     setBeamX(x)
-    rotX.set((y - 50) * -0.16)
-    rotY.set((x - 50) * 0.16)
+    rotX.set((y - 50) * -0.14)
+    rotY.set((x - 50) * 0.14)
   }
 
   const onPointerLeave = () => {
