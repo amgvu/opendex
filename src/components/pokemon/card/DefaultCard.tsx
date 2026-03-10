@@ -46,6 +46,7 @@ export function DefaultCard({
           alt=""
           aria-hidden="true"
           height={96}
+          loading="eager"
           src={iconSrc}
           unoptimized
           width={96}
