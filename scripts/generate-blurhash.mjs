@@ -1,6 +1,6 @@
-import { getPlaiceholder } from 'plaiceholder'
 import fs from 'fs'
 import path from 'path'
+import { getPlaiceholder } from 'plaiceholder'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))

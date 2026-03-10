@@ -56,8 +56,8 @@ export function DefaultCard({
         layoutId={`image-${pokemon.id}-${id}`}
         style={pokemon.blurDataURL ? {
           backgroundImage: `url(${pokemon.blurDataURL})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
         } : undefined}
         transition={CARD_TRANSITION}
       >

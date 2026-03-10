@@ -116,8 +116,8 @@ export default function PokemonGrid() {
               {getRowPokemon(row.index).map((p: Pokemon, i: number) => (
                 <PokemonCard
                   active={selectedId === p.id}
-                  key={p.id}
                   index={row.index * columns + i}
+                  key={p.id}
                   onClick={() => setSelectedId(p.id)}
                   onClose={() => setSelectedId(null)}
                   onNext={onNext}

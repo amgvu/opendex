@@ -9,14 +9,6 @@ const PRELOAD_ROWS = 10
 
 const preloadedUrls = new Set<string>()
 
-function getColumnCount() {
-  if (typeof window === 'undefined') return 5
-  if (window.innerWidth >= 1024) return 5
-  if (window.innerWidth >= 768) return 4
-  if (window.innerWidth >= 640) return 3
-  return 2
-}
-
 export function useVirtualGrid(
   pokemon: Pokemon[],
   selectedId: null | number,
@@ -106,5 +98,13 @@ export function useVirtualGrid(
     totalHeight: virtualizer.getTotalSize(),
     virtualItems
   }
+}
+
+function getColumnCount() {
+  if (typeof window === 'undefined') return 5
+  if (window.innerWidth >= 1024) return 5
+  if (window.innerWidth >= 768) return 4
+  if (window.innerWidth >= 640) return 3
+  return 2
 }
 
