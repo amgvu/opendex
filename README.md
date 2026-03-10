@@ -1,5 +1,9 @@
 # Opendex — Pokemon Explorer
 
+
+https://github.com/user-attachments/assets/dea0f25a-b66f-41c9-b77c-a6201012ceb8
+
+
 ## Overview
 
 Given the take-home prompt, I wanted to build an enjoyable Pokemon viewing experience that was a combination of both fun and performant across various devices, network speeds, and screen sizes. Entering this project, I wasn't a Pokemon fan. But I wanted to tackle this in a way where what I built could make any real fan happy. I put myself into the shoes of what a collector or player would want out of an explorer like this.
