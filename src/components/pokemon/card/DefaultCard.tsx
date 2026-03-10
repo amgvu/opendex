@@ -10,6 +10,8 @@ import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 import { TypeBadge } from './TypeBadge'
 
+const loadedUrls = new Set<string>()
+
 export function DefaultCard({
   active,
   id,
@@ -23,14 +25,16 @@ export function DefaultCard({
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [iconLoaded, setIconLoaded] = useState(false)
+  const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
+  const [imageLoaded, setImageLoaded] = useState(() =>
+    loadedUrls.has(pokemon.officialUrl)
+  )
+  const [iconLoaded, setIconLoaded] = useState(() => loadedUrls.has(iconSrc))
 
   return (
     <motion.div
       animate={{ opacity: active ? 0 : 1, y: !active && hovered ? -3 : 0 }}
       className={`relative h-20 cursor-pointer rounded-xl p-3 [clip-path:inset(0_round_0.75rem)] ${typeColor}`}
-      initial={{ opacity: 0 }}
       layoutId={`card-${pokemon.id}-${id}`}
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
@@ -43,14 +47,18 @@ export function DefaultCard({
       <motion.div
         animate={{ opacity: iconLoaded ? 0.3 : 0 }}
         className="absolute -bottom-4 -right-4 grayscale"
-        transition={{ duration: 0.3 }}
+        initial={false}
+        transition={{ duration: 0.2 }}
       >
         <Image
           alt=""
           aria-hidden="true"
           height={96}
-          onLoad={() => setIconLoaded(true)}
-          src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
+          onLoad={() => {
+            loadedUrls.add(iconSrc)
+            setIconLoaded(true)
+          }}
+          src={iconSrc}
           unoptimized
           width={96}
         />
@@ -62,14 +70,18 @@ export function DefaultCard({
       >
         <motion.div
           animate={{ opacity: imageLoaded ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
+          initial={false}
+          transition={{ duration: 0.2 }}
         >
           <Image
             alt={pokemon.name}
             className="h-28 w-28 object-contain drop-shadow-md"
             height={128}
             loading="lazy"
-            onLoad={() => setImageLoaded(true)}
+            onLoad={() => {
+              loadedUrls.add(pokemon.officialUrl)
+              setImageLoaded(true)
+            }}
             sizes="112px"
             src={pokemon.officialUrl}
             unoptimized
