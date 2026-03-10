@@ -10,11 +10,6 @@ import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 import { TypeBadge } from './TypeBadge'
 
-const loadedUrls = new Set<string>()
-
-const PRIORITY_THRESHOLD = 10
-const EAGER_THRESHOLD = 50
-
 export function DefaultCard({
   active,
   id,
@@ -28,15 +23,10 @@ export function DefaultCard({
   onClick: () => void
   pokemon: Pokemon
 }) {
-  const priority = index < PRIORITY_THRESHOLD
-  const eager = index < EAGER_THRESHOLD
+  const priority = index < 10
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
-  const [imageLoaded, setImageLoaded] = useState(() =>
-    eager || loadedUrls.has(pokemon.officialUrl)
-  )
-  const [iconLoaded, setIconLoaded] = useState(() => loadedUrls.has(iconSrc))
 
   return (
     <motion.div
@@ -51,51 +41,43 @@ export function DefaultCard({
       transition={CARD_TRANSITION}
     >
       <div className="absolute inset-0 bg-white/15" />
-      <motion.div
-        animate={{ opacity: iconLoaded ? 0.3 : 0 }}
-        className="absolute -bottom-4 -right-4 grayscale"
-        initial={false}
-        transition={{ duration: 0.2 }}
-      >
+      <div className="absolute -bottom-4 -right-4 grayscale opacity-30">
         <Image
           alt=""
           aria-hidden="true"
           height={96}
-          onLoad={() => {
-            loadedUrls.add(iconSrc)
-            setIconLoaded(true)
-          }}
           src={iconSrc}
           unoptimized
           width={96}
         />
-      </motion.div>
+      </div>
       <motion.div
         className="absolute -bottom-4 left-16 sm:left-22 md:left-24 lg:left-26 xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
+        style={pokemon.blurDataURL ? {
+          backgroundImage: `url(${pokemon.blurDataURL})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        } : undefined}
         transition={CARD_TRANSITION}
       >
-        <motion.div
-          animate={{ opacity: imageLoaded ? 1 : 0 }}
-          initial={false}
-          transition={{ duration: 0.2 }}
-        >
-          <Image
-            alt={pokemon.name}
-            className="h-28 w-28 object-contain drop-shadow-md"
-            loading={priority ? undefined : 'lazy'}
-            onLoad={() => {
-              loadedUrls.add(pokemon.officialUrl)
-              setImageLoaded(true)
-            }}
-            priority={priority}
-            sizes="112px"
-            src={pokemon.officialUrl}
-            unoptimized
-            width={128}
-            height={128}
-          />
-        </motion.div>
+        <Image
+          alt={pokemon.name}
+          className="h-28 w-28 object-contain drop-shadow-md"
+          height={128}
+          loading={priority ? undefined : 'lazy'}
+          onLoad={e => {
+            const img = e.currentTarget as HTMLImageElement
+            img.style.opacity = '1'
+            if (img.parentElement) img.parentElement.style.backgroundImage = 'none'
+          }}
+          priority={priority}
+          sizes="112px"
+          src={pokemon.officialUrl}
+          style={{ opacity: 0, transition: 'opacity 0.2s' }}
+          unoptimized
+          width={128}
+        />
       </motion.div>
       <div className="relative flex items-start justify-between">
         <motion.p

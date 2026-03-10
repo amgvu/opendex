@@ -22,6 +22,12 @@ export const metadata: Metadata = {
   title: 'Pokédex'
 }
 
+const POKEMON_TYPES = [
+  'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
+  'fire', 'flying', 'ghost', 'grass', 'ground', 'ice',
+  'normal', 'poison', 'psychic', 'rock', 'steel', 'water'
+]
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -29,6 +35,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {POKEMON_TYPES.map(type => (
+          <link as="image" href={`/icons/${type}.svg`} key={type} rel="preload" />
+        ))}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
       >

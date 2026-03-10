@@ -1,5 +1,6 @@
 export type Pokemon = {
   attack: number
+  blurDataURL?: string
   defense: number
   description: string
   generation: number
