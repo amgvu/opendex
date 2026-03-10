@@ -1,121 +1,90 @@
-# Pokemon Explorer - Take-Home Interview Assignment
+# Opendex — Pokemon Explorer
 
 ## Overview
 
-This is a take-home interview assignment demonstrating frontend development skills with Next.js, TypeScript, and modern React patterns. The focus is on **functionality and coding best practices**. Feel free to add libraries as seen fit. The designs are meant as a guide. Be as creative as you'd like. 
+Given the take-home prompt, I wanted to build an enjoyable Pokemon viewing experience that was a combination of both fun and performant across various devices, network speeds, and screen sizes. Entering this project, I wasn't a Pokemon fan. But I wanted to tackle this in a way where what I built could make any real fan happy. I put myself into the shoes of what a collector or player would want out of an explorer like this.
 
-## Submission
-Commit your changes to a public repository and share the link.
+My focus was to create an elegant, performant animated experience. I accomplished this by combining caching techniques, DOM virtualization, component memoization, and deep use of Framer Motion to ensure effortless infinite scrolling and seamless expandable cards.
 
-## Requirements
+---
 
-The application should provide:
+## What's Built
 
-- ✅ **Working searchable grid view** of Pokemon
-- ✅ **Infinite scroll** instead of traditional pagination
-- ✅ **Two views:**
-  - **Default view:** showing only Pokemon name and type
-  - **Expanded view** Reveal additional details
-- ✅ **Responsive design** that works on all screen sizes
+### Core Requirements
 
-## Tech Stack
+- **Search** — debounced input that filters by name, type, description, and Pokédex ID
+- **Infinite scroll** — loads 20 Pokemon at a time, fetches the next page as the user approaches the bottom
+- **Expandable cards** — default view shows name, type badges and thumbnails, expanded view shows full stats, description, full quality artwork, gif, height, weight, and generation
+- **Responsive grid** — 2 columns on mobile up to 5 on desktop
 
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + shadcn/ui components
-- **Package Manager**: pnpm
+### Beyond the Requirements
 
-## Project Structure
+**Filtering and sorting**
 
-```
-src/
-├── app/
-│   ├── api/
-│   │   └── pokemon/
-│   │       └── route.ts          # Pokemon endpoint with search & pagination
-│   └── page.tsx                  # Main Pokemon grid component
-├── components/
-│   ├── ui/                       # shadcn/ui components
-│   └── PokemonGrid.tsx           # Main Pokemon grid with infinite scroll
-├── data/
-│   └── pokemon.json              # Generated Pokemon fixtures
-└── scripts/
-    └── generate-pokemon.js       # Faker.js script to generate Pokemon data
-```
+- Filter by type (multi-select, intersection logic — selecting Fire + Flying finds dual-type Pokemon specifically)
+- Filter by generation (1–9)
+- Sort by any stat, name, or Pokédex ID in either direction
+- All filters and sort state persist in the URL — shareable and bookmark-friendly
 
-## Key Features to implement
+**Navigation**
 
-### 1. **Infinite Scroll Grid**
+- Keyboard navigation — arrow keys to move between cards, Escape to close
+- Swipe to navigate on mobile — drag the expanded card left or right
+- Auto-scroll keeps the selected card in view when navigating through the grid
 
-- Load Pokemon in batches
-- Automatically fetches more data as user scrolls
+**Polish**
 
-### 2. **Search Functionality**
+- FLIP expansion animation — cards expand from their grid position into the overlay
+- Animated stat bars and counters on card open
+- GIF hover on the expanded card image (desktop) Tap to view (mobile)
+- Dynamic page title updates to the selected Pokemon's name
+- Custom blur placeholder on card images — each Pokemon has a precomputed blurDataURL that fills the image slot instantly, preventing empty flashes while artwork loads
 
-### 3. **Expandable Cards**
+---
 
-- **Default view**: Name and type badges only
-- **Expanded view**: Full stats, description, and details
-- Click to expand/collapse individual cards
+## Technical Decisions
 
-## Getting Started
+### TanStack Query — `usePokemonQuery`
 
-### Prerequisites
+Used `useInfiniteQuery` for paginated data fetching with page accumulation. `staleTime: Infinity` and `gcTime: Infinity` prevent unnecessary refetches on a static dataset. `keepPreviousData` keeps the current results visible while a new search or filter loads, avoiding blank flashes between queries. The `queryKey` includes all filter parameters so TanStack Query handles cache invalidation and page resets automatically.
 
-- Node.js 18+
-- pnpm package manager
+### Virtualization — `useVirtualGrid`
 
-### Installation
+Only the rows currently visible in the viewport are mounted in the DOM. For 1000 Pokemon across 200 rows, this keeps the mounted component count at ~60-80 at any time regardless of scroll position. Built with `@tanstack/react-virtual`'s `useWindowVirtualizer` for native window scroll performance.
+
+### Memoization — `PokemonCard`
+
+`React.memo` with a custom comparator that only re-renders a card when `active` or `pokemon` changes. Without this, every interaction in the parent would cascade into re-renders across all ~60 mounted cards simultaneously. The difference was immediately noticable with DevTools INP speeds of up to 200-300ms, reduced down to 48-64ms.
+
+### API Design
+
+The client fetch layer (`src/lib/api.ts`) and the server route handler (`src/app/api/pokemon/route.ts`) are kept separate. The server handles filtering, sorting, and pagination against the static dataset — the client only ever receives the 20 records it needs per page. The contract between them means switching from the static JSON to a real database would require changes only in `route.ts`.
+
+---
+
+## Stack
+
+- **Next.js 15** App Router
+- **TypeScript**
+- **Tailwind CSS** + **shadcn/ui**
+- **TanStack Query** — data fetching and caching
+- **TanStack Virtual** — windowed list virtualization
+- **Framer Motion** — layout animations
+- **plaiceholder + sharp** — used for generating the blur placeholders at data-generation time
+
+---
+
+## Running Locally
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Generate Pokemon fixtures
-node scripts/generate-pokemon.js
-
-# Start development server
 pnpm dev
 ```
 
-### Available Scripts
+Scripts are available to regenerate both faker.js and real PokeAPI/Showdown data.
 
-```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm lint         # Run ESLint
-```
+---
 
-## API Endpoints
+Overall, I had such a fun time building this project. I had my younger brother Jason and a few Pokemon-loving friends QA the app, to which all of them said they'd rather use this over any other similar tool. That kind of fan approval is the best kind of approval in my book.
 
-### GET `/api/pokemon`
-
-Endpoint for fetching Pokemon with pagination and conditional search functionality.
-
-**Query Parameters:**
-
-- `page` (number): Page number for pagination (default: 1)
-- `limit` (number): Items per page (default: 20)
-- `search` (string): Optional search term for filtering by name, type, or description
-
-**Response:**
-
-```json
-{
-  "data": [...],
-  "pagination": {
-    "page": 1,
-    "limit": 20,
-    "total": 1000,
-    "totalPages": 50,
-    "hasNext": true,
-    "hasPrev": false
-  }
-}
-```
-
-**Usage Examples:**
-
-- `GET /api/pokemon?page=1&limit=20` - First 20 Pokemon
-- `GET /api/pokemon?search=fire&page=1&limit=15` - Search for fire-type Pokemon with pagination
-- `GET /api/pokemon?search=dragon&page=2&limit=10` - Second page of dragon Pokemon search results
+In retrospect, it's funny thinking about how I was hardly a fan of Pokemon at all before building this, but since then, I can't help but feel rather interested in it now.
