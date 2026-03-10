@@ -113,7 +113,7 @@ export default function PokemonGrid() {
                 transform: `translateY(${row.start}px)`
               }}
             >
-              {getRowPokemon(row.index).map((p: Pokemon) => (
+              {getRowPokemon(row.index).map((p: Pokemon, i: number) => (
                 <PokemonCard
                   active={selectedId === p.id}
                   key={p.id}
@@ -122,6 +122,8 @@ export default function PokemonGrid() {
                   onNext={onNext}
                   onPrev={onPrev}
                   pokemon={p}
+                  eager={row.index * columns + i < 50}
+                  priority={row.index < 2}
                 />
               ))}
             </div>

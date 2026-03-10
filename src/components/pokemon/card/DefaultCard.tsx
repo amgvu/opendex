@@ -14,20 +14,24 @@ const loadedUrls = new Set<string>()
 
 export function DefaultCard({
   active,
+  eager = false,
   id,
   onClick,
-  pokemon
+  pokemon,
+  priority = false
 }: {
   active: boolean
+  eager?: boolean
   id: string
   onClick: () => void
   pokemon: Pokemon
+  priority?: boolean
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
   const [imageLoaded, setImageLoaded] = useState(() =>
-    loadedUrls.has(pokemon.officialUrl)
+    priority || eager || loadedUrls.has(pokemon.officialUrl)
   )
   const [iconLoaded, setIconLoaded] = useState(() => loadedUrls.has(iconSrc))
 
@@ -77,11 +81,12 @@ export function DefaultCard({
             alt={pokemon.name}
             className="h-28 w-28 object-contain drop-shadow-md"
             height={128}
-            loading="lazy"
+            loading={priority ? undefined : 'lazy'}
             onLoad={() => {
               loadedUrls.add(pokemon.officialUrl)
               setImageLoaded(true)
             }}
+            priority={priority}
             sizes="112px"
             src={pokemon.officialUrl}
             unoptimized

@@ -15,18 +15,22 @@ import { ExpandedCard } from './ExpandedCard'
 export const PokemonCard = memo(
   function PokemonCard({
     active,
+    eager = false,
     onClick,
     onClose,
     onNext,
     onPrev,
-    pokemon
+    pokemon,
+    priority = false
   }: {
     active: boolean
+    eager?: boolean
     onClick: () => void
     onClose: () => void
     onNext: () => void
     onPrev: () => void
     pokemon: Pokemon
+    priority?: boolean
   }) {
     const ref = useRef<HTMLDivElement>(null)
     const id = useId()
@@ -49,9 +53,11 @@ export const PokemonCard = memo(
         )}
         <DefaultCard
           active={active}
+          eager={eager}
           id={id}
           onClick={onClick}
           pokemon={pokemon}
+          priority={priority}
         />
       </LayoutGroup>
     )
