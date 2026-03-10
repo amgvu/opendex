@@ -5,6 +5,9 @@ import type { Pokemon } from '@/types/pokemon'
 
 const CARD_HEIGHT = 80
 const GAP = 16
+const PRELOAD_ROWS = 10
+
+const preloadedUrls = new Set<string>()
 
 function getColumnCount() {
   if (typeof window === 'undefined') return 5
@@ -47,7 +50,16 @@ export function useVirtualGrid(
     if (lastItem.index >= rowCount - 3 && hasNextPage && !isFetchingNextPage) {
       onLoadMore()
     }
-  }, [virtualItems, rowCount, hasNextPage, isFetchingNextPage, onLoadMore])
+    const preloadStart = (lastItem.index + 1) * columns
+    const preloadEnd = Math.min(preloadStart + PRELOAD_ROWS * columns, pokemon.length)
+    for (let i = preloadStart; i < preloadEnd; i++) {
+      const url = pokemon[i]?.officialUrl
+      if (url && !preloadedUrls.has(url)) {
+        preloadedUrls.add(url)
+        new Image().src = url
+      }
+    }
+  }, [virtualItems, rowCount, hasNextPage, isFetchingNextPage, onLoadMore, columns, pokemon])
 
   function getRowPokemon(rowIndex: number): Pokemon[] {
     const start = rowIndex * columns
