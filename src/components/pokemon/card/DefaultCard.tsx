@@ -80,27 +80,29 @@ export function DefaultCard({
           width={128}
         />
       </motion.div>
-      <div className="relative flex items-start justify-between">
-        <motion.p
-          className="text-sm sm:text-base lg:text-lg font-semibold capitalize text-white"
-          layoutId={`name-${pokemon.id}-${id}`}
+      <div className="relative flex h-full flex-col justify-between">
+        <div className="flex items-start justify-between gap-1">
+          <motion.p
+            className={`min-w-0 truncate font-semibold capitalize text-white ${pokemon.name.length > 14 ? 'text-xs sm:text-sm' : 'text-sm sm:text-base lg:text-lg'}`}
+            layoutId={`name-${pokemon.id}-${id}`}
+            transition={CARD_TRANSITION}
+          >
+            {pokemon.name}
+          </motion.p>
+          <span className="flex-shrink-0 text-[10px] sm:text-xs tracking-wide font-semibold text-white">
+            {formatPokedexId(pokemon.id)}
+          </span>
+        </div>
+        <motion.div
+          className="relative flex flex-wrap gap-1"
+          layoutId={`types-${pokemon.id}-${id}`}
           transition={CARD_TRANSITION}
         >
-          {pokemon.name}
-        </motion.p>
-        <span className="text-[10px] sm:text-xs tracking-wide font-semibold text-white">
-          {formatPokedexId(pokemon.id)}
-        </span>
+          {pokemon.types.map((type: string) => (
+            <TypeBadge key={type} type={type} />
+          ))}
+        </motion.div>
       </div>
-      <motion.div
-        className="relative mt-2 flex flex-wrap gap-1"
-        layoutId={`types-${pokemon.id}-${id}`}
-        transition={CARD_TRANSITION}
-      >
-        {pokemon.types.map((type: string) => (
-          <TypeBadge key={type} type={type} />
-        ))}
-      </motion.div>
       {pokemon.isLegendary && (
         <motion.div
           className="absolute bottom-2 right-2"

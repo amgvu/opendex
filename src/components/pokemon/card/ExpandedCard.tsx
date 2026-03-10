@@ -74,11 +74,11 @@ export function ExpandedCard({
               <div
                 className={`relative p-6 ${dragging ? 'select-none' : 'select-text'}`}
               >
-                <div className="mb-4 flex items-start justify-between">
-                  <div>
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
                       <motion.h2
-                        className="text-2xl xl:text-3xl font-bold capitalize text-white"
+                        className={`min-w-0 truncate font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl' : 'text-2xl xl:text-3xl'}`}
                         layoutId={`name-${pokemon.id}-${id}`}
                         transition={CARD_TRANSITION}
                       >
@@ -105,15 +105,15 @@ export function ExpandedCard({
                     </span>
                   </div>
                   <motion.div
-                    className="flex flex-wrap gap-1"
+                    className="flex flex-shrink-0 flex-wrap gap-1"
                     layoutId={`types-${pokemon.id}-${id}`}
                     transition={CARD_TRANSITION}
                   >
                     {pokemon.types.map(type => (
-                      <TypeBadge key={type} type={type} />
+                      <TypeBadge key={type} size="lg" type={type} />
                     ))}
                     {pokemon.isLegendary && (
-                      <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs font-medium text-black">
+                      <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm font-medium text-black">
                         Legendary
                       </span>
                     )}
