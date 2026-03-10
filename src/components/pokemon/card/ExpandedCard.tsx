@@ -1,10 +1,11 @@
-import { AnimatePresence, motion, useMotionTemplate, useSpring, useTransform } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { type RefObject, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
+import { useFoilTilt } from '@/hooks/card/useFoilTilt'
 import { useGifHover } from '@/hooks/card/useGifHover'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
@@ -38,12 +39,7 @@ export function ExpandedCard({
     setGifReady
   } = useGifHover()
   const [dragging, setDragging] = useState(false)
-  const [foilPos, setFoilPos] = useState({ x: 50, y: 50 })
-  const rotX = useSpring(0, { damping: 35, stiffness: 200 })
-  const rotY = useSpring(0, { damping: 35, stiffness: 200 })
-  const foilBgX = useTransform(rotY, [-8, 8], [80, 20])
-  const foilBgY = useTransform(rotX, [-8, 8], [20, 80])
-  const foilBgPos = useMotionTemplate`${foilBgX}% ${foilBgY}%`
+  const { beamX, foilBgPos, onPointerLeave: onFoilLeave, onPointerMove: onFoilMove, rotX, rotY } = useFoilTilt(ref, dragging)
   const blurRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -66,19 +62,8 @@ export function ExpandedCard({
                 else if (info.offset.x > 50) onPrev()
               }}
               onDragStart={() => setDragging(true)}
-              onPointerLeave={() => {
-                rotX.set(0)
-                rotY.set(0)
-              }}
-              onPointerMove={e => {
-                if (dragging || !ref.current) return
-                const rect = ref.current.getBoundingClientRect()
-                const x = ((e.clientX - rect.left) / rect.width) * 100
-                const y = ((e.clientY - rect.top) / rect.height) * 100
-                setFoilPos({ x, y })
-                rotX.set((y - 50) * -0.16)
-                rotY.set((x - 50) * 0.16)
-              }}
+              onPointerLeave={onFoilLeave}
+              onPointerMove={onFoilMove}
               style={{ rotateX: rotX, rotateY: rotY }}
               ref={ref}
               transition={CARD_TRANSITION}
@@ -99,11 +84,11 @@ export function ExpandedCard({
                 style={{
                   background: `linear-gradient(
                     105deg,
-                    transparent ${foilPos.x - 35}%,
-                    rgba(255,255,255,0.10) ${foilPos.x - 12}%,
-                    rgba(255,255,255,0.22) ${foilPos.x}%,
-                    rgba(255,255,255,0.10) ${foilPos.x + 12}%,
-                    transparent ${foilPos.x + 35}%
+                    transparent ${beamX - 35}%,
+                    rgba(255,255,255,0.10) ${beamX - 12}%,
+                    rgba(255,255,255,0.22) ${beamX}%,
+                    rgba(255,255,255,0.10) ${beamX + 12}%,
+                    transparent ${beamX + 35}%
                   )`,
                   mixBlendMode: 'screen',
                   transition: 'background 0.25s ease-out'
