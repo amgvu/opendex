@@ -18,14 +18,29 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  description: 'Fast, interactive Pokémon browser',
-  title: 'Pokédex'
+  description: 'Fast, interactive Pokémon explorer',
+  title: 'Opendex'
 }
 
 const POKEMON_TYPES = [
-  'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
-  'fire', 'flying', 'ghost', 'grass', 'ground', 'ice',
-  'normal', 'poison', 'psychic', 'rock', 'steel', 'water'
+  'bug',
+  'dark',
+  'dragon',
+  'electric',
+  'fairy',
+  'fighting',
+  'fire',
+  'flying',
+  'ghost',
+  'grass',
+  'ground',
+  'ice',
+  'normal',
+  'poison',
+  'psychic',
+  'rock',
+  'steel',
+  'water'
 ]
 
 export default function RootLayout({
@@ -37,7 +52,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {POKEMON_TYPES.map(type => (
-          <link as="image" href={`/icons/${type}.svg`} key={type} rel="preload" />
+          <link
+            as="image"
+            href={`/icons/${type}.svg`}
+            key={type}
+            rel="preload"
+          />
         ))}
       </head>
       <body

@@ -24,7 +24,13 @@ export default function PokemonGrid() {
   const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
 
   const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
-    usePokemonQuery(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
+    usePokemonQuery(
+      debouncedSearch,
+      sortBy,
+      sortOrder,
+      selectedTypes,
+      selectedGens
+    )
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
   const { onNext, onPrev } = useCardNavigation({
@@ -39,8 +45,8 @@ export default function PokemonGrid() {
   useEffect(() => {
     const selected = pokemon.find(p => p.id === selectedId)
     document.title = selected
-      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Pokédex`
-      : 'Pokédex'
+      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Opendex`
+      : 'Opendex'
   }, [selectedId, pokemon])
 
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
@@ -73,11 +79,11 @@ export default function PokemonGrid() {
               aria-hidden="true"
               className="h-5 w-5"
               height={64}
-              src="/pokemon-icon.svg"
+              src="/opendex.png"
               unoptimized
               width={64}
             />
-            <h1 className="text-lg font-bold tracking-tight">Pokédex</h1>
+            <h1 className="text-lg font-bold tracking-tight">Opendex</h1>
           </div>
           <PokemonToolbar
             onToggleGen={toggleGen}
