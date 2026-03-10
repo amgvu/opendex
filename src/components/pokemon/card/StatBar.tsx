@@ -23,7 +23,7 @@ export function StatBar({ label, value }: { label: string; value: number }) {
       <motion.span className="w-8 shrink-0 text-right font-medium text-white">
         {rounded}
       </motion.span>
-      <div className="h-4 flex-1 overflow-hidden rounded-full bg-white/20">
+      <div className="h-3 flex-1 overflow-hidden rounded-full bg-white/20">
         <motion.div
           animate={{ width: `${pct}%` }}
           className="h-full rounded-full bg-white/70"
