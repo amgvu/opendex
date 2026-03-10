@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject, useState } from 'react'
+import { type RefObject, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -38,6 +38,7 @@ export function ExpandedCard({
     setGifReady
   } = useGifHover()
   const [dragging, setDragging] = useState(false)
+  const blurRef = useRef<HTMLDivElement>(null)
 
   return (
     <AnimatePresence>
@@ -86,10 +87,7 @@ export function ExpandedCard({
                       {pokemon.isLegendary && (
                         <motion.div
                           layoutId={`star-${pokemon.id}-${id}`}
-                          transition={{
-                            duration: 0.25,
-                            ease: [0.32, 0.72, 0, 1]
-                          }}
+                          transition={CARD_TRANSITION}
                         >
                           <IoMdStar
                             className="text-yellow-400 xl:hidden"
@@ -133,27 +131,32 @@ export function ExpandedCard({
                   >
                     <div
                       className="relative h-36 w-36 xl:h-64 xl:w-64"
+                      ref={blurRef}
                       style={pokemon.blurDataURL ? {
                         backgroundImage: `url(${pokemon.blurDataURL})`,
                         backgroundPosition: 'center',
                         backgroundSize: 'cover'
                       } : undefined}
                     >
-                      <Image
-                        alt={pokemon.name}
-                        className="h-36 w-36 xl:h-64 xl:w-64 object-contain drop-shadow-2xl"
-                        height={384}
-                        onLoad={e => {
-                          const img = e.currentTarget as HTMLImageElement
-                          if (!hovered || !gifReady) img.style.opacity = '1'
-                          if (img.parentElement) img.parentElement.style.backgroundImage = 'none'
-                        }}
-                        sizes="200px"
-                        src={pokemon.officialUrl}
-                        style={{ opacity: 0, transition: 'opacity 0.2s' }}
-                        unoptimized
-                        width={384}
-                      />
+                      <motion.div
+                        animate={{ opacity: hovered && gifReady ? 0 : 1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Image
+                          alt={pokemon.name}
+                          className="h-36 w-36 xl:h-64 xl:w-64 object-contain drop-shadow-2xl"
+                          height={384}
+                          onLoad={e => {
+                            e.currentTarget.style.opacity = '1'
+                            if (blurRef.current) blurRef.current.style.backgroundImage = 'none'
+                          }}
+                          sizes="200px"
+                          src={pokemon.officialUrl}
+                          style={{ opacity: 0, transition: 'opacity 0.2s' }}
+                          unoptimized
+                          width={384}
+                        />
+                      </motion.div>
                     </div>
                     {gifMounted && (
                       <motion.img
