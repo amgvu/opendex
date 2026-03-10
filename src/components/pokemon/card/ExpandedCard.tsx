@@ -5,7 +5,6 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { useFoilTilt } from '@/hooks/card/useFoilTilt'
 import { useGifHover } from '@/hooks/card/useGifHover'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
@@ -39,17 +38,13 @@ export function ExpandedCard({
     setGifReady
   } = useGifHover()
   const [dragging, setDragging] = useState(false)
-  const { beamX, foilBgPos, onPointerLeave: onFoilLeave, onPointerMove: onFoilMove, rotX, rotY } = useFoilTilt(ref, dragging)
   const blurRef = useRef<HTMLDivElement>(null)
 
   return (
     <AnimatePresence>
       {active && (
         <>
-          <div
-            className="fixed inset-0 z-50 grid place-items-center p-4"
-            style={{ perspective: '900px' }}
-          >
+          <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
               className={`relative w-full max-w-md xl:max-w-xl cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
               drag="x"
@@ -62,38 +57,10 @@ export function ExpandedCard({
                 else if (info.offset.x > 50) onPrev()
               }}
               onDragStart={() => setDragging(true)}
-              onPointerLeave={onFoilLeave}
-              onPointerMove={onFoilMove}
-              style={{ rotateX: rotX, rotateY: rotY }}
               ref={ref}
               transition={CARD_TRANSITION}
             >
               <div className="absolute inset-0 bg-black/25" />
-              <motion.div
-                className="pointer-events-none absolute inset-0 rounded-2xl"
-                style={{
-                  backgroundImage: 'url(/foil.svg)',
-                  backgroundSize: '300% 300%',
-                  backgroundPosition: foilBgPos,
-                  mixBlendMode: 'screen',
-                  opacity: 0.13
-                }}
-              />
-              <div
-                className="pointer-events-none absolute inset-0 rounded-2xl"
-                style={{
-                  background: `linear-gradient(
-                    105deg,
-                    transparent ${beamX - 35}%,
-                    rgba(255,255,255,0.10) ${beamX - 12}%,
-                    rgba(255,255,255,0.22) ${beamX}%,
-                    rgba(255,255,255,0.10) ${beamX + 12}%,
-                    transparent ${beamX + 35}%
-                  )`,
-                  mixBlendMode: 'screen',
-                  transition: 'background 0.25s ease-out'
-                }}
-              />
               <Image
                 alt=""
                 aria-hidden="true"

@@ -84,10 +84,8 @@ function getFilteredSorted(
   }
 
   result.sort((a, b) => {
-    const aVal =
-      sortBy === 'type' ? (a.types[0] ?? '') : a[sortBy as keyof typeof a]
-    const bVal =
-      sortBy === 'type' ? (b.types[0] ?? '') : b[sortBy as keyof typeof b]
+    const aVal = a[sortBy as keyof typeof a]
+    const bVal = b[sortBy as keyof typeof b]
     if (typeof aVal === 'string' && typeof bVal === 'string') {
       return sortOrder === 'asc'
         ? aVal.localeCompare(bVal)
