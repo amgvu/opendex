@@ -6,8 +6,8 @@ import { createPortal } from 'react-dom'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
-import { useOutsideClick } from '@/hooks/useOutsideClick'
+import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
+import { useOutsideClick } from '@/hooks/card/useOutsideClick'
 
 import { DefaultCard } from './DefaultCard'
 import { ExpandedCard } from './ExpandedCard'

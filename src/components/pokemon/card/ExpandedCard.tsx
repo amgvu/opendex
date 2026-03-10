@@ -5,7 +5,7 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { useGifHover } from '@/hooks/useGifHover'
+import { useGifHover } from '@/hooks/card/useGifHover'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
