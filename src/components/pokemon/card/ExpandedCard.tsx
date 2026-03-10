@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useSpring } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject, useRef, useState } from 'react'
+import { type RefObject, useEffect, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -38,13 +38,59 @@ export function ExpandedCard({
     setGifReady
   } = useGifHover()
   const [dragging, setDragging] = useState(false)
+  const [foilPos, setFoilPos] = useState({ x: 50, y: 50 })
+  const rotX = useSpring(0, { damping: 30, stiffness: 400 })
+  const rotY = useSpring(0, { damping: 30, stiffness: 400 })
   const blurRef = useRef<HTMLDivElement>(null)
+
+  const [gyro, setGyro] = useState<'idle' | 'granted' | 'needs-prompt'>('idle')
+
+  useEffect(() => {
+    if (!active) return
+    if (!window.matchMedia('(hover: none)').matches) return
+    if (typeof window.DeviceOrientationEvent === 'undefined') return
+    if (typeof (DeviceOrientationEvent as { requestPermission?: unknown }).requestPermission === 'function') {
+      setGyro('needs-prompt')
+    } else {
+      setGyro('granted')
+    }
+    return () => setGyro('idle')
+  }, [active])
+
+  useEffect(() => {
+    if (gyro !== 'granted') return
+    let baseGamma: number | null = null
+    let baseBeta: number | null = null
+    const handler = (e: DeviceOrientationEvent) => {
+      if (e.gamma === null || e.beta === null) return
+      if (baseGamma === null) baseGamma = e.gamma
+      if (baseBeta === null) baseBeta = e.beta
+      rotY.set(Math.max(-11, Math.min(11, (e.gamma - baseGamma) * 0.5)))
+      rotX.set(Math.max(-11, Math.min(11, (e.beta - baseBeta) * -0.5)))
+    }
+    window.addEventListener('deviceorientation', handler)
+    return () => {
+      window.removeEventListener('deviceorientation', handler)
+      rotX.set(0)
+      rotY.set(0)
+    }
+  }, [gyro, rotX, rotY])
+
+  const requestGyroPermission = () => {
+    ;(DeviceOrientationEvent as { requestPermission: () => Promise<string> })
+      .requestPermission()
+      .then(result => { if (result === 'granted') setGyro('granted') })
+      .catch(() => {})
+  }
 
   return (
     <AnimatePresence>
       {active && (
         <>
-          <div className="fixed inset-0 z-50 grid place-items-center p-4">
+          <div
+            className="fixed inset-0 z-50 grid place-items-center p-4"
+            style={{ perspective: '900px' }}
+          >
             <motion.div
               className={`relative w-full max-w-md xl:max-w-xl cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
               drag="x"
@@ -57,10 +103,51 @@ export function ExpandedCard({
                 else if (info.offset.x > 50) onPrev()
               }}
               onDragStart={() => setDragging(true)}
+              onPointerLeave={() => {
+                setFoilPos({ x: 50, y: 50 })
+                rotX.set(0)
+                rotY.set(0)
+              }}
+              onPointerMove={e => {
+                if (dragging || !ref.current) return
+                const rect = ref.current.getBoundingClientRect()
+                const x = ((e.clientX - rect.left) / rect.width) * 100
+                const y = ((e.clientY - rect.top) / rect.height) * 100
+                setFoilPos({ x, y })
+                rotX.set((y - 50) * -0.11)
+                rotY.set((x - 50) * 0.11)
+              }}
+              style={{ rotateX: rotX, rotateY: rotY }}
               ref={ref}
               transition={CARD_TRANSITION}
             >
               <div className="absolute inset-0 bg-black/25" />
+              <div
+                className="pointer-events-none absolute inset-0 rounded-2xl"
+                style={{
+                  backgroundImage: 'url(/foil.svg)',
+                  backgroundSize: '300% 300%',
+                  backgroundPosition: `${80 - foilPos.x * 0.6}% ${80 - foilPos.y * 0.6}%`,
+                  mixBlendMode: 'screen',
+                  opacity: 0.18,
+                  transition: 'background-position 0.12s ease-out'
+                }}
+              />
+              <div
+                className="pointer-events-none absolute inset-0 rounded-2xl"
+                style={{
+                  background: `linear-gradient(
+                    105deg,
+                    transparent ${foilPos.x - 45}%,
+                    rgba(255,255,255,0.09) ${foilPos.x - 20}%,
+                    rgba(255,255,255,0.15) ${foilPos.x}%,
+                    rgba(255,255,255,0.09) ${foilPos.x + 20}%,
+                    transparent ${foilPos.x + 45}%
+                  )`,
+                  mixBlendMode: 'screen',
+                  transition: 'background 0.12s ease-out'
+                }}
+              />
               <Image
                 alt=""
                 aria-hidden="true"
@@ -132,11 +219,15 @@ export function ExpandedCard({
                     <div
                       className="relative h-36 w-36 xl:h-64 xl:w-64"
                       ref={blurRef}
-                      style={pokemon.blurDataURL ? {
-                        backgroundImage: `url(${pokemon.blurDataURL})`,
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover'
-                      } : undefined}
+                      style={
+                        pokemon.blurDataURL
+                          ? {
+                              backgroundImage: `url(${pokemon.blurDataURL})`,
+                              backgroundPosition: 'center',
+                              backgroundSize: 'cover'
+                            }
+                          : undefined
+                      }
                     >
                       <motion.div
                         animate={{ opacity: hovered && gifReady ? 0 : 1 }}
@@ -148,7 +239,8 @@ export function ExpandedCard({
                           height={384}
                           onLoad={e => {
                             e.currentTarget.style.opacity = '1'
-                            if (blurRef.current) blurRef.current.style.backgroundImage = 'none'
+                            if (blurRef.current)
+                              blurRef.current.style.backgroundImage = 'none'
                           }}
                           sizes="200px"
                           src={pokemon.officialUrl}
@@ -223,6 +315,20 @@ export function ExpandedCard({
                     </span>
                   </div>
                 </motion.div>
+
+                {gyro === 'needs-prompt' && (
+                  <motion.button
+                    animate={{ opacity: 1 }}
+                    className="mt-4 w-full rounded-lg bg-white/10 py-2 text-xs text-white/60 hover:bg-white/15"
+                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0 }}
+                    onClick={requestGyroPermission}
+                    transition={{ delay: 0.2, duration: 0.2 }}
+                    type="button"
+                  >
+                    Enable tilt
+                  </motion.button>
+                )}
               </div>
             </motion.div>
           </div>
