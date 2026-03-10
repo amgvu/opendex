@@ -12,26 +12,29 @@ import { TypeBadge } from './TypeBadge'
 
 const loadedUrls = new Set<string>()
 
+const PRIORITY_THRESHOLD = 10
+const EAGER_THRESHOLD = 50
+
 export function DefaultCard({
   active,
-  eager = false,
   id,
+  index,
   onClick,
-  pokemon,
-  priority = false
+  pokemon
 }: {
   active: boolean
-  eager?: boolean
   id: string
+  index: number
   onClick: () => void
   pokemon: Pokemon
-  priority?: boolean
 }) {
+  const priority = index < PRIORITY_THRESHOLD
+  const eager = index < EAGER_THRESHOLD
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
   const [imageLoaded, setImageLoaded] = useState(() =>
-    priority || eager || loadedUrls.has(pokemon.officialUrl)
+    eager || loadedUrls.has(pokemon.officialUrl)
   )
   const [iconLoaded, setIconLoaded] = useState(() => loadedUrls.has(iconSrc))
 
@@ -80,7 +83,6 @@ export function DefaultCard({
           <Image
             alt={pokemon.name}
             className="h-28 w-28 object-contain drop-shadow-md"
-            height={128}
             loading={priority ? undefined : 'lazy'}
             onLoad={() => {
               loadedUrls.add(pokemon.officialUrl)
@@ -91,6 +93,7 @@ export function DefaultCard({
             src={pokemon.officialUrl}
             unoptimized
             width={128}
+            height={128}
           />
         </motion.div>
       </motion.div>

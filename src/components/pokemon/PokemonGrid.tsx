@@ -117,13 +117,12 @@ export default function PokemonGrid() {
                 <PokemonCard
                   active={selectedId === p.id}
                   key={p.id}
+                  index={row.index * columns + i}
                   onClick={() => setSelectedId(p.id)}
                   onClose={() => setSelectedId(null)}
                   onNext={onNext}
                   onPrev={onPrev}
                   pokemon={p}
-                  eager={row.index * columns + i < 50}
-                  priority={row.index < 2}
                 />
               ))}
             </div>
