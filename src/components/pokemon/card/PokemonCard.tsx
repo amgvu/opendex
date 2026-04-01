@@ -5,6 +5,7 @@ import { memo, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import type { Pokemon } from '@/types/pokemon'
+import type { CollectionItem } from '@/types/collection'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
@@ -15,6 +16,7 @@ import { ExpandedCard } from './ExpandedCard'
 export const PokemonCard = memo(
   function PokemonCard({
     active,
+    collectionItem,
     index,
     onClick,
     onClose,
@@ -23,6 +25,7 @@ export const PokemonCard = memo(
     pokemon
   }: {
     active: boolean
+    collectionItem?: CollectionItem
     index: number
     onClick: () => void
     onClose: () => void
@@ -30,6 +33,7 @@ export const PokemonCard = memo(
     onPrev: () => void
     pokemon: Pokemon
   }) {
+    const level = collectionItem?.level
     const ref = useRef<HTMLDivElement>(null)
     const id = useId()
 
@@ -41,6 +45,7 @@ export const PokemonCard = memo(
         {createPortal(
           <ExpandedCard
             active={active}
+            collectionItem={collectionItem}
             id={id}
             onNext={onNext}
             onPrev={onPrev}
@@ -53,6 +58,7 @@ export const PokemonCard = memo(
           active={active}
           id={id}
           index={index}
+          level={level}
           onClick={onClick}
           pokemon={pokemon}
         />

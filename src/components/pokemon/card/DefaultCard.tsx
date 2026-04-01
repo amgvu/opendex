@@ -14,12 +14,14 @@ export function DefaultCard({
   active,
   id,
   index,
+  level,
   onClick,
   pokemon
 }: {
   active: boolean
   id: string
   index: number
+  level?: number
   onClick: () => void
   pokemon: Pokemon
 }) {
@@ -94,13 +96,20 @@ export function DefaultCard({
           </span>
         </div>
         <motion.div
-          className="relative flex flex-wrap gap-1"
+          className="relative flex items-center justify-between gap-1"
           layoutId={`types-${pokemon.id}-${id}`}
           transition={CARD_TRANSITION}
         >
-          {pokemon.types.map((type: string) => (
-            <TypeBadge key={type} type={type} />
-          ))}
+          <div className="flex flex-wrap gap-1">
+            {pokemon.types.map((type: string) => (
+              <TypeBadge key={type} type={type} />
+            ))}
+          </div>
+          {level !== undefined && (
+            <span className="rounded-full bg-black/40 px-1.5 py-0.5 text-[10px] font-bold text-white">
+              Lv.{level}
+            </span>
+          )}
         </motion.div>
       </div>
       {pokemon.isLegendary && (

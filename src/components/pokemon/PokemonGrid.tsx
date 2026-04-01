@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
@@ -73,17 +74,23 @@ export default function PokemonGrid() {
       </AnimatePresence>
       <div className="fixed inset-x-0 top-0 z-30  bg-background/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-3">
-          <div className="mb-3 flex items-center gap-1.5">
-            <Image
-              alt=""
-              aria-hidden="true"
-              className="h-5 w-5"
-              height={64}
-              src="/opendex.png"
-              unoptimized
-              width={64}
-            />
-            <h1 className="text-lg font-bold tracking-tight">Opendex</h1>
+          <div className="mb-3 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Image
+                alt=""
+                aria-hidden="true"
+                className="h-5 w-5"
+                height={64}
+                src="/opendex.png"
+                unoptimized
+                width={64}
+              />
+              <h1 className="text-lg font-bold tracking-tight">Opendex</h1>
+            </div>
+            <nav className="flex items-center gap-4 text-sm font-medium">
+              <Link className="text-white/50 hover:text-white transition-colors" href="/collection">Collection</Link>
+              <Link className="text-white/50 hover:text-white transition-colors" href="/battles">Battles</Link>
+            </nav>
           </div>
           <PokemonToolbar
             onToggleGen={toggleGen}

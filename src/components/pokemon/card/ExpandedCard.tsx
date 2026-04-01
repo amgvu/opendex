@@ -9,12 +9,15 @@ import { useGifHover } from '@/hooks/card/useGifHover'
 import { useCollection } from '@/hooks/query/useCollection'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
+import { xpProgress } from '@/lib/pokemon-lookup'
+import type { CollectionItem } from '@/types/collection'
 
 import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
 
 export function ExpandedCard({
   active,
+  collectionItem,
   id,
   onNext,
   onPrev,
@@ -22,6 +25,7 @@ export function ExpandedCard({
   ref
 }: {
   active: boolean
+  collectionItem?: CollectionItem
   id: string
   onNext: () => void
   onPrev: () => void
@@ -203,7 +207,9 @@ export function ExpandedCard({
                       onClick={() => remove.mutate(pokemon.id)}
                       disabled={remove.isPending}
                     >
-                      {remove.isPending ? 'Removing...' : '✓ In Collection — Remove'}
+                      {remove.isPending
+                        ? 'Removing...'
+                        : '✓ In Collection — Remove'}
                     </button>
                   ) : (
                     <button
@@ -257,6 +263,61 @@ export function ExpandedCard({
                     </span>
                   </div>
                 </motion.div>
+
+                {collectionItem && (
+                  <motion.div
+                    animate={{ opacity: 1 }}
+                    className="mt-4 border-t border-white/20 pt-4 flex flex-col gap-3"
+                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0 }}
+                    transition={{ delay: 0.2, duration: 0.2 }}
+                  >
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-white/60">
+                        Level {collectionItem.level}
+                      </span>
+                      <span className="text-white/60 text-xs">
+                        {collectionItem.level < 10
+                          ? `${Math.round(xpProgress(collectionItem.experience, collectionItem.level) * 100)}% to Lv. ${collectionItem.level + 1}`
+                          : 'Max Level'}
+                      </span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-white/20">
+                      <div
+                        className="h-full rounded-full bg-white/70 transition-all duration-500"
+                        style={{
+                          width: `${xpProgress(collectionItem.experience, collectionItem.level) * 100}%`
+                        }}
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                      <div className="flex flex-col">
+                        <span className="text-white/50">Rating</span>
+                        <span className="font-semibold text-white">
+                          {collectionItem.rating}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-white/50">Battles</span>
+                        <span className="font-semibold text-white">
+                          {collectionItem.timesBattled}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-white/50">Wins</span>
+                        <span className="font-semibold text-white">
+                          {collectionItem.winStreak}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-white/50">Losses</span>
+                        <span className="font-semibold text-white">
+                          {collectionItem.lossStreak}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </motion.div>
           </div>
