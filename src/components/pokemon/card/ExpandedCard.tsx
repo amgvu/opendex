@@ -6,6 +6,7 @@ import { IoMdStar } from 'react-icons/io'
 import type { Pokemon } from '@/types/pokemon'
 
 import { useGifHover } from '@/hooks/card/useGifHover'
+import { useCollection } from '@/hooks/query/useCollection'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
@@ -28,6 +29,8 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
+  const { isInCollection, add, remove } = useCollection()
+  const inCollection = isInCollection(pokemon.id)
   const {
     gifMounted,
     gifReady,
@@ -186,6 +189,32 @@ export function ExpandedCard({
                 >
                   {pokemon.description}
                 </motion.p>
+
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  className="mb-4"
+                  exit={{ opacity: 0 }}
+                  initial={{ opacity: 0 }}
+                  transition={{ delay: 0.15, duration: 0.2 }}
+                >
+                  {inCollection ? (
+                    <button
+                      className="w-full rounded-xl bg-white/20 py-2 text-sm font-semibold text-white hover:bg-red-500/60 transition-colors"
+                      onClick={() => remove.mutate(pokemon.id)}
+                      disabled={remove.isPending}
+                    >
+                      {remove.isPending ? 'Removing...' : '✓ In Collection — Remove'}
+                    </button>
+                  ) : (
+                    <button
+                      className="w-full rounded-xl bg-white/20 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors"
+                      onClick={() => add.mutate(pokemon)}
+                      disabled={add.isPending}
+                    >
+                      {add.isPending ? 'Adding...' : '+ Add to Collection'}
+                    </button>
+                  )}
+                </motion.div>
 
                 <motion.div
                   animate={{ opacity: 1 }}
