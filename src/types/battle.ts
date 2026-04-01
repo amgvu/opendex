@@ -26,9 +26,12 @@ export type Battle = {
 
 export type BattleSummary = {
   battleId: string
+  pokemon1Id: number
+  pokemon2Id: number
   pokemon1Name: string
   pokemon2Name: string
   winnerName: string | null
+  winnerId: number | null
   status: 'queued' | 'active' | 'completed'
   createdAt: string
 }

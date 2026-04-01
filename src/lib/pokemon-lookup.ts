@@ -29,6 +29,10 @@ export function collectionItemToPokemon(item: CollectionItem): Pokemon {
   }
 }
 
+export function getPokemonById(id: number): Pokemon | undefined {
+  return pokemonById.get(id)
+}
+
 export function xpProgress(experience: number, level: number): number {
   if (level >= 10) return 1
   const start = Math.pow(level - 1, 2) * 50
