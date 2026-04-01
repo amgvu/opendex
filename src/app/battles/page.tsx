@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { StartBattle } from '@/components/battles/StartBattle'
+
 import { BattleHistory } from '@/components/battles/BattleHistory'
+import { StartBattle } from '@/components/battles/StartBattle'
 
 export default function BattlesPage() {
   return (

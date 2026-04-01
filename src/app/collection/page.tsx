@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import { CollectionGrid } from '@/components/collection/CollectionGrid'
 
 export default function CollectionPage() {
