@@ -8,11 +8,20 @@ export default function CollectionPage() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-white">My Collection</h1>
-            <p className="text-sm text-white/50 mt-1">Your Pokemon, their battles, their growth</p>
           </div>
           <nav className="flex items-center gap-4 text-sm font-medium">
-            <Link className="text-white/50 hover:text-white transition-colors" href="/">Pokédex</Link>
-            <Link className="text-white/50 hover:text-white transition-colors" href="/battles">Battles</Link>
+            <Link
+              className="text-white/50 hover:text-white transition-colors"
+              href="/"
+            >
+              Pokédex
+            </Link>
+            <Link
+              className="text-white/50 hover:text-white transition-colors"
+              href="/battles"
+            >
+              Battles
+            </Link>
           </nav>
         </div>
         <CollectionGrid />

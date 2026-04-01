@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { type RefObject, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
+import type { CollectionItem } from '@/types/collection'
 import type { Pokemon } from '@/types/pokemon'
 
 import { useGifHover } from '@/hooks/card/useGifHover'
@@ -10,7 +11,6 @@ import { useCollection } from '@/hooks/query/useCollection'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 import { xpProgress } from '@/lib/pokemon-lookup'
-import type { CollectionItem } from '@/types/collection'
 
 import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
@@ -33,7 +33,7 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const { isInCollection, add, remove } = useCollection()
+  const { add, isInCollection, remove } = useCollection()
   const inCollection = isInCollection(pokemon.id)
   const {
     gifMounted,
@@ -204,8 +204,8 @@ export function ExpandedCard({
                   {inCollection ? (
                     <button
                       className="w-full rounded-xl bg-white/20 py-2 text-sm font-semibold text-white hover:bg-red-500/60 transition-colors"
-                      onClick={() => remove.mutate(pokemon.id)}
                       disabled={remove.isPending}
+                      onClick={() => remove.mutate(pokemon.id)}
                     >
                       {remove.isPending
                         ? 'Removing...'
@@ -214,8 +214,8 @@ export function ExpandedCard({
                   ) : (
                     <button
                       className="w-full rounded-xl bg-white/20 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors"
-                      onClick={() => add.mutate(pokemon)}
                       disabled={add.isPending}
+                      onClick={() => add.mutate(pokemon)}
                     >
                       {add.isPending ? 'Adding...' : '+ Add to Collection'}
                     </button>
@@ -282,11 +282,17 @@ export function ExpandedCard({
                           : 'Max Level'}
                       </span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-white/20">
-                      <div
-                        className="h-full rounded-full bg-white/70 transition-all duration-500"
-                        style={{
+                    <div className="h-3 rounded-full bg-white/20">
+                      <motion.div
+                        animate={{
                           width: `${xpProgress(collectionItem.experience, collectionItem.level) * 100}%`
+                        }}
+                        className="h-full rounded-full bg-white/70"
+                        initial={{ width: '0%' }}
+                        transition={{
+                          delay: 0.3,
+                          duration: 0.4,
+                          ease: 'easeOut'
                         }}
                       />
                     </div>
