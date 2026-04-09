@@ -1,15 +1,5 @@
 # Opendex — Pokemon Explorer
 
-
-https://github.com/user-attachments/assets/1d9500da-f40c-4107-9067-539e67db6ede
-
-
-## Overview
-
-Given the take-home prompt, I wanted to build an enjoyable Pokemon viewing experience that was a combination of both fun and performant across various devices, network speeds, and screen sizes. Entering this project, I wasn't a Pokemon fan. But I wanted to tackle this in a way where what I built could make any real fan happy. I put myself into the shoes of what a collector or player would want out of an explorer like this.
-
-My focus was to create an elegant, performant animated experience. I accomplished this by combining caching techniques, DOM virtualization, component memoization, and deep use of Framer Motion to ensure effortless infinite scrolling and seamless expandable cards.
-
 ---
 
 ## What's Built
@@ -88,7 +78,3 @@ pnpm dev
 Scripts are available to regenerate both faker.js and real PokeAPI/Showdown data.
 
 ---
-
-Overall, I had such a fun time building this project. I had my younger brother Jason and a few Pokemon-loving friends QA the app, to which all of them said they'd rather use this over any other similar tool. That kind of fan approval is the best kind of approval in my book.
-
-In retrospect, it's funny thinking about how I was hardly a fan of Pokemon at all before building this, but since then, I can't help but feel rather interested in it now.
