@@ -30,7 +30,7 @@ export const formatPokedexId = (id: number) =>
 // Row = attacking type, Col = defending type
 // 0 = immune, 0.5 = not very effective, 2 = super effective
 const TYPE_CHART: Record<string, Record<string, number>> = {
-  Bug:      { Dark: 2, Dragon: 1, Electric: 1, Fairy: 0.5, Fighting: 0.5, Fire: 0.5, Flying: 0.5, Ghost: 0.5, Grass: 2, Ground: 1, Ice: 1, Normal: 1, Poison: 0.5, Psychic: 2, Rock: 1, Steel: 0.5, Water: 1, Bug: 1 },
+  Bug:      { Bug: 1, Dark: 2, Dragon: 1, Electric: 1, Fairy: 0.5, Fighting: 0.5, Fire: 0.5, Flying: 0.5, Ghost: 0.5, Grass: 2, Ground: 1, Ice: 1, Normal: 1, Poison: 0.5, Psychic: 2, Rock: 1, Steel: 0.5, Water: 1 },
   Dark:     { Bug: 1, Dark: 0.5, Dragon: 1, Electric: 1, Fairy: 0.5, Fighting: 0.5, Fire: 1, Flying: 1, Ghost: 2, Grass: 1, Ground: 1, Ice: 1, Normal: 1, Poison: 1, Psychic: 2, Rock: 1, Steel: 0.5, Water: 1 },
   Dragon:   { Bug: 1, Dark: 1, Dragon: 2, Electric: 1, Fairy: 0, Fighting: 1, Fire: 1, Flying: 1, Ghost: 1, Grass: 1, Ground: 1, Ice: 1, Normal: 1, Poison: 1, Psychic: 1, Rock: 1, Steel: 0.5, Water: 1 },
   Electric: { Bug: 1, Dark: 1, Dragon: 0.5, Electric: 0.5, Fairy: 1, Fighting: 1, Fire: 1, Flying: 2, Ghost: 1, Grass: 0.5, Ground: 0, Ice: 1, Normal: 1, Poison: 1, Psychic: 1, Rock: 1, Steel: 1, Water: 2 },
