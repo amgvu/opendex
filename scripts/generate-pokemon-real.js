@@ -35,10 +35,20 @@ async function fetchPokemon(id) {
     .sort((a, b) => a.slot - b.slot)
     .map(t => capitalize(t.type.name))
 
+  const abilities = pokemon.abilities
+    .sort((a, b) => a.slot - b.slot)
+    .map(a => ({ isHidden: a.is_hidden, name: a.ability.name.replace(/-/g, ' ') }))
+
+  const evYield = pokemon.stats
+    .filter(s => s.effort > 0)
+    .map(s => ({ stat: s.stat.name, value: s.effort }))
+
   return {
+    abilities,
     attack: stats['attack'],
     defense: stats['defense'],
     description: getEnglishFlavorText(species.flavor_text_entries),
+    evYield,
     generation: GENERATION_MAP[species.generation.name] ?? 1,
     height: parseFloat((pokemon.height / 10).toFixed(1)),
     hp: stats['hp'],

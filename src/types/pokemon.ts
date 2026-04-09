@@ -1,8 +1,10 @@
 export type Pokemon = {
+  abilities?: { isHidden: boolean; name: string }[]
   attack: number
   blurDataURL?: string
   defense: number
   description: string
+  evYield?: { stat: string; value: number }[]
   generation: number
   height: number
   hp: number
