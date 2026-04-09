@@ -5,13 +5,14 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { useGifHover } from '@/hooks/card/useGifHover'
 import { CARD_TRANSITION } from '@/lib/constants'
-import { formatPokedexId, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
+import { EV_STAT_LABELS, formatPokedexId, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
 
 import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
+import { TypeIcon } from './TypeIcon'
 
 export function ExpandedCard({
   active,
@@ -30,7 +31,7 @@ export function ExpandedCard({
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const bst = pokemon.hp + pokemon.attack + pokemon.defense + pokemon.specialAttack + pokemon.specialDefense + pokemon.speed
-  const { immunities, weaknesses } = getTypeMatchups(pokemon.types)
+  const { immunities, resistances, weaknesses } = getTypeMatchups(pokemon.types)
   const {
     gifMounted,
     gifReady,
@@ -244,6 +245,21 @@ export function ExpandedCard({
                   initial={{ opacity: 0 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
                 >
+                  {pokemon.evYield && pokemon.evYield.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span className="w-14 shrink-0 text-white/70">EV</span>
+                      <div className="flex flex-nowrap gap-1.5">
+                        {pokemon.evYield.map(({ stat, value }) => (
+                          <span
+                            className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium text-white"
+                            key={stat}
+                          >
+                            +{value} {EV_STAT_LABELS[stat] ?? stat}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   {pokemon.abilities && pokemon.abilities.length > 0 && (
                     <div className="flex items-center gap-2">
                       <span className="w-14 shrink-0 text-white/70">Ability</span>
@@ -260,9 +276,9 @@ export function ExpandedCard({
                       </div>
                     </div>
                   )}
-                  {(weaknesses.length > 0 || immunities.length > 0) && (
+                  {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
                     <TooltipProvider>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-3 gap-2">
                       <div className="min-w-0">
                         <span className="mb-1 block text-white/60">Weak</span>
                         <div className="flex flex-wrap gap-1">
@@ -272,11 +288,22 @@ export function ExpandedCard({
                         </div>
                       </div>
                       <div className="min-w-0">
+                        <span className="mb-1 block text-white/60">Resist</span>
+                        <div className="flex flex-wrap gap-1">
+                          {resistances.length > 0
+                            ? resistances.map(({ multiplier, type }) => (
+                                <TypeIcon key={type} multiplier={multiplier} type={type} />
+                              ))
+                            : <span className="text-white/30">—</span>
+                          }
+                        </div>
+                      </div>
+                      <div className="min-w-0">
                         <span className="mb-1 block text-white/60">Immune</span>
                         <div className="flex flex-wrap gap-1">
                           {immunities.length > 0
                             ? immunities.map(type => (
-                                <TypeIcon key={type} type={type} />
+                                <TypeIcon immune key={type} type={type} />
                               ))
                             : <span className="text-white/30">—</span>
                           }
@@ -295,26 +322,4 @@ export function ExpandedCard({
   )
 }
 
-function TypeIcon({ multiplier, type }: { multiplier?: 2 | 4; type: string }) {
-  const muted = multiplier === undefined
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <span
-          className={`relative flex shrink-0 items-center justify-center rounded-md p-1 ${getTypeColor(type)} ${muted ? 'opacity-50' : ''} ${multiplier === 4 ? 'ring-2 ring-white/70' : ''}`}
-        >
-          <Image alt="" aria-hidden="true" height={18} src={`/icons/${type.toLowerCase()}.svg`} unoptimized width={18} />
-          {multiplier && (
-            <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-black/70 text-[8px] font-bold leading-none text-white">
-              {multiplier}
-            </span>
-          )}
-        </span>
-      </TooltipTrigger>
-      <TooltipContent>
-        {multiplier ? `${type} ×${multiplier}` : type}
-      </TooltipContent>
-    </Tooltip>
-  )
-}
 

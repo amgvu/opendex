@@ -26,6 +26,15 @@ export const getTypeColor = (type: string) => {
 export const formatPokedexId = (id: number) =>
   `#${String(id).padStart(4, '0')}`
 
+export const EV_STAT_LABELS: Record<string, string> = {
+  'attack': 'Atk',
+  'defense': 'Def',
+  'hp': 'HP',
+  'special-attack': 'Sp.Atk',
+  'special-defense': 'Sp.Def',
+  'speed': 'Spd'
+}
+
 // Attacking type → defending type → multiplier (omitted = 1)
 const TYPE_CHART: Record<string, Record<string, number>> = {
   Bug:      { Dark: 2, Fairy: 0.5, Fighting: 0.5, Fire: 0.5, Flying: 0.5, Ghost: 0.5, Grass: 2, Poison: 0.5, Psychic: 2, Steel: 0.5 },
