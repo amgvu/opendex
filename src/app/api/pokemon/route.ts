@@ -83,7 +83,13 @@ function getFilteredSorted(
     result = result.filter(p => gens.includes(p.generation))
   }
 
+  const bst = (p: typeof result[0]) =>
+    p.hp + p.attack + p.defense + p.specialAttack + p.specialDefense + p.speed
+
   result.sort((a, b) => {
+    if (sortBy === 'bst') {
+      return sortOrder === 'asc' ? bst(a) - bst(b) : bst(b) - bst(a)
+    }
     const aVal = a[sortBy as keyof typeof a]
     const bVal = b[sortBy as keyof typeof b]
     if (typeof aVal === 'string' && typeof bVal === 'string') {

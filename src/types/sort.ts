@@ -1,5 +1,6 @@
 export type SortField =
   | 'attack'
+  | 'bst'
   | 'defense'
   | 'generation'
   | 'hp'
@@ -20,5 +21,6 @@ export const SORT_FIELDS: { field: SortField; label: string }[] = [
   { field: 'defense', label: 'DEF' },
   { field: 'specialAttack', label: 'SP.ATK' },
   { field: 'specialDefense', label: 'SP.DEF' },
-  { field: 'speed', label: 'SPD' }
+  { field: 'speed', label: 'SPD' },
+  { field: 'bst', label: 'BST' }
 ]
