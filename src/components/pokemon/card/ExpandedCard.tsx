@@ -1,5 +1,5 @@
 import { Label, Switch, Tabs } from '@heroui/react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, type RefObject, type SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
@@ -37,7 +37,8 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const tabPanelClass = 'h-56 xl:h-68 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  const dragControls = useDragControls()
+  const tabPanelClass = 'h-56 xl:h-68 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
   const bst =
     pokemon.hp +
     pokemon.attack +
@@ -85,7 +86,9 @@ export function ExpandedCard({
               className={`relative w-full max-w-md xl:max-w-xl cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
+              dragControls={dragControls}
               dragElastic={0.1}
+              dragListener={false}
               layoutId={`card-${pokemon.id}-${id}`}
               onDragEnd={(_, info) => {
                 setDragging(false)
@@ -109,6 +112,11 @@ export function ExpandedCard({
               />
               <div
                 className={`relative p-6 ${dragging ? 'select-none' : 'select-text'}`}
+                onPointerDown={e => {
+                  if (!(e.target as Element).closest('[data-no-drag]')) {
+                    dragControls.start(e)
+                  }
+                }}
               >
                 <div className="mb-4 flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
@@ -228,6 +236,7 @@ export function ExpandedCard({
 
                 <motion.div
                   animate={{ opacity: 1 }}
+                  data-no-drag
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
