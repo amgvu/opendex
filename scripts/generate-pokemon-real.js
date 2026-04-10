@@ -37,7 +37,7 @@ async function fetchPokemon(id) {
 
   const abilities = pokemon.abilities
     .sort((a, b) => a.slot - b.slot)
-    .map(a => ({ isHidden: a.is_hidden, name: a.ability.name.replace(/-/g, ' ') }))
+    .map(a => ({ isHidden: a.is_hidden, name: a.ability.name.replace(/-/g, ' '), url: a.ability.url }))
 
   const evYield = pokemon.stats
     .filter(s => s.effort > 0)
@@ -83,6 +83,35 @@ async function main() {
     const data = await Promise.all(chunk.map(fetchPokemon))
     results.push(...data)
     console.log(`  Fetched ${Math.min(i + CHUNK_SIZE, TOTAL)}/${TOTAL}`)
+  }
+
+  // Fetch descriptions for all unique abilities
+  console.log('\nFetching ability descriptions...')
+  const abilityUrls = new Map()
+  for (const p of results) {
+    for (const a of p.abilities) {
+      if (!abilityUrls.has(a.name)) abilityUrls.set(a.name, a.url)
+    }
+  }
+  const abilityDescriptions = {}
+  const abilityNames = [...abilityUrls.keys()]
+  for (let i = 0; i < abilityNames.length; i += CHUNK_SIZE) {
+    const chunk = abilityNames.slice(i, i + CHUNK_SIZE)
+    await Promise.all(chunk.map(async name => {
+      const data = await fetch(abilityUrls.get(name)).then(r => r.json())
+      const entry = data.effect_entries.find(e => e.language.name === 'en')
+      abilityDescriptions[name] = entry?.short_effect ?? ''
+    }))
+    console.log(`  Abilities: ${Math.min(i + CHUNK_SIZE, abilityNames.length)}/${abilityNames.length}`)
+  }
+
+  // Attach descriptions and strip URL
+  for (const p of results) {
+    p.abilities = p.abilities.map(({ isHidden, name }) => ({
+      description: abilityDescriptions[name] ?? '',
+      isHidden,
+      name
+    }))
   }
 
   const outputPath = path.join(__dirname, '..', 'src', 'data', 'pokemon.json')

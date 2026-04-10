@@ -261,7 +261,7 @@ export function ExpandedCard({
                       </Tabs.List>
                     </Tabs.ListContainer>
 
-                    <Tabs.Panel className="min-h-[14rem] xl:min-h-[17rem] space-y-3 pt-3 text-sm xl:text-base" id="stats">
+                    <Tabs.Panel className="min-h-56 xl:min-h-68 space-y-3 pt-3 text-sm xl:text-base" id="stats">
                       <div className="flex flex-col gap-2">
                         <StatBar label="HP" value={pokemon.hp} />
                         <StatBar label="Attack" value={pokemon.attack} />
@@ -286,7 +286,7 @@ export function ExpandedCard({
                       </div>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className="min-h-[14rem] xl:min-h-[17rem] space-y-2 pt-3 text-sm xl:text-base" id="battle">
+                    <Tabs.Panel className="min-h-56 xl:min-h-68 space-y-2 pt-3 text-sm xl:text-base" id="battle">
                       {pokemon.evYield && pokemon.evYield.length > 0 && (
                         <div className="flex items-center gap-2">
                           <span className="w-14 shrink-0 text-white/70">EV</span>
@@ -303,19 +303,21 @@ export function ExpandedCard({
                         </div>
                       )}
                       {pokemon.abilities && pokemon.abilities.length > 0 && (
-                        <div className="flex items-center gap-2">
-                          <span className="w-14 shrink-0 text-white/70">Ability</span>
-                          <div className="flex flex-nowrap gap-1.5 overflow-x-auto">
+                        <div className="flex flex-col gap-1.5">
+                          <span className="text-white/70">Abilities</span>
+                          <div className="flex flex-col gap-1.5">
                             {pokemon.abilities.map(a => (
-                              <span
-                                className="flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium capitalize text-white"
-                                key={a.name}
-                              >
-                                {a.name}
-                                {a.isHidden && (
-                                  <span className="text-[10px] text-white/50">HA</span>
+                              <div className="rounded-lg bg-white/10 px-3 py-2" key={a.name}>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="font-medium capitalize text-white">{a.name}</span>
+                                  {a.isHidden && (
+                                    <span className="text-[10px] text-white/50">HA</span>
+                                  )}
+                                </div>
+                                {a.description && (
+                                  <p className="mt-0.5 text-xs xl:text-sm text-white/60 leading-snug">{a.description}</p>
                                 )}
-                              </span>
+                              </div>
                             ))}
                           </div>
                         </div>
@@ -358,7 +360,7 @@ export function ExpandedCard({
                       )}
                     </Tabs.Panel>
 
-                    <Tabs.Panel className="min-h-[14rem] xl:min-h-[17rem] pt-3 text-sm xl:text-base" id="bio">
+                    <Tabs.Panel className="min-h-56 xl:min-h-68 pt-3 text-sm xl:text-base" id="bio">
                       <p className="text-white/70">{pokemon.description}</p>
                     </Tabs.Panel>
                   </Tabs>

@@ -1,5 +1,5 @@
 export type Pokemon = {
-  abilities?: { isHidden: boolean; name: string }[]
+  abilities?: { description?: string; isHidden: boolean; name: string }[]
   attack: number
   blurDataURL?: string
   defense: number
