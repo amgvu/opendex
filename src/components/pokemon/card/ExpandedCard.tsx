@@ -1,14 +1,21 @@
+import { Label, Switch } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { type RefObject, useRef, useState } from 'react'
+import { type CSSProperties, type RefObject, type SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { useGifHover } from '@/hooks/card/useGifHover'
+import { useGifSwitch } from '@/context/gif-switch'
 import { CARD_TRANSITION } from '@/lib/constants'
-import { EV_STAT_LABELS, formatPokedexId, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
+import {
+  bgClassToVar,
+  EV_STAT_LABELS,
+  formatPokedexId,
+  getTypeColor,
+  getTypeMatchups
+} from '@/lib/pokemon'
 
 import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
@@ -30,19 +37,43 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
-  const bst = pokemon.hp + pokemon.attack + pokemon.defense + pokemon.specialAttack + pokemon.specialDefense + pokemon.speed
+  const bst =
+    pokemon.hp +
+    pokemon.attack +
+    pokemon.defense +
+    pokemon.specialAttack +
+    pokemon.specialDefense +
+    pokemon.speed
   const { immunities, resistances, weaknesses } = getTypeMatchups(pokemon.types)
-  const {
-    gifMounted,
-    gifReady,
-    hovered,
-    onClick,
-    onPointerLeave,
-    onPointerMove,
-    setGifReady
-  } = useGifHover()
+  const { gifEnabled, setGifEnabled } = useGifSwitch()
+  const [gifMounted, setGifMounted] = useState(gifEnabled)
+  const [gifReady, setGifReady] = useState(false)
+  const [gifError, setGifError] = useState(false)
   const [dragging, setDragging] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (gifEnabled) setGifMounted(true)
+  }, [gifEnabled])
+
+  function handleArtworkLoad(e: SyntheticEvent<HTMLImageElement>) {
+    e.currentTarget.style.opacity = '1'
+    if (blurRef.current) blurRef.current.style.backgroundImage = 'none'
+  }
+
+  const artworkImage = (
+    <Image
+      alt={pokemon.name}
+      className="h-36 w-36 xl:h-64 xl:w-64 object-contain drop-shadow-2xl"
+      height={384}
+      onLoad={handleArtworkLoad}
+      sizes="200px"
+      src={pokemon.officialUrl}
+      style={{ opacity: 0, transition: 'opacity 0.2s' }}
+      unoptimized
+      width={384}
+    />
+  )
 
   return (
     <AnimatePresence>
@@ -109,7 +140,7 @@ export function ExpandedCard({
                     </span>
                   </div>
                   <motion.div
-                    className="flex flex-shrink-0 flex-wrap gap-1"
+                    className="flex shrink-0 flex-wrap gap-1"
                     layoutId={`types-${pokemon.id}-${id}`}
                     transition={CARD_TRANSITION}
                   >
@@ -124,13 +155,10 @@ export function ExpandedCard({
                   </motion.div>
                 </div>
 
-                {pokemon.imageUrl && (
+                {pokemon.officialUrl && (
                   <motion.div
                     className="relative mb-4 flex justify-center"
                     layoutId={`image-${pokemon.id}-${id}`}
-                    onClick={onClick}
-                    onPointerLeave={onPointerLeave}
-                    onPointerMove={onPointerMove}
                     transition={CARD_TRANSITION}
                   >
                     <div
@@ -147,36 +175,52 @@ export function ExpandedCard({
                       }
                     >
                       <motion.div
-                        animate={{ opacity: hovered && gifReady ? 0 : 1 }}
+                        animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <Image
-                          alt={pokemon.name}
-                          className="h-36 w-36 xl:h-64 xl:w-64 object-contain drop-shadow-2xl"
-                          height={384}
-                          onLoad={e => {
-                            e.currentTarget.style.opacity = '1'
-                            if (blurRef.current)
-                              blurRef.current.style.backgroundImage = 'none'
-                          }}
-                          sizes="200px"
-                          src={pokemon.officialUrl}
-                          style={{ opacity: 0, transition: 'opacity 0.2s' }}
-                          unoptimized
-                          width={384}
-                        />
+                        {artworkImage}
                       </motion.div>
                     </div>
-                    {gifMounted && (
+                    {!gifError && gifMounted && (
                       <motion.img
                         alt=""
-                        animate={{ opacity: hovered && gifReady ? 1 : 0 }}
+                        animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
                         className="absolute h-36 w-36 xl:h-64 xl:w-64 object-contain"
                         initial={{ opacity: 0 }}
+                        onError={() => setGifError(true)}
                         onLoad={() => setGifReady(true)}
                         src={pokemon.imageUrl}
                         transition={{ duration: 0.15 }}
                       />
+                    )}
+                    {!gifError && (
+                      <div className="absolute bottom-0 right-0">
+                        <Switch
+                          isSelected={gifEnabled}
+                          onChange={v => {
+                            if (v) setGifMounted(true)
+                            setGifEnabled(v)
+                          }}
+                          size="sm"
+                          style={
+                            {
+                              '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
+                              '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`,
+                              '--switch-control-bg-checked': bgClassToVar(typeColor),
+                              '--switch-control-bg-checked-hover': bgClassToVar(typeColor)
+                            } as CSSProperties
+                          }
+                        >
+                          <Switch.Control>
+                            <Switch.Thumb />
+                          </Switch.Control>
+                          <Switch.Content>
+                            <Label className="text-xs font-medium text-white/70 select-none">
+                              3D
+                            </Label>
+                          </Switch.Content>
+                        </Switch>
+                      </div>
                     )}
                   </motion.div>
                 )}
@@ -205,8 +249,12 @@ export function ExpandedCard({
                   <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
                   <StatBar label="Speed" value={pokemon.speed} />
                   <div className="mt-1 flex items-center gap-3 border-t border-white/20 pt-2 text-sm xl:text-base">
-                    <span className="w-20 xl:w-24 shrink-0 text-white/70">Total</span>
-                    <span className="w-8 shrink-0 text-right font-medium text-white">{bst}</span>
+                    <span className="w-20 xl:w-24 shrink-0 text-white/70">
+                      Total
+                    </span>
+                    <span className="w-8 shrink-0 text-right font-medium text-white">
+                      {bst}
+                    </span>
                     <div className="flex-1" />
                   </div>
                 </motion.div>
@@ -262,7 +310,9 @@ export function ExpandedCard({
                   )}
                   {pokemon.abilities && pokemon.abilities.length > 0 && (
                     <div className="flex items-center gap-2">
-                      <span className="w-14 shrink-0 text-white/70">Ability</span>
+                      <span className="w-14 shrink-0 text-white/70">
+                        Ability
+                      </span>
                       <div className="flex flex-nowrap gap-1.5 overflow-x-auto">
                         {pokemon.abilities.map(a => (
                           <span
@@ -270,46 +320,66 @@ export function ExpandedCard({
                             key={a.name}
                           >
                             {a.name}
-                            {a.isHidden && <span className="text-[10px] text-white/50">HA</span>}
+                            {a.isHidden && (
+                              <span className="text-[10px] text-white/50">
+                                HA
+                              </span>
+                            )}
                           </span>
                         ))}
                       </div>
                     </div>
                   )}
-                  {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
+                  {(weaknesses.length > 0 ||
+                    resistances.length > 0 ||
+                    immunities.length > 0) && (
                     <TooltipProvider>
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="min-w-0">
-                        <span className="mb-1 block text-white/60">Weak</span>
-                        <div className="flex flex-wrap gap-1">
-                          {weaknesses.map(({ multiplier, type }) => (
-                            <TypeIcon key={type} multiplier={multiplier} type={type} />
-                          ))}
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="min-w-0">
+                          <span className="mb-1 block text-white/60">Weak</span>
+                          <div className="flex flex-wrap gap-1">
+                            {weaknesses.map(({ multiplier, type }) => (
+                              <TypeIcon
+                                key={type}
+                                multiplier={multiplier}
+                                type={type}
+                              />
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                      <div className="min-w-0">
-                        <span className="mb-1 block text-white/60">Resist</span>
-                        <div className="flex flex-wrap gap-1">
-                          {resistances.length > 0
-                            ? resistances.map(({ multiplier, type }) => (
-                                <TypeIcon key={type} multiplier={multiplier} type={type} />
+                        <div className="min-w-0">
+                          <span className="mb-1 block text-white/60">
+                            Resist
+                          </span>
+                          <div className="flex flex-wrap gap-1">
+                            {resistances.length > 0 ? (
+                              resistances.map(({ multiplier, type }) => (
+                                <TypeIcon
+                                  key={type}
+                                  multiplier={multiplier}
+                                  type={type}
+                                />
                               ))
-                            : <span className="text-white/30">—</span>
-                          }
+                            ) : (
+                              <span className="text-white/30">—</span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <div className="min-w-0">
-                        <span className="mb-1 block text-white/60">Immune</span>
-                        <div className="flex flex-wrap gap-1">
-                          {immunities.length > 0
-                            ? immunities.map(type => (
+                        <div className="min-w-0">
+                          <span className="mb-1 block text-white/60">
+                            Immune
+                          </span>
+                          <div className="flex flex-wrap gap-1">
+                            {immunities.length > 0 ? (
+                              immunities.map(type => (
                                 <TypeIcon immune key={type} type={type} />
                               ))
-                            : <span className="text-white/30">—</span>
-                          }
+                            ) : (
+                              <span className="text-white/30">—</span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
                     </TooltipProvider>
                   )}
                 </motion.div>
@@ -321,5 +391,3 @@ export function ExpandedCard({
     </AnimatePresence>
   )
 }
-
-
