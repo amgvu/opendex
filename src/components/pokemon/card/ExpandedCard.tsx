@@ -38,7 +38,7 @@ export function ExpandedCard({
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const dragControls = useDragControls()
-  const tabPanelClass = 'h-56 xl:h-68 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  const tabPanelClass = 'h-64 xl:h-68 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
   const bst =
     pokemon.hp +
     pokemon.attack +
