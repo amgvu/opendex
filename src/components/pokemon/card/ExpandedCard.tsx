@@ -83,7 +83,7 @@ export function ExpandedCard({
         <>
           <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
-              className={`relative w-full max-w-md xl:max-w-xl cursor-grab overflow-hidden rounded-2xl shadow-2xl active:cursor-grabbing ${typeColor}`}
+              className={`relative w-full max-w-md xl:max-w-xl overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragControls={dragControls}
@@ -111,7 +111,7 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative p-6 ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative cursor-grab p-6 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
@@ -236,6 +236,7 @@ export function ExpandedCard({
 
                 <motion.div
                   animate={{ opacity: 1 }}
+                  className="cursor-auto"
                   data-no-drag
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
