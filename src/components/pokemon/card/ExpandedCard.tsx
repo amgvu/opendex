@@ -1,4 +1,4 @@
-import { Label, Switch } from '@heroui/react'
+import { Label, Switch, Tabs } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, type RefObject, type SyntheticEvent, useEffect, useRef, useState } from 'react'
@@ -135,9 +135,12 @@ export function ExpandedCard({
                         </motion.div>
                       )}
                     </div>
-                    <span className="text-sm xl:text-base tracking-wide font-semibold text-white/60">
-                      {formatPokedexId(pokemon.id)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm xl:text-base tracking-wide font-semibold text-white/60">
+                        {formatPokedexId(pokemon.id)}
+                      </span>
+                      <span className="text-xs xl:text-sm font-medium text-white/30">BST {bst}</span>
+                    </div>
                   </div>
                   <motion.div
                     className="flex shrink-0 flex-wrap gap-1"
@@ -205,9 +208,9 @@ export function ExpandedCard({
                           style={
                             {
                               '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                              '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`,
                               '--switch-control-bg-checked': bgClassToVar(typeColor),
-                              '--switch-control-bg-checked-hover': bgClassToVar(typeColor)
+                              '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
+                              '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
                             } as CSSProperties
                           }
                         >
@@ -225,163 +228,140 @@ export function ExpandedCard({
                   </motion.div>
                 )}
 
-                <motion.p
+                <motion.div
                   animate={{ opacity: 1 }}
-                  className="mb-4 text-sm xl:text-base text-white/70"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
                 >
-                  {pokemon.description}
-                </motion.p>
+                  <Tabs
+                    defaultSelectedKey="stats"
+                    style={{
+                      '--accent': bgClassToVar(typeColor),
+                      '--border': 'rgba(255,255,255,0.25)',
+                      '--foreground': 'white',
+                      '--muted': 'rgba(255,255,255,0.5)'
+                    } as CSSProperties}
+                    variant="secondary"
+                  >
+                    <Tabs.ListContainer>
+                      <Tabs.List aria-label="Pokemon info">
+                        <Tabs.Tab id="stats">
+                          Stats
+                          <Tabs.Indicator />
+                        </Tabs.Tab>
+                        <Tabs.Tab id="battle">
+                          Battle
+                          <Tabs.Indicator />
+                        </Tabs.Tab>
+                        <Tabs.Tab id="bio">
+                          Bio
+                          <Tabs.Indicator />
+                        </Tabs.Tab>
+                      </Tabs.List>
+                    </Tabs.ListContainer>
 
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  className="flex flex-col gap-2"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                  transition={{ delay: 0.15, duration: 0.2 }}
-                >
-                  <StatBar label="HP" value={pokemon.hp} />
-                  <StatBar label="Attack" value={pokemon.attack} />
-                  <StatBar label="Defense" value={pokemon.defense} />
-                  <StatBar label="Sp. Attack" value={pokemon.specialAttack} />
-                  <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
-                  <StatBar label="Speed" value={pokemon.speed} />
-                  <div className="mt-1 flex items-center gap-3 border-t border-white/20 pt-2 text-sm xl:text-base">
-                    <span className="w-20 xl:w-24 shrink-0 text-white/70">
-                      Total
-                    </span>
-                    <span className="w-8 shrink-0 text-right font-medium text-white">
-                      {bst}
-                    </span>
-                    <div className="flex-1" />
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  className="mt-2 grid grid-cols-3 gap-2 text-sm xl:text-base"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                  transition={{ delay: 0.15, duration: 0.15 }}
-                >
-                  <div className="flex flex-col">
-                    <span className="text-white/60">Height</span>
-                    <span className="font-medium text-white">
-                      {pokemon.height.toFixed(1)}m
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white/60">Weight</span>
-                    <span className="font-medium text-white">
-                      {pokemon.weight.toFixed(1)} lbs
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white/60">Gen</span>
-                    <span className="font-medium text-white">
-                      {pokemon.generation}
-                    </span>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  className="mt-2 space-y-2 text-sm xl:text-base"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                  transition={{ delay: 0.15, duration: 0.2 }}
-                >
-                  {pokemon.evYield && pokemon.evYield.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      <span className="w-14 shrink-0 text-white/70">EV</span>
-                      <div className="flex flex-nowrap gap-1.5">
-                        {pokemon.evYield.map(({ stat, value }) => (
-                          <span
-                            className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium text-white"
-                            key={stat}
-                          >
-                            +{value} {EV_STAT_LABELS[stat] ?? stat}
-                          </span>
-                        ))}
+                    <Tabs.Panel className="min-h-[14rem] xl:min-h-[17rem] space-y-3 pt-3 text-sm xl:text-base" id="stats">
+                      <div className="flex flex-col gap-2">
+                        <StatBar label="HP" value={pokemon.hp} />
+                        <StatBar label="Attack" value={pokemon.attack} />
+                        <StatBar label="Defense" value={pokemon.defense} />
+                        <StatBar label="Sp. Attack" value={pokemon.specialAttack} />
+                        <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
+                        <StatBar label="Speed" value={pokemon.speed} />
                       </div>
-                    </div>
-                  )}
-                  {pokemon.abilities && pokemon.abilities.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      <span className="w-14 shrink-0 text-white/70">
-                        Ability
-                      </span>
-                      <div className="flex flex-nowrap gap-1.5 overflow-x-auto">
-                        {pokemon.abilities.map(a => (
-                          <span
-                            className="flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium capitalize text-white"
-                            key={a.name}
-                          >
-                            {a.name}
-                            {a.isHidden && (
-                              <span className="text-[10px] text-white/50">
-                                HA
-                              </span>
-                            )}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {(weaknesses.length > 0 ||
-                    resistances.length > 0 ||
-                    immunities.length > 0) && (
-                    <TooltipProvider>
                       <div className="grid grid-cols-3 gap-2">
-                        <div className="min-w-0">
-                          <span className="mb-1 block text-white/60">Weak</span>
-                          <div className="flex flex-wrap gap-1">
-                            {weaknesses.map(({ multiplier, type }) => (
-                              <TypeIcon
-                                key={type}
-                                multiplier={multiplier}
-                                type={type}
-                              />
+                        <div className="flex flex-col">
+                          <span className="text-white/60">Height</span>
+                          <span className="font-medium text-white">{pokemon.height.toFixed(1)}m</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-white/60">Weight</span>
+                          <span className="font-medium text-white">{pokemon.weight.toFixed(1)} lbs</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-white/60">Gen</span>
+                          <span className="font-medium text-white">{pokemon.generation}</span>
+                        </div>
+                      </div>
+                    </Tabs.Panel>
+
+                    <Tabs.Panel className="min-h-[14rem] xl:min-h-[17rem] space-y-2 pt-3 text-sm xl:text-base" id="battle">
+                      {pokemon.evYield && pokemon.evYield.length > 0 && (
+                        <div className="flex items-center gap-2">
+                          <span className="w-14 shrink-0 text-white/70">EV</span>
+                          <div className="flex flex-nowrap gap-1.5">
+                            {pokemon.evYield.map(({ stat, value }) => (
+                              <span
+                                className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium text-white"
+                                key={stat}
+                              >
+                                +{value} {EV_STAT_LABELS[stat] ?? stat}
+                              </span>
                             ))}
                           </div>
                         </div>
-                        <div className="min-w-0">
-                          <span className="mb-1 block text-white/60">
-                            Resist
-                          </span>
-                          <div className="flex flex-wrap gap-1">
-                            {resistances.length > 0 ? (
-                              resistances.map(({ multiplier, type }) => (
-                                <TypeIcon
-                                  key={type}
-                                  multiplier={multiplier}
-                                  type={type}
-                                />
-                              ))
-                            ) : (
-                              <span className="text-white/30">—</span>
-                            )}
+                      )}
+                      {pokemon.abilities && pokemon.abilities.length > 0 && (
+                        <div className="flex items-center gap-2">
+                          <span className="w-14 shrink-0 text-white/70">Ability</span>
+                          <div className="flex flex-nowrap gap-1.5 overflow-x-auto">
+                            {pokemon.abilities.map(a => (
+                              <span
+                                className="flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium capitalize text-white"
+                                key={a.name}
+                              >
+                                {a.name}
+                                {a.isHidden && (
+                                  <span className="text-[10px] text-white/50">HA</span>
+                                )}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                        <div className="min-w-0">
-                          <span className="mb-1 block text-white/60">
-                            Immune
-                          </span>
-                          <div className="flex flex-wrap gap-1">
-                            {immunities.length > 0 ? (
-                              immunities.map(type => (
-                                <TypeIcon immune key={type} type={type} />
-                              ))
-                            ) : (
-                              <span className="text-white/30">—</span>
-                            )}
+                      )}
+                      {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
+                        <TooltipProvider>
+                          <div className="grid grid-cols-3 gap-2">
+                            <div className="min-w-0">
+                              <span className="mb-1 block text-white/60">Weak</span>
+                              <div className="flex flex-wrap gap-1">
+                                {weaknesses.map(({ multiplier, type }) => (
+                                  <TypeIcon key={type} multiplier={multiplier} type={type} />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="min-w-0">
+                              <span className="mb-1 block text-white/60">Resist</span>
+                              <div className="flex flex-wrap gap-1">
+                                {resistances.length > 0
+                                  ? resistances.map(({ multiplier, type }) => (
+                                      <TypeIcon key={type} multiplier={multiplier} type={type} />
+                                    ))
+                                  : <span className="text-white/30">—</span>
+                                }
+                              </div>
+                            </div>
+                            <div className="min-w-0">
+                              <span className="mb-1 block text-white/60">Immune</span>
+                              <div className="flex flex-wrap gap-1">
+                                {immunities.length > 0
+                                  ? immunities.map(type => (
+                                      <TypeIcon immune key={type} type={type} />
+                                    ))
+                                  : <span className="text-white/30">—</span>
+                                }
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </TooltipProvider>
-                  )}
+                        </TooltipProvider>
+                      )}
+                    </Tabs.Panel>
+
+                    <Tabs.Panel className="min-h-[14rem] xl:min-h-[17rem] pt-3 text-sm xl:text-base" id="bio">
+                      <p className="text-white/70">{pokemon.description}</p>
+                    </Tabs.Panel>
+                  </Tabs>
                 </motion.div>
               </div>
             </motion.div>
