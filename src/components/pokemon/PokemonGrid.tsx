@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { GifSwitchProvider } from '@/context/gif-switch'
+import { CardProvider } from '@/context/card'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
 import { useFilters } from '@/hooks/filters/useFilters'
 import { useSearch } from '@/hooks/filters/useSearch'
@@ -60,7 +60,7 @@ export default function PokemonGrid() {
     )
 
   return (
-    <GifSwitchProvider>
+    <CardProvider>
       <AnimatePresence>
         {selectedId && (
           <motion.div
@@ -148,6 +148,6 @@ export default function PokemonGrid() {
           </div>
         )}
       </div>
-    </GifSwitchProvider>
+    </CardProvider>
   )
 }

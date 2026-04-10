@@ -64,11 +64,11 @@ export function useCardNavigation({
   useEffect(() => {
     if (!selectedId) return
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'ArrowRight') onNext()
-      if (e.key === 'ArrowLeft') onPrev()
+      if (e.key === 'ArrowRight') { e.stopPropagation(); onNext() }
+      else if (e.key === 'ArrowLeft') { e.stopPropagation(); onPrev() }
     }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
+    window.addEventListener('keydown', onKeyDown, { capture: true })
+    return () => window.removeEventListener('keydown', onKeyDown, { capture: true })
   }, [onNext, onPrev, selectedId])
 
   return { onNext, onPrev }

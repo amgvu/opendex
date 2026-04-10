@@ -7,7 +7,7 @@ import { IoMdStar } from 'react-icons/io'
 import type { Pokemon } from '@/types/pokemon'
 
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { useGifSwitch } from '@/context/gif-switch'
+import { useCardContext } from '@/context/card'
 import { CARD_TRANSITION } from '@/lib/constants'
 import {
   bgClassToVar,
@@ -46,7 +46,7 @@ export function ExpandedCard({
     pokemon.specialDefense +
     pokemon.speed
   const { immunities, resistances, weaknesses } = getTypeMatchups(pokemon.types)
-  const { gifEnabled, setGifEnabled } = useGifSwitch()
+  const { activeTab, gifEnabled, setActiveTab, setGifEnabled } = useCardContext()
   const [gifMounted, setGifMounted] = useState(gifEnabled)
   const [gifReady, setGifReady] = useState(false)
   const [gifError, setGifError] = useState(false)
@@ -233,7 +233,8 @@ export function ExpandedCard({
                   transition={{ delay: 0.15, duration: 0.2 }}
                 >
                   <Tabs
-                    defaultSelectedKey="stats"
+                    onSelectionChange={key => setActiveTab(key as 'battle' | 'bio' | 'stats')}
+                    selectedKey={activeTab}
                     style={{
                       '--accent': bgClassToVar(typeColor),
                       '--border': 'rgba(255,255,255,0.25)',
