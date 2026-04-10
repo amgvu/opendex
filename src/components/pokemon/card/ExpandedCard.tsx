@@ -37,6 +37,7 @@ export function ExpandedCard({
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
+  const tabPanelClass = 'h-56 xl:h-68 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
   const bst =
     pokemon.hp +
     pokemon.attack +
@@ -135,12 +136,9 @@ export function ExpandedCard({
                         </motion.div>
                       )}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm xl:text-base tracking-wide font-semibold text-white/60">
-                        {formatPokedexId(pokemon.id)}
-                      </span>
-                      <span className="text-xs xl:text-sm font-medium text-white/30">BST {bst}</span>
-                    </div>
+                    <span className="text-sm xl:text-base tracking-wide font-semibold text-white/60">
+                      {formatPokedexId(pokemon.id)}
+                    </span>
                   </div>
                   <motion.div
                     className="flex shrink-0 flex-wrap gap-1"
@@ -247,7 +245,10 @@ export function ExpandedCard({
                     <Tabs.ListContainer>
                       <Tabs.List aria-label="Pokemon info">
                         <Tabs.Tab id="stats">
-                          Stats
+                          <span className="flex items-center gap-1.5">
+                            Stats
+                            <span className="text-[10px] font-medium opacity-50">{bst}</span>
+                          </span>
                           <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab id="battle">
@@ -261,107 +262,127 @@ export function ExpandedCard({
                       </Tabs.List>
                     </Tabs.ListContainer>
 
-                    <Tabs.Panel className="min-h-56 xl:min-h-68 space-y-3 pt-3 text-sm xl:text-base" id="stats">
-                      <div className="flex flex-col gap-2">
-                        <StatBar label="HP" value={pokemon.hp} />
-                        <StatBar label="Attack" value={pokemon.attack} />
-                        <StatBar label="Defense" value={pokemon.defense} />
-                        <StatBar label="Sp. Attack" value={pokemon.specialAttack} />
-                        <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
-                        <StatBar label="Speed" value={pokemon.speed} />
-                      </div>
-                      <div className="grid grid-cols-3 gap-2">
-                        <div className="flex flex-col">
-                          <span className="text-white/60">Height</span>
-                          <span className="font-medium text-white">{pokemon.height.toFixed(1)}m</span>
+                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base`} id="stats">
+                      <motion.div
+                        animate={{ opacity: 1, x: 0 }}
+                        className="space-y-5"
+                        initial={{ opacity: 0, x: -10 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <div className="flex flex-col gap-2">
+                          <StatBar label="HP" value={pokemon.hp} />
+                          <StatBar label="Attack" value={pokemon.attack} />
+                          <StatBar label="Defense" value={pokemon.defense} />
+                          <StatBar label="Sp. Attack" value={pokemon.specialAttack} />
+                          <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
+                          <StatBar label="Speed" value={pokemon.speed} />
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-white/60">Weight</span>
-                          <span className="font-medium text-white">{pokemon.weight.toFixed(1)} lbs</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-white/60">Gen</span>
-                          <span className="font-medium text-white">{pokemon.generation}</span>
-                        </div>
-                      </div>
-                    </Tabs.Panel>
-
-                    <Tabs.Panel className="min-h-56 xl:min-h-68 space-y-2 pt-3 text-sm xl:text-base" id="battle">
-                      {pokemon.evYield && pokemon.evYield.length > 0 && (
-                        <div className="flex items-center gap-2">
-                          <span className="w-14 shrink-0 text-white/70">EV</span>
-                          <div className="flex flex-nowrap gap-1.5">
-                            {pokemon.evYield.map(({ stat, value }) => (
-                              <span
-                                className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium text-white"
-                                key={stat}
-                              >
-                                +{value} {EV_STAT_LABELS[stat] ?? stat}
-                              </span>
-                            ))}
+                        <div className="grid grid-cols-3 gap-2">
+                          <div className="flex flex-col">
+                            <span className="text-white/60">Height</span>
+                            <span className="font-medium text-white">{pokemon.height.toFixed(1)}m</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-white/60">Weight</span>
+                            <span className="font-medium text-white">{pokemon.weight.toFixed(1)} lbs</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-white/60">Gen</span>
+                            <span className="font-medium text-white">{pokemon.generation}</span>
                           </div>
                         </div>
-                      )}
-                      {pokemon.abilities && pokemon.abilities.length > 0 && (
-                        <div className="flex flex-col gap-1.5">
-                          <span className="text-white/70">Abilities</span>
+                      </motion.div>
+                    </Tabs.Panel>
+
+                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base`} id="battle">
+                      <motion.div
+                        animate={{ opacity: 1, x: 0 }}
+                        className="space-y-2"
+                        initial={{ opacity: 0, x: -10 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        {pokemon.evYield && pokemon.evYield.length > 0 && (
+                          <div className="flex items-center gap-2">
+                            <span className="w-14 shrink-0 text-white/70">EV</span>
+                            <div className="flex flex-nowrap gap-1.5">
+                              {pokemon.evYield.map(({ stat, value }) => (
+                                <span
+                                  className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium text-white"
+                                  key={stat}
+                                >
+                                  +{value} {EV_STAT_LABELS[stat] ?? stat}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        {pokemon.abilities && pokemon.abilities.length > 0 && (
                           <div className="flex flex-col gap-1.5">
-                            {pokemon.abilities.map(a => (
-                              <div className="rounded-lg bg-white/10 px-3 py-2" key={a.name}>
-                                <div className="flex items-center gap-1.5">
-                                  <span className="font-medium capitalize text-white">{a.name}</span>
-                                  {a.isHidden && (
-                                    <span className="text-[10px] text-white/50">HA</span>
+                            <span className="text-white/70">Abilities</span>
+                            <div className="flex flex-col gap-1.5">
+                              {pokemon.abilities.map(a => (
+                                <div className="rounded-lg bg-white/10 px-3 py-2" key={a.name}>
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="font-medium capitalize text-white">{a.name}</span>
+                                    {a.isHidden && (
+                                      <span className="text-[10px] text-white/50">HA</span>
+                                    )}
+                                  </div>
+                                  {a.description && (
+                                    <p className="mt-0.5 text-xs xl:text-sm text-white/60 leading-snug">{a.description}</p>
                                   )}
                                 </div>
-                                {a.description && (
-                                  <p className="mt-0.5 text-xs xl:text-sm text-white/60 leading-snug">{a.description}</p>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
-                        <TooltipProvider>
-                          <div className="grid grid-cols-3 gap-2">
-                            <div className="min-w-0">
-                              <span className="mb-1 block text-white/60">Weak</span>
-                              <div className="flex flex-wrap gap-1">
-                                {weaknesses.map(({ multiplier, type }) => (
-                                  <TypeIcon key={type} multiplier={multiplier} type={type} />
-                                ))}
-                              </div>
-                            </div>
-                            <div className="min-w-0">
-                              <span className="mb-1 block text-white/60">Resist</span>
-                              <div className="flex flex-wrap gap-1">
-                                {resistances.length > 0
-                                  ? resistances.map(({ multiplier, type }) => (
-                                      <TypeIcon key={type} multiplier={multiplier} type={type} />
-                                    ))
-                                  : <span className="text-white/30">—</span>
-                                }
-                              </div>
-                            </div>
-                            <div className="min-w-0">
-                              <span className="mb-1 block text-white/60">Immune</span>
-                              <div className="flex flex-wrap gap-1">
-                                {immunities.length > 0
-                                  ? immunities.map(type => (
-                                      <TypeIcon immune key={type} type={type} />
-                                    ))
-                                  : <span className="text-white/30">—</span>
-                                }
-                              </div>
+                              ))}
                             </div>
                           </div>
-                        </TooltipProvider>
-                      )}
+                        )}
+                        {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
+                          <TooltipProvider>
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="min-w-0">
+                                <span className="mb-1 block text-white/60">Weak</span>
+                                <div className="flex flex-wrap gap-1">
+                                  {weaknesses.map(({ multiplier, type }) => (
+                                    <TypeIcon key={type} multiplier={multiplier} type={type} />
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="min-w-0">
+                                <span className="mb-1 block text-white/60">Resist</span>
+                                <div className="flex flex-wrap gap-1">
+                                  {resistances.length > 0
+                                    ? resistances.map(({ multiplier, type }) => (
+                                        <TypeIcon key={type} multiplier={multiplier} type={type} />
+                                      ))
+                                    : <span className="text-white/30">—</span>
+                                  }
+                                </div>
+                              </div>
+                              <div className="min-w-0">
+                                <span className="mb-1 block text-white/60">Immune</span>
+                                <div className="flex flex-wrap gap-1">
+                                  {immunities.length > 0
+                                    ? immunities.map(type => (
+                                        <TypeIcon immune key={type} type={type} />
+                                      ))
+                                    : <span className="text-white/30">—</span>
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </TooltipProvider>
+                        )}
+                      </motion.div>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className="min-h-56 xl:min-h-68 pt-3 text-sm xl:text-base" id="bio">
-                      <p className="text-white/70">{pokemon.description}</p>
+                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base`} id="bio">
+                      <motion.div
+                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, x: -10 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <p className="text-white/70">{pokemon.description}</p>
+                      </motion.div>
                     </Tabs.Panel>
                   </Tabs>
                 </motion.div>
