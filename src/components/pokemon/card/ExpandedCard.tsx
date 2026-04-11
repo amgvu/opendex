@@ -30,7 +30,7 @@ import { TypeBadge } from './TypeBadge'
 import { TypeIcon } from './TypeIcon'
 
 const TAB_PANEL_SCROLL =
-  'flex-1 min-h-0 overflow-y-auto overscroll-contain touch-pan-y [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  'flex-1 min-h-0 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
 const GROWTH_RATE_LABELS: Record<string, string> = {
   erratic: 'Erratic',
@@ -101,7 +101,7 @@ export function ExpandedCard({
     <AnimatePresence>
       {active && (
         <>
-          <div className="fixed inset-0 z-50 grid place-items-center p-4 touch-none">
+          <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
               className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
               drag="x"
