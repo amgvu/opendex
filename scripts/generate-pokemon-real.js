@@ -43,13 +43,28 @@ async function fetchPokemon(id) {
     .filter(s => s.effort > 0)
     .map(s => ({ stat: s.stat.name, value: s.effort }))
 
+  const flavorTexts = getEnglishFlavorTexts(species.flavor_text_entries)
+  const description = flavorTexts[0]?.text ?? 'No description available.'
+
+  const genusEntry = species.genera?.find(g => g.language.name === 'en')
+
   return {
+    _evolutionChainUrl: species.evolution_chain?.url ?? null,
     abilities,
     attack: stats['attack'],
+    catchRate: species.capture_rate,
+    color: species.color?.name ?? undefined,
     defense: stats['defense'],
-    description: getEnglishFlavorText(species.flavor_text_entries),
+    description,
+    eggCycles: species.hatch_counter ?? undefined,
+    eggGroups: species.egg_groups?.map(g => g.name.replace(/-/g, ' ')) ?? undefined,
     evYield,
+    flavorTexts,
+    genderRate: species.gender_rate,
     generation: GENERATION_MAP[species.generation.name] ?? 1,
+    genus: genusEntry?.genus ?? undefined,
+    growthRate: species.growth_rate?.name ?? undefined,
+    habitat: species.habitat?.name ?? null,
     height: parseFloat((pokemon.height / 10).toFixed(1)),
     hp: stats['hp'],
     id: pokemon.id,
@@ -65,11 +80,56 @@ async function fetchPokemon(id) {
   }
 }
 
-function getEnglishFlavorText(entries) {
-  const entry = entries.find(e => e.language.name === 'en')
-  return entry
-    ? entry.flavor_text.replace(/[\n\f\r]/g, ' ').trim()
-    : 'No description available.'
+function formatTrigger(details) {
+  if (!details || !details.trigger) return 'Unknown'
+  const trigger = details.trigger.name
+  if (trigger === 'level-up') {
+    if (details.min_level) return `Lv. ${details.min_level}`
+    if (details.min_happiness) return 'Happiness'
+    if (details.min_beauty) return 'Beauty'
+    if (details.known_move) return `Know ${details.known_move.name.replace(/-/g, ' ')}`
+    if (details.held_item) return `Hold ${details.held_item.name.replace(/-/g, ' ')}`
+    if (details.time_of_day) return `${capitalize(details.time_of_day)} (level up)`
+    return 'Level up'
+  }
+  if (trigger === 'use-item') {
+    const item = details.item?.name ?? 'item'
+    return item.split('-').map(capitalize).join(' ')
+  }
+  if (trigger === 'trade') {
+    if (details.held_item) {
+      const item = details.held_item.name.replace(/-/g, ' ')
+      return `Trade (${item})`
+    }
+    return 'Trade'
+  }
+  if (trigger === 'shed') return 'Shed (level 20 + empty slot)'
+  if (trigger === 'spin') return 'Spin'
+  if (trigger === 'tower-of-darkness') return 'Tower of Darkness'
+  if (trigger === 'tower-of-waters') return 'Tower of Waters'
+  if (trigger === 'three-critical-hits') return '3 critical hits'
+  if (trigger === 'take-damage') return 'Take damage'
+  if (trigger === 'other') return 'Special'
+  return trigger.split('-').map(capitalize).join(' ')
+}
+
+function getEnglishFlavorTexts(entries) {
+  const seen = new Set()
+  const texts = []
+  for (let i = entries.length - 1; i >= 0; i--) {
+    const e = entries[i]
+    if (e.language.name !== 'en') continue
+    const cleaned = e.flavor_text.replace(/[\n\f\r]/g, ' ').trim()
+    if (seen.has(cleaned)) continue
+    seen.add(cleaned)
+    texts.push({ game: e.version.name, text: cleaned })
+    if (texts.length >= 3) break
+  }
+  return texts.reverse()
+}
+
+function idFromUrl(url) {
+  return parseInt(url.split('/').filter(Boolean).pop(), 10)
 }
 
 async function main() {
@@ -105,7 +165,7 @@ async function main() {
     console.log(`  Abilities: ${Math.min(i + CHUNK_SIZE, abilityNames.length)}/${abilityNames.length}`)
   }
 
-  // Attach descriptions and strip URL
+  // Attach ability descriptions and strip URL
   for (const p of results) {
     p.abilities = p.abilities.map(({ isHidden, name }) => ({
       description: abilityDescriptions[name] ?? '',
@@ -114,12 +174,48 @@ async function main() {
     }))
   }
 
+  // Fetch evolution chains (deduplicated)
+  console.log('\nFetching evolution chains...')
+  const chainUrlToSteps = new Map()
+  const uniqueChainUrls = [...new Set(results.map(p => p._evolutionChainUrl).filter(Boolean))]
+
+  for (let i = 0; i < uniqueChainUrls.length; i += CHUNK_SIZE) {
+    const chunk = uniqueChainUrls.slice(i, i + CHUNK_SIZE)
+    await Promise.all(chunk.map(async url => {
+      const data = await fetch(url).then(r => r.json())
+      chainUrlToSteps.set(url, parseChain(data.chain))
+    }))
+    console.log(`  Chains: ${Math.min(i + CHUNK_SIZE, uniqueChainUrls.length)}/${uniqueChainUrls.length}`)
+  }
+
+  // Attach evolution chains and clean up temp field
+  for (const p of results) {
+    const url = p._evolutionChainUrl
+    p.evolutionChain = url ? (chainUrlToSteps.get(url) ?? []) : []
+    delete p._evolutionChainUrl
+  }
+
   const outputPath = path.join(__dirname, '..', 'src', 'data', 'pokemon.json')
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })
   fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
   console.log(`\nDone! Saved ${results.length} Pokemon to ${outputPath}`)
   console.log('Sample:', results[0].name, '|', results[0].types.join(', '))
+}
+
+function parseChain(node, steps = []) {
+  for (const next of node.evolves_to) {
+    const details = next.evolution_details[0] ?? {}
+    steps.push({
+      fromId: idFromUrl(node.species.url),
+      fromName: node.species.name,
+      toId: idFromUrl(next.species.url),
+      toName: next.species.name,
+      trigger: formatTrigger(details)
+    })
+    parseChain(next, steps)
+  }
+  return steps
 }
 
 main().catch(err => {
