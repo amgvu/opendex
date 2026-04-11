@@ -14,7 +14,6 @@ import { IoMdStar } from 'react-icons/io'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { TooltipProvider } from '@/components/ui/tooltip'
 import { useCardContext } from '@/context/card'
 import { CARD_TRANSITION } from '@/lib/constants'
 import {
@@ -27,7 +26,6 @@ import {
 
 import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
-import { TypeIcon } from './TypeIcon'
 
 const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
@@ -372,13 +370,13 @@ export function ExpandedCard({
                       <TabPanelContent className="space-y-2">
                         {pokemon.evYield && pokemon.evYield.length > 0 && (
                           <div className="flex items-center gap-2">
-                            <span className="w-14 shrink-0 text-white/70">
+                            <span className="w-16 shrink-0 whitespace-nowrap text-white/70">
                               EV Yield
                             </span>
                             <div className="flex flex-nowrap gap-1.5">
                               {pokemon.evYield.map(({ stat, value }) => (
                                 <span
-                                  className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium text-white"
+                                  className="whitespace-nowrap rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium text-white"
                                   key={stat}
                                 >
                                   +{value} {EV_STAT_LABELS[stat] ?? stat}
@@ -419,56 +417,69 @@ export function ExpandedCard({
                         {(weaknesses.length > 0 ||
                           resistances.length > 0 ||
                           immunities.length > 0) && (
-                          <TooltipProvider>
-                            <div className="grid grid-cols-3 gap-2">
-                              <div className="min-w-0">
-                                <span className="mb-1 block text-white/60">
-                                  Weak
-                                </span>
-                                <div className="flex flex-wrap gap-1">
-                                  {weaknesses.map(({ multiplier, type }) => (
-                                    <TypeIcon
-                                      key={type}
-                                      multiplier={multiplier}
-                                      type={type}
-                                    />
-                                  ))}
-                                </div>
-                              </div>
-                              <div className="min-w-0">
-                                <span className="mb-1 block text-white/60">
-                                  Resist
-                                </span>
-                                <div className="flex flex-wrap gap-1">
-                                  {resistances.length > 0 ? (
-                                    resistances.map(({ multiplier, type }) => (
-                                      <TypeIcon
-                                        key={type}
-                                        multiplier={multiplier}
-                                        type={type}
-                                      />
-                                    ))
-                                  ) : (
-                                    <span className="text-white/30">—</span>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="min-w-0">
-                                <span className="mb-1 block text-white/60">
-                                  Immune
-                                </span>
-                                <div className="flex flex-wrap gap-1">
-                                  {immunities.length > 0 ? (
-                                    immunities.map(type => (
-                                      <TypeIcon immune key={type} type={type} />
-                                    ))
-                                  ) : (
-                                    <span className="text-white/30">—</span>
-                                  )}
-                                </div>
+                          <div className="flex flex-col gap-2">
+                            <div className="min-w-0">
+                              <span className="mb-1 block text-white/60">
+                                Weak
+                              </span>
+                              <div className="flex flex-wrap gap-1">
+                                {weaknesses.map(({ multiplier, type }) => (
+                                  <span className="relative" key={type}>
+                                    <span
+                                      className={`rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/90 ${getTypeColor(type)}`}
+                                    >
+                                      {type}
+                                    </span>
+                                    <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/80 text-[9px] font-bold text-white leading-none">
+                                      ×{multiplier}
+                                    </span>
+                                  </span>
+                                ))}
                               </div>
                             </div>
-                          </TooltipProvider>
+                            <div className="min-w-0">
+                              <span className="mb-1 block text-white/60">
+                                Resist
+                              </span>
+                              <div className="flex flex-wrap gap-1">
+                                {resistances.length > 0 ? (
+                                  resistances.map(({ multiplier, type }) => (
+                                    <span className="relative" key={type}>
+                                      <span
+                                        className={`rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/70 ${getTypeColor(type)}`}
+                                      >
+                                        {type}
+                                      </span>
+                                      <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/80 text-[9px] font-bold text-white leading-none">
+                                        {multiplier === 0.25 ? '¼' : '½'}
+                                      </span>
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className="text-white/30">—</span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="min-w-0">
+                              <span className="mb-1 block text-white/60">
+                                Immune
+                              </span>
+                              <div className="flex flex-wrap gap-1">
+                                {immunities.length > 0 ? (
+                                  immunities.map(type => (
+                                    <span
+                                      className={`rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/40 ${getTypeColor(type)}`}
+                                      key={type}
+                                    >
+                                      {type}
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className="text-white/30">—</span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
                         )}
                       </TabPanelContent>
                     </Tabs.Panel>
