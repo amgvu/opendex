@@ -317,13 +317,9 @@ export function ExpandedCard({
                             value={pokemon.specialDefense}
                           />
                           <StatBar label="Speed" value={pokemon.speed} />
-                          <div className="flex items-center gap-3 border-t border-white/15 mt-3 pt-3">
-                            <span className="w-16 sm:w-20 xl:w-24 2xl:w-28 shrink-0 text-white/70">
-                              BST
-                            </span>
-                            <span className="font-semibold text-white">
-                              {bst}
-                            </span>
+                          <div className="flex items-center gap-3 border-t border-white/15 mt-2 pt-2 text-xs sm:text-sm xl:text-base 2xl:text-lg">
+                            <span className="w-16 sm:w-20 xl:w-24 2xl:w-28 shrink-0 text-white/70">BST</span>
+                            <span className="w-7 sm:w-8 shrink-0 text-right font-semibold text-white">{bst}</span>
                           </div>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
