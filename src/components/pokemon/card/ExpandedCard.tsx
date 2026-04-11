@@ -316,11 +316,11 @@ export function ExpandedCard({
                           <StatBar label="Attack" value={pokemon.attack} />
                           <StatBar label="Defense" value={pokemon.defense} />
                           <StatBar
-                            label="Sp. Attack"
+                            label="Sp. Atk"
                             value={pokemon.specialAttack}
                           />
                           <StatBar
-                            label="Sp. Defense"
+                            label="Sp. Def"
                             value={pokemon.specialDefense}
                           />
                           <StatBar label="Speed" value={pokemon.speed} />
