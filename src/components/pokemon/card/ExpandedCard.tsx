@@ -38,7 +38,7 @@ export function ExpandedCard({
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const dragControls = useDragControls()
-  const tabPanelClass = 'h-64 xl:h-68 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  const tabPanelClass = 'h-64 xl:h-68 2xl:h-80 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
   const bst =
     pokemon.hp +
     pokemon.attack +
@@ -66,10 +66,10 @@ export function ExpandedCard({
   const artworkImage = (
     <Image
       alt={pokemon.name}
-      className="h-36 w-36 xl:h-64 xl:w-64 object-contain drop-shadow-2xl"
+      className="h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain drop-shadow-2xl"
       height={384}
       onLoad={handleArtworkLoad}
-      sizes="200px"
+      sizes="(min-width: 1536px) 320px, 200px"
       src={pokemon.officialUrl}
       style={{ opacity: 0, transition: 'opacity 0.2s' }}
       unoptimized
@@ -83,7 +83,7 @@ export function ExpandedCard({
         <>
           <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
-              className={`relative w-full max-w-md xl:max-w-xl overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
+              className={`relative w-full max-w-md xl:max-w-xl 2xl:max-w-2xl overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragControls={dragControls}
@@ -111,7 +111,7 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative cursor-grab p-6 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative cursor-grab p-6 2xl:p-8 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
@@ -122,7 +122,7 @@ export function ExpandedCard({
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
                       <motion.h2
-                        className={`min-w-0 truncate font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl' : 'text-2xl xl:text-3xl'}`}
+                        className={`min-w-0 truncate font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
                         layoutId={`name-${pokemon.id}-${id}`}
                         transition={CARD_TRANSITION}
                       >
@@ -138,13 +138,17 @@ export function ExpandedCard({
                             size={22}
                           />
                           <IoMdStar
-                            className="text-yellow-400 hidden xl:block"
+                            className="text-yellow-400 hidden xl:block 2xl:hidden"
                             size={26}
+                          />
+                          <IoMdStar
+                            className="text-yellow-400 hidden 2xl:block"
+                            size={30}
                           />
                         </motion.div>
                       )}
                     </div>
-                    <span className="text-sm xl:text-base tracking-wide font-semibold text-white/60">
+                    <span className="text-sm xl:text-base 2xl:text-lg tracking-wide font-semibold text-white/60">
                       {formatPokedexId(pokemon.id)}
                     </span>
                   </div>
@@ -157,7 +161,7 @@ export function ExpandedCard({
                       <TypeBadge key={type} size="lg" type={type} />
                     ))}
                     {pokemon.isLegendary && (
-                      <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm font-medium text-black">
+                      <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
                         Legendary
                       </span>
                     )}
@@ -171,7 +175,7 @@ export function ExpandedCard({
                     transition={CARD_TRANSITION}
                   >
                     <div
-                      className="relative h-36 w-36 xl:h-64 xl:w-64"
+                      className="relative h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80"
                       ref={blurRef}
                       style={
                         pokemon.blurDataURL
@@ -194,7 +198,7 @@ export function ExpandedCard({
                       <motion.img
                         alt=""
                         animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
-                        className="absolute h-36 w-36 xl:h-64 xl:w-64 object-contain"
+                        className="absolute h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
                         initial={{ opacity: 0 }}
                         onError={() => setGifError(true)}
                         onLoad={() => setGifReady(true)}
@@ -273,7 +277,7 @@ export function ExpandedCard({
                       </Tabs.List>
                     </Tabs.ListContainer>
 
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base`} id="stats">
+                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="stats">
                       <motion.div
                         animate={{ opacity: 1, x: 0 }}
                         className="space-y-5"
@@ -305,7 +309,7 @@ export function ExpandedCard({
                       </motion.div>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base`} id="battle">
+                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="battle">
                       <motion.div
                         animate={{ opacity: 1, x: 0 }}
                         className="space-y-2"
@@ -318,7 +322,7 @@ export function ExpandedCard({
                             <div className="flex flex-nowrap gap-1.5">
                               {pokemon.evYield.map(({ stat, value }) => (
                                 <span
-                                  className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm font-medium text-white"
+                                  className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium text-white"
                                   key={stat}
                                 >
                                   +{value} {EV_STAT_LABELS[stat] ?? stat}
@@ -340,7 +344,7 @@ export function ExpandedCard({
                                     )}
                                   </div>
                                   {a.description && (
-                                    <p className="mt-0.5 text-xs xl:text-sm text-white/60 leading-snug">{a.description}</p>
+                                    <p className="mt-0.5 text-xs xl:text-sm 2xl:text-base text-white/60 leading-snug">{a.description}</p>
                                   )}
                                 </div>
                               ))}
@@ -386,7 +390,7 @@ export function ExpandedCard({
                       </motion.div>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base`} id="bio">
+                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="bio">
                       <motion.div
                         animate={{ opacity: 1, x: 0 }}
                         initial={{ opacity: 0, x: -10 }}

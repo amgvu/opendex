@@ -11,11 +11,11 @@ export function TypeIcon({ immune, multiplier, type }: { immune?: boolean; multi
     <Tooltip>
       <TooltipTrigger asChild>
         <span
-          className={`relative flex shrink-0 items-center justify-center rounded-md p-1 ${getTypeColor(type)} ${immune ? 'grayscale opacity-40' : ''} ${!multiplier && !immune ? 'opacity-50' : ''} ${multiplier === 4 ? 'ring-2 ring-white/70' : ''}`}
+          className={`relative flex shrink-0 items-center justify-center rounded-md p-1 2xl:p-1.5 ${getTypeColor(type)} ${immune ? 'grayscale opacity-40' : ''} ${!multiplier && !immune ? 'opacity-50' : ''} ${multiplier === 4 ? 'ring-2 ring-white/70' : ''}`}
         >
           <Image alt="" aria-hidden="true" height={20} src={`/icons/${type.toLowerCase()}.svg`} unoptimized width={20} />
           {multiplier && (
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-black/70 text-[9px] font-bold leading-none text-white">
+            <span className="absolute -right-1 -top-1 flex h-4 w-4 2xl:h-5 2xl:w-5 items-center justify-center rounded-full bg-black/70 text-[9px] 2xl:text-[10px] font-bold leading-none text-white">
               {badgeLabel}
             </span>
           )}
