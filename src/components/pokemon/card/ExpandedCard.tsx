@@ -307,11 +307,11 @@ export function ExpandedCard({
                     </Tabs.ListContainer>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="stats"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
                           <StatBar label="HP" value={pokemon.hp} />
                           <StatBar label="Attack" value={pokemon.attack} />
                           <StatBar label="Defense" value={pokemon.defense} />
@@ -363,7 +363,7 @@ export function ExpandedCard({
                     </Tabs.Panel>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="battle"
                     >
                       <TabPanelContent className="space-y-2">
@@ -471,7 +471,7 @@ export function ExpandedCard({
                     </Tabs.Panel>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="bio"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
