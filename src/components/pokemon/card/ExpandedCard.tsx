@@ -287,12 +287,7 @@ export function ExpandedCard({
                     <Tabs.ListContainer>
                       <Tabs.List aria-label="Pokemon info">
                         <Tabs.Tab id="stats">
-                          <span className="flex items-center gap-1.5">
-                            Stats
-                            <span className="text-[10px] font-medium opacity-50">
-                              {bst}
-                            </span>
-                          </span>
+                          Stats
                           <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab id="battle">
@@ -311,7 +306,7 @@ export function ExpandedCard({
                       id="stats"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
-                        <div className="flex flex-col gap-0.5 sm:gap-2">
+                        <div className="flex flex-col gap-0.5">
                           <StatBar label="HP" value={pokemon.hp} />
                           <StatBar label="Attack" value={pokemon.attack} />
                           <StatBar label="Defense" value={pokemon.defense} />
@@ -324,6 +319,14 @@ export function ExpandedCard({
                             value={pokemon.specialDefense}
                           />
                           <StatBar label="Speed" value={pokemon.speed} />
+                          <div className="flex items-center gap-3 border-t border-white/15 mt-3 pt-3">
+                            <span className="w-16 sm:w-20 xl:w-24 2xl:w-28 shrink-0 text-white/70">
+                              BST
+                            </span>
+                            <span className="font-semibold text-white">
+                              {bst}
+                            </span>
+                          </div>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
                           <InfoStat
