@@ -1,7 +1,15 @@
 import { Label, Switch, Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
-import { type CSSProperties, type ReactNode, type RefObject, type SyntheticEvent, useEffect, useRef, useState } from 'react'
+import {
+  type CSSProperties,
+  type ReactNode,
+  type RefObject,
+  type SyntheticEvent,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { IoMdStar } from 'react-icons/io'
 
 import type { EvolutionStep, Pokemon } from '@/types/pokemon'
@@ -21,7 +29,8 @@ import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
 import { TypeIcon } from './TypeIcon'
 
-const TAB_PANEL_BASE = 'flex-1 min-h-0 overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+const TAB_PANEL_BASE =
+  'flex-1 min-h-0 overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 const TAB_PANEL_SCROLL = `${TAB_PANEL_BASE} overflow-y-auto`
 
 const GROWTH_RATE_LABELS: Record<string, string> = {
@@ -58,13 +67,16 @@ export function ExpandedCard({
     pokemon.specialDefense +
     pokemon.speed
   const { immunities, resistances, weaknesses } = getTypeMatchups(pokemon.types)
-  const { activeTab, gifEnabled, setActiveTab, setGifEnabled } = useCardContext()
+  const { activeTab, gifEnabled, setActiveTab, setGifEnabled } =
+    useCardContext()
   const [gifMounted, setGifMounted] = useState(gifEnabled)
   const [gifReady, setGifReady] = useState(false)
   const [gifError, setGifError] = useState(false)
   const [dragging, setDragging] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
-  const evoNodes = pokemon.evolutionChain?.length ? getEvoNodes(pokemon.evolutionChain) : []
+  const evoNodes = pokemon.evolutionChain?.length
+    ? getEvoNodes(pokemon.evolutionChain)
+    : []
 
   useEffect(() => {
     if (gifEnabled) setGifMounted(true)
@@ -145,9 +157,18 @@ export function ExpandedCard({
                           layoutId={`star-${pokemon.id}-${id}`}
                           transition={CARD_TRANSITION}
                         >
-                          <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
-                          <IoMdStar className="text-yellow-400 hidden xl:block 2xl:hidden" size={26} />
-                          <IoMdStar className="text-yellow-400 hidden 2xl:block" size={30} />
+                          <IoMdStar
+                            className="text-yellow-400 xl:hidden"
+                            size={22}
+                          />
+                          <IoMdStar
+                            className="text-yellow-400 hidden xl:block 2xl:hidden"
+                            size={26}
+                          />
+                          <IoMdStar
+                            className="text-yellow-400 hidden 2xl:block"
+                            size={30}
+                          />
                         </motion.div>
                       )}
                     </div>
@@ -221,8 +242,10 @@ export function ExpandedCard({
                           style={
                             {
                               '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                              '--switch-control-bg-checked': bgClassToVar(typeColor),
-                              '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
+                              '--switch-control-bg-checked':
+                                bgClassToVar(typeColor),
+                              '--switch-control-bg-checked-hover':
+                                bgClassToVar(typeColor),
                               '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
                             } as CSSProperties
                           }
@@ -251,14 +274,18 @@ export function ExpandedCard({
                 >
                   <Tabs
                     className="flex min-h-0 flex-1 flex-col"
-                    onSelectionChange={key => setActiveTab(key as 'battle' | 'bio' | 'stats')}
+                    onSelectionChange={key =>
+                      setActiveTab(key as 'battle' | 'bio' | 'stats')
+                    }
                     selectedKey={activeTab}
-                    style={{
-                      '--accent': bgClassToVar(typeColor),
-                      '--border': 'rgba(255,255,255,0.25)',
-                      '--foreground': 'white',
-                      '--muted': 'rgba(255,255,255,0.5)'
-                    } as CSSProperties}
+                    style={
+                      {
+                        '--accent': bgClassToVar(typeColor),
+                        '--border': 'rgba(255,255,255,0.25)',
+                        '--foreground': 'white',
+                        '--muted': 'rgba(255,255,255,0.5)'
+                      } as CSSProperties
+                    }
                     variant="secondary"
                   >
                     <Tabs.ListContainer>
@@ -266,7 +293,9 @@ export function ExpandedCard({
                         <Tabs.Tab id="stats">
                           <span className="flex items-center gap-1.5">
                             Stats
-                            <span className="text-[10px] font-medium opacity-50">{bst}</span>
+                            <span className="text-[10px] font-medium opacity-50">
+                              {bst}
+                            </span>
                           </span>
                           <Tabs.Indicator />
                         </Tabs.Tab>
@@ -281,48 +310,78 @@ export function ExpandedCard({
                       </Tabs.List>
                     </Tabs.ListContainer>
 
-                    <Tabs.Panel className={`${TAB_PANEL_BASE} overflow-y-hidden pt-3 text-sm xl:text-base 2xl:text-lg`} id="stats">
+                    <Tabs.Panel
+                      className={`${TAB_PANEL_SCROLL}  pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      id="stats"
+                    >
                       <TabPanelContent className="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
                           <StatBar label="HP" value={pokemon.hp} />
                           <StatBar label="Attack" value={pokemon.attack} />
                           <StatBar label="Defense" value={pokemon.defense} />
-                          <StatBar label="Sp. Attack" value={pokemon.specialAttack} />
-                          <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
+                          <StatBar
+                            label="Sp. Attack"
+                            value={pokemon.specialAttack}
+                          />
+                          <StatBar
+                            label="Sp. Defense"
+                            value={pokemon.specialDefense}
+                          />
                           <StatBar label="Speed" value={pokemon.speed} />
                         </div>
                         <div className="grid grid-cols-3 gap-2">
-                          <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
-                          <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
+                          <InfoStat
+                            label="Height"
+                            value={`${pokemon.height.toFixed(1)}m`}
+                          />
+                          <InfoStat
+                            label="Weight"
+                            value={`${pokemon.weight.toFixed(1)} lbs`}
+                          />
                           <InfoStat label="Gen" value={pokemon.generation} />
                           {pokemon.catchRate !== undefined && (
-                            <InfoStat label="Catch" value={`${Math.round(pokemon.catchRate / 255 * 100)}%`} />
+                            <InfoStat
+                              label="Catch"
+                              value={`${Math.round((pokemon.catchRate / 255) * 100)}%`}
+                            />
                           )}
                           {pokemon.growthRate && (
                             <InfoStat
                               label="Growth"
                               value={
                                 <span className="capitalize">
-                                  {GROWTH_RATE_LABELS[pokemon.growthRate] ?? pokemon.growthRate.replace(/-/g, ' ')}
+                                  {GROWTH_RATE_LABELS[pokemon.growthRate] ??
+                                    pokemon.growthRate.replace(/-/g, ' ')}
                                 </span>
                               }
                             />
                           )}
                           {pokemon.baseExperience !== undefined && (
-                            <InfoStat label="Base Exp" value={pokemon.baseExperience} />
+                            <InfoStat
+                              label="Base Exp"
+                              value={pokemon.baseExperience}
+                            />
                           )}
                           {pokemon.baseFriendship !== undefined && (
-                            <InfoStat label="Friendship" value={pokemon.baseFriendship} />
+                            <InfoStat
+                              label="Friendship"
+                              value={pokemon.baseFriendship}
+                            />
                           )}
                         </div>
                       </TabPanelContent>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`} id="battle">
+                    <Tabs.Panel
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      id="battle"
+                    >
                       <TabPanelContent className="space-y-2">
                         {pokemon.evYield && pokemon.evYield.length > 0 && (
                           <div className="flex items-center gap-2">
-                            <span className="w-14 shrink-0 text-white/70">EV</span>
+                            <span className="w-14 shrink-0 text-white/70">
+                              EV
+                            </span>
                             <div className="flex flex-nowrap gap-1.5">
                               {pokemon.evYield.map(({ stat, value }) => (
                                 <span
@@ -340,52 +399,79 @@ export function ExpandedCard({
                             <span className="text-white/70">Abilities</span>
                             <div className="flex flex-col gap-1.5">
                               {pokemon.abilities.map(a => (
-                                <div className="rounded-lg bg-white/10 px-3 py-2" key={a.name}>
+                                <div
+                                  className="rounded-lg bg-white/10 px-3 py-2"
+                                  key={a.name}
+                                >
                                   <div className="flex items-center gap-1.5">
-                                    <span className="font-medium capitalize text-white">{a.name}</span>
+                                    <span className="font-medium capitalize text-white">
+                                      {a.name}
+                                    </span>
                                     {a.isHidden && (
-                                      <span className="text-[10px] text-white/50">HA</span>
+                                      <span className="text-[10px] text-white/50">
+                                        HA
+                                      </span>
                                     )}
                                   </div>
                                   {a.description && (
-                                    <p className="mt-0.5 text-xs xl:text-sm 2xl:text-base text-white/60 leading-snug">{a.description}</p>
+                                    <p className="mt-0.5 text-xs xl:text-sm 2xl:text-base text-white/60 leading-snug">
+                                      {a.description}
+                                    </p>
                                   )}
                                 </div>
                               ))}
                             </div>
                           </div>
                         )}
-                        {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
+                        {(weaknesses.length > 0 ||
+                          resistances.length > 0 ||
+                          immunities.length > 0) && (
                           <TooltipProvider>
                             <div className="grid grid-cols-3 gap-2">
                               <div className="min-w-0">
-                                <span className="mb-1 block text-white/60">Weak</span>
+                                <span className="mb-1 block text-white/60">
+                                  Weak
+                                </span>
                                 <div className="flex flex-wrap gap-1">
                                   {weaknesses.map(({ multiplier, type }) => (
-                                    <TypeIcon key={type} multiplier={multiplier} type={type} />
+                                    <TypeIcon
+                                      key={type}
+                                      multiplier={multiplier}
+                                      type={type}
+                                    />
                                   ))}
                                 </div>
                               </div>
                               <div className="min-w-0">
-                                <span className="mb-1 block text-white/60">Resist</span>
+                                <span className="mb-1 block text-white/60">
+                                  Resist
+                                </span>
                                 <div className="flex flex-wrap gap-1">
-                                  {resistances.length > 0
-                                    ? resistances.map(({ multiplier, type }) => (
-                                        <TypeIcon key={type} multiplier={multiplier} type={type} />
-                                      ))
-                                    : <span className="text-white/30">—</span>
-                                  }
+                                  {resistances.length > 0 ? (
+                                    resistances.map(({ multiplier, type }) => (
+                                      <TypeIcon
+                                        key={type}
+                                        multiplier={multiplier}
+                                        type={type}
+                                      />
+                                    ))
+                                  ) : (
+                                    <span className="text-white/30">—</span>
+                                  )}
                                 </div>
                               </div>
                               <div className="min-w-0">
-                                <span className="mb-1 block text-white/60">Immune</span>
+                                <span className="mb-1 block text-white/60">
+                                  Immune
+                                </span>
                                 <div className="flex flex-wrap gap-1">
-                                  {immunities.length > 0
-                                    ? immunities.map(type => (
-                                        <TypeIcon immune key={type} type={type} />
-                                      ))
-                                    : <span className="text-white/30">—</span>
-                                  }
+                                  {immunities.length > 0 ? (
+                                    immunities.map(type => (
+                                      <TypeIcon immune key={type} type={type} />
+                                    ))
+                                  ) : (
+                                    <span className="text-white/30">—</span>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -394,45 +480,97 @@ export function ExpandedCard({
                       </TabPanelContent>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`} id="bio">
+                    <Tabs.Panel
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      id="bio"
+                    >
                       <TabPanelContent className="flex flex-col gap-3">
                         {pokemon.genus && (
-                          <p className="text-xs xl:text-sm 2xl:text-base italic text-white/50">{pokemon.genus}</p>
+                          <p className="text-xs xl:text-sm 2xl:text-base italic text-white/50">
+                            {pokemon.genus}
+                          </p>
                         )}
-                        <p className="text-white/70 leading-snug">{pokemon.description}</p>
-                        {pokemon.flavorTexts && pokemon.flavorTexts.length > 1 && (
-                          <div className="flex flex-col gap-2">
-                            {pokemon.flavorTexts.slice(1).map(({ game, text }) => (
-                              <div key={game}>
-                                <span className="text-[10px] xl:text-xs 2xl:text-sm uppercase tracking-wider text-white/30 capitalize">{game.replace(/-/g, ' ')}</span>
-                                <p className="text-xs xl:text-sm 2xl:text-base text-white/50 leading-snug">{text}</p>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        <p className="text-white/70 leading-snug">
+                          {pokemon.description}
+                        </p>
+                        {pokemon.flavorTexts &&
+                          pokemon.flavorTexts.length > 1 && (
+                            <div className="flex flex-col gap-2">
+                              {pokemon.flavorTexts
+                                .slice(1)
+                                .map(({ game, text }) => (
+                                  <div key={game}>
+                                    <span className="text-[10px] xl:text-xs 2xl:text-sm uppercase tracking-wider text-white/30 capitalize">
+                                      {game.replace(/-/g, ' ')}
+                                    </span>
+                                    <p className="text-xs xl:text-sm 2xl:text-base text-white/50 leading-snug">
+                                      {text}
+                                    </p>
+                                  </div>
+                                ))}
+                            </div>
+                          )}
                         <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs xl:text-sm 2xl:text-base">
                           {pokemon.habitat != null && (
-                            <InfoStat label="Habitat" muted value={<span className="capitalize">{pokemon.habitat.replace(/-/g, ' ')}</span>} />
+                            <InfoStat
+                              label="Habitat"
+                              muted
+                              value={
+                                <span className="capitalize">
+                                  {pokemon.habitat.replace(/-/g, ' ')}
+                                </span>
+                              }
+                            />
                           )}
                           {pokemon.color && (
-                            <InfoStat label="Color" muted value={<span className="capitalize">{pokemon.color}</span>} />
+                            <InfoStat
+                              label="Color"
+                              muted
+                              value={
+                                <span className="capitalize">
+                                  {pokemon.color}
+                                </span>
+                              }
+                            />
                           )}
                           {pokemon.genderRate !== undefined && (
-                            <InfoStat label="Gender" muted value={formatGender(pokemon.genderRate)} />
+                            <InfoStat
+                              label="Gender"
+                              muted
+                              value={formatGender(pokemon.genderRate)}
+                            />
                           )}
-                          {pokemon.eggGroups && pokemon.eggGroups.length > 0 && (
-                            <InfoStat label="Egg Groups" muted value={<span className="capitalize">{pokemon.eggGroups.join(', ')}</span>} />
-                          )}
+                          {pokemon.eggGroups &&
+                            pokemon.eggGroups.length > 0 && (
+                              <InfoStat
+                                label="Egg Groups"
+                                muted
+                                value={
+                                  <span className="capitalize">
+                                    {pokemon.eggGroups.join(', ')}
+                                  </span>
+                                }
+                              />
+                            )}
                           {pokemon.eggCycles !== undefined && (
-                            <InfoStat label="Egg Cycles" muted value={`${pokemon.eggCycles} cycles`} />
+                            <InfoStat
+                              label="Egg Cycles"
+                              muted
+                              value={`${pokemon.eggCycles} cycles`}
+                            />
                           )}
                         </div>
                         {evoNodes.length > 0 && (
                           <div>
-                            <span className="mb-2 block text-xs xl:text-sm 2xl:text-base text-white/50">Evolution</span>
+                            <span className="mb-2 block text-xs xl:text-sm 2xl:text-base text-white/50">
+                              Evolution
+                            </span>
                             <div className="flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
                               {evoNodes.map(node => (
-                                <div className="flex shrink-0 flex-col items-center gap-1" key={node.id}>
+                                <div
+                                  className="flex shrink-0 flex-col items-center gap-1"
+                                  key={node.id}
+                                >
                                   <Image
                                     alt={node.name}
                                     className="h-14 w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20 object-contain drop-shadow"
@@ -442,7 +580,9 @@ export function ExpandedCard({
                                     unoptimized
                                     width={80}
                                   />
-                                  <span className="text-[9px] xl:text-[10px] 2xl:text-xs capitalize text-white/60 text-center leading-tight">{node.name}</span>
+                                  <span className="text-[9px] xl:text-[10px] 2xl:text-xs capitalize text-white/60 text-center leading-tight">
+                                    {node.name}
+                                  </span>
                                 </div>
                               ))}
                             </div>
@@ -474,13 +614,27 @@ function getEvoNodes(chain: EvolutionStep[]) {
   const seen = new Set<number>()
   const nodes: { id: number; name: string }[] = []
   for (const step of chain) {
-    if (!seen.has(step.fromId)) { seen.add(step.fromId); nodes.push({ id: step.fromId, name: step.fromName }) }
-    if (!seen.has(step.toId)) { seen.add(step.toId); nodes.push({ id: step.toId, name: step.toName }) }
+    if (!seen.has(step.fromId)) {
+      seen.add(step.fromId)
+      nodes.push({ id: step.fromId, name: step.fromName })
+    }
+    if (!seen.has(step.toId)) {
+      seen.add(step.toId)
+      nodes.push({ id: step.toId, name: step.toName })
+    }
   }
   return nodes
 }
 
-function InfoStat({ label, muted, value }: { label: string; muted?: boolean; value: ReactNode }) {
+function InfoStat({
+  label,
+  muted,
+  value
+}: {
+  label: string
+  muted?: boolean
+  value: ReactNode
+}) {
   return (
     <div className="flex flex-col">
       <span className={muted ? 'text-white/50' : 'text-white/60'}>{label}</span>
@@ -489,7 +643,13 @@ function InfoStat({ label, muted, value }: { label: string; muted?: boolean; val
   )
 }
 
-function TabPanelContent({ children, className }: { children: ReactNode; className?: string }) {
+function TabPanelContent({
+  children,
+  className
+}: {
+  children: ReactNode
+  className?: string
+}) {
   return (
     <motion.div
       animate={{ opacity: 1, x: 0 }}
