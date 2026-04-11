@@ -12,7 +12,7 @@ import {
 } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
-import type { EvolutionStep, Pokemon } from '@/types/pokemon'
+import type { Pokemon } from '@/types/pokemon'
 
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { useCardContext } from '@/context/card'
@@ -74,9 +74,6 @@ export function ExpandedCard({
   const [gifError, setGifError] = useState(false)
   const [dragging, setDragging] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
-  const evoNodes = pokemon.evolutionChain?.length
-    ? getEvoNodes(pokemon.evolutionChain)
-    : []
 
   useEffect(() => {
     if (gifEnabled) setGifMounted(true)
@@ -311,7 +308,7 @@ export function ExpandedCard({
                     </Tabs.ListContainer>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL}  pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_BASE} overflow-y-hidden pt-3 text-sm xl:text-base 2xl:text-lg`}
                       id="stats"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
@@ -362,12 +359,6 @@ export function ExpandedCard({
                               value={pokemon.baseExperience}
                             />
                           )}
-                          {pokemon.baseFriendship !== undefined && (
-                            <InfoStat
-                              label="Friendship"
-                              value={pokemon.baseFriendship}
-                            />
-                          )}
                         </div>
                       </TabPanelContent>
                     </Tabs.Panel>
@@ -380,7 +371,7 @@ export function ExpandedCard({
                         {pokemon.evYield && pokemon.evYield.length > 0 && (
                           <div className="flex items-center gap-2">
                             <span className="w-14 shrink-0 text-white/70">
-                              EV
+                              EV Yield
                             </span>
                             <div className="flex flex-nowrap gap-1.5">
                               {pokemon.evYield.map(({ stat, value }) => (
@@ -500,7 +491,7 @@ export function ExpandedCard({
                                 .slice(1)
                                 .map(({ game, text }) => (
                                   <div key={game}>
-                                    <span className="text-[10px] xl:text-xs 2xl:text-sm uppercase tracking-wider text-white/30 capitalize">
+                                    <span className="text-[10px] xl:text-xs 2xl:text-sm tracking-wider text-white/30 capitalize">
                                       {game.replace(/-/g, ' ')}
                                     </span>
                                     <p className="text-xs xl:text-sm 2xl:text-base text-white/50 leading-snug">
@@ -560,34 +551,6 @@ export function ExpandedCard({
                             />
                           )}
                         </div>
-                        {evoNodes.length > 0 && (
-                          <div>
-                            <span className="mb-2 block text-xs xl:text-sm 2xl:text-base text-white/50">
-                              Evolution
-                            </span>
-                            <div className="flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
-                              {evoNodes.map(node => (
-                                <div
-                                  className="flex shrink-0 flex-col items-center gap-1"
-                                  key={node.id}
-                                >
-                                  <Image
-                                    alt={node.name}
-                                    className="h-14 w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20 object-contain drop-shadow"
-                                    height={80}
-                                    loading="lazy"
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${node.id}.png`}
-                                    unoptimized
-                                    width={80}
-                                  />
-                                  <span className="text-[9px] xl:text-[10px] 2xl:text-xs capitalize text-white/60 text-center leading-tight">
-                                    {node.name}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
                       </TabPanelContent>
                     </Tabs.Panel>
                   </Tabs>
@@ -608,22 +571,6 @@ function formatGender(genderRate: number | undefined) {
   if (genderRate === 8) return '100% ♀'
   const female = Math.round((genderRate / 8) * 100)
   return `${100 - female}% ♂ / ${female}% ♀`
-}
-
-function getEvoNodes(chain: EvolutionStep[]) {
-  const seen = new Set<number>()
-  const nodes: { id: number; name: string }[] = []
-  for (const step of chain) {
-    if (!seen.has(step.fromId)) {
-      seen.add(step.fromId)
-      nodes.push({ id: step.fromId, name: step.fromName })
-    }
-    if (!seen.has(step.toId)) {
-      seen.add(step.toId)
-      nodes.push({ id: step.toId, name: step.toName })
-    }
-  }
-  return nodes
 }
 
 function InfoStat({
