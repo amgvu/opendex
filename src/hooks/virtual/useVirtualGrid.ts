@@ -102,6 +102,7 @@ export function useVirtualGrid(
 
 function getColumnCount() {
   if (typeof window === 'undefined') return 5
+  if (window.innerWidth >= 1536) return 6
   if (window.innerWidth >= 1024) return 5
   if (window.innerWidth >= 768) return 4
   if (window.innerWidth >= 640) return 3

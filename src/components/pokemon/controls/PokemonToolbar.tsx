@@ -93,7 +93,7 @@ export function PokemonToolbar({
       </div>
 
       {/* Desktop static controls */}
-      <div className="hidden flex-wrap items-center gap-3 xl:flex">
+      <div className="hidden flex-wrap items-center gap-3 2xl:gap-4 xl:flex">
         <SortControls
           onSort={onUpdateSort}
           sortBy={sortBy}

@@ -53,7 +53,7 @@ export function DefaultCard({
         />
       </div>
       <motion.div
-        className="absolute -bottom-4 left-16 sm:left-22 md:left-24 lg:left-26 xl:left-28 h-28 w-28"
+        className="absolute -bottom-4 left-16 sm:left-20 md:left-20 lg:left-22 xl:left-24 2xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
         style={pokemon.blurDataURL ? {
           backgroundImage: `url(${pokemon.blurDataURL})`,
@@ -83,13 +83,13 @@ export function DefaultCard({
       <div className="relative flex h-full flex-col justify-between">
         <div className="flex items-start justify-between gap-1">
           <motion.p
-            className={`min-w-0 truncate font-semibold capitalize text-white ${pokemon.name.length > 14 ? 'text-xs sm:text-sm' : 'text-sm sm:text-base lg:text-lg'}`}
+            className={`min-w-0 truncate font-semibold capitalize text-white ${pokemon.name.length > 14 ? 'text-xs sm:text-sm 2xl:text-base' : 'text-sm sm:text-base lg:text-lg 2xl:text-xl'}`}
             layoutId={`name-${pokemon.id}-${id}`}
             transition={CARD_TRANSITION}
           >
             {pokemon.name}
           </motion.p>
-          <span className="flex-shrink-0 text-[10px] sm:text-xs tracking-wide font-semibold text-white">
+          <span className="flex-shrink-0 text-[10px] sm:text-xs 2xl:text-sm tracking-wide font-semibold text-white">
             {formatPokedexId(pokemon.id)}
           </span>
         </div>
