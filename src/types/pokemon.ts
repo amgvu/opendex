@@ -9,6 +9,8 @@ export type EvolutionStep = {
 export type Pokemon = {
   abilities?: { description?: string; isHidden: boolean; name: string }[]
   attack: number
+  baseExperience?: number
+  baseFriendship?: number
   blurDataURL?: string
   catchRate?: number
   color?: string

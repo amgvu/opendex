@@ -52,6 +52,8 @@ async function fetchPokemon(id) {
     _evolutionChainUrl: species.evolution_chain?.url ?? null,
     abilities,
     attack: stats['attack'],
+    baseExperience: pokemon.base_experience ?? undefined,
+    baseFriendship: species.base_happiness ?? undefined,
     catchRate: species.capture_rate,
     color: species.color?.name ?? undefined,
     defense: stats['defense'],

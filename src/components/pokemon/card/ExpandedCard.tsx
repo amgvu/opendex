@@ -1,10 +1,10 @@
 import { Label, Switch, Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
-import { type CSSProperties, type RefObject, type SyntheticEvent, useEffect, useRef, useState } from 'react'
+import { type CSSProperties, type ReactNode, type RefObject, type SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { EvolutionStep, Pokemon } from '@/types/pokemon'
 
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { useCardContext } from '@/context/card'
@@ -20,6 +20,9 @@ import {
 import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
 import { TypeIcon } from './TypeIcon'
+
+const TAB_PANEL_BASE = 'flex-1 min-h-0 overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+const TAB_PANEL_SCROLL = `${TAB_PANEL_BASE} overflow-y-auto`
 
 const GROWTH_RATE_LABELS: Record<string, string> = {
   erratic: 'Erratic',
@@ -47,7 +50,6 @@ export function ExpandedCard({
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const dragControls = useDragControls()
-  const tabPanelClass = 'flex-1 min-h-0 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
   const bst =
     pokemon.hp +
     pokemon.attack +
@@ -62,6 +64,7 @@ export function ExpandedCard({
   const [gifError, setGifError] = useState(false)
   const [dragging, setDragging] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
+  const evoNodes = pokemon.evolutionChain?.length ? getEvoNodes(pokemon.evolutionChain) : []
 
   useEffect(() => {
     if (gifEnabled) setGifMounted(true)
@@ -85,18 +88,6 @@ export function ExpandedCard({
       width={384}
     />
   )
-
-  // Group evo chain steps by fromId for branching display
-  const evoGroups = pokemon.evolutionChain && pokemon.evolutionChain.length > 0
-    ? (() => {
-        const map = new Map<number, typeof pokemon.evolutionChain>()
-        for (const step of pokemon.evolutionChain) {
-          if (!map.has(step.fromId)) map.set(step.fromId, [])
-          map.get(step.fromId)!.push(step)
-        }
-        return map
-      })()
-    : null
 
   return (
     <AnimatePresence>
@@ -154,18 +145,9 @@ export function ExpandedCard({
                           layoutId={`star-${pokemon.id}-${id}`}
                           transition={CARD_TRANSITION}
                         >
-                          <IoMdStar
-                            className="text-yellow-400 xl:hidden"
-                            size={22}
-                          />
-                          <IoMdStar
-                            className="text-yellow-400 hidden xl:block 2xl:hidden"
-                            size={26}
-                          />
-                          <IoMdStar
-                            className="text-yellow-400 hidden 2xl:block"
-                            size={30}
-                          />
+                          <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
+                          <IoMdStar className="text-yellow-400 hidden xl:block 2xl:hidden" size={26} />
+                          <IoMdStar className="text-yellow-400 hidden 2xl:block" size={30} />
                         </motion.div>
                       )}
                     </div>
@@ -269,7 +251,7 @@ export function ExpandedCard({
                 >
                   <Tabs
                     className="flex min-h-0 flex-1 flex-col"
-                    onSelectionChange={key => setActiveTab(key as 'battle' | 'bio' | 'evo' | 'stats')}
+                    onSelectionChange={key => setActiveTab(key as 'battle' | 'bio' | 'stats')}
                     selectedKey={activeTab}
                     style={{
                       '--accent': bgClassToVar(typeColor),
@@ -296,20 +278,11 @@ export function ExpandedCard({
                           Bio
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab id="evo">
-                          Evo
-                          <Tabs.Indicator />
-                        </Tabs.Tab>
                       </Tabs.List>
                     </Tabs.ListContainer>
 
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="stats">
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex h-full flex-col justify-between"
-                        initial={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.15 }}
-                      >
+                    <Tabs.Panel className={`${TAB_PANEL_BASE} overflow-y-hidden pt-3 text-sm xl:text-base 2xl:text-lg`} id="stats">
+                      <TabPanelContent className="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
                           <StatBar label="HP" value={pokemon.hp} />
                           <StatBar label="Attack" value={pokemon.attack} />
@@ -318,42 +291,35 @@ export function ExpandedCard({
                           <StatBar label="Sp. Defense" value={pokemon.specialDefense} />
                           <StatBar label="Speed" value={pokemon.speed} />
                         </div>
-                        <div className="grid grid-cols-3 gap-2 mt-3">
-                          <div className="flex flex-col">
-                            <span className="text-white/60">Height</span>
-                            <span className="font-medium text-white">{pokemon.height.toFixed(1)}m</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-white/60">Weight</span>
-                            <span className="font-medium text-white">{pokemon.weight.toFixed(1)} lbs</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-white/60">Gen</span>
-                            <span className="font-medium text-white">{pokemon.generation}</span>
-                          </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
+                          <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
+                          <InfoStat label="Gen" value={pokemon.generation} />
                           {pokemon.catchRate !== undefined && (
-                            <div className="flex flex-col">
-                              <span className="text-white/60">Catch</span>
-                              <span className="font-medium text-white">{Math.round(pokemon.catchRate / 255 * 100)}%</span>
-                            </div>
+                            <InfoStat label="Catch" value={`${Math.round(pokemon.catchRate / 255 * 100)}%`} />
                           )}
                           {pokemon.growthRate && (
-                            <div className="flex flex-col">
-                              <span className="text-white/60">Growth</span>
-                              <span className="font-medium text-white">{GROWTH_RATE_LABELS[pokemon.growthRate] ?? pokemon.growthRate}</span>
-                            </div>
+                            <InfoStat
+                              label="Growth"
+                              value={
+                                <span className="capitalize">
+                                  {GROWTH_RATE_LABELS[pokemon.growthRate] ?? pokemon.growthRate.replace(/-/g, ' ')}
+                                </span>
+                              }
+                            />
+                          )}
+                          {pokemon.baseExperience !== undefined && (
+                            <InfoStat label="Base Exp" value={pokemon.baseExperience} />
+                          )}
+                          {pokemon.baseFriendship !== undefined && (
+                            <InfoStat label="Friendship" value={pokemon.baseFriendship} />
                           )}
                         </div>
-                      </motion.div>
+                      </TabPanelContent>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="battle">
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-2"
-                        initial={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.15 }}
-                      >
+                    <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`} id="battle">
+                      <TabPanelContent className="space-y-2">
                         {pokemon.evYield && pokemon.evYield.length > 0 && (
                           <div className="flex items-center gap-2">
                             <span className="w-14 shrink-0 text-white/70">EV</span>
@@ -425,16 +391,11 @@ export function ExpandedCard({
                             </div>
                           </TooltipProvider>
                         )}
-                      </motion.div>
+                      </TabPanelContent>
                     </Tabs.Panel>
 
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="bio">
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex flex-col gap-3"
-                        initial={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.15 }}
-                      >
+                    <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`} id="bio">
+                      <TabPanelContent className="flex flex-col gap-3">
                         {pokemon.genus && (
                           <p className="text-xs xl:text-sm 2xl:text-base italic text-white/50">{pokemon.genus}</p>
                         )}
@@ -450,89 +411,44 @@ export function ExpandedCard({
                           </div>
                         )}
                         <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs xl:text-sm 2xl:text-base">
-                          {pokemon.habitat !== undefined && pokemon.habitat !== null && (
-                            <div className="flex flex-col">
-                              <span className="text-white/50">Habitat</span>
-                              <span className="font-medium capitalize text-white">{pokemon.habitat.replace(/-/g, ' ')}</span>
-                            </div>
+                          {pokemon.habitat != null && (
+                            <InfoStat label="Habitat" muted value={<span className="capitalize">{pokemon.habitat.replace(/-/g, ' ')}</span>} />
                           )}
                           {pokemon.color && (
-                            <div className="flex flex-col">
-                              <span className="text-white/50">Color</span>
-                              <span className="font-medium capitalize text-white">{pokemon.color}</span>
-                            </div>
+                            <InfoStat label="Color" muted value={<span className="capitalize">{pokemon.color}</span>} />
                           )}
                           {pokemon.genderRate !== undefined && (
-                            <div className="flex flex-col">
-                              <span className="text-white/50">Gender</span>
-                              <span className="font-medium text-white">{formatGender(pokemon.genderRate)}</span>
-                            </div>
+                            <InfoStat label="Gender" muted value={formatGender(pokemon.genderRate)} />
                           )}
                           {pokemon.eggGroups && pokemon.eggGroups.length > 0 && (
-                            <div className="flex flex-col">
-                              <span className="text-white/50">Egg Groups</span>
-                              <span className="font-medium capitalize text-white">{pokemon.eggGroups.join(', ')}</span>
-                            </div>
+                            <InfoStat label="Egg Groups" muted value={<span className="capitalize">{pokemon.eggGroups.join(', ')}</span>} />
                           )}
                           {pokemon.eggCycles !== undefined && (
-                            <div className="flex flex-col">
-                              <span className="text-white/50">Egg Cycles</span>
-                              <span className="font-medium text-white">{pokemon.eggCycles} cycles</span>
-                            </div>
+                            <InfoStat label="Egg Cycles" muted value={`${pokemon.eggCycles} cycles`} />
                           )}
                         </div>
-                      </motion.div>
-                    </Tabs.Panel>
-
-                    <Tabs.Panel className={`${tabPanelClass} pt-3 text-sm xl:text-base 2xl:text-lg`} id="evo">
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        initial={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.15 }}
-                      >
-                        {!pokemon.evolutionChain || pokemon.evolutionChain.length === 0 ? (
-                          <p className="text-white/40 italic">Does not evolve.</p>
-                        ) : (
-                          <div className="flex flex-col gap-3">
-                            {evoGroups && [...evoGroups.entries()].map(([fromId, steps]) => (
-                              <div className="flex flex-col gap-2" key={fromId}>
-                                {steps.map(step => (
-                                  <div className="flex items-center gap-2" key={`${step.fromId}-${step.toId}`}>
-                                    <div className="flex flex-col items-center gap-0.5 min-w-0">
-                                      <Image
-                                        alt={step.fromName}
-                                        className="h-12 w-12 xl:h-14 xl:w-14 2xl:h-16 2xl:w-16 object-contain drop-shadow"
-                                        height={64}
-                                        loading="lazy"
-                                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${step.fromId}.png`}
-                                        unoptimized
-                                        width={64}
-                                      />
-                                      <span className="text-[10px] xl:text-xs capitalize text-white/60 text-center leading-tight">{step.fromName}</span>
-                                    </div>
-                                    <div className="flex flex-col items-center gap-0.5 flex-1 min-w-0">
-                                      <span className="text-white/30 text-lg leading-none">→</span>
-                                      <span className="text-[9px] xl:text-[10px] 2xl:text-xs text-white/50 text-center leading-tight px-1">{step.trigger}</span>
-                                    </div>
-                                    <div className="flex flex-col items-center gap-0.5 min-w-0">
-                                      <Image
-                                        alt={step.toName}
-                                        className="h-12 w-12 xl:h-14 xl:w-14 2xl:h-16 2xl:w-16 object-contain drop-shadow"
-                                        height={64}
-                                        loading="lazy"
-                                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${step.toId}.png`}
-                                        unoptimized
-                                        width={64}
-                                      />
-                                      <span className="text-[10px] xl:text-xs capitalize text-white/60 text-center leading-tight">{step.toName}</span>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            ))}
+                        {evoNodes.length > 0 && (
+                          <div>
+                            <span className="mb-2 block text-xs xl:text-sm 2xl:text-base text-white/50">Evolution</span>
+                            <div className="flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+                              {evoNodes.map(node => (
+                                <div className="flex shrink-0 flex-col items-center gap-1" key={node.id}>
+                                  <Image
+                                    alt={node.name}
+                                    className="h-14 w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20 object-contain drop-shadow"
+                                    height={80}
+                                    loading="lazy"
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${node.id}.png`}
+                                    unoptimized
+                                    width={80}
+                                  />
+                                  <span className="text-[9px] xl:text-[10px] 2xl:text-xs capitalize text-white/60 text-center leading-tight">{node.name}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         )}
-                      </motion.div>
+                      </TabPanelContent>
                     </Tabs.Panel>
                   </Tabs>
                 </motion.div>
@@ -552,4 +468,36 @@ function formatGender(genderRate: number | undefined) {
   if (genderRate === 8) return '100% ♀'
   const female = Math.round((genderRate / 8) * 100)
   return `${100 - female}% ♂ / ${female}% ♀`
+}
+
+function getEvoNodes(chain: EvolutionStep[]) {
+  const seen = new Set<number>()
+  const nodes: { id: number; name: string }[] = []
+  for (const step of chain) {
+    if (!seen.has(step.fromId)) { seen.add(step.fromId); nodes.push({ id: step.fromId, name: step.fromName }) }
+    if (!seen.has(step.toId)) { seen.add(step.toId); nodes.push({ id: step.toId, name: step.toName }) }
+  }
+  return nodes
+}
+
+function InfoStat({ label, muted, value }: { label: string; muted?: boolean; value: ReactNode }) {
+  return (
+    <div className="flex flex-col">
+      <span className={muted ? 'text-white/50' : 'text-white/60'}>{label}</span>
+      <span className="font-medium text-white">{value}</span>
+    </div>
+  )
+}
+
+function TabPanelContent({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <motion.div
+      animate={{ opacity: 1, x: 0 }}
+      className={className}
+      initial={{ opacity: 0, x: -10 }}
+      transition={{ duration: 0.15 }}
+    >
+      {children}
+    </motion.div>
+  )
 }

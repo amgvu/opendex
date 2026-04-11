@@ -13,6 +13,8 @@
       }
     ],
     "attack": 49,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 49,
@@ -94,6 +96,8 @@
       }
     ],
     "attack": 62,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 63,
@@ -179,6 +183,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 236,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 83,
@@ -264,6 +270,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 43,
@@ -344,6 +352,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 58,
@@ -428,6 +438,8 @@
       }
     ],
     "attack": 84,
+    "baseExperience": 240,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 78,
@@ -509,6 +521,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 65,
@@ -589,6 +603,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 80,
@@ -673,6 +689,8 @@
       }
     ],
     "attack": 83,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 100,
@@ -753,6 +771,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 39,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 35,
@@ -827,6 +847,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 55,
@@ -906,6 +928,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 178,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 50,
@@ -990,6 +1014,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 39,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 30,
@@ -1065,6 +1091,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "yellow",
     "defense": 50,
@@ -1145,6 +1173,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 178,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 40,
@@ -1234,6 +1264,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 40,
@@ -1319,6 +1351,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 122,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 55,
@@ -1404,6 +1438,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 216,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 75,
@@ -1489,6 +1525,8 @@
       }
     ],
     "attack": 56,
+    "baseExperience": 51,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "purple",
     "defense": 35,
@@ -1566,6 +1604,8 @@
       }
     ],
     "attack": 81,
+    "baseExperience": 145,
+    "baseFriendship": 70,
     "catchRate": 127,
     "color": "brown",
     "defense": 60,
@@ -1638,6 +1678,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 52,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 30,
@@ -1711,6 +1753,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 155,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 65,
@@ -1789,6 +1833,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "purple",
     "defense": 44,
@@ -1867,6 +1913,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 157,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "purple",
     "defense": 69,
@@ -1940,6 +1988,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 112,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 40,
@@ -2020,6 +2070,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 218,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "yellow",
     "defense": 55,
@@ -2100,6 +2152,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "yellow",
     "defense": 85,
@@ -2172,6 +2226,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "yellow",
     "defense": 110,
@@ -2249,6 +2305,8 @@
       }
     ],
     "attack": 47,
+    "baseExperience": 55,
+    "baseFriendship": 70,
     "catchRate": 235,
     "color": "blue",
     "defense": 52,
@@ -2334,6 +2392,8 @@
       }
     ],
     "attack": 62,
+    "baseExperience": 128,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 67,
@@ -2418,6 +2478,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 227,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 87,
@@ -2503,6 +2565,8 @@
       }
     ],
     "attack": 57,
+    "baseExperience": 55,
+    "baseFriendship": 70,
     "catchRate": 235,
     "color": "purple",
     "defense": 40,
@@ -2588,6 +2652,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 128,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "purple",
     "defense": 57,
@@ -2673,6 +2739,8 @@
       }
     ],
     "attack": 102,
+    "baseExperience": 227,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 77,
@@ -2759,6 +2827,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 113,
+    "baseFriendship": 140,
     "catchRate": 150,
     "color": "pink",
     "defense": 48,
@@ -2843,6 +2913,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 217,
+    "baseFriendship": 140,
     "catchRate": 25,
     "color": "pink",
     "defense": 73,
@@ -2922,6 +2994,8 @@
       }
     ],
     "attack": 41,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 40,
@@ -2994,6 +3068,8 @@
       }
     ],
     "attack": 76,
+    "baseExperience": 177,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "yellow",
     "defense": 75,
@@ -3075,6 +3151,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 95,
+    "baseFriendship": 70,
     "catchRate": 170,
     "color": "pink",
     "defense": 20,
@@ -3160,6 +3238,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 196,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "pink",
     "defense": 45,
@@ -3240,6 +3320,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 49,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "purple",
     "defense": 35,
@@ -3320,6 +3402,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "purple",
     "defense": 70,
@@ -3400,6 +3484,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 55,
@@ -3487,6 +3573,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 138,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 70,
@@ -3574,6 +3662,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 221,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 85,
@@ -3666,6 +3756,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 57,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "red",
     "defense": 55,
@@ -3745,6 +3837,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 80,
@@ -3828,6 +3922,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 50,
@@ -3906,6 +4002,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 60,
@@ -3988,6 +4086,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 53,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 25,
@@ -4065,6 +4165,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 149,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "brown",
     "defense": 50,
@@ -4142,6 +4244,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "yellow",
     "defense": 35,
@@ -4226,6 +4330,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "yellow",
     "defense": 60,
@@ -4310,6 +4416,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 48,
@@ -4388,6 +4496,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 78,
@@ -4466,6 +4576,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 35,
@@ -4550,6 +4662,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 60,
@@ -4634,6 +4748,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 45,
@@ -4711,6 +4827,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 194,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 80,
@@ -4788,6 +4906,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 40,
@@ -4879,6 +4999,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 135,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 65,
@@ -4970,6 +5092,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 230,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 95,
@@ -5062,6 +5186,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "brown",
     "defense": 15,
@@ -5146,6 +5272,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 140,
+    "baseFriendship": 70,
     "catchRate": 100,
     "color": "brown",
     "defense": 30,
@@ -5230,6 +5358,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 225,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "brown",
     "defense": 45,
@@ -5314,6 +5444,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "gray",
     "defense": 50,
@@ -5398,6 +5530,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "gray",
     "defense": 70,
@@ -5482,6 +5616,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 227,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 80,
@@ -5561,6 +5697,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 35,
@@ -5641,6 +5779,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 137,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 50,
@@ -5721,6 +5861,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 221,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 65,
@@ -5806,6 +5948,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 67,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 35,
@@ -5884,6 +6028,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "blue",
     "defense": 65,
@@ -5962,6 +6108,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 100,
@@ -6047,6 +6195,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 137,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 115,
@@ -6132,6 +6282,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 223,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 130,
@@ -6217,6 +6369,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 82,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 55,
@@ -6294,6 +6448,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "yellow",
     "defense": 70,
@@ -6371,6 +6527,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 65,
@@ -6457,6 +6615,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "pink",
     "defense": 110,
@@ -6543,6 +6703,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 70,
@@ -6628,6 +6790,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 95,
@@ -6713,6 +6877,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 132,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 55,
@@ -6792,6 +6958,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 45,
@@ -6870,6 +7038,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 70,
@@ -6948,6 +7118,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 55,
@@ -7026,6 +7198,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "white",
     "defense": 80,
@@ -7105,6 +7279,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 50,
@@ -7182,6 +7358,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 75,
@@ -7263,6 +7441,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 100,
@@ -7340,6 +7520,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 180,
@@ -7408,6 +7590,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 30,
@@ -7483,6 +7667,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "purple",
     "defense": 45,
@@ -7558,6 +7744,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 225,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 60,
@@ -7643,6 +7831,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 77,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 160,
@@ -7721,6 +7911,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 45,
@@ -7798,6 +7990,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 169,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "yellow",
     "defense": 70,
@@ -7875,6 +8069,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "red",
     "defense": 90,
@@ -7952,6 +8148,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "red",
     "defense": 115,
@@ -8029,6 +8227,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "red",
     "defense": 50,
@@ -8106,6 +8306,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "red",
     "defense": 70,
@@ -8178,6 +8380,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "pink",
     "defense": 80,
@@ -8251,6 +8455,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 186,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 85,
@@ -8329,6 +8535,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 95,
@@ -8406,6 +8614,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 149,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 110,
@@ -8483,6 +8693,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 53,
@@ -8574,6 +8786,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 79,
@@ -8665,6 +8879,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 77,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "pink",
     "defense": 75,
@@ -8742,6 +8958,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 68,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 95,
@@ -8819,6 +9037,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 120,
@@ -8896,6 +9116,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 69,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "gray",
     "defense": 95,
@@ -8982,6 +9204,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 120,
@@ -9068,6 +9292,8 @@
       }
     ],
     "attack": 5,
+    "baseExperience": 395,
+    "baseFriendship": 140,
     "catchRate": 30,
     "color": "pink",
     "defense": 5,
@@ -9152,6 +9378,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 87,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 115,
@@ -9229,6 +9457,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 80,
@@ -9298,6 +9528,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 59,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "blue",
     "defense": 70,
@@ -9383,6 +9615,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 95,
@@ -9472,6 +9706,8 @@
       }
     ],
     "attack": 67,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "red",
     "defense": 60,
@@ -9549,6 +9785,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "red",
     "defense": 65,
@@ -9626,6 +9864,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 68,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "brown",
     "defense": 55,
@@ -9703,6 +9943,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 182,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 85,
@@ -9781,6 +10023,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "pink",
     "defense": 65,
@@ -9866,6 +10110,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 100,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 80,
@@ -9951,6 +10197,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 35,
@@ -10024,6 +10272,8 @@
       }
     ],
     "attack": 83,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 57,
@@ -10103,6 +10353,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 57,
@@ -10187,6 +10439,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 100,
@@ -10256,6 +10510,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 95,
@@ -10324,6 +10580,8 @@
       }
     ],
     "attack": 10,
+    "baseExperience": 40,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "red",
     "defense": 55,
@@ -10397,6 +10655,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 189,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 79,
@@ -10476,6 +10736,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 187,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 80,
@@ -10542,6 +10804,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 101,
+    "baseFriendship": 70,
     "catchRate": 35,
     "color": "purple",
     "defense": 48,
@@ -10611,6 +10875,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 50,
@@ -10732,6 +10998,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 60,
@@ -10853,6 +11121,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 60,
@@ -10974,6 +11244,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 60,
@@ -11100,6 +11372,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 79,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "pink",
     "defense": 70,
@@ -11184,6 +11458,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 100,
@@ -11263,6 +11539,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 125,
@@ -11342,6 +11620,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 90,
@@ -11421,6 +11701,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 105,
@@ -11500,6 +11782,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 65,
@@ -11570,6 +11854,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 189,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "black",
     "defense": 65,
@@ -11642,6 +11928,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 100,
@@ -11707,6 +11995,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "yellow",
     "defense": 85,
@@ -11772,6 +12062,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "yellow",
     "defense": 90,
@@ -11837,6 +12129,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 60,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 45,
@@ -11917,6 +12211,8 @@
       }
     ],
     "attack": 84,
+    "baseExperience": 147,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 65,
@@ -11997,6 +12293,8 @@
       }
     ],
     "attack": 134,
+    "baseExperience": 270,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "brown",
     "defense": 95,
@@ -12078,6 +12376,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "purple",
     "defense": 90,
@@ -12137,6 +12437,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 45,
     "color": "pink",
     "defense": 100,
@@ -12201,6 +12503,8 @@
       }
     ],
     "attack": 49,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 65,
@@ -12281,6 +12585,8 @@
       }
     ],
     "attack": 62,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 80,
@@ -12365,6 +12671,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 236,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 100,
@@ -12449,6 +12757,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 43,
@@ -12528,6 +12838,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 58,
@@ -12611,6 +12923,8 @@
       }
     ],
     "attack": 84,
+    "baseExperience": 240,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 78,
@@ -12690,6 +13004,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 64,
@@ -12770,6 +13086,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 80,
@@ -12854,6 +13172,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 100,
@@ -12943,6 +13263,8 @@
       }
     ],
     "attack": 46,
+    "baseExperience": 43,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 34,
@@ -13020,6 +13342,8 @@
       }
     ],
     "attack": 76,
+    "baseExperience": 145,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 64,
@@ -13097,6 +13421,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 52,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 30,
@@ -13175,6 +13501,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 50,
@@ -13253,6 +13581,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 53,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "red",
     "defense": 30,
@@ -13331,6 +13661,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 137,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "red",
     "defense": 50,
@@ -13409,6 +13741,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 40,
@@ -13487,6 +13821,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 140,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "red",
     "defense": 70,
@@ -13560,6 +13896,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 241,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "purple",
     "defense": 80,
@@ -13645,6 +13983,8 @@
       }
     ],
     "attack": 38,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 38,
@@ -13723,6 +14063,8 @@
       }
     ],
     "attack": 58,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 58,
@@ -13796,6 +14138,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 41,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 15,
@@ -13880,6 +14224,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 44,
+    "baseFriendship": 140,
     "catchRate": 150,
     "color": "pink",
     "defense": 28,
@@ -13964,6 +14310,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 42,
+    "baseFriendship": 70,
     "catchRate": 170,
     "color": "pink",
     "defense": 15,
@@ -14049,6 +14397,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 49,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 65,
@@ -14133,6 +14483,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "white",
     "defense": 85,
@@ -14219,6 +14571,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "green",
     "defense": 45,
@@ -14297,6 +14651,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "green",
     "defense": 70,
@@ -14374,6 +14730,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 235,
     "color": "white",
     "defense": 40,
@@ -14454,6 +14812,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 128,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "pink",
     "defense": 55,
@@ -14534,6 +14894,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 230,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 85,
@@ -14614,6 +14976,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 221,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 95,
@@ -14705,6 +15069,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 88,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 50,
@@ -14791,6 +15157,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 189,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 80,
@@ -14877,6 +15245,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 65,
     "color": "brown",
     "defense": 115,
@@ -14954,6 +15324,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 225,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 75,
@@ -15045,6 +15417,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "pink",
     "defense": 40,
@@ -15131,6 +15505,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 119,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 50,
@@ -15217,6 +15593,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 207,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 70,
@@ -15303,6 +15681,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 55,
@@ -15380,6 +15760,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 36,
+    "baseFriendship": 70,
     "catchRate": 235,
     "color": "yellow",
     "defense": 30,
@@ -15457,6 +15839,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 149,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "yellow",
     "defense": 55,
@@ -15534,6 +15918,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 78,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 45,
@@ -15612,6 +15998,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 42,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 45,
@@ -15698,6 +16086,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 151,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "blue",
     "defense": 85,
@@ -15779,6 +16169,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 60,
@@ -15900,6 +16292,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 184,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "black",
     "defense": 110,
@@ -16026,6 +16420,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 81,
+    "baseFriendship": 35,
     "catchRate": 30,
     "color": "black",
     "defense": 42,
@@ -16104,6 +16500,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 70,
     "color": "pink",
     "defense": 80,
@@ -16180,6 +16578,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 87,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "gray",
     "defense": 60,
@@ -16247,6 +16647,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 118,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "black",
     "defense": 48,
@@ -16315,6 +16717,8 @@
       }
     ],
     "attack": 33,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 58,
@@ -16392,6 +16796,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "yellow",
     "defense": 65,
@@ -16465,6 +16871,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 90,
@@ -16537,6 +16945,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 140,
@@ -16615,6 +17025,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 145,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 70,
@@ -16692,6 +17104,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 86,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 105,
@@ -16770,6 +17184,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 179,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "gray",
     "defense": 200,
@@ -16848,6 +17264,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 50,
@@ -16926,6 +17344,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 75,
@@ -17004,6 +17424,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 88,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 85,
@@ -17082,6 +17504,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "red",
     "defense": 100,
@@ -17167,6 +17591,8 @@
       }
     ],
     "attack": 10,
+    "baseExperience": 177,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 230,
@@ -17241,6 +17667,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 75,
@@ -17311,6 +17739,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 86,
+    "baseFriendship": 35,
     "catchRate": 60,
     "color": "black",
     "defense": 55,
@@ -17396,6 +17826,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 50,
@@ -17480,6 +17912,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "brown",
     "defense": 75,
@@ -17564,6 +17998,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "red",
     "defense": 40,
@@ -17641,6 +18077,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 151,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 120,
@@ -17719,6 +18157,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "brown",
     "defense": 40,
@@ -17804,6 +18244,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 80,
@@ -17893,6 +18335,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "pink",
     "defense": 95,
@@ -17976,6 +18420,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 35,
@@ -18054,6 +18500,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 75,
@@ -18136,6 +18584,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 116,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 45,
@@ -18207,6 +18657,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "purple",
     "defense": 70,
@@ -18285,6 +18737,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "gray",
     "defense": 140,
@@ -18355,6 +18809,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 66,
+    "baseFriendship": 35,
     "catchRate": 120,
     "color": "black",
     "defense": 30,
@@ -18433,6 +18889,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 175,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "black",
     "defense": 50,
@@ -18511,6 +18969,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 243,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 95,
@@ -18600,6 +19060,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 60,
@@ -18672,6 +19134,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 120,
@@ -18753,6 +19217,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 90,
@@ -18837,6 +19303,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 62,
@@ -18914,6 +19382,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 88,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 35,
@@ -18983,6 +19453,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 42,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 35,
@@ -19074,6 +19546,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 95,
@@ -19165,6 +19639,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "pink",
     "defense": 15,
@@ -19238,6 +19714,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 37,
@@ -19317,6 +19795,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 73,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 37,
@@ -19401,6 +19881,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "pink",
     "defense": 105,
@@ -19470,6 +19952,8 @@
       }
     ],
     "attack": 10,
+    "baseExperience": 608,
+    "baseFriendship": 140,
     "catchRate": 30,
     "color": "pink",
     "defense": 10,
@@ -19549,6 +20033,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "yellow",
     "defense": 75,
@@ -19617,6 +20103,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "brown",
     "defense": 85,
@@ -19685,6 +20173,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 115,
@@ -19753,6 +20243,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 60,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "green",
     "defense": 50,
@@ -19828,6 +20320,8 @@
       }
     ],
     "attack": 84,
+    "baseExperience": 144,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "gray",
     "defense": 70,
@@ -19908,6 +20402,8 @@
       }
     ],
     "attack": 134,
+    "baseExperience": 270,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "green",
     "defense": 110,
@@ -19988,6 +20484,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "white",
     "defense": 130,
@@ -20053,6 +20551,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "red",
     "defense": 90,
@@ -20113,6 +20613,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 45,
     "color": "green",
     "defense": 100,
@@ -20178,6 +20680,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 35,
@@ -20258,6 +20762,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 45,
@@ -20338,6 +20844,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 65,
@@ -20418,6 +20926,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 40,
@@ -20497,6 +21007,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 60,
@@ -20581,6 +21093,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 70,
@@ -20661,6 +21175,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 50,
@@ -20741,6 +21257,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 70,
@@ -20822,6 +21340,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 241,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -20908,6 +21428,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 35,
@@ -20985,6 +21507,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 127,
     "color": "gray",
     "defense": 70,
@@ -21062,6 +21586,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 41,
@@ -21146,6 +21672,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "white",
     "defense": 61,
@@ -21225,6 +21753,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "red",
     "defense": 35,
@@ -21313,6 +21843,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "white",
     "defense": 55,
@@ -21406,6 +21938,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 178,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 50,
@@ -21495,6 +22029,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "purple",
     "defense": 55,
@@ -21588,6 +22124,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 70,
@@ -21687,6 +22225,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 44,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 30,
@@ -21773,6 +22313,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 119,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 50,
@@ -21859,6 +22401,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 216,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 70,
@@ -21945,6 +22489,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 44,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 50,
@@ -22030,6 +22576,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 119,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 40,
@@ -22116,6 +22664,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 216,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 60,
@@ -22197,6 +22747,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 54,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "blue",
     "defense": 30,
@@ -22270,6 +22822,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 60,
@@ -22348,6 +22902,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 54,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 30,
@@ -22427,6 +22983,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 100,
@@ -22506,6 +23064,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 40,
+    "baseFriendship": 35,
     "catchRate": 235,
     "color": "white",
     "defense": 25,
@@ -22599,6 +23159,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 97,
+    "baseFriendship": 35,
     "catchRate": 120,
     "color": "white",
     "defense": 35,
@@ -22692,6 +23254,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 233,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "white",
     "defense": 65,
@@ -22780,6 +23344,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 54,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "blue",
     "defense": 32,
@@ -22854,6 +23420,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 62,
@@ -22937,6 +23505,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 59,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 60,
@@ -23015,6 +23585,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "green",
     "defense": 80,
@@ -23084,6 +23656,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 60,
@@ -23158,6 +23732,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "white",
     "defense": 80,
@@ -23232,6 +23808,8 @@
       }
     ],
     "attack": 160,
+    "baseExperience": 252,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 100,
@@ -23311,6 +23889,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 53,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 90,
@@ -23391,6 +23971,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 160,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "yellow",
     "defense": 45,
@@ -23466,6 +24048,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 83,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 45,
@@ -23546,6 +24130,8 @@
       }
     ],
     "attack": 51,
+    "baseExperience": 48,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 23,
@@ -23626,6 +24212,8 @@
       }
     ],
     "attack": 71,
+    "baseExperience": 126,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 43,
@@ -23706,6 +24294,8 @@
       }
     ],
     "attack": 91,
+    "baseExperience": 221,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 63,
@@ -23791,6 +24381,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 47,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "yellow",
     "defense": 30,
@@ -23868,6 +24460,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "brown",
     "defense": 60,
@@ -23945,6 +24539,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 38,
+    "baseFriendship": 70,
     "catchRate": 150,
     "color": "blue",
     "defense": 40,
@@ -24030,6 +24626,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 75,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 135,
@@ -24107,6 +24705,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 52,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "pink",
     "defense": 45,
@@ -24185,6 +24785,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 140,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 65,
@@ -24267,6 +24869,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 133,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "purple",
     "defense": 75,
@@ -24341,6 +24945,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 133,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "black",
     "defense": 85,
@@ -24416,6 +25022,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 66,
+    "baseFriendship": 35,
     "catchRate": 180,
     "color": "gray",
     "defense": 100,
@@ -24501,6 +25109,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 151,
+    "baseFriendship": 35,
     "catchRate": 90,
     "color": "gray",
     "defense": 140,
@@ -24586,6 +25196,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 239,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "gray",
     "defense": 180,
@@ -24666,6 +25278,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "blue",
     "defense": 55,
@@ -24739,6 +25353,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "red",
     "defense": 75,
@@ -24817,6 +25433,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 59,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 40,
@@ -24894,6 +25512,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 60,
@@ -24966,6 +25586,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "yellow",
     "defense": 40,
@@ -25030,6 +25652,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "yellow",
     "defense": 50,
@@ -25099,6 +25723,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 151,
+    "baseFriendship": 70,
     "catchRate": 150,
     "color": "gray",
     "defense": 75,
@@ -25169,6 +25795,8 @@
       }
     ],
     "attack": 47,
+    "baseExperience": 151,
+    "baseFriendship": 70,
     "catchRate": 150,
     "color": "purple",
     "defense": 75,
@@ -25239,6 +25867,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 140,
+    "baseFriendship": 70,
     "catchRate": 150,
     "color": "green",
     "defense": 45,
@@ -25325,6 +25955,8 @@
       }
     ],
     "attack": 43,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "green",
     "defense": 53,
@@ -25402,6 +26034,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 83,
@@ -25474,6 +26108,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 61,
+    "baseFriendship": 35,
     "catchRate": 225,
     "color": "red",
     "defense": 20,
@@ -25547,6 +26183,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 161,
+    "baseFriendship": 35,
     "catchRate": 60,
     "color": "blue",
     "defense": 40,
@@ -25625,6 +26263,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 80,
+    "baseFriendship": 70,
     "catchRate": 125,
     "color": "blue",
     "defense": 35,
@@ -25703,6 +26343,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "blue",
     "defense": 45,
@@ -25781,6 +26423,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "yellow",
     "defense": 40,
@@ -25859,6 +26503,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 150,
     "color": "red",
     "defense": 70,
@@ -25941,6 +26587,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 140,
@@ -26010,6 +26658,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "black",
     "defense": 35,
@@ -26087,6 +26737,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 65,
@@ -26164,6 +26816,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 126,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 60,
@@ -26234,6 +26888,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 45,
@@ -26309,6 +26965,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 119,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 50,
@@ -26389,6 +27047,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 234,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 80,
@@ -26474,6 +27134,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 67,
+    "baseFriendship": 35,
     "catchRate": 190,
     "color": "green",
     "defense": 40,
@@ -26547,6 +27209,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 166,
+    "baseFriendship": 35,
     "catchRate": 60,
     "color": "green",
     "defense": 60,
@@ -26625,6 +27289,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 60,
@@ -26699,6 +27365,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -26773,6 +27441,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 160,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "white",
     "defense": 60,
@@ -26837,6 +27507,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 160,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "black",
     "defense": 60,
@@ -26901,6 +27573,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 65,
@@ -26961,6 +27635,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 85,
@@ -27031,6 +27707,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 43,
@@ -27109,6 +27787,8 @@
       }
     ],
     "attack": 78,
+    "baseExperience": 164,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 73,
@@ -27187,6 +27867,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 205,
     "color": "red",
     "defense": 65,
@@ -27265,6 +27947,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 164,
+    "baseFriendship": 70,
     "catchRate": 155,
     "color": "red",
     "defense": 85,
@@ -27334,6 +28018,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 55,
@@ -27402,6 +28088,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "black",
     "defense": 105,
@@ -27475,6 +28163,8 @@
       }
     ],
     "attack": 41,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 77,
@@ -27548,6 +28238,8 @@
       }
     ],
     "attack": 81,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 97,
@@ -27621,6 +28313,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 50,
@@ -27694,6 +28388,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 100,
@@ -27772,6 +28468,8 @@
       }
     ],
     "attack": 15,
+    "baseExperience": 40,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 20,
@@ -27850,6 +28548,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 189,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "pink",
     "defense": 79,
@@ -27918,6 +28618,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 70,
@@ -27983,6 +28685,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "green",
     "defense": 70,
@@ -28052,6 +28756,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 59,
+    "baseFriendship": 35,
     "catchRate": 225,
     "color": "black",
     "defense": 35,
@@ -28129,6 +28835,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 159,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "black",
     "defense": 65,
@@ -28201,6 +28909,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 59,
+    "baseFriendship": 35,
     "catchRate": 190,
     "color": "black",
     "defense": 90,
@@ -28280,6 +28990,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 159,
+    "baseFriendship": 35,
     "catchRate": 90,
     "color": "black",
     "defense": 130,
@@ -28368,6 +29080,8 @@
       }
     ],
     "attack": 68,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "green",
     "defense": 83,
@@ -28429,6 +29143,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 80,
@@ -28510,6 +29226,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 163,
+    "baseFriendship": 35,
     "catchRate": 30,
     "color": "white",
     "defense": 60,
@@ -28574,6 +29292,8 @@
       }
     ],
     "attack": 23,
+    "baseExperience": 52,
+    "baseFriendship": 70,
     "catchRate": 125,
     "color": "blue",
     "defense": 48,
@@ -28651,6 +29371,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 50,
@@ -28736,6 +29458,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "gray",
     "defense": 80,
@@ -28821,6 +29545,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 50,
@@ -28907,6 +29633,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 70,
@@ -28993,6 +29721,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -29074,6 +29804,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 69,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 85,
@@ -29153,6 +29885,8 @@
       }
     ],
     "attack": 104,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "blue",
     "defense": 105,
@@ -29236,6 +29970,8 @@
       }
     ],
     "attack": 84,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "pink",
     "defense": 105,
@@ -29320,6 +30056,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "gray",
     "defense": 130,
@@ -29390,6 +30128,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 116,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "pink",
     "defense": 55,
@@ -29454,6 +30194,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 60,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 60,
@@ -29533,6 +30275,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 147,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "white",
     "defense": 100,
@@ -29612,6 +30356,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 270,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 80,
@@ -29692,6 +30438,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 60,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 80,
@@ -29772,6 +30520,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 147,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 100,
@@ -29852,6 +30602,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 270,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 130,
@@ -29932,6 +30684,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "brown",
     "defense": 200,
@@ -29996,6 +30750,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 100,
@@ -30060,6 +30816,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "gray",
     "defense": 150,
@@ -30123,6 +30881,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 270,
+    "baseFriendship": 90,
     "catchRate": 3,
     "color": "red",
     "defense": 90,
@@ -30183,6 +30943,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 270,
+    "baseFriendship": 90,
     "catchRate": 3,
     "color": "blue",
     "defense": 80,
@@ -30243,6 +31005,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 302,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "blue",
     "defense": 90,
@@ -30302,6 +31066,8 @@
       }
     ],
     "attack": 150,
+    "baseExperience": 302,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "red",
     "defense": 140,
@@ -30361,6 +31127,8 @@
       }
     ],
     "attack": 150,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "green",
     "defense": 90,
@@ -30425,6 +31193,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "yellow",
     "defense": 100,
@@ -30485,6 +31255,8 @@
       }
     ],
     "attack": 150,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "red",
     "defense": 50,
@@ -30557,6 +31329,8 @@
       }
     ],
     "attack": 68,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 64,
@@ -30637,6 +31411,8 @@
       }
     ],
     "attack": 89,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 85,
@@ -30721,6 +31497,8 @@
       }
     ],
     "attack": 109,
+    "baseExperience": 236,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 105,
@@ -30806,6 +31584,8 @@
       }
     ],
     "attack": 58,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 44,
@@ -30886,6 +31666,8 @@
       }
     ],
     "attack": 78,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 52,
@@ -30971,6 +31753,8 @@
       }
     ],
     "attack": 104,
+    "baseExperience": 240,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 71,
@@ -31060,6 +31844,8 @@
       }
     ],
     "attack": 51,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 53,
@@ -31140,6 +31926,8 @@
       }
     ],
     "attack": 66,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 68,
@@ -31220,6 +32008,8 @@
       }
     ],
     "attack": 86,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 88,
@@ -31301,6 +32091,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 49,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 30,
@@ -31381,6 +32173,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 119,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 50,
@@ -31461,6 +32255,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 218,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 70,
@@ -31546,6 +32342,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 40,
@@ -31624,6 +32422,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 127,
     "color": "brown",
     "defense": 60,
@@ -31698,6 +32498,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 39,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "red",
     "defense": 41,
@@ -31770,6 +32572,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 134,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 51,
@@ -31847,6 +32651,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 53,
+    "baseFriendship": 70,
     "catchRate": 235,
     "color": "blue",
     "defense": 34,
@@ -31931,6 +32737,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 127,
+    "baseFriendship": 100,
     "catchRate": 120,
     "color": "blue",
     "defense": 49,
@@ -32015,6 +32823,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 235,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 79,
@@ -32099,6 +32909,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 35,
@@ -32184,6 +32996,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 232,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "green",
     "defense": 65,
@@ -32265,6 +33079,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 40,
@@ -32337,6 +33153,8 @@
       }
     ],
     "attack": 165,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 60,
@@ -32409,6 +33227,8 @@
       }
     ],
     "attack": 42,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 118,
@@ -32482,6 +33302,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 168,
@@ -32555,6 +33377,8 @@
       }
     ],
     "attack": 29,
+    "baseExperience": 45,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 45,
@@ -32634,6 +33458,8 @@
       }
     ],
     "attack": 59,
+    "baseExperience": 148,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 85,
@@ -32714,6 +33540,8 @@
       }
     ],
     "attack": 94,
+    "baseExperience": 148,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 50,
@@ -32798,6 +33626,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 49,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "yellow",
     "defense": 42,
@@ -32871,6 +33701,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 102,
@@ -32953,6 +33785,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 142,
+    "baseFriendship": 100,
     "catchRate": 200,
     "color": "white",
     "defense": 70,
@@ -33018,6 +33852,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 35,
@@ -33091,6 +33927,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 55,
@@ -33159,6 +33997,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 55,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 45,
@@ -33227,6 +34067,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 70,
@@ -33305,6 +34147,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 48,
@@ -33383,6 +34227,8 @@
       }
     ],
     "attack": 83,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 68,
@@ -33462,6 +34308,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 169,
+    "baseFriendship": 100,
     "catchRate": 45,
     "color": "purple",
     "defense": 66,
@@ -33539,6 +34387,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 125,
     "color": "purple",
     "defense": 34,
@@ -33617,6 +34467,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 174,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 44,
@@ -33695,6 +34547,8 @@
       }
     ],
     "attack": 66,
+    "baseExperience": 70,
+    "baseFriendship": 0,
     "catchRate": 190,
     "color": "brown",
     "defense": 44,
@@ -33773,6 +34627,8 @@
       }
     ],
     "attack": 76,
+    "baseExperience": 168,
+    "baseFriendship": 140,
     "catchRate": 60,
     "color": "brown",
     "defense": 84,
@@ -33841,6 +34697,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 173,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "purple",
     "defense": 60,
@@ -33922,6 +34780,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 177,
+    "baseFriendship": 35,
     "catchRate": 30,
     "color": "black",
     "defense": 52,
@@ -34000,6 +34860,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 42,
@@ -34077,6 +34939,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 158,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "gray",
     "defense": 64,
@@ -34144,6 +35008,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 57,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "yellow",
     "defense": 50,
@@ -34221,6 +35087,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "purple",
     "defense": 47,
@@ -34299,6 +35167,8 @@
       }
     ],
     "attack": 93,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "purple",
     "defense": 67,
@@ -34377,6 +35247,8 @@
       }
     ],
     "attack": 24,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 86,
@@ -34455,6 +35327,8 @@
       }
     ],
     "attack": 89,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "green",
     "defense": 116,
@@ -34537,6 +35411,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 95,
@@ -34614,6 +35490,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 145,
     "color": "pink",
     "defense": 45,
@@ -34699,6 +35577,8 @@
       }
     ],
     "attack": 5,
+    "baseExperience": 110,
+    "baseFriendship": 140,
     "catchRate": 130,
     "color": "pink",
     "defense": 5,
@@ -34783,6 +35663,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 144,
+    "baseFriendship": 35,
     "catchRate": 30,
     "color": "black",
     "defense": 45,
@@ -34848,6 +35730,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 100,
     "color": "purple",
     "defense": 108,
@@ -34917,6 +35801,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 45,
@@ -34998,6 +35884,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 65,
@@ -35079,6 +35967,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 270,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 95,
@@ -35165,6 +36055,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 78,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "black",
     "defense": 40,
@@ -35242,6 +36134,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 57,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 40,
@@ -35319,6 +36213,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 70,
@@ -35397,6 +36293,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 140,
     "color": "brown",
     "defense": 78,
@@ -35469,6 +36367,8 @@
       }
     ],
     "attack": 112,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "brown",
     "defense": 118,
@@ -35546,6 +36446,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "purple",
     "defense": 90,
@@ -35625,6 +36527,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 110,
@@ -35704,6 +36608,8 @@
       }
     ],
     "attack": 61,
+    "baseExperience": 60,
+    "baseFriendship": 100,
     "catchRate": 140,
     "color": "blue",
     "defense": 40,
@@ -35782,6 +36688,8 @@
       }
     ],
     "attack": 106,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 65,
@@ -35850,6 +36758,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "green",
     "defense": 72,
@@ -35919,6 +36829,8 @@
       }
     ],
     "attack": 49,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 56,
@@ -35996,6 +36908,8 @@
       }
     ],
     "attack": 69,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 76,
@@ -36073,6 +36987,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 69,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "blue",
     "defense": 50,
@@ -36146,6 +37062,8 @@
       }
     ],
     "attack": 62,
+    "baseExperience": 67,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "white",
     "defense": 50,
@@ -36220,6 +37138,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "white",
     "defense": 75,
@@ -36298,6 +37218,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 179,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "black",
     "defense": 65,
@@ -36387,6 +37309,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 241,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "gray",
     "defense": 115,
@@ -36472,6 +37396,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "pink",
     "defense": 95,
@@ -36549,6 +37475,8 @@
       }
     ],
     "attack": 140,
+    "baseExperience": 241,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "gray",
     "defense": 130,
@@ -36635,6 +37563,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 187,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "blue",
     "defense": 125,
@@ -36707,6 +37637,8 @@
       }
     ],
     "attack": 123,
+    "baseExperience": 243,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "yellow",
     "defense": 67,
@@ -36786,6 +37718,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 243,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "red",
     "defense": 67,
@@ -36870,6 +37804,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 245,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "white",
     "defense": 95,
@@ -36960,6 +37896,8 @@
       }
     ],
     "attack": 76,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "green",
     "defense": 86,
@@ -37033,6 +37971,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 184,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "green",
     "defense": 130,
@@ -37154,6 +38094,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 184,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 110,
@@ -37280,6 +38222,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 179,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "purple",
     "defense": 125,
@@ -37358,6 +38302,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "brown",
     "defense": 80,
@@ -37443,6 +38389,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 241,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "red",
     "defense": 70,
@@ -37527,6 +38475,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 233,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "white",
     "defense": 65,
@@ -37620,6 +38570,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 145,
@@ -37697,6 +38649,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 236,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "black",
     "defense": 135,
@@ -37780,6 +38734,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "white",
     "defense": 70,
@@ -37856,6 +38812,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 77,
@@ -37920,6 +38878,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 261,
+    "baseFriendship": 140,
     "catchRate": 3,
     "color": "yellow",
     "defense": 130,
@@ -37983,6 +38943,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 261,
+    "baseFriendship": 140,
     "catchRate": 3,
     "color": "pink",
     "defense": 105,
@@ -38050,6 +39012,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 261,
+    "baseFriendship": 140,
     "catchRate": 3,
     "color": "blue",
     "defense": 70,
@@ -38118,6 +39082,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "white",
     "defense": 120,
@@ -38183,6 +39149,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "purple",
     "defense": 100,
@@ -38248,6 +39216,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "brown",
     "defense": 106,
@@ -38308,6 +39278,8 @@
       }
     ],
     "attack": 160,
+    "baseExperience": 302,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "white",
     "defense": 110,
@@ -38372,6 +39344,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "black",
     "defense": 120,
@@ -38432,6 +39406,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "yellow",
     "defense": 110,
@@ -38491,6 +39467,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 216,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "blue",
     "defense": 80,
@@ -38559,6 +39537,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 70,
     "catchRate": 3,
     "color": "blue",
     "defense": 100,
@@ -38627,6 +39607,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "black",
     "defense": 90,
@@ -38690,6 +39672,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 45,
     "color": "green",
     "defense": 100,
@@ -38749,6 +39733,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 324,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "white",
     "defense": 120,
@@ -38808,6 +39794,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "yellow",
     "defense": 100,
@@ -38873,6 +39861,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 55,
@@ -38953,6 +39943,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 145,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 75,
@@ -39033,6 +40025,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 238,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 95,
@@ -39113,6 +40107,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 45,
@@ -39192,6 +40188,8 @@
       }
     ],
     "attack": 93,
+    "baseExperience": 146,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 55,
@@ -39272,6 +40270,8 @@
       }
     ],
     "attack": 123,
+    "baseExperience": 238,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 65,
@@ -39352,6 +40352,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 45,
@@ -39431,6 +40433,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 145,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 60,
@@ -39510,6 +40514,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 238,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 85,
@@ -39594,6 +40600,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 51,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 39,
@@ -39671,6 +40679,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 69,
@@ -39748,6 +40758,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 55,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 45,
@@ -39832,6 +40844,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 130,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "gray",
     "defense": 65,
@@ -39916,6 +40930,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 225,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 90,
@@ -40000,6 +41016,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "purple",
     "defense": 37,
@@ -40077,6 +41095,8 @@
       }
     ],
     "attack": 88,
+    "baseExperience": 156,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "purple",
     "defense": 50,
@@ -40149,6 +41169,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "green",
     "defense": 48,
@@ -40221,6 +41243,8 @@
       }
     ],
     "attack": 98,
+    "baseExperience": 174,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "green",
     "defense": 63,
@@ -40293,6 +41317,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "red",
     "defense": 48,
@@ -40365,6 +41391,8 @@
       }
     ],
     "attack": 98,
+    "baseExperience": 174,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 63,
@@ -40437,6 +41465,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 48,
@@ -40509,6 +41539,8 @@
       }
     ],
     "attack": 98,
+    "baseExperience": 174,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 63,
@@ -40586,6 +41618,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 45,
@@ -40663,6 +41697,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "pink",
     "defense": 85,
@@ -40740,6 +41776,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 53,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 50,
@@ -40825,6 +41863,8 @@
       }
     ],
     "attack": 77,
+    "baseExperience": 125,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "gray",
     "defense": 62,
@@ -40910,6 +41950,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 220,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 80,
@@ -40995,6 +42037,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 59,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "black",
     "defense": 32,
@@ -41072,6 +42116,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 174,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "black",
     "defense": 63,
@@ -41149,6 +42195,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 85,
@@ -41233,6 +42281,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 137,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 105,
@@ -41321,6 +42371,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 232,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 130,
@@ -41405,6 +42457,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 43,
@@ -41484,6 +42538,8 @@
       }
     ],
     "attack": 57,
+    "baseExperience": 149,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 55,
@@ -41563,6 +42619,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "gray",
     "defense": 40,
@@ -41640,6 +42698,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 178,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 60,
@@ -41718,6 +42778,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 390,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "pink",
     "defense": 86,
@@ -41787,6 +42849,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "gray",
     "defense": 55,
@@ -41871,6 +42935,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "gray",
     "defense": 85,
@@ -41955,6 +43021,8 @@
       }
     ],
     "attack": 140,
+    "baseExperience": 227,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 95,
@@ -42039,6 +43107,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 59,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 40,
@@ -42123,6 +43193,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 134,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "blue",
     "defense": 55,
@@ -42208,6 +43280,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 229,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 75,
@@ -42293,6 +43367,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 85,
@@ -42362,6 +43438,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 75,
@@ -42431,6 +43509,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "yellow",
     "defense": 70,
@@ -42516,6 +43596,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 133,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 90,
@@ -42601,6 +43683,8 @@
       }
     ],
     "attack": 103,
+    "baseExperience": 225,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 80,
@@ -42686,6 +43770,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 52,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "red",
     "defense": 59,
@@ -42771,6 +43857,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 126,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "gray",
     "defense": 99,
@@ -42856,6 +43944,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 218,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 89,
@@ -42941,6 +44031,8 @@
       }
     ],
     "attack": 27,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "green",
     "defense": 60,
@@ -43020,6 +44112,8 @@
       }
     ],
     "attack": 67,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "green",
     "defense": 85,
@@ -43099,6 +44193,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "green",
     "defense": 50,
@@ -43176,6 +44272,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "green",
     "defense": 75,
@@ -43253,6 +44351,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "green",
     "defense": 65,
@@ -43330,6 +44430,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "brown",
     "defense": 35,
@@ -43415,6 +44517,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 123,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 45,
@@ -43500,6 +44604,8 @@
       }
     ],
     "attack": 117,
+    "baseExperience": 234,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 80,
@@ -43580,6 +44686,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "red",
     "defense": 45,
@@ -43652,6 +44760,8 @@
       }
     ],
     "attack": 140,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "red",
     "defense": 55,
@@ -43729,6 +44839,8 @@
       }
     ],
     "attack": 86,
+    "baseExperience": 161,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "green",
     "defense": 67,
@@ -43798,6 +44910,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "red",
     "defense": 85,
@@ -43877,6 +44991,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 125,
@@ -43956,6 +45072,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 70,
+    "baseFriendship": 35,
     "catchRate": 180,
     "color": "yellow",
     "defense": 70,
@@ -44035,6 +45153,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 171,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "red",
     "defense": 115,
@@ -44118,6 +45238,8 @@
       }
     ],
     "attack": 58,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "black",
     "defense": 80,
@@ -44178,6 +45300,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "black",
     "defense": 85,
@@ -44253,6 +45377,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 169,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "yellow",
     "defense": 145,
@@ -44338,6 +45464,8 @@
       }
     ],
     "attack": 78,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 103,
@@ -44417,6 +45545,8 @@
       }
     ],
     "attack": 108,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 133,
@@ -44486,6 +45616,8 @@
       }
     ],
     "attack": 112,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 45,
@@ -44555,6 +45687,8 @@
       }
     ],
     "attack": 140,
+    "baseExperience": 177,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 65,
@@ -44634,6 +45768,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "green",
     "defense": 62,
@@ -44711,6 +45847,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "green",
     "defense": 82,
@@ -44778,6 +45916,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "gray",
     "defense": 40,
@@ -44845,6 +45985,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 179,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 60,
@@ -44922,6 +46064,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 40,
@@ -44999,6 +46143,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 60,
@@ -45076,6 +46222,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "purple",
     "defense": 50,
@@ -45160,6 +46308,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 137,
+    "baseFriendship": 70,
     "catchRate": 100,
     "color": "purple",
     "defense": 70,
@@ -45244,6 +46394,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 221,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "purple",
     "defense": 95,
@@ -45328,6 +46480,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "green",
     "defense": 40,
@@ -45412,6 +46566,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 130,
+    "baseFriendship": 70,
     "catchRate": 100,
     "color": "green",
     "defense": 50,
@@ -45496,6 +46652,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 221,
+    "baseFriendship": 70,
     "catchRate": 50,
     "color": "green",
     "defense": 75,
@@ -45580,6 +46738,8 @@
       }
     ],
     "attack": 44,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 50,
@@ -45659,6 +46819,8 @@
       }
     ],
     "attack": 87,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 63,
@@ -45738,6 +46900,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "white",
     "defense": 50,
@@ -45822,6 +46986,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 138,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "white",
     "defense": 65,
@@ -45906,6 +47072,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 241,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 85,
@@ -45990,6 +47158,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 67,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 50,
@@ -46068,6 +47238,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 70,
@@ -46141,6 +47313,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 150,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "white",
     "defense": 60,
@@ -46211,6 +47385,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "blue",
     "defense": 45,
@@ -46288,6 +47464,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "gray",
     "defense": 105,
@@ -46361,6 +47539,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 59,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 45,
@@ -46434,6 +47614,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 162,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "white",
     "defense": 70,
@@ -46512,6 +47694,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 67,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 50,
@@ -46590,6 +47774,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "white",
     "defense": 70,
@@ -46668,6 +47854,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "pink",
     "defense": 80,
@@ -46738,6 +47926,8 @@
       }
     ],
     "attack": 47,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 50,
@@ -46816,6 +48006,8 @@
       }
     ],
     "attack": 77,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "yellow",
     "defense": 60,
@@ -46884,6 +48076,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 91,
@@ -46958,6 +48152,8 @@
       }
     ],
     "attack": 94,
+    "baseExperience": 171,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "gray",
     "defense": 131,
@@ -47037,6 +48233,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 130,
     "color": "gray",
     "defense": 70,
@@ -47121,6 +48319,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 95,
@@ -47205,6 +48405,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 234,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "gray",
     "defense": 115,
@@ -47279,6 +48481,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 55,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 40,
@@ -47353,6 +48557,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "blue",
     "defense": 70,
@@ -47427,6 +48633,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 232,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "blue",
     "defense": 80,
@@ -47511,6 +48719,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 67,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "blue",
     "defense": 55,
@@ -47588,6 +48798,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 75,
@@ -47665,6 +48877,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 55,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 55,
@@ -47750,6 +48964,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 130,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "black",
     "defense": 60,
@@ -47835,6 +49051,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 234,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "black",
     "defense": 90,
@@ -47920,6 +49138,8 @@
       }
     ],
     "attack": 87,
+    "baseExperience": 64,
+    "baseFriendship": 35,
     "catchRate": 75,
     "color": "green",
     "defense": 60,
@@ -48005,6 +49225,8 @@
       }
     ],
     "attack": 117,
+    "baseExperience": 144,
+    "baseFriendship": 35,
     "catchRate": 60,
     "color": "green",
     "defense": 70,
@@ -48090,6 +49312,8 @@
       }
     ],
     "attack": 147,
+    "baseExperience": 243,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "yellow",
     "defense": 90,
@@ -48175,6 +49399,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "white",
     "defense": 40,
@@ -48252,6 +49478,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 177,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "white",
     "defense": 80,
@@ -48319,6 +49547,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "blue",
     "defense": 50,
@@ -48388,6 +49618,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "red",
     "defense": 85,
@@ -48465,6 +49697,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "red",
     "defense": 40,
@@ -48542,6 +49776,8 @@
       }
     ],
     "attack": 66,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "brown",
     "defense": 84,
@@ -48613,6 +49849,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "yellow",
     "defense": 50,
@@ -48691,6 +49929,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 179,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 60,
@@ -48769,6 +50009,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 90,
@@ -48839,6 +50081,8 @@
       }
     ],
     "attack": 74,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "green",
     "defense": 50,
@@ -48917,6 +50161,8 @@
       }
     ],
     "attack": 124,
+    "baseExperience": 169,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "green",
     "defense": 80,
@@ -48995,6 +50241,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 68,
+    "baseFriendship": 35,
     "catchRate": 120,
     "color": "red",
     "defense": 70,
@@ -49080,6 +50328,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 172,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "red",
     "defense": 100,
@@ -49165,6 +50415,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 95,
@@ -49234,6 +50486,8 @@
       }
     ],
     "attack": 83,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "white",
     "defense": 50,
@@ -49312,6 +50566,8 @@
       }
     ],
     "attack": 123,
+    "baseExperience": 179,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "red",
     "defense": 75,
@@ -49390,6 +50646,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 74,
+    "baseFriendship": 35,
     "catchRate": 190,
     "color": "brown",
     "defense": 75,
@@ -49468,6 +50726,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 179,
+    "baseFriendship": 35,
     "catchRate": 60,
     "color": "brown",
     "defense": 105,
@@ -49546,6 +50806,8 @@
       }
     ],
     "attack": 97,
+    "baseExperience": 169,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "red",
     "defense": 66,
@@ -49615,6 +50877,8 @@
       }
     ],
     "attack": 109,
+    "baseExperience": 169,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "gray",
     "defense": 112,
@@ -49675,6 +50939,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 60,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 50,
@@ -49750,6 +51016,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 147,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 70,
@@ -49825,6 +51093,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 270,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -49905,6 +51175,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 55,
@@ -49978,6 +51250,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 248,
+    "baseFriendship": 70,
     "catchRate": 15,
     "color": "white",
     "defense": 65,
@@ -50046,6 +51320,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "blue",
     "defense": 129,
@@ -50106,6 +51382,8 @@
       }
     ],
     "attack": 129,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "gray",
     "defense": 90,
@@ -50166,6 +51444,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "green",
     "defense": 72,
@@ -50231,6 +51511,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 261,
+    "baseFriendship": 90,
     "catchRate": 3,
     "color": "green",
     "defense": 70,
@@ -50295,6 +51577,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 261,
+    "baseFriendship": 90,
     "catchRate": 3,
     "color": "blue",
     "defense": 70,
@@ -50355,6 +51639,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "white",
     "defense": 100,
@@ -50415,6 +51701,8 @@
       }
     ],
     "attack": 150,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "black",
     "defense": 120,
@@ -50480,6 +51768,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 270,
+    "baseFriendship": 90,
     "catchRate": 3,
     "color": "brown",
     "defense": 90,
@@ -50540,6 +51830,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 297,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 90,
@@ -50608,6 +51900,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 261,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "yellow",
     "defense": 90,
@@ -50668,6 +51962,8 @@
       }
     ],
     "attack": 77,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "white",
     "defense": 77,
@@ -50736,6 +52032,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "purple",
     "defense": 95,
@@ -50809,6 +52107,8 @@
       }
     ],
     "attack": 61,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 65,
@@ -50884,6 +52184,8 @@
       }
     ],
     "attack": 78,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 95,
@@ -50959,6 +52261,8 @@
       }
     ],
     "attack": 107,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "green",
     "defense": 122,
@@ -51035,6 +52339,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 40,
@@ -51110,6 +52416,8 @@
       }
     ],
     "attack": 59,
+    "baseExperience": 143,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 58,
@@ -51185,6 +52493,8 @@
       }
     ],
     "attack": 69,
+    "baseExperience": 240,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 72,
@@ -51261,6 +52571,8 @@
       }
     ],
     "attack": 56,
+    "baseExperience": 63,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 40,
@@ -51336,6 +52648,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 52,
@@ -51411,6 +52725,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 67,
@@ -51492,6 +52808,8 @@
       }
     ],
     "attack": 36,
+    "baseExperience": 47,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 38,
@@ -51569,6 +52887,8 @@
       }
     ],
     "attack": 56,
+    "baseExperience": 148,
+    "baseFriendship": 70,
     "catchRate": 127,
     "color": "brown",
     "defense": 77,
@@ -51642,6 +52962,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "red",
     "defense": 43,
@@ -51722,6 +53044,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 134,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "red",
     "defense": 55,
@@ -51802,6 +53126,8 @@
       }
     ],
     "attack": 81,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 71,
@@ -51887,6 +53213,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 40,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "black",
     "defense": 40,
@@ -51962,6 +53290,8 @@
       }
     ],
     "attack": 22,
+    "baseExperience": 75,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "black",
     "defense": 60,
@@ -52042,6 +53372,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 185,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 50,
@@ -52131,6 +53463,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 74,
+    "baseFriendship": 70,
     "catchRate": 220,
     "color": "brown",
     "defense": 58,
@@ -52209,6 +53543,8 @@
       }
     ],
     "attack": 68,
+    "baseExperience": 177,
+    "baseFriendship": 70,
     "catchRate": 65,
     "color": "brown",
     "defense": 72,
@@ -52282,6 +53618,8 @@
       }
     ],
     "attack": 38,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "white",
     "defense": 39,
@@ -52361,6 +53699,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 130,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "white",
     "defense": 47,
@@ -52440,6 +53780,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 248,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 68,
@@ -52519,6 +53861,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "brown",
     "defense": 48,
@@ -52587,6 +53931,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 186,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 62,
@@ -52660,6 +54006,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 70,
+    "baseFriendship": 70,
     "catchRate": 220,
     "color": "white",
     "defense": 62,
@@ -52738,6 +54086,8 @@
       }
     ],
     "attack": 124,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 65,
     "color": "white",
     "defense": 78,
@@ -52807,6 +54157,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 160,
     "color": "white",
     "defense": 60,
@@ -52876,6 +54228,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 71,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "gray",
     "defense": 54,
@@ -52953,6 +54307,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 163,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 76,
@@ -53020,6 +54376,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 65,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "brown",
     "defense": 100,
@@ -53095,6 +54453,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 157,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 150,
@@ -53170,6 +54530,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 234,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 140,
@@ -53254,6 +54616,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 68,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "pink",
     "defense": 60,
@@ -53326,6 +54690,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 162,
+    "baseFriendship": 70,
     "catchRate": 140,
     "color": "pink",
     "defense": 72,
@@ -53398,6 +54764,8 @@
       }
     ],
     "attack": 48,
+    "baseExperience": 68,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "white",
     "defense": 66,
@@ -53470,6 +54838,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 140,
     "color": "white",
     "defense": 86,
@@ -53547,6 +54917,8 @@
       }
     ],
     "attack": 54,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 53,
@@ -53626,6 +54998,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 169,
+    "baseFriendship": 70,
     "catchRate": 80,
     "color": "blue",
     "defense": 88,
@@ -53705,6 +55079,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 67,
@@ -53783,6 +55159,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 115,
@@ -53861,6 +55239,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "brown",
     "defense": 60,
@@ -53940,6 +55320,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 55,
     "color": "brown",
     "defense": 90,
@@ -54009,6 +55391,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 66,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "blue",
     "defense": 62,
@@ -54077,6 +55461,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 100,
+    "baseFriendship": 70,
     "catchRate": 55,
     "color": "blue",
     "defense": 88,
@@ -54155,6 +55541,8 @@
       }
     ],
     "attack": 38,
+    "baseExperience": 58,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 33,
@@ -54234,6 +55622,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "yellow",
     "defense": 52,
@@ -54312,6 +55702,8 @@
       }
     ],
     "attack": 89,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 77,
@@ -54386,6 +55778,8 @@
       }
     ],
     "attack": 121,
+    "baseExperience": 182,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 119,
@@ -54460,6 +55854,8 @@
       }
     ],
     "attack": 59,
+    "baseExperience": 72,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 50,
@@ -54533,6 +55929,8 @@
       }
     ],
     "attack": 77,
+    "baseExperience": 104,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 72,
@@ -54606,6 +56004,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 184,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "pink",
     "defense": 65,
@@ -54732,6 +56132,8 @@
       }
     ],
     "attack": 92,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 100,
     "color": "green",
     "defense": 75,
@@ -54803,6 +56205,8 @@
       }
     ],
     "attack": 58,
+    "baseExperience": 151,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "yellow",
     "defense": 57,
@@ -54869,6 +56273,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 100,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "gray",
     "defense": 150,
@@ -54944,6 +56350,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 60,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "purple",
     "defense": 35,
@@ -55028,6 +56436,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 158,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "purple",
     "defense": 53,
@@ -55112,6 +56522,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 35,
     "catchRate": 45,
     "color": "purple",
     "defense": 70,
@@ -55191,6 +56603,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 165,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "gray",
     "defense": 91,
@@ -55261,6 +56675,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 62,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 48,
@@ -55340,6 +56756,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "brown",
     "defense": 76,
@@ -55419,6 +56837,8 @@
       }
     ],
     "attack": 66,
+    "baseExperience": 67,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "brown",
     "defense": 70,
@@ -55497,6 +56917,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "brown",
     "defense": 122,
@@ -55575,6 +56997,8 @@
       }
     ],
     "attack": 69,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 85,
@@ -55653,6 +57077,8 @@
       }
     ],
     "attack": 117,
+    "baseExperience": 180,
+    "baseFriendship": 70,
     "catchRate": 55,
     "color": "blue",
     "defense": 184,
@@ -55731,6 +57157,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 49,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 35,
@@ -55810,6 +57238,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 187,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 80,
@@ -55879,6 +57309,8 @@
       }
     ],
     "attack": 131,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "blue",
     "defense": 95,
@@ -55934,6 +57366,8 @@
       }
     ],
     "attack": 131,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "red",
     "defense": 95,
@@ -55990,6 +57424,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "green",
     "defense": 121,
@@ -56050,6 +57486,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 270,
+    "baseFriendship": 70,
     "catchRate": 3,
     "color": "pink",
     "defense": 150,
@@ -56110,6 +57548,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "purple",
     "defense": 60,
@@ -56170,6 +57610,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 270,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "brown",
     "defense": 120,
@@ -56231,6 +57673,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 55,
@@ -56311,6 +57755,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 75,
@@ -56391,6 +57837,8 @@
       }
     ],
     "attack": 107,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "brown",
     "defense": 75,
@@ -56471,6 +57919,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 40,
@@ -56550,6 +58000,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 50,
@@ -56629,6 +58081,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 90,
@@ -56709,6 +58163,8 @@
       }
     ],
     "attack": 54,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 54,
@@ -56789,6 +58245,8 @@
       }
     ],
     "attack": 69,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 69,
@@ -56869,6 +58327,8 @@
       }
     ],
     "attack": 74,
+    "baseExperience": 239,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 74,
@@ -56955,6 +58415,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 53,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "black",
     "defense": 30,
@@ -57040,6 +58502,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 124,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "black",
     "defense": 50,
@@ -57125,6 +58589,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 218,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "black",
     "defense": 75,
@@ -57210,6 +58676,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 51,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "brown",
     "defense": 30,
@@ -57287,6 +58755,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 146,
+    "baseFriendship": 70,
     "catchRate": 127,
     "color": "brown",
     "defense": 60,
@@ -57354,6 +58824,8 @@
       }
     ],
     "attack": 62,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 255,
     "color": "gray",
     "defense": 45,
@@ -57428,6 +58900,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 140,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "green",
     "defense": 95,
@@ -57503,6 +58977,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 225,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -57588,6 +59064,8 @@
       }
     ],
     "attack": 82,
+    "baseExperience": 68,
+    "baseFriendship": 70,
     "catchRate": 225,
     "color": "purple",
     "defense": 57,
@@ -57665,6 +59143,8 @@
       }
     ],
     "attack": 132,
+    "baseExperience": 167,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "white",
     "defense": 77,
@@ -57733,6 +59213,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 167,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "red",
     "defense": 70,
@@ -57803,6 +59285,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "yellow",
     "defense": 40,
@@ -57882,6 +59366,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 162,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "yellow",
     "defense": 60,
@@ -57961,6 +59447,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 56,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 40,
@@ -58038,6 +59526,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "brown",
     "defense": 65,
@@ -58105,6 +59595,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "blue",
     "defense": 20,
@@ -58174,6 +59666,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 61,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "blue",
     "defense": 62,
@@ -58252,6 +59746,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 173,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "blue",
     "defense": 152,
@@ -58330,6 +59826,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 77,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "brown",
     "defense": 70,
@@ -58407,6 +59905,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "brown",
     "defense": 100,
@@ -58479,6 +59979,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 54,
+    "baseFriendship": 70,
     "catchRate": 200,
     "color": "green",
     "defense": 52,
@@ -58553,6 +60055,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 159,
+    "baseFriendship": 70,
     "catchRate": 100,
     "color": "green",
     "defense": 92,
@@ -58627,6 +60131,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 50,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "pink",
     "defense": 35,
@@ -58699,6 +60205,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "pink",
     "defense": 90,
@@ -58776,6 +60284,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 57,
+    "baseFriendship": 70,
     "catchRate": 190,
     "color": "purple",
     "defense": 55,
@@ -58854,6 +60364,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 142,
+    "baseFriendship": 70,
     "catchRate": 75,
     "color": "purple",
     "defense": 80,
@@ -58927,6 +60439,8 @@
       }
     ],
     "attack": 44,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "black",
     "defense": 40,
@@ -59001,6 +60515,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "black",
     "defense": 60,
@@ -59080,6 +60596,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 68,
+    "baseFriendship": 70,
     "catchRate": 140,
     "color": "pink",
     "defense": 50,
@@ -59158,6 +60676,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 175,
+    "baseFriendship": 70,
     "catchRate": 70,
     "color": "pink",
     "defense": 80,
@@ -59236,6 +60756,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 42,
+    "baseFriendship": 70,
     "catchRate": 235,
     "color": "purple",
     "defense": 38,
@@ -59320,6 +60842,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 102,
+    "baseFriendship": 70,
     "catchRate": 120,
     "color": "purple",
     "defense": 48,
@@ -59404,6 +60928,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 230,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "purple",
     "defense": 98,
@@ -59488,6 +61014,8 @@
       }
     ],
     "attack": 52,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "green",
     "defense": 90,
@@ -59557,6 +61085,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 80,
@@ -59622,6 +61152,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 172,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "white",
     "defense": 90,
@@ -59681,6 +61213,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 46,
+    "baseFriendship": 70,
     "catchRate": 90,
     "color": "gray",
     "defense": 40,
@@ -59750,6 +61284,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 186,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 140,
@@ -59824,6 +61360,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 64,
+    "baseFriendship": 70,
     "catchRate": 140,
     "color": "brown",
     "defense": 80,
@@ -59897,6 +61435,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "brown",
     "defense": 110,
@@ -59970,6 +61510,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 144,
+    "baseFriendship": 70,
     "catchRate": 60,
     "color": "black",
     "defense": 130,
@@ -60029,6 +61571,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 107,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 95,
@@ -60096,6 +61640,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 95,
@@ -60163,6 +61709,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 154,
+    "baseFriendship": 70,
     "catchRate": 30,
     "color": "brown",
     "defense": 100,
@@ -60227,6 +61775,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 168,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "blue",
     "defense": 65,
@@ -60286,6 +61836,8 @@
       }
     ],
     "attack": 78,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 70,
     "color": "red",
     "defense": 135,
@@ -60357,6 +61909,8 @@
       }
     ],
     "attack": 98,
+    "baseExperience": 152,
+    "baseFriendship": 70,
     "catchRate": 180,
     "color": "gray",
     "defense": 63,
@@ -60418,6 +61972,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 167,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "yellow",
     "defense": 80,
@@ -60488,6 +62044,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 166,
+    "baseFriendship": 70,
     "catchRate": 80,
     "color": "pink",
     "defense": 70,
@@ -60558,6 +62116,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 170,
+    "baseFriendship": 70,
     "catchRate": 70,
     "color": "white",
     "defense": 85,
@@ -60619,6 +62179,8 @@
       }
     ],
     "attack": 131,
+    "baseExperience": 181,
+    "baseFriendship": 70,
     "catchRate": 25,
     "color": "green",
     "defense": 100,
@@ -60689,6 +62251,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 60,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 65,
@@ -60773,6 +62337,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 147,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 90,
@@ -60858,6 +62424,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 270,
+    "baseFriendship": 70,
     "catchRate": 45,
     "color": "gray",
     "defense": 125,
@@ -60938,6 +62506,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 257,
+    "baseFriendship": 70,
     "catchRate": 3,
     "color": "yellow",
     "defense": 85,
@@ -61003,6 +62573,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 257,
+    "baseFriendship": 70,
     "catchRate": 3,
     "color": "pink",
     "defense": 75,
@@ -61068,6 +62640,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 257,
+    "baseFriendship": 70,
     "catchRate": 3,
     "color": "red",
     "defense": 115,
@@ -61133,6 +62707,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 257,
+    "baseFriendship": 70,
     "catchRate": 3,
     "color": "purple",
     "defense": 115,
@@ -61193,6 +62769,8 @@
       }
     ],
     "attack": 29,
+    "baseExperience": 40,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "blue",
     "defense": 31,
@@ -61274,6 +62852,8 @@
       }
     ],
     "attack": 29,
+    "baseExperience": 140,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "blue",
     "defense": 131,
@@ -61359,6 +62939,8 @@
       }
     ],
     "attack": 137,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "white",
     "defense": 107,
@@ -61441,6 +63023,8 @@
       }
     ],
     "attack": 113,
+    "baseExperience": 306,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "purple",
     "defense": 89,
@@ -61523,6 +63107,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "white",
     "defense": 47,
@@ -61583,6 +63169,8 @@
       }
     ],
     "attack": 139,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "red",
     "defense": 139,
@@ -61647,6 +63235,8 @@
       }
     ],
     "attack": 137,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "white",
     "defense": 37,
@@ -61707,6 +63297,8 @@
       }
     ],
     "attack": 89,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "black",
     "defense": 71,
@@ -61766,6 +63358,8 @@
       }
     ],
     "attack": 101,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "green",
     "defense": 103,
@@ -61834,6 +63428,8 @@
       }
     ],
     "attack": 181,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "white",
     "defense": 131,
@@ -61894,6 +63490,8 @@
       }
     ],
     "attack": 101,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "black",
     "defense": 53,
@@ -61954,6 +63552,8 @@
       }
     ],
     "attack": 107,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 255,
     "color": "black",
     "defense": 101,
@@ -62017,6 +63617,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 115,
@@ -62077,6 +63679,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 80,
@@ -62141,6 +63745,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 189,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "purple",
     "defense": 67,
@@ -62204,6 +63810,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 243,
+    "baseFriendship": 0,
     "catchRate": 45,
     "color": "purple",
     "defense": 73,
@@ -62268,6 +63876,8 @@
       }
     ],
     "attack": 131,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "gray",
     "defense": 211,
@@ -62324,6 +63934,8 @@
       }
     ],
     "attack": 127,
+    "baseExperience": 257,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "white",
     "defense": 53,
@@ -62380,6 +63992,8 @@
       }
     ],
     "attack": 112,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "yellow",
     "defense": 75,
@@ -62439,6 +64053,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 135,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 65,
@@ -62498,6 +64114,8 @@
       }
     ],
     "attack": 143,
+    "baseExperience": 270,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "gray",
     "defense": 143,
@@ -62562,6 +64180,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 50,
@@ -62638,6 +64258,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 147,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 70,
@@ -62714,6 +64336,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 90,
@@ -62790,6 +64414,8 @@
       }
     ],
     "attack": 71,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "white",
     "defense": 40,
@@ -62866,6 +64492,8 @@
       }
     ],
     "attack": 86,
+    "baseExperience": 147,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "gray",
     "defense": 60,
@@ -62942,6 +64570,8 @@
       }
     ],
     "attack": 116,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "white",
     "defense": 75,
@@ -63018,6 +64648,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 40,
@@ -63098,6 +64730,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 147,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 55,
@@ -63174,6 +64808,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 65,
@@ -63250,6 +64886,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 55,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "brown",
     "defense": 55,
@@ -63318,6 +64956,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 161,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "brown",
     "defense": 95,
@@ -63391,6 +65031,8 @@
       }
     ],
     "attack": 47,
+    "baseExperience": 49,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "blue",
     "defense": 35,
@@ -63471,6 +65113,8 @@
       }
     ],
     "attack": 67,
+    "baseExperience": 128,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "blue",
     "defense": 55,
@@ -63551,6 +65195,8 @@
       }
     ],
     "attack": 87,
+    "baseExperience": 248,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "purple",
     "defense": 105,
@@ -63632,6 +65278,8 @@
       }
     ],
     "attack": 20,
+    "baseExperience": 36,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "blue",
     "defense": 20,
@@ -63712,6 +65360,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 117,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "yellow",
     "defense": 80,
@@ -63793,6 +65443,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 253,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "red",
     "defense": 110,
@@ -63874,6 +65526,8 @@
       }
     ],
     "attack": 28,
+    "baseExperience": 49,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "brown",
     "defense": 28,
@@ -63947,6 +65601,8 @@
       }
     ],
     "attack": 58,
+    "baseExperience": 159,
+    "baseFriendship": 50,
     "catchRate": 127,
     "color": "brown",
     "defense": 58,
@@ -64020,6 +65676,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 50,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "green",
     "defense": 60,
@@ -64093,6 +65751,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 161,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "green",
     "defense": 90,
@@ -64166,6 +65826,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 122,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "white",
     "defense": 55,
@@ -64239,6 +65901,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 172,
+    "baseFriendship": 50,
     "catchRate": 127,
     "color": "white",
     "defense": 100,
@@ -64312,6 +65976,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 57,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "green",
     "defense": 50,
@@ -64386,6 +66052,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 170,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "green",
     "defense": 90,
@@ -64456,6 +66124,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 54,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "yellow",
     "defense": 50,
@@ -64524,6 +66194,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 172,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "yellow",
     "defense": 60,
@@ -64597,6 +66269,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 48,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "black",
     "defense": 50,
@@ -64677,6 +66351,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 144,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "black",
     "defense": 90,
@@ -64758,6 +66434,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 255,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "black",
     "defense": 120,
@@ -64839,6 +66517,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 52,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "green",
     "defense": 80,
@@ -64935,6 +66615,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 170,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 80,
@@ -65031,6 +66713,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 170,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 80,
@@ -65127,6 +66811,8 @@
       }
     ],
     "attack": 57,
+    "baseExperience": 63,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "green",
     "defense": 75,
@@ -65201,6 +66887,8 @@
       }
     ],
     "attack": 107,
+    "baseExperience": 179,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "green",
     "defense": 125,
@@ -65265,6 +66953,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 166,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 55,
@@ -65327,6 +67017,8 @@
       }
     ],
     "attack": 63,
+    "baseExperience": 56,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "brown",
     "defense": 40,
@@ -65395,6 +67087,8 @@
       }
     ],
     "attack": 123,
+    "baseExperience": 172,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "brown",
     "defense": 60,
@@ -65468,6 +67162,8 @@
       }
     ],
     "attack": 38,
+    "baseExperience": 48,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "purple",
     "defense": 35,
@@ -65542,6 +67238,8 @@
       }
     ],
     "attack": 98,
+    "baseExperience": 176,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "purple",
     "defense": 70,
@@ -65616,6 +67314,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 61,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "red",
     "defense": 45,
@@ -65690,6 +67390,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 184,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "red",
     "defense": 65,
@@ -65759,6 +67461,8 @@
       }
     ],
     "attack": 68,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 180,
     "color": "brown",
     "defense": 60,
@@ -65828,6 +67532,8 @@
       }
     ],
     "attack": 118,
+    "baseExperience": 168,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -65897,6 +67603,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "purple",
     "defense": 45,
@@ -65966,6 +67674,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 178,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "purple",
     "defense": 65,
@@ -66040,6 +67750,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 53,
+    "baseFriendship": 50,
     "catchRate": 235,
     "color": "pink",
     "defense": 45,
@@ -66120,6 +67832,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 130,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "pink",
     "defense": 65,
@@ -66200,6 +67914,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 255,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "pink",
     "defense": 95,
@@ -66281,6 +67997,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 53,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "pink",
     "defense": 30,
@@ -66363,6 +68081,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 130,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "pink",
     "defense": 45,
@@ -66445,6 +68165,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 255,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "purple",
     "defense": 65,
@@ -66527,6 +68249,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 260,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "gray",
     "defense": 101,
@@ -66608,6 +68332,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 154,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "brown",
     "defense": 100,
@@ -66683,6 +68409,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 179,
+    "baseFriendship": 50,
     "catchRate": 30,
     "color": "white",
     "defense": 50,
@@ -66752,6 +68480,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 177,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "white",
     "defense": 95,
@@ -66826,6 +68556,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 182,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "purple",
     "defense": 75,
@@ -66897,6 +68629,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 169,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "gray",
     "defense": 145,
@@ -66974,6 +68708,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 54,
+    "baseFriendship": 50,
     "catchRate": 200,
     "color": "white",
     "defense": 40,
@@ -67043,6 +68779,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 173,
+    "baseFriendship": 50,
     "catchRate": 100,
     "color": "white",
     "defense": 75,
@@ -67112,6 +68850,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 165,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "yellow",
     "defense": 100,
@@ -67177,6 +68917,8 @@
       }
     ],
     "attack": 101,
+    "baseExperience": 152,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "purple",
     "defense": 95,
@@ -67238,6 +68980,8 @@
       }
     ],
     "attack": 25,
+    "baseExperience": 37,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "white",
     "defense": 35,
@@ -67307,6 +69051,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 166,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "white",
     "defense": 60,
@@ -67371,6 +69117,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 165,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "gray",
     "defense": 135,
@@ -67426,6 +69174,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 165,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "blue",
     "defense": 110,
@@ -67492,6 +69242,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 166,
+    "baseFriendship": 140,
     "catchRate": 30,
     "color": "purple",
     "defense": 55,
@@ -67548,6 +69300,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 153,
+    "baseFriendship": 50,
     "catchRate": 180,
     "color": "yellow",
     "defense": 58,
@@ -67610,6 +69364,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 66,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "yellow",
     "defense": 49,
@@ -67679,6 +69435,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 175,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "green",
     "defense": 69,
@@ -67753,6 +69511,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 177,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 90,
@@ -67819,6 +69579,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 177,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 90,
@@ -67885,6 +69647,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 177,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 100,
@@ -67951,6 +69715,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 177,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 100,
@@ -68017,6 +69783,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 187,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "white",
     "defense": 115,
@@ -68092,6 +69860,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 54,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 30,
@@ -68174,6 +69944,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 144,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 50,
@@ -68256,6 +70028,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 300,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 75,
@@ -68328,6 +70102,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 335,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "blue",
     "defense": 115,
@@ -68383,6 +70159,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 335,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "red",
     "defense": 115,
@@ -68438,6 +70216,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 345,
+    "baseFriendship": 0,
     "catchRate": 255,
     "color": "purple",
     "defense": 95,
@@ -68494,6 +70274,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 77,
+    "baseFriendship": 50,
     "catchRate": 3,
     "color": "gray",
     "defense": 60,
@@ -68557,6 +70339,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 275,
+    "baseFriendship": 50,
     "catchRate": 3,
     "color": "gray",
     "defense": 100,
@@ -68621,6 +70405,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 300,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "green",
     "defense": 105,
@@ -68677,6 +70463,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 290,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "yellow",
     "defense": 50,
@@ -68732,6 +70520,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 290,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "green",
     "defense": 50,
@@ -68787,6 +70577,8 @@
       }
     ],
     "attack": 145,
+    "baseExperience": 290,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "white",
     "defense": 130,
@@ -68842,6 +70634,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 290,
+    "baseFriendship": 35,
     "catchRate": 3,
     "color": "black",
     "defense": 60,
@@ -68897,6 +70691,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 250,
+    "baseFriendship": 100,
     "catchRate": 3,
     "color": "green",
     "defense": 80,
@@ -68963,6 +70759,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 263,
+    "baseFriendship": 50,
     "catchRate": 135,
     "color": "gray",
     "defense": 72,
@@ -69037,6 +70835,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 175,
+    "baseFriendship": 50,
     "catchRate": 115,
     "color": "brown",
     "defense": 95,
@@ -69114,6 +70914,8 @@
       }
     ],
     "attack": 140,
+    "baseExperience": 275,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "brown",
     "defense": 105,
@@ -69191,6 +70993,8 @@
       }
     ],
     "attack": 112,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 135,
     "color": "green",
     "defense": 65,
@@ -69261,6 +71065,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 102,
+    "baseFriendship": 50,
     "catchRate": 135,
     "color": "gray",
     "defense": 60,
@@ -69338,6 +71144,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 179,
+    "baseFriendship": 50,
     "catchRate": 135,
     "color": "black",
     "defense": 95,
@@ -69403,6 +71211,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 116,
+    "baseFriendship": 50,
     "catchRate": 3,
     "color": "pink",
     "defense": 70,
@@ -69460,6 +71270,8 @@
       }
     ],
     "attack": 61,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 54,
@@ -69536,6 +71348,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 144,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 63,
@@ -69612,6 +71426,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 70,
@@ -69689,6 +71505,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "red",
     "defense": 59,
@@ -69764,6 +71582,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 144,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "red",
     "defense": 78,
@@ -69839,6 +71659,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "red",
     "defense": 100,
@@ -69915,6 +71737,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "white",
     "defense": 45,
@@ -69991,6 +71815,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 144,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 65,
@@ -70067,6 +71893,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 80,
@@ -70149,6 +71977,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 51,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "gray",
     "defense": 40,
@@ -70222,6 +72052,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 171,
+    "baseFriendship": 50,
     "catchRate": 100,
     "color": "gray",
     "defense": 75,
@@ -70290,6 +72122,8 @@
       }
     ],
     "attack": 41,
+    "baseExperience": 42,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "white",
     "defense": 45,
@@ -70358,6 +72192,8 @@
       }
     ],
     "attack": 79,
+    "baseExperience": 141,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "green",
     "defense": 92,
@@ -70426,6 +72262,8 @@
       }
     ],
     "attack": 46,
+    "baseExperience": 42,
+    "baseFriendship": 20,
     "catchRate": 190,
     "color": "gray",
     "defense": 40,
@@ -70494,6 +72332,8 @@
       }
     ],
     "attack": 102,
+    "baseExperience": 158,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "gray",
     "defense": 78,
@@ -70568,6 +72408,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 48,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "yellow",
     "defense": 20,
@@ -70648,6 +72490,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 123,
+    "baseFriendship": 50,
     "catchRate": 80,
     "color": "yellow",
     "defense": 40,
@@ -70729,6 +72573,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 245,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "yellow",
     "defense": 70,
@@ -70810,6 +72656,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 61,
+    "baseFriendship": 50,
     "catchRate": 150,
     "color": "white",
     "defense": 45,
@@ -70884,6 +72732,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 165,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "white",
     "defense": 70,
@@ -70953,6 +72803,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "yellow",
     "defense": 70,
@@ -71022,6 +72874,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 167,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "brown",
     "defense": 115,
@@ -71091,6 +72945,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 52,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "green",
     "defense": 45,
@@ -71167,6 +73023,8 @@
       }
     ],
     "attack": 53,
+    "baseExperience": 124,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "green",
     "defense": 60,
@@ -71243,6 +73101,8 @@
       }
     ],
     "attack": 69,
+    "baseExperience": 255,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 90,
@@ -71324,6 +73184,8 @@
       }
     ],
     "attack": 96,
+    "baseExperience": 146,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "green",
     "defense": 51,
@@ -71390,6 +73252,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 56,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "brown",
     "defense": 75,
@@ -71470,6 +73334,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 124,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "brown",
     "defense": 100,
@@ -71550,6 +73416,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 250,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "brown",
     "defense": 130,
@@ -71625,6 +73493,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 51,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "red",
     "defense": 40,
@@ -71700,6 +73570,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 263,
+    "baseFriendship": 20,
     "catchRate": 25,
     "color": "red",
     "defense": 100,
@@ -71776,6 +73648,8 @@
       }
     ],
     "attack": 125,
+    "baseExperience": 263,
+    "baseFriendship": 20,
     "catchRate": 25,
     "color": "blue",
     "defense": 80,
@@ -71857,6 +73731,8 @@
       }
     ],
     "attack": 31,
+    "baseExperience": 54,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "yellow",
     "defense": 41,
@@ -71930,6 +73806,8 @@
       }
     ],
     "attack": 64,
+    "baseExperience": 173,
+    "baseFriendship": 50,
     "catchRate": 50,
     "color": "green",
     "defense": 91,
@@ -72003,6 +73881,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 56,
+    "baseFriendship": 50,
     "catchRate": 180,
     "color": "black",
     "defense": 35,
@@ -72078,6 +73958,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 172,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "yellow",
     "defense": 60,
@@ -72153,6 +74035,8 @@
       }
     ],
     "attack": 78,
+    "baseExperience": 68,
+    "baseFriendship": 50,
     "catchRate": 150,
     "color": "brown",
     "defense": 60,
@@ -72226,6 +74110,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 177,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "gray",
     "defense": 90,
@@ -72299,6 +74185,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 58,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "gray",
     "defense": 35,
@@ -72373,6 +74261,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 170,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "gray",
     "defense": 65,
@@ -72442,6 +74332,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 55,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "brown",
     "defense": 30,
@@ -72511,6 +74403,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 168,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "brown",
     "defense": 70,
@@ -72575,6 +74469,8 @@
       }
     ],
     "attack": 40,
+    "baseExperience": 67,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "yellow",
     "defense": 35,
@@ -72639,6 +74535,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 180,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "black",
     "defense": 65,
@@ -72713,6 +74611,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 158,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "red",
     "defense": 115,
@@ -72778,6 +74678,8 @@
       }
     ],
     "attack": 62,
+    "baseExperience": 61,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "green",
     "defense": 40,
@@ -72851,6 +74753,8 @@
       }
     ],
     "attack": 108,
+    "baseExperience": 170,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "green",
     "defense": 65,
@@ -72920,6 +74824,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 54,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "brown",
     "defense": 60,
@@ -72988,6 +74894,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 165,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 85,
@@ -73062,6 +74970,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 51,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "yellow",
     "defense": 30,
@@ -73135,6 +75045,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 168,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "yellow",
     "defense": 60,
@@ -73208,6 +75120,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 59,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "pink",
     "defense": 45,
@@ -73289,6 +75203,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 133,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "pink",
     "defense": 55,
@@ -73370,6 +75286,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 253,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "pink",
     "defense": 77,
@@ -73451,6 +75369,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 49,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "white",
     "defense": 25,
@@ -73524,6 +75444,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 149,
+    "baseFriendship": 50,
     "catchRate": 50,
     "color": "red",
     "defense": 50,
@@ -73597,6 +75519,8 @@
       }
     ],
     "attack": 103,
+    "baseExperience": 243,
+    "baseFriendship": 50,
     "catchRate": 25,
     "color": "white",
     "defense": 85,
@@ -73653,6 +75577,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 63,
+    "baseFriendship": 50,
     "catchRate": 200,
     "color": "blue",
     "defense": 40,
@@ -73717,6 +75643,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 160,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "blue",
     "defense": 72,
@@ -73786,6 +75714,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 60,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "gray",
     "defense": 63,
@@ -73855,6 +75785,8 @@
       }
     ],
     "attack": 119,
+    "baseExperience": 175,
+    "baseFriendship": 50,
     "catchRate": 75,
     "color": "gray",
     "defense": 90,
@@ -73924,6 +75856,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 175,
+    "baseFriendship": 50,
     "catchRate": 190,
     "color": "green",
     "defense": 65,
@@ -73985,6 +75919,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 240,
+    "baseFriendship": 50,
     "catchRate": 25,
     "color": "pink",
     "defense": 145,
@@ -74045,6 +75981,8 @@
       }
     ],
     "attack": 35,
+    "baseExperience": 70,
+    "baseFriendship": 50,
     "catchRate": 70,
     "color": "blue",
     "defense": 42,
@@ -74114,6 +76052,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 184,
+    "baseFriendship": 50,
     "catchRate": 25,
     "color": "blue",
     "defense": 90,
@@ -74183,6 +76123,8 @@
       }
     ],
     "attack": 61,
+    "baseExperience": 58,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "white",
     "defense": 60,
@@ -74251,6 +76193,8 @@
       }
     ],
     "attack": 101,
+    "baseExperience": 171,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "white",
     "defense": 100,
@@ -74324,6 +76268,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 175,
+    "baseFriendship": 50,
     "catchRate": 100,
     "color": "pink",
     "defense": 74,
@@ -74390,6 +76336,8 @@
       }
     ],
     "attack": 68,
+    "baseExperience": 67,
+    "baseFriendship": 50,
     "catchRate": 150,
     "color": "white",
     "defense": 45,
@@ -74463,6 +76411,8 @@
       }
     ],
     "attack": 113,
+    "baseExperience": 182,
+    "baseFriendship": 50,
     "catchRate": 50,
     "color": "white",
     "defense": 65,
@@ -74531,6 +76481,8 @@
       }
     ],
     "attack": 102,
+    "baseExperience": 167,
+    "baseFriendship": 50,
     "catchRate": 100,
     "color": "gray",
     "defense": 73,
@@ -74597,6 +76549,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 265,
+    "baseFriendship": 50,
     "catchRate": 25,
     "color": "blue",
     "defense": 115,
@@ -74657,6 +76611,8 @@
       }
     ],
     "attack": 50,
+    "baseExperience": 166,
+    "baseFriendship": 50,
     "catchRate": 100,
     "color": "pink",
     "defense": 60,
@@ -74723,6 +76679,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 268,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "gray",
     "defense": 80,
@@ -74804,6 +76762,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 151,
+    "baseFriendship": 50,
     "catchRate": 90,
     "color": "brown",
     "defense": 60,
@@ -74886,6 +76846,8 @@
       }
     ],
     "attack": 90,
+    "baseExperience": 260,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "brown",
     "defense": 70,
@@ -74960,6 +76922,8 @@
       }
     ],
     "attack": 100,
+    "baseExperience": 182,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "yellow",
     "defense": 80,
@@ -75033,6 +76997,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 275,
+    "baseFriendship": 50,
     "catchRate": 25,
     "color": "black",
     "defense": 120,
@@ -75104,6 +77070,8 @@
       }
     ],
     "attack": 131,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "purple",
     "defense": 131,
@@ -75160,6 +77128,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 50,
     "color": "pink",
     "defense": 99,
@@ -75216,6 +77186,8 @@
       }
     ],
     "attack": 127,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 50,
     "color": "gray",
     "defense": 99,
@@ -75272,6 +77244,8 @@
       }
     ],
     "attack": 55,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "gray",
     "defense": 55,
@@ -75336,6 +77310,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "red",
     "defense": 79,
@@ -75392,6 +77368,8 @@
       }
     ],
     "attack": 81,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "gray",
     "defense": 97,
@@ -75448,6 +77426,8 @@
       }
     ],
     "attack": 112,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "gray",
     "defense": 120,
@@ -75504,6 +77484,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 50,
     "color": "red",
     "defense": 114,
@@ -75560,6 +77542,8 @@
       }
     ],
     "attack": 140,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 50,
     "color": "gray",
     "defense": 108,
@@ -75616,6 +77600,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "blue",
     "defense": 86,
@@ -75672,6 +77658,8 @@
       }
     ],
     "attack": 70,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "yellow",
     "defense": 60,
@@ -75728,6 +77716,8 @@
       }
     ],
     "attack": 134,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 30,
     "color": "green",
     "defense": 110,
@@ -75789,6 +77779,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 64,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "gray",
     "defense": 45,
@@ -75866,6 +77858,8 @@
       }
     ],
     "attack": 95,
+    "baseExperience": 148,
+    "baseFriendship": 50,
     "catchRate": 25,
     "color": "gray",
     "defense": 66,
@@ -75943,6 +77937,8 @@
       }
     ],
     "attack": 145,
+    "baseExperience": 300,
+    "baseFriendship": 50,
     "catchRate": 10,
     "color": "gray",
     "defense": 92,
@@ -76015,6 +78011,8 @@
       }
     ],
     "attack": 30,
+    "baseExperience": 60,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "brown",
     "defense": 70,
@@ -76078,6 +78076,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 275,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "yellow",
     "defense": 95,
@@ -76142,6 +78142,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 6,
     "color": "brown",
     "defense": 100,
@@ -76198,6 +78200,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 6,
     "color": "white",
     "defense": 80,
@@ -76254,6 +78258,8 @@
       }
     ],
     "attack": 110,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 6,
     "color": "brown",
     "defense": 125,
@@ -76310,6 +78316,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 285,
+    "baseFriendship": 0,
     "catchRate": 6,
     "color": "red",
     "defense": 80,
@@ -76366,6 +78374,8 @@
       }
     ],
     "attack": 139,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "green",
     "defense": 71,
@@ -76422,6 +78432,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "white",
     "defense": 90,
@@ -76478,6 +78490,8 @@
       }
     ],
     "attack": 135,
+    "baseExperience": 335,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "red",
     "defense": 115,
@@ -76534,6 +78548,8 @@
       }
     ],
     "attack": 85,
+    "baseExperience": 335,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "blue",
     "defense": 100,
@@ -76590,6 +78606,8 @@
       }
     ],
     "attack": 83,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 5,
     "color": "blue",
     "defense": 91,
@@ -76646,6 +78664,8 @@
       }
     ],
     "attack": 130,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 5,
     "color": "green",
     "defense": 88,
@@ -76712,6 +78732,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 170,
+    "baseFriendship": 50,
     "catchRate": 45,
     "color": "green",
     "defense": 110,
@@ -76803,6 +78825,8 @@
       }
     ],
     "attack": 45,
+    "baseExperience": 62,
+    "baseFriendship": 50,
     "catchRate": 120,
     "color": "green",
     "defense": 45,
@@ -76873,6 +78897,8 @@
       }
     ],
     "attack": 60,
+    "baseExperience": 178,
+    "baseFriendship": 50,
     "catchRate": 60,
     "color": "green",
     "defense": 106,
@@ -76943,6 +78969,8 @@
       }
     ],
     "attack": 128,
+    "baseExperience": 278,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "black",
     "defense": 115,
@@ -77004,6 +79032,8 @@
       }
     ],
     "attack": 75,
+    "baseExperience": 278,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "black",
     "defense": 66,
@@ -77065,6 +79095,8 @@
       }
     ],
     "attack": 91,
+    "baseExperience": 278,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "black",
     "defense": 82,
@@ -77121,6 +79153,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 275,
+    "baseFriendship": 50,
     "catchRate": 5,
     "color": "green",
     "defense": 84,
@@ -77186,6 +79220,8 @@
       }
     ],
     "attack": 105,
+    "baseExperience": 300,
+    "baseFriendship": 50,
     "catchRate": 10,
     "color": "white",
     "defense": 130,
@@ -77261,6 +79297,8 @@
       }
     ],
     "attack": 80,
+    "baseExperience": 270,
+    "baseFriendship": 50,
     "catchRate": 10,
     "color": "green",
     "defense": 110,
@@ -77347,6 +79385,8 @@
       }
     ],
     "attack": 115,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "brown",
     "defense": 121,
@@ -77403,6 +79443,8 @@
       }
     ],
     "attack": 73,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "yellow",
     "defense": 91,
@@ -77459,6 +79501,8 @@
       }
     ],
     "attack": 120,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "gray",
     "defense": 80,
@@ -77515,6 +79559,8 @@
       }
     ],
     "attack": 72,
+    "baseExperience": 295,
+    "baseFriendship": 0,
     "catchRate": 10,
     "color": "blue",
     "defense": 100,
@@ -77571,6 +79617,8 @@
       }
     ],
     "attack": 65,
+    "baseExperience": 90,
+    "baseFriendship": 50,
     "catchRate": 255,
     "color": "blue",
     "defense": 85,
@@ -77626,6 +79674,8 @@
       }
     ],
     "attack": 88,
+    "baseExperience": 300,
+    "baseFriendship": 0,
     "catchRate": 3,
     "color": "purple",
     "defense": 160,
