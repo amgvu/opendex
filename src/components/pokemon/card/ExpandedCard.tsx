@@ -30,7 +30,7 @@ import { TypeBadge } from './TypeBadge'
 import { TypeIcon } from './TypeIcon'
 
 const TAB_PANEL_SCROLL =
-  'flex-1 min-h-0 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  'flex-1 min-h-0 overflow-y-auto overscroll-contain touch-pan-y [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
 const GROWTH_RATE_LABELS: Record<string, string> = {
   erratic: 'Erratic',
@@ -101,7 +101,7 @@ export function ExpandedCard({
     <AnimatePresence>
       {active && (
         <>
-          <div className="fixed inset-0 z-50 grid place-items-center p-4">
+          <div className="fixed inset-0 z-50 grid place-items-center p-4 touch-none">
             <motion.div
               className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl overflow-hidden rounded-2xl shadow-2xl ${typeColor}`}
               drag="x"
@@ -119,7 +119,7 @@ export function ExpandedCard({
               ref={ref}
               transition={CARD_TRANSITION}
             >
-              <div className="pointer-events-none absolute inset-4 rounded-xl border border-black/20 bg-black/25 shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)]" />
+              <div className="pointer-events-none absolute inset-3 rounded-lg border border-black/20 bg-black/25 shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)] sm:inset-4.5 sm:rounded-xl" />
               <Image
                 alt=""
                 aria-hidden="true"
@@ -307,11 +307,11 @@ export function ExpandedCard({
                     </Tabs.ListContainer>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="stats"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
                           <StatBar label="HP" value={pokemon.hp} />
                           <StatBar label="Attack" value={pokemon.attack} />
                           <StatBar label="Defense" value={pokemon.defense} />
@@ -363,7 +363,7 @@ export function ExpandedCard({
                     </Tabs.Panel>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="battle"
                     >
                       <TabPanelContent className="space-y-2">
@@ -471,7 +471,7 @@ export function ExpandedCard({
                     </Tabs.Panel>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="bio"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
