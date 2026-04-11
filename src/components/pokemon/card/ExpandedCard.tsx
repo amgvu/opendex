@@ -29,9 +29,8 @@ import { StatBar } from './StatBar'
 import { TypeBadge } from './TypeBadge'
 import { TypeIcon } from './TypeIcon'
 
-const TAB_PANEL_BASE =
-  'flex-1 min-h-0 overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
-const TAB_PANEL_SCROLL = `${TAB_PANEL_BASE} overflow-y-auto`
+const TAB_PANEL_SCROLL =
+  'flex-1 min-h-0 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
 const GROWTH_RATE_LABELS: Record<string, string> = {
   erratic: 'Erratic',
@@ -120,7 +119,7 @@ export function ExpandedCard({
               ref={ref}
               transition={CARD_TRANSITION}
             >
-              <div className="absolute inset-0 bg-black/25" />
+              <div className="pointer-events-none absolute inset-4 rounded-xl border border-black/20 bg-black/25 shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)]" />
               <Image
                 alt=""
                 aria-hidden="true"
@@ -132,7 +131,7 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative flex h-full cursor-grab flex-col p-6 2xl:p-8 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative flex h-full cursor-grab flex-col px-7 py-6 2xl:px-9 2xl:py-8 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
@@ -308,7 +307,7 @@ export function ExpandedCard({
                     </Tabs.ListContainer>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_BASE} overflow-y-hidden pt-3 text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-3 text-sm xl:text-base 2xl:text-lg`}
                       id="stats"
                     >
                       <TabPanelContent className="flex flex-col gap-3">
