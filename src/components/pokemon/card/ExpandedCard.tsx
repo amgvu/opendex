@@ -119,7 +119,7 @@ export function ExpandedCard({
               ref={ref}
               transition={CARD_TRANSITION}
             >
-              <div className="pointer-events-none absolute inset-4 rounded-xl border border-black/20 bg-black/25 shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)]" />
+              <div className="pointer-events-none absolute inset-3 rounded-lg border border-black/20 bg-black/25 shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)] sm:inset-4.5 sm:rounded-xl" />
               <Image
                 alt=""
                 aria-hidden="true"
