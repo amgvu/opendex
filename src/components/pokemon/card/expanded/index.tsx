@@ -50,7 +50,7 @@ export function ExpandedCard({
       {active && (
         <div className="fixed inset-0 z-50 grid place-items-center p-4">
           <motion.div
-            className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl overflow-hidden rounded-2xl ${typeColor}`}
+            className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:inset(0_round_1rem)] ${typeColor}`}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragControls={dragControls}
@@ -65,7 +65,7 @@ export function ExpandedCard({
             onDragStart={() => setDragging(true)}
             ref={ref}
             style={{
-              boxShadow: `0 25px 50px -12px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
+              filter: `drop-shadow(0 25px 50px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`
             }}
             transition={CARD_TRANSITION}
           >

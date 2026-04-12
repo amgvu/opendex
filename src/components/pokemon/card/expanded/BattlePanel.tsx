@@ -50,7 +50,9 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
           </div>
         </div>
       )}
-      {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
+      {(weaknesses.length > 0 ||
+        resistances.length > 0 ||
+        immunities.length > 0) && (
         <div className="flex flex-col gap-2">
           <div className="min-w-0">
             <span className="mb-1 block text-white/60">Weak</span>

@@ -22,7 +22,7 @@ export function StatsPanel({
   return (
     <TabPanelContent>
       <div className="flex flex-col gap-0.5">
-        <div className="flex items-center gap-3 text-xs sm:text-sm xl:text-base 2xl:text-lg mb-1">
+        <div className="flex items-center gap-3 text-xs sm:text-sm xl:text-base 2xl:text-lg mb-2">
           <span className="w-16 sm:w-20 xl:w-24 2xl:w-28 shrink-0 font-medium text-white/50">
             Base Stats
           </span>
@@ -39,7 +39,7 @@ export function StatsPanel({
         <StatBar label="Sp. Atk" value={pokemon.specialAttack} />
         <StatBar label="Sp. Def" value={pokemon.specialDefense} />
         <StatBar label="Speed" value={pokemon.speed} />
-        <div className="grid grid-cols-3 gap-2 mt-1.5 sm:mt-2">
+        <div className="grid grid-cols-3 gap-2 mt-2">
           <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
           <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
           <InfoStat label="Gen" value={pokemon.generation} />
