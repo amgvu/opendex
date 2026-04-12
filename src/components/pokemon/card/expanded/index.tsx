@@ -79,7 +79,7 @@ export function ExpandedCard({
             <Image
               alt=""
               aria-hidden="true"
-              className="absolute bottom-54 right-52 h-[512px] w-[512px] scale-[2] origin-top-left opacity-10 grayscale"
+              className="absolute bottom-42 sm:bottom-54 right-24 sm:right-52 h-[512px] w-[512px] scale-[2] origin-top-left opacity-10 grayscale"
               height={512}
               loading="eager"
               src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
