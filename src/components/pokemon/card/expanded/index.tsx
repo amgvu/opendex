@@ -79,12 +79,12 @@ export function ExpandedCard({
             <Image
               alt=""
               aria-hidden="true"
-              className="absolute -bottom-24 -right-32 opacity-10 grayscale"
-              height={768}
+              className="absolute bottom-54 right-52 h-[512px] w-[512px] scale-[2] origin-top-left opacity-10 grayscale"
+              height={512}
               loading="eager"
               src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
               unoptimized
-              width={768}
+              width={512}
             />
             <div
               className={`relative flex h-full cursor-grab flex-col px-7 pt-5 pb-3 sm:px-9 sm:py-8 2xl:px-11 2xl:py-10 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}

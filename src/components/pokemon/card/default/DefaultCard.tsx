@@ -40,17 +40,16 @@ export function DefaultCard({
       }}
       transition={CARD_TRANSITION}
     >
-<div className="absolute -bottom-4 -right-5 grayscale opacity-30">
-        <Image
-          alt=""
-          aria-hidden="true"
-          height={96}
-          loading="eager"
-          src={iconSrc}
-          unoptimized
-          width={96}
-        />
-      </div>
+      <Image
+        alt=""
+        aria-hidden="true"
+        className="absolute bottom-2 -left-9 h-[128px] w-[128px] scale-[1.5] origin-top-left opacity-20 grayscale"
+        height={128}
+        loading="eager"
+        src={iconSrc}
+        unoptimized
+        width={128}
+      />
       <motion.div
         className="absolute -bottom-4 left-16 sm:left-20 md:left-20 lg:left-22 xl:left-24 2xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
