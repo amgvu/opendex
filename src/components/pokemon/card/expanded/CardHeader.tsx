@@ -1,0 +1,60 @@
+import { motion } from 'motion/react'
+import { IoMdStar } from 'react-icons/io'
+
+import type { Pokemon } from '@/types/pokemon'
+
+import { CARD_TRANSITION } from '@/lib/constants'
+import { formatPokedexId } from '@/lib/pokemon'
+
+import { TypeBadge } from '../TypeBadge'
+
+export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
+  return (
+    <div className="mb-1 sm:mb-4 flex items-start justify-between gap-3">
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-1.5">
+          <motion.h2
+            className={`min-w-0 truncate font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
+            layoutId={`name-${pokemon.id}-${id}`}
+            transition={CARD_TRANSITION}
+          >
+            {pokemon.name}
+          </motion.h2>
+          {pokemon.isLegendary && (
+            <motion.div
+              layoutId={`star-${pokemon.id}-${id}`}
+              transition={CARD_TRANSITION}
+            >
+              <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
+              <IoMdStar
+                className="text-yellow-400 hidden xl:block 2xl:hidden"
+                size={26}
+              />
+              <IoMdStar
+                className="text-yellow-400 hidden 2xl:block"
+                size={30}
+              />
+            </motion.div>
+          )}
+        </div>
+        <span className="-mt-1 sm:mt-0 block text-sm xl:text-base 2xl:text-lg tracking-wide font-semibold text-white/60">
+          {formatPokedexId(pokemon.id)}
+        </span>
+      </div>
+      <motion.div
+        className="flex shrink-0 flex-wrap gap-1"
+        layoutId={`types-${pokemon.id}-${id}`}
+        transition={CARD_TRANSITION}
+      >
+        {pokemon.types.map(type => (
+          <TypeBadge key={type} size="lg" type={type} />
+        ))}
+        {pokemon.isLegendary && (
+          <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
+            Legendary
+          </span>
+        )}
+      </motion.div>
+    </div>
+  )
+}

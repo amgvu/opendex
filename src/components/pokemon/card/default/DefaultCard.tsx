@@ -8,7 +8,7 @@ import type { Pokemon } from '@/types/pokemon'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
-import { TypeBadge } from './TypeBadge'
+import { TypeBadge } from '../TypeBadge'
 
 export function DefaultCard({
   active,
@@ -55,11 +55,15 @@ export function DefaultCard({
       <motion.div
         className="absolute -bottom-4 left-16 sm:left-20 md:left-20 lg:left-22 xl:left-24 2xl:left-28 h-28 w-28"
         layoutId={`image-${pokemon.id}-${id}`}
-        style={pokemon.blurDataURL ? {
-          backgroundImage: `url(${pokemon.blurDataURL})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover'
-        } : undefined}
+        style={
+          pokemon.blurDataURL
+            ? {
+                backgroundImage: `url(${pokemon.blurDataURL})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover'
+              }
+            : undefined
+        }
         transition={CARD_TRANSITION}
       >
         <Image
@@ -70,7 +74,8 @@ export function DefaultCard({
           onLoad={e => {
             const img = e.currentTarget as HTMLImageElement
             img.style.opacity = '1'
-            if (img.parentElement) img.parentElement.style.backgroundImage = 'none'
+            if (img.parentElement)
+              img.parentElement.style.backgroundImage = 'none'
           }}
           priority={priority}
           sizes="112px"

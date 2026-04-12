@@ -9,8 +9,8 @@ import type { Pokemon } from '@/types/pokemon'
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
 
-import { DefaultCard } from './DefaultCard'
-import { ExpandedCard } from './ExpandedCard'
+import { DefaultCard } from './default/DefaultCard'
+import { ExpandedCard } from './expanded'
 
 export const PokemonCard = memo(
   function PokemonCard({
