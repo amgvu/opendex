@@ -1,28 +1,28 @@
 export const colors: Record<string, string> = {
-  Bug: 'bg-lime-500',
-  Dark: 'bg-slate-800',
-  Dragon: 'bg-indigo-700',
-  Electric: 'bg-yellow-500',
-  Fairy: 'bg-pink-300',
-  Fighting: 'bg-red-700',
-  Fire: 'bg-red-500',
-  Flying: 'bg-indigo-400',
-  Ghost: 'bg-purple-700',
-  Grass: 'bg-green-500',
-  Ground: 'bg-amber-600',
-  Ice: 'bg-cyan-300',
-  Normal: 'bg-slate-400',
-  Poison: 'bg-purple-500',
-  Psychic: 'bg-pink-500',
-  Rock: 'bg-amber-700',
-  Steel: 'bg-slate-500',
-  Water: 'bg-blue-500'
+  Bug: 'bg-[#A6B91A]',
+  Dark: 'bg-[#705746]',
+  Dragon: 'bg-[#6F35FC]',
+  Electric: 'bg-[#F7D02C]',
+  Fairy: 'bg-[#D685AD]',
+  Fighting: 'bg-[#C22E28]',
+  Fire: 'bg-[#EE8130]',
+  Flying: 'bg-[#A98FF3]',
+  Ghost: 'bg-[#735797]',
+  Grass: 'bg-[#7AC74C]',
+  Ground: 'bg-[#E2BF65]',
+  Ice: 'bg-[#96D9D6]',
+  Normal: 'bg-[#A8A77A]',
+  Poison: 'bg-[#A33EA1]',
+  Psychic: 'bg-[#F95587]',
+  Rock: 'bg-[#B6A136]',
+  Steel: 'bg-[#B7B7CE]',
+  Water: 'bg-[#6390F0]'
 }
 
-export const getTypeColor = (type: string) => colors[type] ?? 'bg-slate-400'
+export const getTypeColor = (type: string) => colors[type] ?? 'bg-[#A8A77A]'
 
 export const bgClassToVar = (cls: string) =>
-  `var(${cls.replace('bg-', '--color-')})`
+  cls.match(/bg-\[([^\]]+)\]/)?.[1] ?? `var(${cls.replace('bg-', '--color-')})`
 
 export const formatPokedexId = (id: number) => `#${String(id).padStart(4, '0')}`
 

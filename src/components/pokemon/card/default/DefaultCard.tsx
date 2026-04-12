@@ -40,8 +40,7 @@ export function DefaultCard({
       }}
       transition={CARD_TRANSITION}
     >
-      <div className="absolute inset-0 bg-white/15" />
-      <div className="absolute -bottom-4 -right-5 grayscale opacity-30">
+<div className="absolute -bottom-4 -right-5 grayscale opacity-30">
         <Image
           alt=""
           aria-hidden="true"
