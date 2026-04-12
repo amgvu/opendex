@@ -84,12 +84,16 @@ export function ExpandedCard({
   const artworkImage = (
     <Image
       alt={pokemon.name}
-      className="h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain drop-shadow-2xl"
+      className="h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
       height={384}
       onLoad={handleArtworkLoad}
       sizes="(min-width: 1536px) 320px, 200px"
       src={pokemon.officialUrl}
-      style={{ opacity: 0, transition: 'opacity 0.2s' }}
+      style={{
+        filter: `drop-shadow(0 25px 25px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`,
+        opacity: 0,
+        transition: 'opacity 0.2s'
+      }}
       unoptimized
       width={384}
     />
@@ -117,7 +121,12 @@ export function ExpandedCard({
               ref={ref}
               transition={CARD_TRANSITION}
             >
-              <div className="pointer-events-none absolute inset-3 rounded-lg border border-black/20 bg-black/25 shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)] sm:inset-4.5 sm:rounded-xl" />
+              <div
+                className="pointer-events-none absolute inset-3 rounded-lg border bg-black/25 shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)] sm:inset-4.5 sm:rounded-xl"
+                style={{
+                  borderColor: `color-mix(in oklab, ${bgClassToVar(typeColor)}, black 25%)`
+                }}
+              />
               <Image
                 alt=""
                 aria-hidden="true"
@@ -284,15 +293,24 @@ export function ExpandedCard({
                   >
                     <Tabs.ListContainer>
                       <Tabs.List aria-label="Pokemon info">
-                        <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="stats">
+                        <Tabs.Tab
+                          className="text-xs sm:text-sm xl:text-base"
+                          id="stats"
+                        >
                           Stats
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="battle">
+                        <Tabs.Tab
+                          className="text-xs sm:text-sm xl:text-base"
+                          id="battle"
+                        >
                           Battle
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="bio">
+                        <Tabs.Tab
+                          className="text-xs sm:text-sm xl:text-base"
+                          id="bio"
+                        >
                           Bio
                           <Tabs.Indicator />
                         </Tabs.Tab>
@@ -300,11 +318,25 @@ export function ExpandedCard({
                     </Tabs.ListContainer>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="stats"
                     >
-                      <TabPanelContent className="flex flex-col gap-3">
+                      <TabPanelContent>
                         <div className="flex flex-col gap-0.5">
+                          <div className="flex items-center gap-3 text-xs sm:text-sm xl:text-base 2xl:text-lg mb-1">
+                            <span className="w-16 sm:w-20 xl:w-24 2xl:w-28 shrink-0 font-medium text-white/50">
+                              Base Stats
+                            </span>
+                            <span className="w-7 sm:w-8 shrink-0" />
+                            <div className="flex-1 flex justify-end">
+                              <span className="text-white/50 font-medium">
+                                BST{' '}
+                                <span className="font-bold text-white">
+                                  {bst}
+                                </span>
+                              </span>
+                            </div>
+                          </div>
                           <StatBar label="HP" value={pokemon.hp} />
                           <StatBar label="Attack" value={pokemon.attack} />
                           <StatBar label="Defense" value={pokemon.defense} />
@@ -317,53 +349,49 @@ export function ExpandedCard({
                             value={pokemon.specialDefense}
                           />
                           <StatBar label="Speed" value={pokemon.speed} />
-                          <div className="flex items-center gap-3 border-t border-white/15 mt-2 pt-2 text-xs sm:text-sm xl:text-base 2xl:text-lg">
-                            <span className="w-16 sm:w-20 xl:w-24 2xl:w-28 shrink-0 text-white/70">BST</span>
-                            <span className="w-7 sm:w-8 shrink-0 text-right font-semibold text-white">{bst}</span>
+                          <div className="grid grid-cols-3 gap-2 mt-1.5 sm:mt-2">
+                            <InfoStat
+                              label="Height"
+                              value={`${pokemon.height.toFixed(1)}m`}
+                            />
+                            <InfoStat
+                              label="Weight"
+                              value={`${pokemon.weight.toFixed(1)} lbs`}
+                            />
+                            <InfoStat label="Gen" value={pokemon.generation} />
+                            {pokemon.catchRate !== undefined && (
+                              <InfoStat
+                                label="Catch"
+                                value={`${Math.round((pokemon.catchRate / 255) * 100)}%`}
+                              />
+                            )}
+                            {pokemon.growthRate && (
+                              <InfoStat
+                                label="Growth"
+                                value={
+                                  <span className="capitalize">
+                                    {GROWTH_RATE_LABELS[pokemon.growthRate] ??
+                                      pokemon.growthRate.replace(/-/g, ' ')}
+                                  </span>
+                                }
+                              />
+                            )}
+                            {pokemon.baseExperience !== undefined && (
+                              <InfoStat
+                                label="Base Exp"
+                                value={pokemon.baseExperience}
+                              />
+                            )}
                           </div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-2">
-                          <InfoStat
-                            label="Height"
-                            value={`${pokemon.height.toFixed(1)}m`}
-                          />
-                          <InfoStat
-                            label="Weight"
-                            value={`${pokemon.weight.toFixed(1)} lbs`}
-                          />
-                          <InfoStat label="Gen" value={pokemon.generation} />
-                          {pokemon.catchRate !== undefined && (
-                            <InfoStat
-                              label="Catch"
-                              value={`${Math.round((pokemon.catchRate / 255) * 100)}%`}
-                            />
-                          )}
-                          {pokemon.growthRate && (
-                            <InfoStat
-                              label="Growth"
-                              value={
-                                <span className="capitalize">
-                                  {GROWTH_RATE_LABELS[pokemon.growthRate] ??
-                                    pokemon.growthRate.replace(/-/g, ' ')}
-                                </span>
-                              }
-                            />
-                          )}
-                          {pokemon.baseExperience !== undefined && (
-                            <InfoStat
-                              label="Base Exp"
-                              value={pokemon.baseExperience}
-                            />
-                          )}
                         </div>
                       </TabPanelContent>
                     </Tabs.Panel>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="battle"
                     >
-                      <TabPanelContent className="space-y-2">
+                      <TabPanelContent className="space-y-1.5 sm:space-y-2">
                         {pokemon.evYield && pokemon.evYield.length > 0 && (
                           <div className="flex items-center gap-2">
                             <span className="w-16 shrink-0 whitespace-nowrap text-white/70">
@@ -481,10 +509,10 @@ export function ExpandedCard({
                     </Tabs.Panel>
 
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                       id="bio"
                     >
-                      <TabPanelContent className="flex flex-col gap-3">
+                      <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
                         {pokemon.genus && (
                           <p className="text-xs xl:text-sm 2xl:text-base italic text-white/50">
                             {pokemon.genus}
