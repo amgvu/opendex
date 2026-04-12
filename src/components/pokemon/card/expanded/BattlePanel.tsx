@@ -58,9 +58,9 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
             <span className="mb-1 block text-white/60">Weak</span>
             <div className="flex flex-wrap gap-1">
               {weaknesses.map(({ multiplier, type }) => (
-                <span className="relative" key={type}>
+                <span className="relative inline-flex" key={type}>
                   <span
-                    className={`rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/90 ${getTypeColor(type)}`}
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/90 ${getTypeColor(type)}`}
                   >
                     {type}
                   </span>
@@ -76,9 +76,9 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
             <div className="flex flex-wrap gap-1">
               {resistances.length > 0 ? (
                 resistances.map(({ multiplier, type }) => (
-                  <span className="relative" key={type}>
+                  <span className="relative inline-flex" key={type}>
                     <span
-                      className={`rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/70 ${getTypeColor(type)}`}
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/70 ${getTypeColor(type)}`}
                     >
                       {type}
                     </span>
