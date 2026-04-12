@@ -56,7 +56,7 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
             label="Egg Groups"
             muted
             value={
-              <span className="capitalize">{pokemon.eggGroups.join(', ')}</span>
+              <span className="capitalize">{pokemon.eggGroups.map(g => g.replace(/(\D)(\d)/, '$1 $2')).join(', ')}</span>
             }
           />
         )}
