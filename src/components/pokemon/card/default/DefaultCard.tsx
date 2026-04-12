@@ -31,7 +31,7 @@ export function DefaultCard({
   return (
     <motion.div
       animate={{ opacity: active ? 0 : 1, y: !active && hovered ? -3 : 0 }}
-      className={`relative h-20 cursor-pointer rounded-xl p-3 [clip-path:inset(0_round_0.75rem)] ${typeColor}`}
+      className={`relative h-20 cursor-pointer rounded-xl p-3 [clip-path:inset(0_round_0.85rem)] ${typeColor}`}
       layoutId={`card-${pokemon.id}-${id}`}
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
@@ -41,7 +41,7 @@ export function DefaultCard({
       transition={CARD_TRANSITION}
     >
       <div className="absolute inset-0 bg-white/15" />
-      <div className="absolute -bottom-4 -right-4 grayscale opacity-30">
+      <div className="absolute -bottom-4 -right-5 grayscale opacity-30">
         <Image
           alt=""
           aria-hidden="true"

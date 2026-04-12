@@ -14,7 +14,7 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
           <motion.h2
-            className={`min-w-0 truncate font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
+            className={`min-w-0 truncate pb-1 font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
             layoutId={`name-${pokemon.id}-${id}`}
             transition={CARD_TRANSITION}
           >
