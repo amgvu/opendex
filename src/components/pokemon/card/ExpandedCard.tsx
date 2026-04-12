@@ -117,7 +117,7 @@ export function ExpandedCard({
               ref={ref}
               transition={CARD_TRANSITION}
             >
-              <div className="pointer-events-none absolute inset-3 rounded-lg border border-black/20 bg-black/25 shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)] sm:inset-4.5 sm:rounded-xl" />
+              <div className="pointer-events-none absolute inset-3 rounded-lg border border-black/20 bg-black/25 shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)] sm:inset-4.5 sm:rounded-xl" />
               <Image
                 alt=""
                 aria-hidden="true"
@@ -129,14 +129,14 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative flex h-full cursor-grab flex-col px-7 py-6 2xl:px-9 2xl:py-8 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative flex h-full cursor-grab flex-col px-7 pt-5 pb-3 sm:px-9 sm:py-8 2xl:px-11 2xl:py-10 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
                   }
                 }}
               >
-                <div className="mb-4 flex items-start justify-between gap-3">
+                <div className="mb-1 sm:mb-4 flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
                       <motion.h2
@@ -166,7 +166,7 @@ export function ExpandedCard({
                         </motion.div>
                       )}
                     </div>
-                    <span className="text-sm xl:text-base 2xl:text-lg tracking-wide font-semibold text-white/60">
+                    <span className="-mt-1 sm:mt-0 block text-sm xl:text-base 2xl:text-lg tracking-wide font-semibold text-white/60">
                       {formatPokedexId(pokemon.id)}
                     </span>
                   </div>
@@ -188,7 +188,7 @@ export function ExpandedCard({
 
                 {pokemon.officialUrl && (
                   <motion.div
-                    className="relative mb-4 flex justify-center"
+                    className="relative mb-1 sm:mb-4 flex justify-center"
                     layoutId={`image-${pokemon.id}-${id}`}
                     transition={CARD_TRANSITION}
                   >
@@ -284,15 +284,15 @@ export function ExpandedCard({
                   >
                     <Tabs.ListContainer>
                       <Tabs.List aria-label="Pokemon info">
-                        <Tabs.Tab id="stats">
+                        <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="stats">
                           Stats
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab id="battle">
+                        <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="battle">
                           Battle
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab id="bio">
+                        <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="bio">
                           Bio
                           <Tabs.Indicator />
                         </Tabs.Tab>
