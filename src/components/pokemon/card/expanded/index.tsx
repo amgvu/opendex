@@ -73,7 +73,7 @@ export function ExpandedCard({
               className="pointer-events-none absolute inset-3 rounded-lg border bg-black/25 sm:inset-4.5 sm:rounded-xl"
               style={{
                 borderColor: `color-mix(in oklab, ${bgClassToVar(typeColor)}, black 25%)`,
-                boxShadow: `inset 0 1px 3px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
+                boxShadow: `inset 0 0 1px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
               }}
             />
             <Image

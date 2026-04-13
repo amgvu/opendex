@@ -78,7 +78,7 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
                 resistances.map(({ multiplier, type }) => (
                   <span className="relative inline-flex" key={type}>
                     <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white/70 ${getTypeColor(type)}`}
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs xl:text-sm 2xl:text-base font-medium capitalize text-white ${getTypeColor(type)}`}
                     >
                       {type}
                     </span>
