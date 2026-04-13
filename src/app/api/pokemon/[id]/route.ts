@@ -1,9 +1,10 @@
 import type { NextRequest } from 'next/server'
+
 import { NextResponse } from 'next/server'
 
-import pokemonData from '@/data/pokemon.json'
-
 import type { Pokemon } from '@/types/pokemon'
+
+import pokemonData from '@/data/pokemon.json'
 
 export async function GET(
   _: NextRequest,
