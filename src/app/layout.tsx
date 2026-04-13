@@ -19,7 +19,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  description: 'Fast, interactive Pokémon explorer',
+  description:
+    'Community-made Pokédex. Browse all 1,025 Pokémon - stats, types, abilities, and more.',
   title: 'Opendex'
 }
 
