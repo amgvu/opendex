@@ -11,13 +11,6 @@ export function useSelectedPokemon() {
 
   const selectPokemon = useCallback((id: null | number) => {
     setSelectedId(id)
-    const params = new URLSearchParams(window.location.search)
-    if (id !== null) {
-      params.set('pokemon', String(id))
-    } else {
-      params.delete('pokemon')
-    }
-    history.replaceState(null, '', `?${params.toString()}`)
   }, [])
 
   return { selectedId, setSelectedId: selectPokemon }
