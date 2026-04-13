@@ -44,8 +44,10 @@ export function DefaultCard({
         alt=""
         aria-hidden="true"
         className="absolute bottom-2 -left-9 h-[128px] w-[128px] scale-[1.5] origin-top-left opacity-20 grayscale"
+        draggable={false}
         height={128}
         loading="eager"
+        onContextMenu={e => e.preventDefault()}
         src={iconSrc}
         unoptimized
         width={128}

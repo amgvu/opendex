@@ -43,7 +43,9 @@ export function CardArtwork({
     <Image
       alt={pokemon.name}
       className="h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
+      draggable={false}
       height={384}
+      onContextMenu={e => e.preventDefault()}
       onLoad={handleArtworkLoad}
       sizes="(min-width: 1536px) 320px, 200px"
       src={pokemon.officialUrl}
@@ -88,7 +90,9 @@ export function CardArtwork({
           alt=""
           animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
           className="absolute h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
+          draggable={false}
           initial={{ opacity: 0 }}
+          onContextMenu={e => e.preventDefault()}
           onError={() => setGifError(true)}
           onLoad={() => setGifReady(true)}
           src={pokemon.imageUrl}
