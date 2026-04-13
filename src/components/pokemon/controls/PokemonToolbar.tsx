@@ -52,7 +52,7 @@ export function PokemonToolbar({
           type="text"
           value={search}
         />
-        <Drawer>
+        <Drawer shouldScaleBackground={false}>
           <DrawerTrigger className="relative inline-flex cursor-pointer items-center gap-2 rounded-md border bg-background px-3 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground xl:hidden">
             <TbAdjustments size={16} />
             {activeCount > 0 && (
