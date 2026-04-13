@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
 import { useEffect } from 'react'
 
@@ -51,6 +51,10 @@ export default function PokemonGrid() {
       : 'Opendex'
   }, [selectedId, pokemon])
 
+  const { scrollY } = useScroll()
+  const titleHeight = useTransform(scrollY, [0, 48], [44, 0])
+  const titleOpacity = useTransform(scrollY, [0, 32], [1, 0])
+
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
     useVirtualGrid(
       pokemon,
@@ -73,31 +77,33 @@ export default function PokemonGrid() {
           />
         )}
       </AnimatePresence>
-      <div className="fixed inset-x-0 top-0 z-30  bg-background/80 backdrop-blur-sm">
+      <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
-          <div className="mb-3 2xl:mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 2xl:gap-2">
-              <Image
-                alt=""
-                aria-hidden="true"
-                className="h-5 w-5 2xl:h-6 2xl:w-6"
-                height={64}
-                src="/opendex.png"
-                unoptimized
-                width={64}
-              />
-              <h1 className="text-lg 2xl:text-xl font-bold tracking-tight">Opendex</h1>
+          <motion.div className="overflow-hidden" style={{ height: titleHeight, opacity: titleOpacity }}>
+            <div className="mb-3 2xl:mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-1.5 2xl:gap-2">
+                <Image
+                  alt=""
+                  aria-hidden="true"
+                  className="h-5 w-5 2xl:h-6 2xl:w-6"
+                  height={64}
+                  src="/opendex.png"
+                  unoptimized
+                  width={64}
+                />
+                <h1 className="text-lg 2xl:text-xl font-bold tracking-tight">Opendex</h1>
+              </div>
+              <Button asChild size="sm" variant="outline">
+                <a
+                  href="https://ko-fi.com/amgdev"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  ☕ Support on Ko-fi
+                </a>
+              </Button>
             </div>
-            <Button asChild size="sm" variant="outline">
-              <a
-                href="https://ko-fi.com/amgdev"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                ☕ Support on Ko-fi
-              </a>
-            </Button>
-          </div>
+          </motion.div>
           <PokemonToolbar
             onToggleGen={toggleGen}
             onToggleType={toggleType}
