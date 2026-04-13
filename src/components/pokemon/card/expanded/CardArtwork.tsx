@@ -4,14 +4,15 @@ import Image from 'next/image'
 import {
   type CSSProperties,
   type SyntheticEvent,
-  useEffect,
   useRef,
   useState
 } from 'react'
+import { TbCheck, TbLink } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
+import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar } from '@/lib/pokemon'
 
@@ -25,14 +26,15 @@ export function CardArtwork({
   typeColor: string
 }) {
   const { gifEnabled, setGifEnabled } = useCardContext()
-  const [gifMounted, setGifMounted] = useState(gifEnabled)
-  const [gifReady, setGifReady] = useState(false)
-  const [gifError, setGifError] = useState(false)
+  const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled)
+  const [copied, setCopied] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (gifEnabled) setGifMounted(true)
-  }, [gifEnabled])
+  function handleCopy() {
+    navigator.clipboard.writeText(window.location.href)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
 
   function handleArtworkLoad(e: SyntheticEvent<HTMLImageElement>) {
     e.currentTarget.style.opacity = '1'
@@ -99,14 +101,20 @@ export function CardArtwork({
           transition={{ duration: 0.15 }}
         />
       )}
+      <div className="absolute bottom-0 left-0" data-no-drag>
+        <button
+          className="flex items-center gap-1 text-xs font-medium text-white/70 select-none cursor-pointer"
+          onClick={handleCopy}
+        >
+          {copied ? <TbCheck size={16} /> : <TbLink size={16} />}
+          <span>{copied ? 'Copied!' : 'Copy link'}</span>
+        </button>
+      </div>
       {!gifError && (
         <div className="absolute bottom-0 right-0">
           <Switch
             isSelected={gifEnabled}
-            onChange={v => {
-              if (v) setGifMounted(true)
-              setGifEnabled(v)
-            }}
+            onChange={v => setGifEnabled(v)}
             size="sm"
             style={
               {

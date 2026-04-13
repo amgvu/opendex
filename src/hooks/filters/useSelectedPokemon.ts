@@ -1,11 +1,8 @@
 import { useSearchParams } from 'next/navigation'
 import { useCallback, useState } from 'react'
 
-import { useUrlSync } from './useUrlSync'
-
 export function useSelectedPokemon() {
   const searchParams = useSearchParams()
-  const { routerRef, searchParamsRef } = useUrlSync()
 
   const [selectedId, setSelectedId] = useState<null | number>(() => {
     const raw = parseInt(searchParams.get('pokemon') ?? '', 10)
@@ -14,14 +11,14 @@ export function useSelectedPokemon() {
 
   const selectPokemon = useCallback((id: null | number) => {
     setSelectedId(id)
-    const params = new URLSearchParams(searchParamsRef.current.toString())
+    const params = new URLSearchParams(window.location.search)
     if (id !== null) {
       params.set('pokemon', String(id))
     } else {
       params.delete('pokemon')
     }
-    routerRef.current.replace(`?${params.toString()}`, { scroll: false })
-  }, [routerRef, searchParamsRef])
+    history.replaceState(null, '', `?${params.toString()}`)
+  }, [])
 
   return { selectedId, setSelectedId: selectPokemon }
 }
