@@ -29,7 +29,7 @@ export function useCardNavigation({
   }
 
   const onNext = useCallback(() => {
-    if (!canNavigate()) return
+    if (!canNavigate() || selectedIndex === -1) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
       setSelectedId(next.id)
@@ -47,7 +47,7 @@ export function useCardNavigation({
   ])
 
   const onPrev = useCallback(() => {
-    if (!canNavigate()) return
+    if (!canNavigate() || selectedIndex === -1) return
     const prev = pokemon[selectedIndex - 1]
     if (prev) setSelectedId(prev.id)
   }, [pokemon, selectedIndex, setSelectedId])
