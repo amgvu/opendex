@@ -4,6 +4,7 @@ import { TbAdjustments, TbHome } from 'react-icons/tb'
 
 import type { SortField, SortOrder } from '@/types/sort'
 
+import { Button, buttonVariants } from '../../ui/button'
 import {
   Drawer,
   DrawerContent,
@@ -11,7 +12,6 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '../../ui/drawer'
-import { Button } from '../../ui/button'
 import { Input } from '../../ui/input'
 import { FilterControls } from './FilterControls'
 import { SortControls } from './SortControls'
@@ -47,9 +47,7 @@ export function PokemonToolbar({
       {/* Search + mobile drawer trigger */}
       <div className="flex gap-2">
         <Button asChild size="icon" variant="outline">
-          <a
-            href="/"
-          >
+          <a href="/">
             <TbHome size={16} />
           </a>
         </Button>
@@ -61,7 +59,7 @@ export function PokemonToolbar({
           value={search}
         />
         <Drawer shouldScaleBackground={false}>
-          <DrawerTrigger className="relative inline-flex cursor-pointer items-center gap-2 rounded-md border bg-background px-3 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground xl:hidden">
+          <DrawerTrigger className={`relative xl:hidden ${buttonVariants({ size: 'icon', variant: 'outline' })}`}>
             <TbAdjustments size={16} />
             {activeCount > 0 && (
               <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-[10px] font-bold text-background">
