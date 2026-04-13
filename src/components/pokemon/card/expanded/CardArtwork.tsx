@@ -31,7 +31,10 @@ export function CardArtwork({
   const blurRef = useRef<HTMLDivElement>(null)
 
   function handleCopy() {
-    navigator.clipboard.writeText(window.location.href)
+    const params = new URLSearchParams(window.location.search)
+    params.set('pokemon', String(pokemon.id))
+    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    navigator.clipboard.writeText(url)
     setCopied(true)
     setTimeout(() => setCopied(false), 1500)
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { TbAdjustments } from 'react-icons/tb'
+import { TbAdjustments, TbHome } from 'react-icons/tb'
 
 import type { SortField, SortOrder } from '@/types/sort'
 
@@ -11,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '../../ui/drawer'
+import { Button } from '../../ui/button'
 import { Input } from '../../ui/input'
 import { FilterControls } from './FilterControls'
 import { SortControls } from './SortControls'
@@ -45,6 +46,13 @@ export function PokemonToolbar({
     <div className="space-y-3">
       {/* Search + mobile drawer trigger */}
       <div className="flex gap-2">
+        <Button asChild size="icon" variant="outline">
+          <a
+            href="/"
+          >
+            <TbHome size={16} />
+          </a>
+        </Button>
         <Input
           className="flex-1"
           onChange={e => onUpdateSearch(e.target.value)}

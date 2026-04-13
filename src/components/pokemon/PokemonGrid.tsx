@@ -88,7 +88,10 @@ export default function PokemonGrid() {
         <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
           <motion.div className="overflow-hidden" style={{ height: titleHeight, opacity: titleOpacity }}>
             <div className="mb-3 2xl:mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-1.5 2xl:gap-2">
+              <a
+                className="flex items-center gap-1.5 2xl:gap-2"
+                href="/"
+              >
                 <Image
                   alt=""
                   aria-hidden="true"
@@ -99,7 +102,7 @@ export default function PokemonGrid() {
                   width={64}
                 />
                 <h1 className="text-lg 2xl:text-xl font-bold tracking-tight">Opendex</h1>
-              </div>
+              </a>
               <Button asChild size="sm" variant="outline">
                 <a
                   href="https://ko-fi.com/amgdev"
