@@ -6,16 +6,18 @@ import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
+import { Button } from '@/components/ui/button'
 import { CardProvider } from '@/context/card'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
 import { useFilters } from '@/hooks/filters/useFilters'
 import { useSearch } from '@/hooks/filters/useSearch'
 import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
 import { useSort } from '@/hooks/filters/useSort'
+import { usePokemonByIdQuery } from '@/hooks/query/usePokemonByIdQuery'
 import { usePokemonQuery } from '@/hooks/query/usePokemonQuery'
 import { useVirtualGrid } from '@/hooks/virtual/useVirtualGrid'
 
-import { Button } from '@/components/ui/button'
+import { DirectCard } from './card/DirectCard'
 import { PokemonCard } from './card/PokemonCard'
 import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
@@ -35,6 +37,13 @@ export default function PokemonGrid() {
     )
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
+  const selectedInList = selectedId !== null
+    ? pokemon.find(p => p.id === selectedId) ?? null
+    : null
+  const needsDirect = selectedId !== null && selectedInList === null
+
+  const { pokemon: directPokemon } = usePokemonByIdQuery(needsDirect ? selectedId : null)
+
   const { onNext, onPrev } = useCardNavigation({
     fetchNextPage: loadMore,
     hasNextPage,
@@ -45,11 +54,11 @@ export default function PokemonGrid() {
   })
 
   useEffect(() => {
-    const selected = pokemon.find(p => p.id === selectedId)
+    const selected = selectedInList ?? directPokemon
     document.title = selected
       ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Opendex`
       : 'Opendex'
-  }, [selectedId, pokemon])
+  }, [selectedId, selectedInList, directPokemon])
 
   const { scrollY } = useScroll()
   const titleHeight = useTransform(scrollY, [0, 48], [44, 0])
@@ -77,6 +86,14 @@ export default function PokemonGrid() {
           />
         )}
       </AnimatePresence>
+      {needsDirect && directPokemon && (
+        <DirectCard
+          onClose={() => setSelectedId(null)}
+          onNext={onNext}
+          onPrev={onPrev}
+          pokemon={directPokemon}
+        />
+      )}
       <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
           <motion.div className="overflow-hidden" style={{ height: titleHeight, opacity: titleOpacity }}>
