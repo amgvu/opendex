@@ -7,9 +7,10 @@ export function useSelectedPokemon() {
   const searchParams = useSearchParams()
   const { routerRef, searchParamsRef } = useUrlSync()
 
-  const [selectedId, setSelectedId] = useState<null | number>(
-    searchParams.get('pokemon') ? Number(searchParams.get('pokemon')) : null
-  )
+  const [selectedId, setSelectedId] = useState<null | number>(() => {
+    const raw = parseInt(searchParams.get('pokemon') ?? '', 10)
+    return isNaN(raw) ? null : raw
+  })
 
   const selectPokemon = useCallback((id: null | number) => {
     setSelectedId(id)

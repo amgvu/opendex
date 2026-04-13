@@ -2,18 +2,17 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
-import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { Button } from '@/components/ui/button'
 import { CardProvider } from '@/context/card'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
+import { useDirectCard } from '@/hooks/card/useDirectCard'
 import { useFilters } from '@/hooks/filters/useFilters'
 import { useSearch } from '@/hooks/filters/useSearch'
 import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
 import { useSort } from '@/hooks/filters/useSort'
-import { usePokemonByIdQuery } from '@/hooks/query/usePokemonByIdQuery'
 import { usePokemonQuery } from '@/hooks/query/usePokemonQuery'
 import { useVirtualGrid } from '@/hooks/virtual/useVirtualGrid'
 
@@ -37,12 +36,11 @@ export default function PokemonGrid() {
     )
   const { selectedId, setSelectedId } = useSelectedPokemon()
 
-  const selectedInList = selectedId !== null
-    ? pokemon.find(p => p.id === selectedId) ?? null
-    : null
-  const needsDirect = selectedId !== null && selectedInList === null
-
-  const { pokemon: directPokemon } = usePokemonByIdQuery(needsDirect ? selectedId : null)
+  const { directData, handleSetSelectedId, needsDirect } = useDirectCard(
+    selectedId,
+    setSelectedId,
+    pokemon
+  )
 
   const { onNext, onPrev } = useCardNavigation({
     fetchNextPage: loadMore,
@@ -50,15 +48,8 @@ export default function PokemonGrid() {
     isFetchingNextPage,
     pokemon,
     selectedId,
-    setSelectedId
+    setSelectedId: handleSetSelectedId
   })
-
-  useEffect(() => {
-    const selected = selectedInList ?? directPokemon
-    document.title = selected
-      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Opendex`
-      : 'Opendex'
-  }, [selectedId, selectedInList, directPokemon])
 
   const { scrollY } = useScroll()
   const titleHeight = useTransform(scrollY, [0, 48], [44, 0])
@@ -81,16 +72,16 @@ export default function PokemonGrid() {
             className="fixed inset-0 z-40 bg-black/40"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-            onClick={() => setSelectedId(null)}
+            onClick={() => handleSetSelectedId(null)}
           />
         )}
       </AnimatePresence>
-      {needsDirect && directPokemon && (
+      {needsDirect && directData && (
         <DirectCard
-          onClose={() => setSelectedId(null)}
+          onClose={() => handleSetSelectedId(null)}
           onNext={onNext}
           onPrev={onPrev}
-          pokemon={directPokemon}
+          pokemon={directData}
         />
       )}
       <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
@@ -156,11 +147,11 @@ export default function PokemonGrid() {
             >
               {getRowPokemon(row.index).map((p: Pokemon, i: number) => (
                 <PokemonCard
-                  active={selectedId === p.id}
+                  active={!needsDirect && selectedId === p.id}
                   index={row.index * columns + i}
                   key={p.id}
-                  onClick={() => setSelectedId(p.id)}
-                  onClose={() => setSelectedId(null)}
+                  onClick={() => handleSetSelectedId(p.id)}
+                  onClose={() => handleSetSelectedId(null)}
                   onNext={onNext}
                   onPrev={onPrev}
                   pokemon={p}

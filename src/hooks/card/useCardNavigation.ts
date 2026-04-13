@@ -21,12 +21,12 @@ export function useCardNavigation({
   const pendingNextRef = useRef(false)
   const lastNavTimeRef = useRef(0)
 
-  const canNavigate = () => {
+  const canNavigate = useCallback(() => {
     const now = Date.now()
     if (now - lastNavTimeRef.current < 100) return false
     lastNavTimeRef.current = now
     return true
-  }
+  }, [])
 
   const onNext = useCallback(() => {
     if (!canNavigate() || selectedIndex === -1) return
@@ -37,20 +37,13 @@ export function useCardNavigation({
       pendingNextRef.current = true
       void fetchNextPage()
     }
-  }, [
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    pokemon,
-    selectedIndex,
-    setSelectedId
-  ])
+  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, selectedIndex, setSelectedId])
 
   const onPrev = useCallback(() => {
     if (!canNavigate() || selectedIndex === -1) return
     const prev = pokemon[selectedIndex - 1]
     if (prev) setSelectedId(prev.id)
-  }, [pokemon, selectedIndex, setSelectedId])
+  }, [canNavigate, pokemon, selectedIndex, setSelectedId])
 
   useEffect(() => {
     if (!pendingNextRef.current) return
