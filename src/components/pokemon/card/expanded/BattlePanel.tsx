@@ -5,7 +5,8 @@ import { EV_STAT_LABELS, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
 import { TabPanelContent } from './shared'
 
 export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
-  const { immunities, resistances, weaknesses } = getTypeMatchups(pokemon.types)
+  const { immunities, resistances, weaknesses } =
+    pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)
 
   return (
     <TabPanelContent className="space-y-1.5 sm:space-y-2">
