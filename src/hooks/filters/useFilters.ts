@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { useFilterStore } from '@/stores/filterStore'
 
@@ -8,18 +8,20 @@ import { useUrlSync } from './useUrlSync'
 export function useFilters() {
   const searchParams = useSearchParams()
   const { routerRef, searchParamsRef } = useUrlSync()
-  const selectedGens = useFilterStore(s => s.selectedGens)
-  const selectedTypes = useFilterStore(s => s.selectedTypes)
 
-  useEffect(() => {
+  const initialized = useRef(false)
+  if (!initialized.current) {
+    initialized.current = true
     useFilterStore.getState().setSelectedTypes(
       searchParams.get('types')?.split(',').filter(Boolean) ?? []
     )
     useFilterStore.getState().setSelectedGens(
       searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
     )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
+
+  const selectedGens = useFilterStore(s => s.selectedGens)
+  const selectedTypes = useFilterStore(s => s.selectedTypes)
 
   useEffect(() => {
     const params = new URLSearchParams(searchParamsRef.current.toString())

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { useFilterStore } from '@/stores/filterStore'
 
@@ -8,14 +8,16 @@ import { useUrlSync } from './useUrlSync'
 export function useSearch(delay = 300) {
   const searchParams = useSearchParams()
   const { routerRef, searchParamsRef } = useUrlSync()
-  const search = useFilterStore(s => s.search)
 
-  useEffect(() => {
+  const initialized = useRef(false)
+  if (!initialized.current) {
+    initialized.current = true
     const val = searchParams.get('search') ?? ''
     useFilterStore.getState().setSearch(val)
     useFilterStore.getState().setDebouncedSearch(val)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
+
+  const search = useFilterStore(s => s.search)
 
   useEffect(() => {
     const timer = setTimeout(() => {

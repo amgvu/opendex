@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 
 type NavContextValue = {
   onNext: () => void
@@ -18,7 +18,8 @@ export function NavProvider({
   onNext: () => void
   onPrev: () => void
 }) {
-  return <NavContext.Provider value={{ onNext, onPrev }}>{children}</NavContext.Provider>
+  const value = useMemo(() => ({ onNext, onPrev }), [onNext, onPrev])
+  return <NavContext.Provider value={value}>{children}</NavContext.Provider>
 }
 
 export function useNavContext() {

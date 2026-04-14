@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import type { SortField, SortOrder } from '@/types/sort'
 
@@ -10,14 +10,16 @@ import { useUrlSync } from './useUrlSync'
 export function useSort() {
   const searchParams = useSearchParams()
   const { routerRef, searchParamsRef } = useUrlSync()
-  const sortBy = useFilterStore(s => s.sortBy)
-  const sortOrder = useFilterStore(s => s.sortOrder)
 
-  useEffect(() => {
+  const initialized = useRef(false)
+  if (!initialized.current) {
+    initialized.current = true
     useFilterStore.getState().setSortBy((searchParams.get('sortBy') as SortField) ?? 'id')
     useFilterStore.getState().setSortOrder((searchParams.get('sortOrder') as SortOrder) ?? 'asc')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
+
+  const sortBy = useFilterStore(s => s.sortBy)
+  const sortOrder = useFilterStore(s => s.sortOrder)
 
   useEffect(() => {
     const params = new URLSearchParams(searchParamsRef.current.toString())
