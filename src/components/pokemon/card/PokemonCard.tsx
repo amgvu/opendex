@@ -8,6 +8,7 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
+import { usePokemonByIdQuery } from '@/hooks/query/usePokemonByIdQuery'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { DefaultCard } from './default/DefaultCard'
@@ -29,6 +30,7 @@ export const PokemonCard = memo(
     const id = useId()
     const setSelectedId = useSelectionStore(s => s.setSelectedId)
     const onClose = () => setSelectedId(null)
+    const { pokemon: detail } = usePokemonByIdQuery(active ? pokemon.id : null)
 
     useOutsideClick(ref, onClose, active)
     useBodyScrollLock(active, onClose)
@@ -36,7 +38,7 @@ export const PokemonCard = memo(
     return (
       <LayoutGroup id={`pokemon-${pokemon.id}`}>
         {createPortal(
-          <ExpandedCard active={active} id={id} pokemon={pokemon} ref={ref} />,
+          <ExpandedCard active={active} id={id} pokemon={detail ?? pokemon} ref={ref} />,
           document.body
         )}
         <DefaultCard

@@ -4,6 +4,14 @@ import { NextResponse } from 'next/server'
 
 import pokemonData from '@/data/pokemon.json'
 
+// Fields sent to the client for grid display — detail fields are fetched on demand via /api/pokemon/[id]
+const SUMMARY_KEYS = new Set([
+  'attack', 'blurDataURL', 'defense', 'description', 'generation',
+  'height', 'hp', 'id', 'imageUrl', 'isLegendary', 'isMythical',
+  'name', 'officialUrl', 'specialAttack', 'specialDefense', 'speed',
+  'types', 'weight'
+])
+
 export function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -31,9 +39,15 @@ export function GET(request: NextRequest) {
     const endIndex = startIndex + limit
     const paginatedPokemon = filteredPokemon.slice(startIndex, endIndex)
 
+    const summaries = paginatedPokemon.map(p =>
+      Object.fromEntries(
+        Object.entries(p as Record<string, unknown>).filter(([k]) => SUMMARY_KEYS.has(k))
+      )
+    )
+
     return NextResponse.json(
       {
-        data: paginatedPokemon,
+        data: summaries,
         pagination: {
           hasNext: page < totalPages,
           hasPrev: page > 1,
