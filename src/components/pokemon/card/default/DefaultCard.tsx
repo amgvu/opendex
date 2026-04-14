@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
+import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -108,13 +109,16 @@ export function DefaultCard({
           ))}
         </motion.div>
       </div>
-      {pokemon.isLegendary && (
+      {(pokemon.isLegendary || pokemon.isMythical) && (
         <motion.div
           className="absolute bottom-2 right-2"
           layoutId={`star-${pokemon.id}-${id}`}
           transition={CARD_TRANSITION}
         >
-          <IoMdStar className="text-yellow-400" size={18} />
+          {pokemon.isMythical
+            ? <TbSparkles className="text-pink-400" size={16} />
+            : <IoMdStar className="text-yellow-400" size={18} />
+          }
         </motion.div>
       )}
     </motion.div>

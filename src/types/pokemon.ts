@@ -6,6 +6,22 @@ export type EvolutionStep = {
   trigger: string
 }
 
+export type LearnsetMove = {
+  accuracy: null | number
+  category: string
+  level: number
+  name: string
+  power: null | number
+  pp: number
+  type: string
+}
+
+export type TypeMatchups = {
+  immunities: string[]
+  resistances: { multiplier: number; type: string }[]
+  weaknesses: { multiplier: number; type: string }[]
+}
+
 export type Pokemon = {
   abilities?: { description?: string; isHidden: boolean; name: string }[]
   attack: number
@@ -27,15 +43,19 @@ export type Pokemon = {
   growthRate?: string
   habitat?: null | string
   height: number
+  heldItems?: { name: string; rarity: number }[]
   hp: number
   id: number
   imageUrl: string
   isLegendary?: boolean
+  isMythical?: boolean
+  learnset?: { egg: string[]; levelUp: LearnsetMove[]; machine: string[] }
   name: string
   officialUrl: string
   specialAttack: number
   specialDefense: number
   speed: number
+  typeMatchups?: TypeMatchups
   types: string[]
   weight: number
 }

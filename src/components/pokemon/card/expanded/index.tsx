@@ -14,6 +14,8 @@ import { BattlePanel } from './BattlePanel'
 import { BioPanel } from './BioPanel'
 import { CardArtwork } from './CardArtwork'
 import { CardHeader } from './CardHeader'
+import { EvolutionPanel } from './EvolutionPanel'
+import { LearnsetPanel } from './LearnsetPanel'
 import { StatsPanel } from './StatsPanel'
 
 const TAB_PANEL_SCROLL =
@@ -107,7 +109,7 @@ export function ExpandedCard({
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"
                   onSelectionChange={key =>
-                    setActiveTab(key as 'battle' | 'bio' | 'stats')
+                    setActiveTab(key as 'battle' | 'bio' | 'evo' | 'moves' | 'stats')
                   }
                   selectedKey={activeTab}
                   style={
@@ -143,6 +145,20 @@ export function ExpandedCard({
                         Bio
                         <Tabs.Indicator />
                       </Tabs.Tab>
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="moves"
+                      >
+                        Moves
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="evo"
+                      >
+                        Evol
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
                     </Tabs.List>
                   </Tabs.ListContainer>
                   <Tabs.Panel
@@ -162,6 +178,18 @@ export function ExpandedCard({
                     id="bio"
                   >
                     <BioPanel pokemon={pokemon} />
+                  </Tabs.Panel>
+                  <Tabs.Panel
+                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3`}
+                    id="moves"
+                  >
+                    <LearnsetPanel pokemon={pokemon} />
+                  </Tabs.Panel>
+                  <Tabs.Panel
+                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3`}
+                    id="evo"
+                  >
+                    <EvolutionPanel pokemon={pokemon} />
                   </Tabs.Panel>
                 </Tabs>
               </motion.div>

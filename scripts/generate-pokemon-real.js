@@ -17,8 +17,155 @@ const GENERATION_MAP = {
   'generation-viii': 8
 }
 
+// Priority order for picking which game's moveset to use (latest first)
+const VERSION_GROUP_PRIORITY = [
+  'scarlet-violet',
+  'sword-shield',
+  'brilliant-diamond-shining-pearl',
+  'legends-arceus',
+  'ultra-sun-ultra-moon',
+  'sun-moon',
+  'omega-ruby-alpha-sapphire',
+  'x-y',
+  'black-2-white-2',
+  'black-white',
+  'heartgold-soulsilver',
+  'platinum',
+  'diamond-pearl',
+  'firered-leafgreen',
+  'emerald',
+  'ruby-sapphire',
+  'crystal',
+  'gold-silver',
+  'red-blue',
+  'yellow'
+]
+
+// The 18 battle types used for damage calculations (excludes shadow/unknown)
+const BATTLE_TYPES = [
+  'normal',
+  'fire',
+  'water',
+  'electric',
+  'grass',
+  'ice',
+  'fighting',
+  'poison',
+  'ground',
+  'flying',
+  'psychic',
+  'bug',
+  'rock',
+  'ghost',
+  'dragon',
+  'dark',
+  'steel',
+  'fairy'
+]
+
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+// Compute weaknesses/resistances/immunities for a Pokemon given its types
+// typeChart: { 'fire': { double_damage_from: ['water',...], half_damage_from: [...], no_damage_from: [...] } }
+function computeTypeMatchups(pokemonTypes, typeChart) {
+  const weaknesses = []
+  const resistances = []
+  const immunities = []
+
+  for (const attacker of BATTLE_TYPES) {
+    let multiplier = 1
+
+    for (const defType of pokemonTypes) {
+      const chart = typeChart[defType.toLowerCase()]
+      if (!chart) continue
+      if (chart.no_damage_from.includes(attacker)) {
+        multiplier = 0
+        break
+      }
+      if (chart.double_damage_from.includes(attacker)) multiplier *= 2
+      if (chart.half_damage_from.includes(attacker)) multiplier *= 0.5
+    }
+
+    const typeName = capitalize(attacker)
+    if (multiplier === 0) immunities.push(typeName)
+    else if (multiplier < 1) resistances.push({ multiplier, type: typeName })
+    else if (multiplier > 1) weaknesses.push({ multiplier, type: typeName })
+  }
+
+  immunities.sort()
+  resistances.sort(
+    (a, b) => a.multiplier - b.multiplier || a.type.localeCompare(b.type)
+  )
+  weaknesses.sort(
+    (a, b) => b.multiplier - a.multiplier || a.type.localeCompare(b.type)
+  )
+
+  return { immunities, resistances, weaknesses }
+}
+
+// Pick the most recent game version that has at least one level-up move.
+// Falls back to any version group if none have level-up moves.
+function extractLearnset(moves) {
+  const vgsWithLevelUp = new Set()
+  const vgsAny = new Set()
+
+  for (const m of moves) {
+    for (const vgd of m.version_group_details) {
+      vgsAny.add(vgd.version_group.name)
+      if (vgd.move_learn_method.name === 'level-up') {
+        vgsWithLevelUp.add(vgd.version_group.name)
+      }
+    }
+  }
+
+  const bestVg =
+    VERSION_GROUP_PRIORITY.find(vg => vgsWithLevelUp.has(vg)) ??
+    VERSION_GROUP_PRIORITY.find(vg => vgsAny.has(vg)) ??
+    [...vgsAny][0]
+
+  if (!bestVg) return { egg: [], levelUp: [], machine: [] }
+
+  // Use a map to deduplicate: if a move appears at multiple levels, keep lowest non-zero
+  const levelUpMap = new Map()
+  const egg = new Set()
+  const machine = new Set()
+
+  for (const m of moves) {
+    const name = m.move.name
+    const url = m.move.url
+
+    for (const vgd of m.version_group_details) {
+      if (vgd.version_group.name !== bestVg) continue
+      const method = vgd.move_learn_method.name
+
+      if (method === 'level-up') {
+        const lvl = vgd.level_learned_at
+        const existing = levelUpMap.get(name)
+        if (
+          !existing ||
+          (lvl > 0 && (existing.level === 0 || lvl < existing.level))
+        ) {
+          levelUpMap.set(name, { _url: url, level: lvl || 1, name })
+        }
+      } else if (method === 'egg') {
+        egg.add(name)
+      } else if (method === 'machine' || method === 'tutor') {
+        machine.add(name)
+      }
+    }
+  }
+
+  const levelUp = [...levelUpMap.values()].sort(
+    (a, b) => a.level - b.level || a.name.localeCompare(b.name)
+  )
+
+  return {
+    egg: [...egg].sort(),
+    levelUp,
+    machine: [...machine].sort()
+  }
 }
 
 async function fetchPokemon(id) {
@@ -37,11 +184,22 @@ async function fetchPokemon(id) {
 
   const abilities = pokemon.abilities
     .sort((a, b) => a.slot - b.slot)
-    .map(a => ({ isHidden: a.is_hidden, name: a.ability.name.replace(/-/g, ' '), url: a.ability.url }))
+    .map(a => ({
+      isHidden: a.is_hidden,
+      name: a.ability.name.replace(/-/g, ' '),
+      url: a.ability.url
+    }))
 
   const evYield = pokemon.stats
     .filter(s => s.effort > 0)
     .map(s => ({ stat: s.stat.name, value: s.effort }))
+
+  const heldItems = pokemon.held_items
+    .map(hi => ({
+      name: hi.item.name.split('-').map(capitalize).join(' '),
+      rarity: Math.max(...hi.version_details.map(vd => vd.rarity))
+    }))
+    .sort((a, b) => b.rarity - a.rarity)
 
   const flavorTexts = getEnglishFlavorTexts(species.flavor_text_entries)
   const description = flavorTexts[0]?.text ?? 'No description available.'
@@ -59,7 +217,8 @@ async function fetchPokemon(id) {
     defense: stats['defense'],
     description,
     eggCycles: species.hatch_counter ?? undefined,
-    eggGroups: species.egg_groups?.map(g => g.name.replace(/-/g, ' ')) ?? undefined,
+    eggGroups:
+      species.egg_groups?.map(g => g.name.replace(/-/g, ' ')) ?? undefined,
     evYield,
     flavorTexts,
     genderRate: species.gender_rate,
@@ -68,10 +227,13 @@ async function fetchPokemon(id) {
     growthRate: species.growth_rate?.name ?? undefined,
     habitat: species.habitat?.name ?? null,
     height: parseFloat((pokemon.height / 10).toFixed(1)),
+    heldItems,
     hp: stats['hp'],
     id: pokemon.id,
     imageUrl: `https://play.pokemonshowdown.com/sprites/ani/${species.name.replace(/-/g, '')}.gif`,
-    isLegendary: species.is_legendary || species.is_mythical,
+    isLegendary: species.is_legendary,
+    isMythical: species.is_mythical,
+    learnset: extractLearnset(pokemon.moves),
     name: pokemon.name,
     officialUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
     specialAttack: stats['special-attack'],
@@ -89,9 +251,12 @@ function formatTrigger(details) {
     if (details.min_level) return `Lv. ${details.min_level}`
     if (details.min_happiness) return 'Happiness'
     if (details.min_beauty) return 'Beauty'
-    if (details.known_move) return `Know ${details.known_move.name.replace(/-/g, ' ')}`
-    if (details.held_item) return `Hold ${details.held_item.name.replace(/-/g, ' ')}`
-    if (details.time_of_day) return `${capitalize(details.time_of_day)} (level up)`
+    if (details.known_move)
+      return `Know ${details.known_move.name.replace(/-/g, ' ')}`
+    if (details.held_item)
+      return `Hold ${details.held_item.name.replace(/-/g, ' ')}`
+    if (details.time_of_day)
+      return `${capitalize(details.time_of_day)} (level up)`
     return 'Level up'
   }
   if (trigger === 'use-item') {
@@ -125,7 +290,6 @@ function getEnglishFlavorTexts(entries) {
     if (seen.has(cleaned)) continue
     seen.add(cleaned)
     texts.push({ game: e.version.name, text: cleaned })
-    if (texts.length >= 3) break
   }
   return texts.reverse()
 }
@@ -159,12 +323,16 @@ async function main() {
   const abilityNames = [...abilityUrls.keys()]
   for (let i = 0; i < abilityNames.length; i += CHUNK_SIZE) {
     const chunk = abilityNames.slice(i, i + CHUNK_SIZE)
-    await Promise.all(chunk.map(async name => {
-      const data = await fetch(abilityUrls.get(name)).then(r => r.json())
-      const entry = data.effect_entries.find(e => e.language.name === 'en')
-      abilityDescriptions[name] = entry?.short_effect ?? ''
-    }))
-    console.log(`  Abilities: ${Math.min(i + CHUNK_SIZE, abilityNames.length)}/${abilityNames.length}`)
+    await Promise.all(
+      chunk.map(async name => {
+        const data = await fetch(abilityUrls.get(name)).then(r => r.json())
+        const entry = data.effect_entries.find(e => e.language.name === 'en')
+        abilityDescriptions[name] = entry?.short_effect ?? ''
+      })
+    )
+    console.log(
+      `  Abilities: ${Math.min(i + CHUNK_SIZE, abilityNames.length)}/${abilityNames.length}`
+    )
   }
 
   // Attach ability descriptions and strip URL
@@ -179,15 +347,21 @@ async function main() {
   // Fetch evolution chains (deduplicated)
   console.log('\nFetching evolution chains...')
   const chainUrlToSteps = new Map()
-  const uniqueChainUrls = [...new Set(results.map(p => p._evolutionChainUrl).filter(Boolean))]
+  const uniqueChainUrls = [
+    ...new Set(results.map(p => p._evolutionChainUrl).filter(Boolean))
+  ]
 
   for (let i = 0; i < uniqueChainUrls.length; i += CHUNK_SIZE) {
     const chunk = uniqueChainUrls.slice(i, i + CHUNK_SIZE)
-    await Promise.all(chunk.map(async url => {
-      const data = await fetch(url).then(r => r.json())
-      chainUrlToSteps.set(url, parseChain(data.chain))
-    }))
-    console.log(`  Chains: ${Math.min(i + CHUNK_SIZE, uniqueChainUrls.length)}/${uniqueChainUrls.length}`)
+    await Promise.all(
+      chunk.map(async url => {
+        const data = await fetch(url).then(r => r.json())
+        chainUrlToSteps.set(url, parseChain(data.chain))
+      })
+    )
+    console.log(
+      `  Chains: ${Math.min(i + CHUNK_SIZE, uniqueChainUrls.length)}/${uniqueChainUrls.length}`
+    )
   }
 
   // Attach evolution chains and clean up temp field
@@ -197,12 +371,86 @@ async function main() {
     delete p._evolutionChainUrl
   }
 
+  // Fetch the type damage chart (18 types, one-time)
+  console.log('\nFetching type chart...')
+  const typeChart = {}
+  await Promise.all(
+    BATTLE_TYPES.map(async typeName => {
+      const data = await fetch(`${POKEAPI}/type/${typeName}`).then(r =>
+        r.json()
+      )
+      typeChart[typeName] = {
+        double_damage_from: data.damage_relations.double_damage_from.map(
+          t => t.name
+        ),
+        half_damage_from: data.damage_relations.half_damage_from.map(
+          t => t.name
+        ),
+        no_damage_from: data.damage_relations.no_damage_from.map(t => t.name)
+      }
+    })
+  )
+  console.log(`  Type chart complete (${BATTLE_TYPES.length} types)`)
+
+  // Attach type matchups to each Pokemon
+  for (const p of results) {
+    p.typeMatchups = computeTypeMatchups(p.types, typeChart)
+  }
+
+  // Fetch details for all unique level-up moves (deduplicated across all Pokemon)
+  console.log('\nFetching level-up move details...')
+  const moveUrlMap = new Map()
+  for (const p of results) {
+    for (const m of p.learnset.levelUp) {
+      if (!moveUrlMap.has(m.name)) moveUrlMap.set(m.name, m._url)
+    }
+  }
+
+  const moveDetails = {}
+  const moveNames = [...moveUrlMap.keys()]
+  for (let i = 0; i < moveNames.length; i += CHUNK_SIZE) {
+    const chunk = moveNames.slice(i, i + CHUNK_SIZE)
+    await Promise.all(
+      chunk.map(async name => {
+        const data = await fetch(moveUrlMap.get(name)).then(r => r.json())
+        moveDetails[name] = {
+          accuracy: data.accuracy,
+          category: data.damage_class?.name ?? 'status',
+          power: data.power,
+          pp: data.pp,
+          type: capitalize(data.type?.name ?? 'normal')
+        }
+      })
+    )
+    console.log(
+      `  Moves: ${Math.min(i + CHUNK_SIZE, moveNames.length)}/${moveNames.length}`
+    )
+  }
+
+  // Attach move details and strip temp _url field
+  for (const p of results) {
+    p.learnset.levelUp = p.learnset.levelUp.map(({ _url, ...rest }) => ({
+      ...rest,
+      ...(moveDetails[rest.name] ?? {})
+    }))
+  }
+
   const outputPath = path.join(__dirname, '..', 'src', 'data', 'pokemon.json')
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })
   fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
   console.log(`\nDone! Saved ${results.length} Pokemon to ${outputPath}`)
   console.log('Sample:', results[0].name, '|', results[0].types.join(', '))
+  console.log(
+    '  typeMatchups weaknesses:',
+    results[0].typeMatchups.weaknesses
+      .map(w => `${w.type} ${w.multiplier}x`)
+      .join(', ')
+  )
+  console.log('  learnset levelUp count:', results[0].learnset.levelUp.length)
+  console.log('  learnset egg count:', results[0].learnset.egg.length)
+  console.log('  learnset machine count:', results[0].learnset.machine.length)
+  console.log('  flavorTexts count:', results[0].flavorTexts.length)
 }
 
 function parseChain(node, steps = []) {
