@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
-import { IoSparkles } from 'react-icons/io5'
+import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -116,7 +116,7 @@ export function DefaultCard({
           transition={CARD_TRANSITION}
         >
           {pokemon.isMythical
-            ? <IoSparkles className="text-pink-400" size={16} />
+            ? <TbSparkles className="text-pink-400" size={16} />
             : <IoMdStar className="text-yellow-400" size={18} />
           }
         </motion.div>

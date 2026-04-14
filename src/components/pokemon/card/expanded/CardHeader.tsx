@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { IoMdStar } from 'react-icons/io'
-import { IoSparkles } from 'react-icons/io5'
+import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -28,9 +28,9 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
             >
               {pokemon.isMythical ? (
                 <>
-                  <IoSparkles className="text-pink-400 xl:hidden" size={22} />
-                  <IoSparkles className="text-pink-400 hidden xl:block 2xl:hidden" size={26} />
-                  <IoSparkles className="text-pink-400 hidden 2xl:block" size={30} />
+                  <TbSparkles className="text-pink-400 xl:hidden" size={22} />
+                  <TbSparkles className="text-pink-400 hidden xl:block 2xl:hidden" size={26} />
+                  <TbSparkles className="text-pink-400 hidden 2xl:block" size={30} />
                 </>
               ) : (
                 <>

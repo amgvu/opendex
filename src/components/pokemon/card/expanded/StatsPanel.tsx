@@ -57,6 +57,9 @@ export function StatsPanel({
           {pokemon.baseExperience !== undefined && (
             <InfoStat label="Base Exp" value={pokemon.baseExperience} />
           )}
+          {pokemon.baseFriendship !== undefined && (
+            <InfoStat label="Friendship" value={`${pokemon.baseFriendship} / 255`} />
+          )}
         </div>
       </div>
     </TabPanelContent>

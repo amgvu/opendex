@@ -18,12 +18,6 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
             value={`${Math.round((pokemon.catchRate / 255) * 100)}%`}
           />
         )}
-        {pokemon.baseFriendship !== undefined && (
-          <InfoStat
-            label="Base Friendship"
-            value={`${pokemon.baseFriendship} / 255`}
-          />
-        )}
       </div>
       {pokemon.evYield && pokemon.evYield.length > 0 && (
         <div className="flex items-center gap-2">
