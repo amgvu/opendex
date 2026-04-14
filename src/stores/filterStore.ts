@@ -7,14 +7,14 @@ type FilterStore = {
   search: string
   selectedGens: number[]
   selectedTypes: string[]
-  sortBy: SortField
-  sortOrder: SortOrder
   setDebouncedSearch: (v: string) => void
   setSearch: (v: string) => void
   setSelectedGens: (v: number[]) => void
   setSelectedTypes: (v: string[]) => void
   setSortBy: (v: SortField) => void
   setSortOrder: (v: SortOrder) => void
+  sortBy: SortField
+  sortOrder: SortOrder
   toggleGen: (gen: number) => void
   toggleType: (type: string) => void
   updateSort: (field: SortField) => void
@@ -25,14 +25,14 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
   search: '',
   selectedGens: [],
   selectedTypes: [],
-  sortBy: 'id',
-  sortOrder: 'asc',
   setDebouncedSearch: v => set({ debouncedSearch: v }),
   setSearch: v => set({ search: v }),
   setSelectedGens: v => set({ selectedGens: v }),
   setSelectedTypes: v => set({ selectedTypes: v }),
   setSortBy: v => set({ sortBy: v }),
   setSortOrder: v => set({ sortOrder: v }),
+  sortBy: 'id',
+  sortOrder: 'asc',
   toggleGen: gen => {
     const { selectedGens } = get()
     set({

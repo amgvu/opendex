@@ -1,11 +1,15 @@
 import { create } from 'zustand'
 
 type SelectionStore = {
-  selectedId: number | null
-  setSelectedId: (id: number | null) => void
+  fromUrl: boolean
+  selectedId: null | number
+  setSelectedId: (id: null | number) => void
+  setSelectedIdFromUrl: (id: null | number) => void
 }
 
 export const useSelectionStore = create<SelectionStore>(set => ({
+  fromUrl: false,
   selectedId: null,
-  setSelectedId: id => set({ selectedId: id })
+  setSelectedId: id => set({ fromUrl: false, selectedId: id }),
+  setSelectedIdFromUrl: id => set({ fromUrl: id !== null, selectedId: id })
 }))

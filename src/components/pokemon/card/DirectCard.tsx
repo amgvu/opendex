@@ -7,32 +7,18 @@ import type { Pokemon } from '@/types/pokemon'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
+import { useSelectionStore } from '@/stores/selectionStore'
 
 import { ExpandedCard } from './expanded'
 
-export function DirectCard({
-  onClose,
-  onNext,
-  onPrev,
-  pokemon
-}: {
-  onClose: () => void
-  onNext: () => void
-  onPrev: () => void
-  pokemon: Pokemon
-}) {
+export function DirectCard({ pokemon }: { pokemon: Pokemon }) {
   const ref = useRef<HTMLDivElement>(null)
+  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+  const onClose = () => setSelectedId(null)
   useOutsideClick(ref, onClose, true)
   useBodyScrollLock(true, onClose)
   return createPortal(
-    <ExpandedCard
-      active
-      id="__direct__"
-      onNext={onNext}
-      onPrev={onPrev}
-      pokemon={pokemon}
-      ref={ref}
-    />,
+    <ExpandedCard active id="__direct__" pokemon={pokemon} ref={ref} />,
     document.body
   )
 }

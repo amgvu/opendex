@@ -2,21 +2,22 @@ import { useCallback, useEffect, useRef } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
+import { useSelectionStore } from '@/stores/selectionStore'
+
 export function useCardNavigation({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-  pokemon,
-  selectedId,
-  setSelectedId
+  pokemon
 }: {
   fetchNextPage: () => void
   hasNextPage: boolean
   isFetchingNextPage: boolean
   pokemon: Pokemon[]
-  selectedId: null | number
-  setSelectedId: (id: null | number) => void
 }) {
+  const selectedId = useSelectionStore(s => s.selectedId)
+  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+
   const selectedIndex = pokemon.findIndex(p => p.id === selectedId)
   const pendingNextRef = useRef(false)
   const lastNavTimeRef = useRef(0)

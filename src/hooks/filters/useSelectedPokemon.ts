@@ -1,17 +1,19 @@
+'use client'
+
 import { useSearchParams } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useEffect } from 'react'
+
+import { useSelectionStore } from '@/stores/selectionStore'
 
 export function useSelectedPokemon() {
   const searchParams = useSearchParams()
+  const { selectedId, setSelectedId, setSelectedIdFromUrl } = useSelectionStore()
 
-  const [selectedId, setSelectedId] = useState<null | number>(() => {
+  useEffect(() => {
     const raw = parseInt(searchParams.get('pokemon') ?? '', 10)
-    return isNaN(raw) ? null : raw
-  })
-
-  const selectPokemon = useCallback((id: null | number) => {
-    setSelectedId(id)
+    if (!isNaN(raw)) setSelectedIdFromUrl(raw)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { selectedId, setSelectedId: selectPokemon }
+  return { selectedId, setSelectedId }
 }
