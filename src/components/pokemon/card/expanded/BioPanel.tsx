@@ -68,6 +68,21 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
           />
         )}
       </div>
+      {pokemon.heldItems && pokemon.heldItems.length > 0 && (
+        <div>
+          <p className="mb-1 text-[10px] xl:text-xs font-medium uppercase tracking-wider text-white/40">
+            Wild Held Items
+          </p>
+          <div className="flex flex-col gap-1">
+            {pokemon.heldItems.map(item => (
+              <div className="flex items-center justify-between" key={item.name}>
+                <span className="text-xs xl:text-sm 2xl:text-base text-white/70">{item.name}</span>
+                <span className="text-xs xl:text-sm text-white/40">{item.rarity}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </TabPanelContent>
   )
 }

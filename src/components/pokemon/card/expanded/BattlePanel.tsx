@@ -1,6 +1,7 @@
 import type { Pokemon } from '@/types/pokemon'
 
 import { EV_STAT_LABELS, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
+import { InfoStat } from './shared'
 
 import { TabPanelContent } from './shared'
 
@@ -10,6 +11,20 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
 
   return (
     <TabPanelContent className="space-y-1.5 sm:space-y-2">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs xl:text-sm 2xl:text-base">
+        {pokemon.catchRate !== undefined && (
+          <InfoStat
+            label="Catch Rate"
+            value={`${Math.round((pokemon.catchRate / 255) * 100)}%`}
+          />
+        )}
+        {pokemon.baseFriendship !== undefined && (
+          <InfoStat
+            label="Base Friendship"
+            value={`${pokemon.baseFriendship} / 255`}
+          />
+        )}
+      </div>
       {pokemon.evYield && pokemon.evYield.length > 0 && (
         <div className="flex items-center gap-2">
           <span className="w-16 shrink-0 whitespace-nowrap text-white/70">

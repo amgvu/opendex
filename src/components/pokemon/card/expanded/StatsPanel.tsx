@@ -43,12 +43,6 @@ export function StatsPanel({
           <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
           <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
           <InfoStat label="Gen" value={pokemon.generation} />
-          {pokemon.catchRate !== undefined && (
-            <InfoStat
-              label="Catch"
-              value={`${Math.round((pokemon.catchRate / 255) * 100)}%`}
-            />
-          )}
           {pokemon.growthRate && (
             <InfoStat
               label="Growth"
