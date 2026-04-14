@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { IoMdStar } from 'react-icons/io'
+import { IoSparkles } from 'react-icons/io5'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -20,20 +21,24 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
           >
             {pokemon.name}
           </motion.h2>
-          {pokemon.isLegendary && (
+          {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
               layoutId={`star-${pokemon.id}-${id}`}
               transition={CARD_TRANSITION}
             >
-              <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
-              <IoMdStar
-                className="text-yellow-400 hidden xl:block 2xl:hidden"
-                size={26}
-              />
-              <IoMdStar
-                className="text-yellow-400 hidden 2xl:block"
-                size={30}
-              />
+              {pokemon.isMythical ? (
+                <>
+                  <IoSparkles className="text-pink-400 xl:hidden" size={22} />
+                  <IoSparkles className="text-pink-400 hidden xl:block 2xl:hidden" size={26} />
+                  <IoSparkles className="text-pink-400 hidden 2xl:block" size={30} />
+                </>
+              ) : (
+                <>
+                  <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
+                  <IoMdStar className="text-yellow-400 hidden xl:block 2xl:hidden" size={26} />
+                  <IoMdStar className="text-yellow-400 hidden 2xl:block" size={30} />
+                </>
+              )}
             </motion.div>
           )}
         </div>
@@ -49,6 +54,11 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
         {pokemon.types.map(type => (
           <TypeBadge key={type} size="lg" type={type} />
         ))}
+        {pokemon.isMythical && (
+          <span className="rounded-full bg-pink-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
+            Mythical
+          </span>
+        )}
         {pokemon.isLegendary && (
           <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
             Legendary
