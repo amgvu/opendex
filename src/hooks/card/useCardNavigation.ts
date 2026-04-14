@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useTransition } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -21,6 +21,7 @@ export function useCardNavigation({
   const selectedIndex = pokemon.findIndex(p => p.id === selectedId)
   const pendingNextRef = useRef(false)
   const lastNavTimeRef = useRef(0)
+  const [, startTransition] = useTransition()
 
   const canNavigate = useCallback(() => {
     const now = Date.now()
@@ -33,18 +34,18 @@ export function useCardNavigation({
     if (!canNavigate() || selectedIndex === -1) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
-      setSelectedId(next.id)
+      startTransition(() => setSelectedId(next.id))
     } else if (hasNextPage && !isFetchingNextPage) {
       pendingNextRef.current = true
       void fetchNextPage()
     }
-  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, selectedIndex, setSelectedId])
+  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, selectedIndex, setSelectedId, startTransition])
 
   const onPrev = useCallback(() => {
     if (!canNavigate() || selectedIndex === -1) return
     const prev = pokemon[selectedIndex - 1]
-    if (prev) setSelectedId(prev.id)
-  }, [canNavigate, pokemon, selectedIndex, setSelectedId])
+    if (prev) startTransition(() => setSelectedId(prev.id))
+  }, [canNavigate, pokemon, selectedIndex, setSelectedId, startTransition])
 
   useEffect(() => {
     if (!pendingNextRef.current) return
