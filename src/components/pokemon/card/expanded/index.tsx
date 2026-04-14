@@ -165,31 +165,31 @@ export function ExpandedCard({
                     className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                     id="stats"
                   >
-                    <StatsPanel bst={bst} pokemon={pokemon} />
+                    {activeTab === 'stats' && <StatsPanel bst={bst} pokemon={pokemon} />}
                   </Tabs.Panel>
                   <Tabs.Panel
                     className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                     id="battle"
                   >
-                    <BattlePanel pokemon={pokemon} />
+                    {activeTab === 'battle' && <BattlePanel pokemon={pokemon} />}
                   </Tabs.Panel>
                   <Tabs.Panel
                     className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
                     id="bio"
                   >
-                    <BioPanel pokemon={pokemon} />
+                    {activeTab === 'bio' && <BioPanel pokemon={pokemon} />}
                   </Tabs.Panel>
                   <Tabs.Panel
                     className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3`}
                     id="moves"
                   >
-                    <LearnsetPanel pokemon={pokemon} />
+                    {activeTab === 'moves' && <LearnsetPanel pokemon={pokemon} />}
                   </Tabs.Panel>
                   <Tabs.Panel
                     className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3`}
                     id="evo"
                   >
-                    <EvolutionPanel pokemon={pokemon} />
+                    {activeTab === 'evo' && <EvolutionPanel pokemon={pokemon} />}
                   </Tabs.Panel>
                 </Tabs>
               </motion.div>
