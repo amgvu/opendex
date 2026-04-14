@@ -47,20 +47,20 @@ function PokemonNode({ currentId, node }: { currentId: number; node: TreeNode })
 
   return (
     <div
-      className={`flex flex-col items-center gap-0.5 transition-opacity ${isCurrent ? 'opacity-100' : 'opacity-60'}`}
+      className={`flex flex-col items-center gap-1 transition-opacity ${isCurrent ? 'opacity-100' : 'opacity-60'}`}
     >
       <Image
         alt={node.name}
-        className="h-14 w-14 object-contain drop-shadow-sm"
-        height={56}
+        className="h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28 object-contain drop-shadow-md"
+        height={80}
         src={spriteUrl}
         unoptimized
-        width={56}
+        width={80}
       />
-      <span className="max-w-[56px] truncate text-center text-[10px] font-medium capitalize leading-tight text-white">
+      <span className="max-w-[80px] xl:max-w-[96px] truncate text-center text-xs xl:text-sm font-medium capitalize leading-tight text-white">
         {node.name}
       </span>
-      <span className="text-[9px] leading-none text-white/40">
+      <span className="text-[10px] xl:text-xs leading-none text-white/40">
         {formatPokedexId(node.id)}
       </span>
     </div>
@@ -69,11 +69,11 @@ function PokemonNode({ currentId, node }: { currentId: number; node: TreeNode })
 
 function TriggerConnector({ trigger }: { trigger: string }) {
   return (
-    <div className="flex min-w-[44px] flex-col items-center justify-center gap-0.5 px-1.5">
-      <span className="line-clamp-2 max-w-[52px] text-center text-[9px] leading-tight text-white/40">
+    <div className="flex min-w-[52px] xl:min-w-[64px] flex-col items-center justify-center gap-1 px-2">
+      <span className="line-clamp-2 max-w-[60px] xl:max-w-[72px] text-center text-[10px] xl:text-xs leading-tight text-white/40">
         {trigger}
       </span>
-      <span className="text-[10px] leading-none text-white/30">→</span>
+      <span className="text-xs xl:text-sm leading-none text-white/30">→</span>
     </div>
   )
 }
@@ -110,12 +110,12 @@ export function EvolutionPanel({ pokemon }: { pokemon: Pokemon }) {
   const tree = buildTree(chain)
 
   return (
-    <TabPanelContent className="flex flex-col gap-2">
+    <TabPanelContent className="flex h-full w-full items-center justify-center">
       {!tree ? (
         <p className="text-xs italic text-white/30">Does not evolve</p>
       ) : (
-        <div className="overflow-x-auto pb-1">
-          <div className="inline-flex items-start min-w-min">
+        <div className="overflow-auto w-full flex items-center justify-center p-2">
+          <div className="inline-flex items-center">
             <EvolutionNode currentId={pokemon.id} node={tree} />
           </div>
         </div>
