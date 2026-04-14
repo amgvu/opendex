@@ -1,6 +1,7 @@
 import { ChevronDown } from 'lucide-react'
 
 import { colors, getTypeColor } from '@/lib/pokemon'
+import { useFilterStore } from '@/stores/filterStore'
 
 import { Button } from '../../ui/button'
 import { Checkbox } from '../../ui/checkbox'
@@ -9,17 +10,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover'
 const ALL_TYPES = Object.keys(colors).sort()
 const ALL_GENS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-export function FilterControls({
-  onToggleGen,
-  onToggleType,
-  selectedGens,
-  selectedTypes
-}: {
-  onToggleGen: (gen: number) => void
-  onToggleType: (type: string) => void
-  selectedGens: number[]
-  selectedTypes: string[]
-}) {
+export function FilterControls() {
+  const selectedGens = useFilterStore(s => s.selectedGens)
+  const selectedTypes = useFilterStore(s => s.selectedTypes)
+  const toggleGen = useFilterStore(s => s.toggleGen)
+  const toggleType = useFilterStore(s => s.toggleType)
+
   return (
     <div className="flex flex-wrap gap-3">
       <div className="flex flex-wrap items-center">
@@ -50,7 +46,7 @@ export function FilterControls({
                     <Checkbox
                       checked={checked}
                       className="h-4 w-4 border-white data-[state=checked]:bg-white data-[state=checked]:text-black"
-                      onCheckedChange={() => onToggleType(type)}
+                      onCheckedChange={() => toggleType(type)}
                     />
                     {type}
                   </label>
@@ -69,7 +65,7 @@ export function FilterControls({
           {ALL_GENS.map(gen => (
             <Button
               key={gen}
-              onClick={() => onToggleGen(gen)}
+              onClick={() => toggleGen(gen)}
               size="sm"
               variant={selectedGens.includes(gen) ? 'default' : 'secondary'}
             >

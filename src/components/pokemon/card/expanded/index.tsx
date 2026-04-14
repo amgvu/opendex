@@ -6,6 +6,7 @@ import { type CSSProperties, type RefObject, useState } from 'react'
 import type { Pokemon } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
+import { useNavContext } from '@/context/navigation'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
 
@@ -21,15 +22,11 @@ const TAB_PANEL_SCROLL =
 export function ExpandedCard({
   active,
   id,
-  onNext,
-  onPrev,
   pokemon,
   ref
 }: {
   active: boolean
   id: string
-  onNext: () => void
-  onPrev: () => void
   pokemon: Pokemon
   ref: RefObject<HTMLDivElement | null>
 }) {
@@ -43,6 +40,7 @@ export function ExpandedCard({
     pokemon.specialDefense +
     pokemon.speed
   const { activeTab, setActiveTab } = useCardContext()
+  const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
   return (

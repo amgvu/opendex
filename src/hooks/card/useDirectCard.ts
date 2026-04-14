@@ -1,26 +1,19 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { usePokemonByIdQuery } from '@/hooks/query/usePokemonByIdQuery'
+import { useSelectionStore } from '@/stores/selectionStore'
 
-export function useDirectCard(
-  selectedId: null | number,
-  setSelectedId: (id: null | number) => void,
-  pokemon: Pokemon[]
-) {
-  const fromUrlRef = useRef(selectedId !== null)
-
-  const handleSetSelectedId = useCallback((id: null | number) => {
-    fromUrlRef.current = false
-    setSelectedId(id)
-  }, [setSelectedId])
+export function useDirectCard(pokemon: Pokemon[]) {
+  const selectedId = useSelectionStore(s => s.selectedId)
+  const fromUrl = useSelectionStore(s => s.fromUrl)
 
   const selectedInList = selectedId !== null
     ? pokemon.find(p => p.id === selectedId) ?? null
     : null
 
-  const needsDirect = selectedId !== null && (fromUrlRef.current || selectedInList === null)
+  const needsDirect = selectedId !== null && (fromUrl || selectedInList === null)
 
   const { pokemon: directPokemon } = usePokemonByIdQuery(needsDirect ? selectedId : null)
   const directData = needsDirect ? (selectedInList ?? directPokemon) : null
@@ -32,5 +25,5 @@ export function useDirectCard(
       : 'Opendex'
   }, [directData, selectedInList])
 
-  return { directData, handleSetSelectedId, needsDirect }
+  return { directData, needsDirect }
 }

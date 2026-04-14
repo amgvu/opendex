@@ -2,7 +2,7 @@
 
 import { TbAdjustments, TbHome } from 'react-icons/tb'
 
-import type { SortField, SortOrder } from '@/types/sort'
+import { useFilterStore } from '@/stores/filterStore'
 
 import { Button, buttonVariants } from '../../ui/button'
 import {
@@ -16,27 +16,14 @@ import { Input } from '../../ui/input'
 import { FilterControls } from './FilterControls'
 import { SortControls } from './SortControls'
 
-export function PokemonToolbar({
-  onToggleGen,
-  onToggleType,
-  onUpdateSearch,
-  onUpdateSort,
-  search,
-  selectedGens,
-  selectedTypes,
-  sortBy,
-  sortOrder
-}: {
-  onToggleGen: (gen: number) => void
-  onToggleType: (type: string) => void
-  onUpdateSearch: (value: string) => void
-  onUpdateSort: (field: SortField) => void
-  search: string
-  selectedGens: number[]
-  selectedTypes: string[]
-  sortBy: SortField
-  sortOrder: SortOrder
-}) {
+export function PokemonToolbar() {
+  const search = useFilterStore(s => s.search)
+  const setSearch = useFilterStore(s => s.setSearch)
+  const sortBy = useFilterStore(s => s.sortBy)
+  const sortOrder = useFilterStore(s => s.sortOrder)
+  const selectedTypes = useFilterStore(s => s.selectedTypes)
+  const selectedGens = useFilterStore(s => s.selectedGens)
+
   const activeCount =
     selectedTypes.length +
     selectedGens.length +
@@ -53,7 +40,7 @@ export function PokemonToolbar({
         </Button>
         <Input
           className="flex-1"
-          onChange={e => onUpdateSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
           placeholder="Search Pokemon..."
           type="text"
           value={search}
@@ -76,22 +63,13 @@ export function PokemonToolbar({
                 <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                   Sort
                 </p>
-                <SortControls
-                  onSort={onUpdateSort}
-                  sortBy={sortBy}
-                  sortOrder={sortOrder}
-                />
+                <SortControls />
               </div>
               <div>
                 <p className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                   Filter
                 </p>
-                <FilterControls
-                  onToggleGen={onToggleGen}
-                  onToggleType={onToggleType}
-                  selectedGens={selectedGens}
-                  selectedTypes={selectedTypes}
-                />
+                <FilterControls />
               </div>
             </div>
           </DrawerContent>
@@ -100,18 +78,9 @@ export function PokemonToolbar({
 
       {/* Desktop static controls */}
       <div className="hidden flex-wrap items-center gap-3 2xl:gap-4 xl:flex">
-        <SortControls
-          onSort={onUpdateSort}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-        />
+        <SortControls />
         <div className="h-4 w-px bg-border" />
-        <FilterControls
-          onToggleGen={onToggleGen}
-          onToggleType={onToggleType}
-          selectedGens={selectedGens}
-          selectedTypes={selectedTypes}
-        />
+        <FilterControls />
       </div>
     </div>
   )

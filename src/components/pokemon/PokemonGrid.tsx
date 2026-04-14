@@ -6,7 +6,7 @@ import Image from 'next/image'
 import type { Pokemon } from '@/types/pokemon'
 
 import { Button } from '@/components/ui/button'
-import { CardProvider } from '@/context/card'
+import { NavProvider } from '@/context/navigation'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
 import { useDirectCard } from '@/hooks/card/useDirectCard'
 import { useFilters } from '@/hooks/filters/useFilters'
@@ -15,6 +15,8 @@ import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
 import { useSort } from '@/hooks/filters/useSort'
 import { usePokemonQuery } from '@/hooks/query/usePokemonQuery'
 import { useVirtualGrid } from '@/hooks/virtual/useVirtualGrid'
+import { useFilterStore } from '@/stores/filterStore'
+import { useSelectionStore } from '@/stores/selectionStore'
 
 import { DirectCard } from './card/DirectCard'
 import { PokemonCard } from './card/PokemonCard'
@@ -22,33 +24,30 @@ import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
 
 export default function PokemonGrid() {
-  const { debouncedSearch, search, setSearch } = useSearch()
-  const { sortBy, sortOrder, updateSort } = useSort()
-  const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
+  // URL sync — side-effect only
+  useSearch()
+  useSort()
+  useFilters()
+  useSelectedPokemon()
+
+  const debouncedSearch = useFilterStore(s => s.debouncedSearch)
+  const sortBy = useFilterStore(s => s.sortBy)
+  const sortOrder = useFilterStore(s => s.sortOrder)
+  const selectedTypes = useFilterStore(s => s.selectedTypes)
+  const selectedGens = useFilterStore(s => s.selectedGens)
+  const selectedId = useSelectionStore(s => s.selectedId)
+  const setSelectedId = useSelectionStore(s => s.setSelectedId)
 
   const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
-    usePokemonQuery(
-      debouncedSearch,
-      sortBy,
-      sortOrder,
-      selectedTypes,
-      selectedGens
-    )
-  const { selectedId, setSelectedId } = useSelectedPokemon()
+    usePokemonQuery(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
 
-  const { directData, handleSetSelectedId, needsDirect } = useDirectCard(
-    selectedId,
-    setSelectedId,
-    pokemon
-  )
+  const { directData, needsDirect } = useDirectCard(pokemon)
 
   const { onNext, onPrev } = useCardNavigation({
     fetchNextPage: loadMore,
     hasNextPage,
     isFetchingNextPage,
-    pokemon,
-    selectedId,
-    setSelectedId: handleSetSelectedId
+    pokemon
   })
 
   const { scrollY } = useScroll()
@@ -56,15 +55,10 @@ export default function PokemonGrid() {
   const titleOpacity = useTransform(scrollY, [0, 32], [1, 0])
 
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
-    useVirtualGrid(
-      pokemon,
-      loadMore,
-      hasNextPage,
-      isFetchingNextPage
-    )
+    useVirtualGrid(pokemon, loadMore, hasNextPage, isFetchingNextPage)
 
   return (
-    <CardProvider>
+    <NavProvider onNext={onNext} onPrev={onPrev}>
       <AnimatePresence>
         {selectedId && (
           <motion.div
@@ -72,26 +66,16 @@ export default function PokemonGrid() {
             className="fixed inset-0 z-40 bg-black/40"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-            onClick={() => handleSetSelectedId(null)}
+            onClick={() => setSelectedId(null)}
           />
         )}
       </AnimatePresence>
-      {needsDirect && directData && (
-        <DirectCard
-          onClose={() => handleSetSelectedId(null)}
-          onNext={onNext}
-          onPrev={onPrev}
-          pokemon={directData}
-        />
-      )}
+      {needsDirect && directData && <DirectCard pokemon={directData} />}
       <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
           <motion.div className="overflow-hidden" style={{ height: titleHeight, opacity: titleOpacity }}>
             <div className="mb-3 2xl:mb-4 flex items-center justify-between">
-              <a
-                className="flex items-center gap-1.5 2xl:gap-2"
-                href="/"
-              >
+              <a className="flex items-center gap-1.5 2xl:gap-2" href="/">
                 <Image
                   alt=""
                   aria-hidden="true"
@@ -104,35 +88,17 @@ export default function PokemonGrid() {
                 <h1 className="text-lg 2xl:text-xl font-bold tracking-tight">Opendex</h1>
               </a>
               <Button asChild size="sm" variant="outline">
-                <a
-                  href="https://ko-fi.com/amgdev"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <a href="https://ko-fi.com/amgdev" rel="noopener noreferrer" target="_blank">
                   ☕ Support on Ko-fi
                 </a>
               </Button>
             </div>
           </motion.div>
-          <PokemonToolbar
-            onToggleGen={toggleGen}
-            onToggleType={toggleType}
-            onUpdateSearch={setSearch}
-            onUpdateSort={updateSort}
-            search={search}
-            selectedGens={selectedGens}
-            selectedTypes={selectedTypes}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-          />
+          <PokemonToolbar />
         </div>
       </div>
       <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl p-4 pt-32 xl:pt-40">
-        <GridStatus
-          empty={status === 'success' && pokemon.length === 0}
-          status={status}
-        />
-
+        <GridStatus empty={status === 'success' && pokemon.length === 0} status={status} />
         <div className="relative w-full" style={{ height: totalHeight }}>
           {virtualItems.map(row => (
             <div
@@ -153,17 +119,13 @@ export default function PokemonGrid() {
                   active={!needsDirect && selectedId === p.id}
                   index={row.index * columns + i}
                   key={p.id}
-                  onClick={() => handleSetSelectedId(p.id)}
-                  onClose={() => handleSetSelectedId(null)}
-                  onNext={onNext}
-                  onPrev={onPrev}
+                  onClick={() => setSelectedId(p.id)}
                   pokemon={p}
                 />
               ))}
             </div>
           ))}
         </div>
-
         {isFetchingNextPage && (
           <div className="flex justify-center py-4">
             <Image
@@ -176,6 +138,6 @@ export default function PokemonGrid() {
           </div>
         )}
       </div>
-    </CardProvider>
+    </NavProvider>
   )
 }
