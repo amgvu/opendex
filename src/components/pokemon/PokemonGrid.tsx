@@ -6,7 +6,6 @@ import Image from 'next/image'
 import type { Pokemon } from '@/types/pokemon'
 
 import { Button } from '@/components/ui/button'
-import { CardProvider } from '@/context/card'
 import { NavProvider } from '@/context/navigation'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
 import { useDirectCard } from '@/hooks/card/useDirectCard'
@@ -71,8 +70,7 @@ export default function PokemonGrid() {
 
   return (
     <NavProvider onNext={onNext} onPrev={onPrev}>
-      <CardProvider>
-        <AnimatePresence>
+      <AnimatePresence>
           {selectedId && (
             <motion.div
               animate={{ opacity: 1 }}
@@ -165,7 +163,6 @@ export default function PokemonGrid() {
             </div>
           )}
         </div>
-      </CardProvider>
     </NavProvider>
   )
 }
