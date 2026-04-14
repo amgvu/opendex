@@ -1,49 +1,32 @@
 import { useSearchParams } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useEffect } from 'react'
+
+import { useFilterStore } from '@/stores/filterStore'
 
 import { useUrlSync } from './useUrlSync'
 
 export function useFilters() {
   const searchParams = useSearchParams()
   const { routerRef, searchParamsRef } = useUrlSync()
+  const selectedGens = useFilterStore(s => s.selectedGens)
+  const selectedTypes = useFilterStore(s => s.selectedTypes)
 
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(
-    searchParams.get('types')?.split(',').filter(Boolean) ?? []
-  )
-  const [selectedGens, setSelectedGens] = useState<number[]>(
-    searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
-  )
+  useEffect(() => {
+    useFilterStore.getState().setSelectedTypes(
+      searchParams.get('types')?.split(',').filter(Boolean) ?? []
+    )
+    useFilterStore.getState().setSelectedGens(
+      searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
+    )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const syncUrl = useCallback((types: string[], gens: number[]) => {
+  useEffect(() => {
     const params = new URLSearchParams(searchParamsRef.current.toString())
-    if (types.length > 0) {
-      params.set('types', types.join(','))
-    } else {
-      params.delete('types')
-    }
-    if (gens.length > 0) {
-      params.set('gens', gens.join(','))
-    } else {
-      params.delete('gens')
-    }
+    if (selectedTypes.length > 0) params.set('types', selectedTypes.join(','))
+    else params.delete('types')
+    if (selectedGens.length > 0) params.set('gens', selectedGens.join(','))
+    else params.delete('gens')
     routerRef.current.replace(`?${params.toString()}`, { scroll: false })
-  }, [routerRef, searchParamsRef])
-
-  const toggleType = useCallback((type: string) => {
-    const next = selectedTypes.includes(type)
-      ? selectedTypes.filter(t => t !== type)
-      : [...selectedTypes, type]
-    setSelectedTypes(next)
-    syncUrl(next, selectedGens)
-  }, [selectedTypes, selectedGens, syncUrl])
-
-  const toggleGen = useCallback((gen: number) => {
-    const next = selectedGens.includes(gen)
-      ? selectedGens.filter(g => g !== gen)
-      : [...selectedGens, gen]
-    setSelectedGens(next)
-    syncUrl(selectedTypes, next)
-  }, [selectedTypes, selectedGens, syncUrl])
-
-  return { selectedGens, selectedTypes, toggleGen, toggleType }
+  }, [selectedGens, selectedTypes, routerRef, searchParamsRef])
 }

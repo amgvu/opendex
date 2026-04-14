@@ -1,20 +1,15 @@
 import { TbArrowDown, TbArrowUp } from 'react-icons/tb'
 
-import type { SortField, SortOrder } from '@/types/sort'
-
+import { useFilterStore } from '@/stores/filterStore'
 import { SORT_FIELDS } from '@/types/sort'
 
 import { Button } from '../../ui/button'
 
-export function SortControls({
-  onSort,
-  sortBy,
-  sortOrder
-}: {
-  onSort: (field: SortField) => void
-  sortBy: SortField
-  sortOrder: SortOrder
-}) {
+export function SortControls() {
+  const sortBy = useFilterStore(s => s.sortBy)
+  const sortOrder = useFilterStore(s => s.sortOrder)
+  const updateSort = useFilterStore(s => s.updateSort)
+
   return (
     <div className="flex flex-wrap gap-1">
       {SORT_FIELDS.map(({ field, label }) => {
@@ -22,7 +17,7 @@ export function SortControls({
         return (
           <Button
             key={field}
-            onClick={() => onSort(field)}
+            onClick={() => updateSort(field)}
             size="sm"
             variant={active ? 'default' : 'secondary'}
           >

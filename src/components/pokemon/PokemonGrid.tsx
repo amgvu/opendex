@@ -16,6 +16,7 @@ import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
 import { useSort } from '@/hooks/filters/useSort'
 import { usePokemonQuery } from '@/hooks/query/usePokemonQuery'
 import { useVirtualGrid } from '@/hooks/virtual/useVirtualGrid'
+import { useFilterStore } from '@/stores/filterStore'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { DirectCard } from './card/DirectCard'
@@ -24,9 +25,19 @@ import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
 
 export default function PokemonGrid() {
-  const { debouncedSearch, search, setSearch } = useSearch()
-  const { sortBy, sortOrder, updateSort } = useSort()
-  const { selectedGens, selectedTypes, toggleGen, toggleType } = useFilters()
+  // URL sync — called for side effects only
+  useSearch()
+  useSort()
+  useFilters()
+  useSelectedPokemon()
+
+  const debouncedSearch = useFilterStore(s => s.debouncedSearch)
+  const sortBy = useFilterStore(s => s.sortBy)
+  const sortOrder = useFilterStore(s => s.sortOrder)
+  const selectedTypes = useFilterStore(s => s.selectedTypes)
+  const selectedGens = useFilterStore(s => s.selectedGens)
+  const selectedId = useSelectionStore(s => s.selectedId)
+  const setSelectedId = useSelectionStore(s => s.setSelectedId)
 
   const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
     usePokemonQuery(
@@ -36,11 +47,6 @@ export default function PokemonGrid() {
       selectedTypes,
       selectedGens
     )
-
-  useSelectedPokemon()
-
-  const selectedId = useSelectionStore(s => s.selectedId)
-  const setSelectedId = useSelectionStore(s => s.setSelectedId)
 
   const { directData, needsDirect } = useDirectCard(pokemon)
 
@@ -110,17 +116,7 @@ export default function PokemonGrid() {
                 </Button>
               </div>
             </motion.div>
-            <PokemonToolbar
-              onToggleGen={toggleGen}
-              onToggleType={toggleType}
-              onUpdateSearch={setSearch}
-              onUpdateSort={updateSort}
-              search={search}
-              selectedGens={selectedGens}
-              selectedTypes={selectedTypes}
-              sortBy={sortBy}
-              sortOrder={sortOrder}
-            />
+            <PokemonToolbar />
           </div>
         </div>
         <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl p-4 pt-32 xl:pt-40">
