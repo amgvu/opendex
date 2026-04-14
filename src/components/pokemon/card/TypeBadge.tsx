@@ -17,7 +17,7 @@ export function TypeBadge({
       className={`rounded-full font-medium text-white border ${sizeClass} ${getTypeColor(type)}`}
       style={{
         borderColor: `color-mix(in srgb, ${hex} 70%, white)`,
-        boxShadow: `0 2px 6px color-mix(in srgb, ${hex} 80%, black)`
+        boxShadow: `0 1px 2px color-mix(in srgb, ${hex} 80%, black)`
       }}
     >
       {type}
