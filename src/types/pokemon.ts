@@ -6,15 +6,16 @@ export type EvolutionStep = {
   trigger: string
 }
 
-export type LearnsetMove = {
+export type MoveDetail = {
   accuracy: null | number
   category: string
-  level: number
   name: string
   power: null | number
   pp: number
   type: string
 }
+
+export type LearnsetMove = MoveDetail & { level: number }
 
 export type TypeMatchups = {
   immunities: string[]
@@ -49,7 +50,7 @@ export type Pokemon = {
   imageUrl: string
   isLegendary?: boolean
   isMythical?: boolean
-  learnset?: { egg: string[]; levelUp: LearnsetMove[]; machine: string[] }
+  learnset?: { egg: MoveDetail[]; levelUp: LearnsetMove[]; machine: MoveDetail[] }
   name: string
   officialUrl: string
   specialAttack: number
