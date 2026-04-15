@@ -21,7 +21,7 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
           >
             {pokemon.name}
           </motion.h2>
-          {(pokemon.isLegendary ?? pokemon.isMythical) && (
+          {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
               layoutId={`star-${pokemon.id}-${id}`}
               transition={CARD_TRANSITION}
