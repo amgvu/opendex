@@ -24,8 +24,8 @@ import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
-import { TypeBadge } from '../TypeBadge'
 import { EvolutionPanel } from '../expanded/EvolutionPanel'
+import { TypeBadge } from '../TypeBadge'
 import { FullBattlePanel } from './FullBattlePanel'
 import { FullBioPanel } from './FullBioPanel'
 import { FullMovesPanel } from './FullMovesPanel'
@@ -61,7 +61,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
     const params = new URLSearchParams(window.location.search)
     params.set('pokemon', String(pokemon.id))
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
-    navigator.clipboard.writeText(url)
+    void navigator.clipboard.writeText(url)
     setCopied(true)
     setTimeout(() => setCopied(false), 1500)
   }
@@ -102,7 +102,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
             <Image
               alt=""
               aria-hidden="true"
-              className="absolute -bottom-24 -right-24 h-[640px] w-[640px] opacity-[0.07] grayscale"
+              className="absolute scale-[4] bottom-64 right-16 h-[640px] w-[640px] opacity-10 grayscale"
               height={512}
               loading="eager"
               src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
@@ -365,7 +365,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
             <div className="absolute right-4 top-4 z-20 flex items-center gap-1">
               <button
                 aria-label="Previous"
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={onPrev}
                 type="button"
               >
@@ -373,7 +373,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               </button>
               <button
                 aria-label="Next"
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={onNext}
                 type="button"
               >
@@ -381,7 +381,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               </button>
               <button
                 aria-label="Minimize to card"
-                className="ml-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                className=" flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={() => setFullModalOpen(false)}
                 type="button"
               >
@@ -389,7 +389,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               </button>
               <button
                 aria-label="Close"
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={closeAll}
                 type="button"
               >
@@ -409,7 +409,7 @@ function PhysicalStat({
   value
 }: {
   label: string
-  value: string | number
+  value: number | string
 }) {
   return (
     <div className="flex flex-col gap-0.5">

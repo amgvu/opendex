@@ -1,8 +1,8 @@
 import type { Pokemon } from '@/types/pokemon'
 
+import { InfoStat, TabPanelContent } from '../expanded/shared'
 import { StatBar } from '../expanded/StatBar'
 import { StatRadar } from '../expanded/StatRadar'
-import { InfoStat, TabPanelContent } from '../expanded/shared'
 
 const GROWTH_RATE_LABELS: Record<string, string> = {
   erratic: 'Erratic',
@@ -13,7 +13,13 @@ const GROWTH_RATE_LABELS: Record<string, string> = {
   slow: 'Slow'
 }
 
-export function FullStatsPanel({ bst, pokemon }: { bst: number; pokemon: Pokemon }) {
+export function FullStatsPanel({
+  bst,
+  pokemon
+}: {
+  bst: number
+  pokemon: Pokemon
+}) {
   return (
     <TabPanelContent className="flex flex-col gap-5">
       {/* Header */}
@@ -59,7 +65,10 @@ export function FullStatsPanel({ bst, pokemon }: { bst: number; pokemon: Pokemon
             <InfoStat label="Base Exp" value={pokemon.baseExperience} />
           )}
           {pokemon.baseFriendship !== undefined && (
-            <InfoStat label="Friendship" value={`${pokemon.baseFriendship} / 255`} />
+            <InfoStat
+              label="Friendship"
+              value={`${pokemon.baseFriendship} / 255`}
+            />
           )}
         </div>
       </div>
