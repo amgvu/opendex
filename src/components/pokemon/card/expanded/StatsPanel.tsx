@@ -34,15 +34,22 @@ export function StatsPanel({
           <div className="flex items-center gap-1 shrink-0">
             <span className="font-medium text-white/50">Base Stats</span>
             <button
-              aria-label={statsView === 'bars' ? 'Switch to radar chart' : 'Switch to bar chart'}
-              className="rounded p-0.5 text-white/35 hover:text-white/65 transition-colors"
-              onClick={() => setStatsView(statsView === 'bars' ? 'radar' : 'bars')}
+              aria-label={
+                statsView === 'bars'
+                  ? 'Switch to radar chart'
+                  : 'Switch to bar chart'
+              }
+              className="rounded cursor-pointer p-0.5 text-white/35 hover:text-white/65 transition-colors"
+              onClick={() =>
+                setStatsView(statsView === 'bars' ? 'radar' : 'bars')
+              }
               type="button"
             >
-              {statsView === 'bars'
-                ? <TbChartRadar size={13} />
-                : <TbChartBar size={13} />
-              }
+              {statsView === 'bars' ? (
+                <TbChartRadar size={13} />
+              ) : (
+                <TbChartBar size={13} />
+              )}
             </button>
           </div>
           <div className="flex-1 flex justify-end">
@@ -101,7 +108,10 @@ export function StatsPanel({
             <InfoStat label="Base Exp" value={pokemon.baseExperience} />
           )}
           {pokemon.baseFriendship !== undefined && (
-            <InfoStat label="Friendship" value={`${pokemon.baseFriendship} / 255`} />
+            <InfoStat
+              label="Friendship"
+              value={`${pokemon.baseFriendship} / 255`}
+            />
           )}
         </div>
       </div>
