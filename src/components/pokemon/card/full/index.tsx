@@ -1,19 +1,20 @@
 'use client'
 
-import { Tabs } from '@heroui/react'
+import { Label, Switch, Tabs } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { type CSSProperties } from 'react'
+import { type CSSProperties, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { IoMdStar } from 'react-icons/io'
-import { TbChevronLeft, TbChevronRight, TbSparkles, TbX } from 'react-icons/tb'
+import { TbCheck, TbChevronLeft, TbChevronRight, TbLink, TbMinimize, TbSparkles, TbX } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
-import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
+import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
+import { useSelectionStore } from '@/stores/selectionStore'
 
 import { TypeBadge } from '../TypeBadge'
 import { EvolutionPanel } from '../expanded/EvolutionPanel'
@@ -26,9 +27,22 @@ const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
 export function FullModal({ pokemon }: { pokemon: Pokemon }) {
-  const { activeTab, fullModalOpen, setActiveTab, setFullModalOpen } = useCardContext()
+  const { activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled } =
+    useCardContext()
   const { onNext, onPrev } = useNavContext()
+  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+  const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled)
+  const [copied, setCopied] = useState(false)
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
+
+  function handleCopy() {
+    const params = new URLSearchParams(window.location.search)
+    params.set('pokemon', String(pokemon.id))
+    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    navigator.clipboard.writeText(url)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
   const bst =
     pokemon.hp +
     pokemon.attack +
@@ -37,31 +51,36 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
     pokemon.specialDefense +
     pokemon.speed
 
-  useBodyScrollLock(fullModalOpen, () => setFullModalOpen(false))
+  const closeAll = () => { setFullModalOpen(false); setSelectedId(null) }
 
   return createPortal(
     <AnimatePresence>
       {fullModalOpen && (
-        <div className="fixed inset-0 z-[60] p-4 sm:p-6">
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center px-4 py-6 2xl:px-6"
+          data-outside-click-ignore
+          onPointerDown={e => e.stopPropagation()}
+        >
           <motion.div
             animate={{ opacity: 1 }}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-            onClick={() => setFullModalOpen(false)}
+            onClick={closeAll}
             transition={{ duration: 0.2 }}
           />
           <motion.div
             animate={{ opacity: 1, scale: 1 }}
-            className={`relative flex h-full w-full overflow-hidden rounded-2xl ${typeColor}`}
+            className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
             exit={{ opacity: 0, scale: 0.97 }}
             initial={{ opacity: 0, scale: 0.97 }}
+            onClick={e => e.stopPropagation()}
             transition={{ duration: 0.2 }}
           >
             <Image
               alt=""
               aria-hidden="true"
-              className="absolute -bottom-16 -left-16 h-[512px] w-[512px] opacity-10 grayscale"
+              className="absolute -bottom-16 -right-16 h-[512px] w-[512px] opacity-10 grayscale"
               height={512}
               loading="eager"
               src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
@@ -69,7 +88,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               width={512}
             />
             <div
-              className="pointer-events-none absolute inset-3 rounded-xl border"
+              className="pointer-events-none absolute inset-3 rounded-xl border bg-black/25"
               style={{
                 borderColor: `color-mix(in oklab, ${bgClassToVar(typeColor)}, black 25%)`,
                 boxShadow: `inset 0 0 1px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
@@ -79,20 +98,77 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
             {/* LEFT SIDEBAR */}
             <div className="relative z-10 flex w-[28%] min-w-0 shrink-0 flex-col items-center gap-5 border-r border-white/10 p-8 pb-6">
               {pokemon.officialUrl && (
-                <div className="flex flex-1 items-center justify-center">
-                  <Image
-                    alt={pokemon.name}
-                    className="h-44 w-44 xl:h-56 xl:w-56 2xl:h-64 2xl:w-64 object-contain"
-                    draggable={false}
-                    height={384}
-                    onContextMenu={e => e.preventDefault()}
-                    src={pokemon.officialUrl}
-                    style={{
-                      filter: `drop-shadow(0 20px 30px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`
-                    }}
-                    unoptimized
-                    width={384}
-                  />
+                <div className="relative flex flex-1 items-center justify-center">
+                  <div className="relative h-44 w-44 xl:h-56 xl:w-56 2xl:h-64 2xl:w-64">
+                    <motion.div
+                      animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Image
+                        alt={pokemon.name}
+                        className="h-44 w-44 xl:h-56 xl:w-56 2xl:h-64 2xl:w-64 object-contain"
+                        draggable={false}
+                        height={384}
+                        onContextMenu={e => e.preventDefault()}
+                        src={pokemon.officialUrl}
+                        style={{
+                          filter: `drop-shadow(0 20px 30px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`
+                        }}
+                        unoptimized
+                        width={384}
+                      />
+                    </motion.div>
+                    {!gifError && gifMounted && (
+                      <motion.img
+                        alt=""
+                        animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
+                        className="absolute inset-0 h-full w-full object-contain"
+                        draggable={false}
+                        initial={{ opacity: 0 }}
+                        onContextMenu={e => e.preventDefault()}
+                        onError={() => setGifError(true)}
+                        onLoad={() => setGifReady(true)}
+                        src={pokemon.imageUrl}
+                        transition={{ duration: 0.15 }}
+                      />
+                    )}
+                  </div>
+                  <div className="absolute bottom-0 left-0">
+                    <button
+                      className="flex cursor-pointer items-center gap-1 text-xs font-medium text-white/70 select-none"
+                      onClick={handleCopy}
+                      type="button"
+                    >
+                      {copied ? <TbCheck size={14} /> : <TbLink size={14} />}
+                      <span>{copied ? 'Copied!' : 'Copy link'}</span>
+                    </button>
+                  </div>
+                  {!gifError && (
+                    <div className="absolute bottom-0 right-0">
+                      <Switch
+                        isSelected={gifEnabled}
+                        onChange={v => setGifEnabled(v)}
+                        size="sm"
+                        style={
+                          {
+                            '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
+                            '--switch-control-bg-checked': bgClassToVar(typeColor),
+                            '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
+                            '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
+                          } as CSSProperties
+                        }
+                      >
+                        <Switch.Control>
+                          <Switch.Thumb />
+                        </Switch.Control>
+                        <Switch.Content>
+                          <Label className="cursor-pointer select-none text-xs font-medium text-white/70">
+                            3D
+                          </Label>
+                        </Switch.Content>
+                      </Switch>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -238,9 +314,17 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 <TbChevronRight size={16} />
               </button>
               <button
-                aria-label="Close full view"
-                className="ml-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                aria-label="Minimize to card"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={() => setFullModalOpen(false)}
+                type="button"
+              >
+                <TbMinimize size={16} />
+              </button>
+              <button
+                aria-label="Close"
+                className="ml-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                onClick={closeAll}
                 type="button"
               >
                 <TbX size={16} />
