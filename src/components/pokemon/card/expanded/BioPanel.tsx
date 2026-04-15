@@ -75,9 +75,9 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
           </p>
           <div className="flex flex-col gap-1">
             {pokemon.heldItems.map(item => (
-              <div className="flex items-center justify-between" key={item.name}>
+              <div className="flex items-center gap-1.5" key={item.name}>
                 <span className="text-xs xl:text-sm 2xl:text-base text-white/70">{item.name}</span>
-                <span className="text-xs xl:text-sm text-white/40">{item.rarity}%</span>
+                <span className="text-xs text-white/35">({item.rarity}%)</span>
               </div>
             ))}
           </div>
