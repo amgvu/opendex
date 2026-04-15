@@ -235,7 +235,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-2.5">
                     <h2
-                      className={`truncate font-black capitalize leading-none text-white ${
+                      className={`truncate font-black capitalize leading-tight text-white ${
                         pokemon.name.length > 12
                           ? 'text-3xl xl:text-4xl 2xl:text-5xl'
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
@@ -287,7 +287,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               </div>
 
               {/* Divider */}
-              <div className="mx-8 shrink-0 border-t border-white/10" />
+              <div className="mx-5 shrink-0 border-t border-white/10" />
 
               {/* Tabs */}
               <div className="flex min-h-0 flex-1 flex-col px-8 pt-4">

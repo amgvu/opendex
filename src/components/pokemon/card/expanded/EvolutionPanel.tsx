@@ -59,8 +59,8 @@ function PokemonNode({
     >
       <Image
         alt={node.name}
-        className={`object-contain drop-shadow-md ${large ? 'h-32 w-32 xl:h-36 xl:w-36 2xl:h-40 2xl:w-40' : 'h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28'}`}
-        height={large ? 160 : 80}
+        className={`object-contain drop-shadow-md ${large ? 'h-44 w-44 xl:h-52 xl:w-52 2xl:h-60 2xl:w-60' : 'h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28'}`}
+        height={large ? 240 : 80}
         src={spriteUrl}
         unoptimized
         width={large ? 160 : 80}
@@ -77,11 +77,11 @@ function PokemonNode({
 
 function TriggerConnector({ large, trigger }: { large?: boolean; trigger: string }) {
   return (
-    <div className={`flex flex-col items-center justify-center gap-1 px-3 ${large ? 'min-w-[80px]' : 'min-w-[52px] xl:min-w-[64px]'}`}>
-      <span className={`line-clamp-2 text-center leading-tight text-white/40 ${large ? 'max-w-[88px] text-xs xl:text-sm' : 'max-w-[60px] xl:max-w-[72px] text-[10px] xl:text-xs'}`}>
+    <div className={`flex flex-col items-center justify-center gap-1 px-3 ${large ? 'min-w-[100px]' : 'min-w-[52px] xl:min-w-[64px]'}`}>
+      <span className={`line-clamp-2 text-center leading-tight text-white/40 ${large ? 'max-w-[96px] text-xs xl:text-sm' : 'max-w-[60px] xl:max-w-[72px] text-[10px] xl:text-xs'}`}>
         {trigger}
       </span>
-      <span className={`leading-none text-white/30 ${large ? 'text-sm xl:text-base' : 'text-xs xl:text-sm'}`}>→</span>
+      <span className={`leading-none text-white/30 ${large ? 'text-base xl:text-lg' : 'text-xs xl:text-sm'}`}>→</span>
     </div>
   )
 }

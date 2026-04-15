@@ -81,7 +81,7 @@ export function ExpandedCard({
             />
             <button
               aria-label="Open full view"
-              className="absolute right-3 top-3 z-10 hidden cursor-pointer items-center justify-center text-white/30 transition-colors hover:text-white/60 sm:flex"
+              className="absolute right-6 top-6 z-10 hidden cursor-pointer items-center justify-center text-white/30 transition-colors hover:text-white/60 sm:flex"
               data-no-drag
               onClick={() => setFullModalOpen(true)}
               type="button"
