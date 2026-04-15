@@ -2,7 +2,7 @@ import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, type RefObject, useState } from 'react'
-import { TbMaximize } from 'react-icons/tb'
+import { TbArrowsDiagonal } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -86,7 +86,7 @@ export function ExpandedCard({
                 onClick={() => setFullModalOpen(true)}
                 type="button"
               >
-                <TbMaximize size={14} />
+                <TbArrowsDiagonal size={14} />
               </button>
               <Image
                 alt=""

@@ -7,11 +7,11 @@ import { type CSSProperties, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { IoMdStar } from 'react-icons/io'
 import {
+  TbArrowsDiagonalMinimize2,
   TbCheck,
   TbChevronLeft,
   TbChevronRight,
   TbLink,
-  TbMinimize,
   TbSparkles,
   TbX
 } from 'react-icons/tb'
@@ -385,7 +385,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 onClick={() => setFullModalOpen(false)}
                 type="button"
               >
-                <TbMinimize size={16} />
+                <TbArrowsDiagonalMinimize2 size={16} />
               </button>
               <button
                 aria-label="Close"
