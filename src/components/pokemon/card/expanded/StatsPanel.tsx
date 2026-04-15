@@ -59,7 +59,7 @@ export function StatsPanel({
           </div>
         </div>
 
-        <AnimatePresence initial={false} mode="popLayout">
+        <AnimatePresence mode="popLayout">
           {statsView === 'bars' ? (
             <motion.div
               animate={{ opacity: 1 }}
