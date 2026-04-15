@@ -2,6 +2,7 @@ import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, type RefObject, useState } from 'react'
+import { TbMaximize } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -10,6 +11,7 @@ import { useNavContext } from '@/context/navigation'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
 
+import { FullModal } from '../full'
 import { BattlePanel } from './BattlePanel'
 import { BioPanel } from './BioPanel'
 import { CardArtwork } from './CardArtwork'
@@ -41,13 +43,14 @@ export function ExpandedCard({
     pokemon.specialAttack +
     pokemon.specialDefense +
     pokemon.speed
-  const { activeTab, setActiveTab } = useCardContext()
+  const { activeTab, setActiveTab, setFullModalOpen } = useCardContext()
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
   return (
     <AnimatePresence>
       {active && (
+        <>
         <div className="fixed inset-0 z-50 grid place-items-center p-4">
           <motion.div
             className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:inset(0_round_1rem)] ${typeColor}`}
@@ -76,6 +79,15 @@ export function ExpandedCard({
                 boxShadow: `inset 0 0 1px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
               }}
             />
+            <button
+              aria-label="Open full view"
+              className="absolute right-3 top-3 z-10 hidden cursor-pointer items-center justify-center text-white/30 transition-colors hover:text-white/60 sm:flex"
+              data-no-drag
+              onClick={() => setFullModalOpen(true)}
+              type="button"
+            >
+              <TbMaximize size={14} />
+            </button>
             <Image
               alt=""
               aria-hidden="true"
@@ -196,6 +208,8 @@ export function ExpandedCard({
             </div>
           </motion.div>
         </div>
+        <FullModal pokemon={pokemon} />
+        </>
       )}
     </AnimatePresence>
   )
