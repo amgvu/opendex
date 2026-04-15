@@ -7,7 +7,10 @@ import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { fetchPokemonById, pokemonByIdQueryKey } from '@/hooks/query/usePokemonByIdQuery'
+import {
+  fetchPokemonById,
+  pokemonByIdQueryKey
+} from '@/hooks/query/usePokemonByIdQuery'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
@@ -106,7 +109,7 @@ export function DefaultCard({
           >
             {pokemon.name}
           </motion.p>
-          <span className="flex-shrink-0 text-[10px] sm:text-xs 2xl:text-sm tracking-wide font-semibold text-white">
+          <span className="flex-shrink-0 text-[10px] font-mono sm:text-xs 2xl:text-sm tracking-wide font-semibold text-white">
             {formatPokedexId(pokemon.id)}
           </span>
         </div>
@@ -126,10 +129,11 @@ export function DefaultCard({
           layoutId={`star-${pokemon.id}-${id}`}
           transition={CARD_TRANSITION}
         >
-          {pokemon.isMythical
-            ? <TbSparkles className="text-pink-400" size={16} />
-            : <IoMdStar className="text-yellow-400" size={18} />
-          }
+          {pokemon.isMythical ? (
+            <TbSparkles className="text-pink-400" size={16} />
+          ) : (
+            <IoMdStar className="text-yellow-400" size={18} />
+          )}
         </motion.div>
       )}
     </motion.div>
