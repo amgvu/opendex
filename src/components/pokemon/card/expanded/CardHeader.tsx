@@ -54,7 +54,7 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
             </motion.div>
           )}
         </div>
-        <span className="-mt-1 sm:mt-0 block text-sm xl:text-base 2xl:text-lg tracking-wide font-semibold text-white/60">
+        <span className="-mt-1 sm:mt-0 block text-sm xl:text-base 2xl:text-lg tracking-widest font-mono font-semibold text-white/60">
           {formatPokedexId(pokemon.id)}
         </span>
       </div>

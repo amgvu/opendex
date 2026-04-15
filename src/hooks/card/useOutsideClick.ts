@@ -12,6 +12,7 @@ export function useOutsideClick(
     if (!active) return
 
     function handleClick(e: MouseEvent) {
+      if ((e.target as Element).closest?.('[data-outside-click-ignore]')) return
       if (ref.current && !ref.current.contains(e.target as Node)) {
         callbackRef.current()
       }

@@ -23,7 +23,7 @@ function formatMoveName(name: string) {
     .join(' ')
 }
 
-function MoveTable({
+export function MoveTable({
   moves,
   showLevel
 }: {
