@@ -16,11 +16,11 @@ import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
-import { BattlePanel } from '../expanded/BattlePanel'
-import { BioPanel } from '../expanded/BioPanel'
 import { EvolutionPanel } from '../expanded/EvolutionPanel'
-import { LearnsetPanel } from '../expanded/LearnsetPanel'
-import { StatsPanel } from '../expanded/StatsPanel'
+import { FullBattlePanel } from './FullBattlePanel'
+import { FullBioPanel } from './FullBioPanel'
+import { FullMovesPanel } from './FullMovesPanel'
+import { FullStatsPanel } from './FullStatsPanel'
 
 const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
@@ -196,22 +196,22 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                   className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
                   id="stats"
                 >
-                  {activeTab === 'stats' && <StatsPanel bst={bst} pokemon={pokemon} />}
+                  {activeTab === 'stats' && <FullStatsPanel bst={bst} pokemon={pokemon} />}
                 </Tabs.Panel>
                 <Tabs.Panel
                   className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
                   id="battle"
                 >
-                  {activeTab === 'battle' && <BattlePanel pokemon={pokemon} />}
+                  {activeTab === 'battle' && <FullBattlePanel pokemon={pokemon} />}
                 </Tabs.Panel>
                 <Tabs.Panel
                   className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
                   id="bio"
                 >
-                  {activeTab === 'bio' && <BioPanel pokemon={pokemon} />}
+                  {activeTab === 'bio' && <FullBioPanel pokemon={pokemon} />}
                 </Tabs.Panel>
                 <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="moves">
-                  {activeTab === 'moves' && <LearnsetPanel pokemon={pokemon} />}
+                  {activeTab === 'moves' && <FullMovesPanel pokemon={pokemon} />}
                 </Tabs.Panel>
                 <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="evo">
                   {activeTab === 'evo' && <EvolutionPanel pokemon={pokemon} />}
