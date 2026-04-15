@@ -21,10 +21,10 @@ export function FullBioPanel({ pokemon }: { pokemon: Pokemon }) {
           <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-white/40">
             Pokédex Entries
           </p>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-3">
             {extraFlavors.map(({ game, text }) => (
-              <div className="rounded-lg bg-white/8 px-3 py-2.5" key={game}>
-                <span className="mb-1 block rounded-full text-[10px] font-medium uppercase tracking-wider text-white/35 capitalize">
+              <div key={game}>
+                <span className="mb-0.5 block text-[10px] font-medium uppercase tracking-wider text-white/35 capitalize">
                   {game.replace(/-/g, ' ')}
                 </span>
                 <p className="text-sm text-white/60 leading-snug">{text}</p>

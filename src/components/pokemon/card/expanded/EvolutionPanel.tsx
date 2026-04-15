@@ -41,7 +41,15 @@ function buildTree(steps: EvolutionStep[]): TreeNode | null {
   return build(root.fromId, root.fromName)
 }
 
-function PokemonNode({ currentId, node }: { currentId: number; node: TreeNode }) {
+function PokemonNode({
+  currentId,
+  large,
+  node
+}: {
+  currentId: number
+  large?: boolean
+  node: TreeNode
+}) {
   const isCurrent = node.id === currentId
   const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${node.id}.png`
 
@@ -51,43 +59,51 @@ function PokemonNode({ currentId, node }: { currentId: number; node: TreeNode })
     >
       <Image
         alt={node.name}
-        className="h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28 object-contain drop-shadow-md"
-        height={80}
+        className={`object-contain drop-shadow-md ${large ? 'h-32 w-32 xl:h-36 xl:w-36 2xl:h-40 2xl:w-40' : 'h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28'}`}
+        height={large ? 160 : 80}
         src={spriteUrl}
         unoptimized
-        width={80}
+        width={large ? 160 : 80}
       />
-      <span className="max-w-[80px] xl:max-w-[96px] truncate text-center text-xs xl:text-sm font-medium capitalize leading-tight text-white">
+      <span className={`truncate text-center font-medium capitalize leading-tight text-white ${large ? 'max-w-[120px] text-sm xl:text-base' : 'max-w-[80px] xl:max-w-[96px] text-xs xl:text-sm'}`}>
         {node.name}
       </span>
-      <span className="text-[10px] xl:text-xs leading-none text-white/40">
+      <span className={`leading-none text-white/40 ${large ? 'text-xs xl:text-sm' : 'text-[10px] xl:text-xs'}`}>
         {formatPokedexId(node.id)}
       </span>
     </div>
   )
 }
 
-function TriggerConnector({ trigger }: { trigger: string }) {
+function TriggerConnector({ large, trigger }: { large?: boolean; trigger: string }) {
   return (
-    <div className="flex min-w-[52px] xl:min-w-[64px] flex-col items-center justify-center gap-1 px-2">
-      <span className="line-clamp-2 max-w-[60px] xl:max-w-[72px] text-center text-[10px] xl:text-xs leading-tight text-white/40">
+    <div className={`flex flex-col items-center justify-center gap-1 px-3 ${large ? 'min-w-[80px]' : 'min-w-[52px] xl:min-w-[64px]'}`}>
+      <span className={`line-clamp-2 text-center leading-tight text-white/40 ${large ? 'max-w-[88px] text-xs xl:text-sm' : 'max-w-[60px] xl:max-w-[72px] text-[10px] xl:text-xs'}`}>
         {trigger}
       </span>
-      <span className="text-xs xl:text-sm leading-none text-white/30">→</span>
+      <span className={`leading-none text-white/30 ${large ? 'text-sm xl:text-base' : 'text-xs xl:text-sm'}`}>→</span>
     </div>
   )
 }
 
-function EvolutionNode({ currentId, node }: { currentId: number; node: TreeNode }) {
+function EvolutionNode({
+  currentId,
+  large,
+  node
+}: {
+  currentId: number
+  large?: boolean
+  node: TreeNode
+}) {
   return (
     <div className="flex items-center">
-      <PokemonNode currentId={currentId} node={node} />
+      <PokemonNode currentId={currentId} large={large} node={node} />
       {node.children.length > 0 && (
         <div className="flex flex-col justify-center">
           {node.children.map(({ node: child, trigger }) => (
             <div className="flex items-center" key={child.id}>
-              <TriggerConnector trigger={trigger} />
-              <EvolutionNode currentId={currentId} node={child} />
+              <TriggerConnector large={large} trigger={trigger} />
+              <EvolutionNode currentId={currentId} large={large} node={child} />
             </div>
           ))}
         </div>
@@ -96,7 +112,7 @@ function EvolutionNode({ currentId, node }: { currentId: number; node: TreeNode 
   )
 }
 
-export function EvolutionPanel({ pokemon }: { pokemon: Pokemon }) {
+export function EvolutionPanel({ large, pokemon }: { large?: boolean; pokemon: Pokemon }) {
   const chain = pokemon.evolutionChain
 
   if (chain === undefined) {
@@ -116,7 +132,7 @@ export function EvolutionPanel({ pokemon }: { pokemon: Pokemon }) {
       ) : (
         <div className="overflow-auto w-full flex items-center justify-center p-2">
           <div className="inline-flex items-center">
-            <EvolutionNode currentId={pokemon.id} node={tree} />
+            <EvolutionNode currentId={pokemon.id} large={large} node={tree} />
           </div>
         </div>
       )}

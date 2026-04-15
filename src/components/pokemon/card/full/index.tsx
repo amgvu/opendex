@@ -354,7 +354,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                   </Tabs.Panel>
                   <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="evo">
                     {activeTab === 'evo' && (
-                      <EvolutionPanel pokemon={pokemon} />
+                      <EvolutionPanel large pokemon={pokemon} />
                     )}
                   </Tabs.Panel>
                 </Tabs>
