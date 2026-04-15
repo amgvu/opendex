@@ -31,7 +31,7 @@ export function FullStatsPanel({
       </div>
 
       {/* Radar — own section, centered */}
-      <div className="h-64 xl:h-72 2xl:h-80 w-full flex items-center justify-center">
+      <div className="h-64 xl:h-88 2xl:h-96 w-full flex items-center justify-center">
         <StatRadar pokemon={pokemon} />
       </div>
 
