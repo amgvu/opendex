@@ -24,43 +24,45 @@ export function FullStatsPanel({ bst, pokemon }: { bst: number; pokemon: Pokemon
       </div>
 
       <div className="flex gap-8 items-start">
-        {/* Bar chart */}
-        <div className="flex-1 flex flex-col gap-0.5">
-          <StatBar label="HP" value={pokemon.hp} />
-          <StatBar label="Attack" value={pokemon.attack} />
-          <StatBar label="Defense" value={pokemon.defense} />
-          <StatBar label="Sp. Atk" value={pokemon.specialAttack} />
-          <StatBar label="Sp. Def" value={pokemon.specialDefense} />
-          <StatBar label="Speed" value={pokemon.speed} />
+        {/* Left: bars + info stats nested below */}
+        <div className="flex flex-1 flex-col gap-5">
+          <div className="flex flex-col gap-0.5">
+            <StatBar label="HP" value={pokemon.hp} />
+            <StatBar label="Attack" value={pokemon.attack} />
+            <StatBar label="Defense" value={pokemon.defense} />
+            <StatBar label="Sp. Atk" value={pokemon.specialAttack} />
+            <StatBar label="Sp. Def" value={pokemon.specialDefense} />
+            <StatBar label="Speed" value={pokemon.speed} />
+          </div>
+
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-3">
+            <InfoStat label="Height" value={`${pokemon.height.toFixed(1)} m`} />
+            <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
+            <InfoStat label="Generation" value={`Gen ${pokemon.generation}`} />
+            {pokemon.growthRate && (
+              <InfoStat
+                label="Growth Rate"
+                value={
+                  <span className="capitalize">
+                    {GROWTH_RATE_LABELS[pokemon.growthRate] ??
+                      pokemon.growthRate.replace(/-/g, ' ')}
+                  </span>
+                }
+              />
+            )}
+            {pokemon.baseExperience !== undefined && (
+              <InfoStat label="Base Exp" value={pokemon.baseExperience} />
+            )}
+            {pokemon.baseFriendship !== undefined && (
+              <InfoStat label="Friendship" value={`${pokemon.baseFriendship} / 255`} />
+            )}
+          </div>
         </div>
 
-        {/* Radar chart */}
-        <div className="w-64 xl:w-72 2xl:w-80 shrink-0 flex items-center justify-center">
+        {/* Right: radar chart alongside bars */}
+        <div className="w-52 xl:w-60 2xl:w-72 shrink-0 flex items-center justify-center">
           <StatRadar pokemon={pokemon} />
         </div>
-      </div>
-
-      <div className="grid grid-cols-4 gap-3 mt-5">
-        <InfoStat label="Height" value={`${pokemon.height.toFixed(1)} m`} />
-        <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
-        <InfoStat label="Generation" value={`Gen ${pokemon.generation}`} />
-        {pokemon.growthRate && (
-          <InfoStat
-            label="Growth Rate"
-            value={
-              <span className="capitalize">
-                {GROWTH_RATE_LABELS[pokemon.growthRate] ??
-                  pokemon.growthRate.replace(/-/g, ' ')}
-              </span>
-            }
-          />
-        )}
-        {pokemon.baseExperience !== undefined && (
-          <InfoStat label="Base Exp" value={pokemon.baseExperience} />
-        )}
-        {pokemon.baseFriendship !== undefined && (
-          <InfoStat label="Friendship" value={`${pokemon.baseFriendship} / 255`} />
-        )}
       </div>
     </TabPanelContent>
   )

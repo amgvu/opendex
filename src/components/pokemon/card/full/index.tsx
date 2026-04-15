@@ -6,7 +6,15 @@ import Image from 'next/image'
 import { type CSSProperties, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { IoMdStar } from 'react-icons/io'
-import { TbCheck, TbChevronLeft, TbChevronRight, TbLink, TbMinimize, TbSparkles, TbX } from 'react-icons/tb'
+import {
+  TbCheck,
+  TbChevronLeft,
+  TbChevronRight,
+  TbLink,
+  TbMinimize,
+  TbSparkles,
+  TbX
+} from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -24,16 +32,30 @@ import { FullMovesPanel } from './FullMovesPanel'
 import { FullStatsPanel } from './FullStatsPanel'
 
 const TAB_PANEL_SCROLL =
-  'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain mb-4 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
 export function FullModal({ pokemon }: { pokemon: Pokemon }) {
-  const { activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled } =
-    useCardContext()
+  const {
+    activeTab,
+    fullModalOpen,
+    gifEnabled,
+    setActiveTab,
+    setFullModalOpen,
+    setGifEnabled
+  } = useCardContext()
   const { onNext, onPrev } = useNavContext()
   const setSelectedId = useSelectionStore(s => s.setSelectedId)
-  const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled)
+  const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
+    useGifLoader(gifEnabled)
   const [copied, setCopied] = useState(false)
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
+  const bst =
+    pokemon.hp +
+    pokemon.attack +
+    pokemon.defense +
+    pokemon.specialAttack +
+    pokemon.specialDefense +
+    pokemon.speed
 
   function handleCopy() {
     const params = new URLSearchParams(window.location.search)
@@ -43,15 +65,11 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
     setCopied(true)
     setTimeout(() => setCopied(false), 1500)
   }
-  const bst =
-    pokemon.hp +
-    pokemon.attack +
-    pokemon.defense +
-    pokemon.specialAttack +
-    pokemon.specialDefense +
-    pokemon.speed
 
-  const closeAll = () => { setFullModalOpen(false); setSelectedId(null) }
+  const closeAll = () => {
+    setFullModalOpen(false)
+    setSelectedId(null)
+  }
 
   return createPortal(
     <AnimatePresence>
@@ -61,6 +79,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
           data-outside-click-ignore
           onPointerDown={e => e.stopPropagation()}
         >
+          {/* Backdrop */}
           <motion.div
             animate={{ opacity: 1 }}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -69,6 +88,8 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
             onClick={closeAll}
             transition={{ duration: 0.2 }}
           />
+
+          {/* Modal card */}
           <motion.div
             animate={{ opacity: 1, scale: 1 }}
             className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
@@ -77,16 +98,19 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
             onClick={e => e.stopPropagation()}
             transition={{ duration: 0.2 }}
           >
+            {/* Type watermark — large, bottom-right */}
             <Image
               alt=""
               aria-hidden="true"
-              className="absolute -bottom-16 -right-16 h-[512px] w-[512px] opacity-10 grayscale"
+              className="absolute -bottom-24 -right-24 h-[640px] w-[640px] opacity-[0.07] grayscale"
               height={512}
               loading="eager"
               src={`/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`}
               unoptimized
               width={512}
             />
+
+            {/* Inset border + dark overlay */}
             <div
               className="pointer-events-none absolute inset-3 rounded-xl border bg-black/25"
               style={{
@@ -95,27 +119,29 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               }}
             />
 
-            {/* LEFT SIDEBAR */}
-            <div className="relative z-10 flex w-[28%] min-w-0 shrink-0 flex-col items-center gap-5 border-r border-white/10 p-8 pb-6">
-              {pokemon.officialUrl && (
-                <div className="relative flex flex-1 items-center justify-center">
-                  <div className="relative h-44 w-44 xl:h-56 xl:w-56 2xl:h-64 2xl:w-64">
+            {/* ── LEFT: artwork + controls + stats ── */}
+            <div className="relative z-10 flex w-[32%] shrink-0 flex-col border-r border-white/10">
+              {/* Artwork — fills flex-1, scales with panel */}
+              <div className="relative flex min-h-0 flex-1 items-center justify-center px-8 pt-16 pb-3">
+                {pokemon.officialUrl && (
+                  <div className="relative w-full" style={{ aspectRatio: '1' }}>
                     <motion.div
                       animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
+                      className="h-full w-full"
                       transition={{ duration: 0.2 }}
                     >
                       <Image
                         alt={pokemon.name}
-                        className="h-44 w-44 xl:h-56 xl:w-56 2xl:h-64 2xl:w-64 object-contain"
+                        className="object-contain"
                         draggable={false}
-                        height={384}
+                        fill
                         onContextMenu={e => e.preventDefault()}
+                        sizes="(min-width: 1536px) 420px, (min-width: 1280px) 360px, 300px"
                         src={pokemon.officialUrl}
                         style={{
-                          filter: `drop-shadow(0 20px 30px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`
+                          filter: `drop-shadow(0 24px 40px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 50%))`
                         }}
                         unoptimized
-                        width={384}
                       />
                     </motion.div>
                     {!gifError && gifMounted && (
@@ -133,100 +159,67 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                       />
                     )}
                   </div>
-                  <div className="absolute bottom-0 left-0">
-                    <button
-                      className="flex cursor-pointer items-center gap-1 text-xs font-medium text-white/70 select-none"
-                      onClick={handleCopy}
-                      type="button"
-                    >
-                      {copied ? <TbCheck size={14} /> : <TbLink size={14} />}
-                      <span>{copied ? 'Copied!' : 'Copy link'}</span>
-                    </button>
-                  </div>
-                  {!gifError && (
-                    <div className="absolute bottom-0 right-0">
-                      <Switch
-                        isSelected={gifEnabled}
-                        onChange={v => setGifEnabled(v)}
-                        size="sm"
-                        style={
-                          {
-                            '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                            '--switch-control-bg-checked': bgClassToVar(typeColor),
-                            '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
-                            '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-                          } as CSSProperties
-                        }
-                      >
-                        <Switch.Control>
-                          <Switch.Thumb />
-                        </Switch.Control>
-                        <Switch.Content>
-                          <Label className="cursor-pointer select-none text-xs font-medium text-white/70">
-                            3D
-                          </Label>
-                        </Switch.Content>
-                      </Switch>
-                    </div>
-                  )}
-                </div>
-              )}
+                )}
+              </div>
 
-              <div className="w-full text-center">
-                <div className="flex items-center justify-center gap-2">
-                  <h2
-                    className={`truncate font-bold capitalize text-white ${
-                      pokemon.name.length > 14
-                        ? 'text-xl xl:text-2xl 2xl:text-3xl'
-                        : 'text-2xl xl:text-3xl 2xl:text-4xl'
-                    }`}
+              {/* Controls row */}
+              <div className="flex shrink-0 items-center justify-between border-t border-white/10 px-8 py-2.5">
+                <button
+                  className="flex cursor-pointer items-center gap-1 text-xs font-medium text-white/60 transition-colors hover:text-white/90 select-none"
+                  onClick={handleCopy}
+                  type="button"
+                >
+                  {copied ? <TbCheck size={14} /> : <TbLink size={14} />}
+                  {copied ? 'Copied!' : 'Copy link'}
+                </button>
+                {!gifError && (
+                  <Switch
+                    isSelected={gifEnabled}
+                    onChange={v => setGifEnabled(v)}
+                    size="sm"
+                    style={
+                      {
+                        '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
+                        '--switch-control-bg-checked': bgClassToVar(typeColor),
+                        '--switch-control-bg-checked-hover':
+                          bgClassToVar(typeColor),
+                        '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
+                      } as CSSProperties
+                    }
                   >
-                    {pokemon.name}
-                  </h2>
-                  {pokemon.isMythical && (
-                    <TbSparkles className="shrink-0 text-pink-400" size={20} />
-                  )}
-                  {pokemon.isLegendary && (
-                    <IoMdStar className="shrink-0 text-yellow-400" size={20} />
-                  )}
-                </div>
-                <span className="block font-semibold tracking-wide text-white/50 text-sm xl:text-base">
-                  {formatPokedexId(pokemon.id)}
-                </span>
-                {pokemon.genus && (
-                  <span className="mt-0.5 block italic text-white/40 text-xs xl:text-sm">
-                    {pokemon.genus}
-                  </span>
+                    <Switch.Control>
+                      <Switch.Thumb />
+                    </Switch.Control>
+                    <Switch.Content>
+                      <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
+                        3D
+                      </Label>
+                    </Switch.Content>
+                  </Switch>
                 )}
               </div>
 
-              <div className="flex flex-wrap justify-center gap-1.5">
-                {pokemon.types.map(type => (
-                  <TypeBadge key={type} size="lg" type={type} />
-                ))}
-                {pokemon.isMythical && (
-                  <span className="rounded-full bg-pink-400 px-2.5 py-0.5 text-xs font-medium text-black">
-                    Mythical
-                  </span>
-                )}
-                {pokemon.isLegendary && (
-                  <span className="rounded-full bg-yellow-400 px-2.5 py-0.5 text-xs font-medium text-black">
-                    Legendary
-                  </span>
-                )}
-              </div>
-
-              <div className="grid w-full grid-cols-2 gap-x-6 gap-y-2.5">
-                <SidebarStat label="Height" value={`${pokemon.height.toFixed(1)} m`} />
-                <SidebarStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
-                <SidebarStat label="Generation" value={`Gen ${pokemon.generation}`} />
-                <SidebarStat label="Base Total" value={bst} />
+              {/* Physical stats grid */}
+              <div className="grid shrink-0 grid-cols-2 gap-x-6 gap-y-3 px-8 py-5">
+                <PhysicalStat
+                  label="Height"
+                  value={`${pokemon.height.toFixed(1)} m`}
+                />
+                <PhysicalStat
+                  label="Weight"
+                  value={`${pokemon.weight.toFixed(1)} lbs`}
+                />
+                <PhysicalStat
+                  label="Generation"
+                  value={`Gen ${pokemon.generation}`}
+                />
+                <PhysicalStat label="Base Total" value={bst} />
               </div>
             </div>
 
-            {/* RIGHT CONTENT */}
+            {/* ── RIGHT: identity header + tabs ── */}
             <div
-              className="relative z-10 flex min-h-0 flex-1 flex-col p-6 pt-14"
+              className="relative z-10 flex min-h-0 flex-1 flex-col"
               style={
                 {
                   '--accent': bgClassToVar(typeColor),
@@ -236,69 +229,142 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 } as CSSProperties
               }
             >
-              <Tabs
-                className="flex min-h-0 flex-1 flex-col"
-                onSelectionChange={key =>
-                  setActiveTab(key as 'battle' | 'bio' | 'evo' | 'moves' | 'stats')
-                }
-                selectedKey={activeTab}
-                variant="secondary"
-              >
-                <Tabs.ListContainer>
-                  <Tabs.List aria-label="Pokemon info">
-                    <Tabs.Tab className="text-sm xl:text-base" id="stats">
-                      Stats
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                    <Tabs.Tab className="text-sm xl:text-base" id="battle">
-                      Battle
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                    <Tabs.Tab className="text-sm xl:text-base" id="bio">
-                      Bio
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                    <Tabs.Tab className="text-sm xl:text-base" id="moves">
-                      Moves
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                    <Tabs.Tab className="text-sm xl:text-base" id="evo">
-                      Evol
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                  </Tabs.List>
-                </Tabs.ListContainer>
-                <Tabs.Panel
-                  className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
-                  id="stats"
+              {/* Identity header */}
+              <div className="shrink-0 px-8 pb-5 pt-16">
+                {/* Name row */}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <h2
+                      className={`truncate font-black capitalize leading-none text-white ${
+                        pokemon.name.length > 12
+                          ? 'text-3xl xl:text-4xl 2xl:text-5xl'
+                          : 'text-4xl xl:text-5xl 2xl:text-6xl'
+                      }`}
+                    >
+                      {pokemon.name}
+                    </h2>
+                    {pokemon.isMythical && (
+                      <TbSparkles
+                        className="mb-0.5 shrink-0 text-pink-400"
+                        size={22}
+                      />
+                    )}
+                    {pokemon.isLegendary && (
+                      <IoMdStar
+                        className="mb-0.5 shrink-0 text-yellow-400"
+                        size={22}
+                      />
+                    )}
+                  </div>
+                  <span className="mt-1 shrink-0 font-mono text-base font-semibold tracking-widest text-white/30 xl:text-lg">
+                    {formatPokedexId(pokemon.id)}
+                  </span>
+                </div>
+
+                {/* Genus */}
+                {pokemon.genus && (
+                  <p className="mt-1 text-sm italic text-white/45 xl:text-base">
+                    {pokemon.genus}
+                  </p>
+                )}
+
+                {/* Types + special badges */}
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  {pokemon.types.map(type => (
+                    <TypeBadge key={type} size="lg" type={type} />
+                  ))}
+                  {pokemon.isMythical && (
+                    <span className="rounded-full bg-pink-400 px-2.5 py-0.5 text-xs font-semibold text-black">
+                      Mythical
+                    </span>
+                  )}
+                  {pokemon.isLegendary && (
+                    <span className="rounded-full bg-yellow-400 px-2.5 py-0.5 text-xs font-semibold text-black">
+                      Legendary
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="mx-8 shrink-0 border-t border-white/10" />
+
+              {/* Tabs */}
+              <div className="flex min-h-0 flex-1 flex-col px-8 pt-4">
+                <Tabs
+                  className="flex min-h-0 flex-1 flex-col"
+                  onSelectionChange={key =>
+                    setActiveTab(
+                      key as 'battle' | 'bio' | 'evo' | 'moves' | 'stats'
+                    )
+                  }
+                  selectedKey={activeTab}
+                  variant="secondary"
                 >
-                  {activeTab === 'stats' && <FullStatsPanel bst={bst} pokemon={pokemon} />}
-                </Tabs.Panel>
-                <Tabs.Panel
-                  className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
-                  id="battle"
-                >
-                  {activeTab === 'battle' && <FullBattlePanel pokemon={pokemon} />}
-                </Tabs.Panel>
-                <Tabs.Panel
-                  className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
-                  id="bio"
-                >
-                  {activeTab === 'bio' && <FullBioPanel pokemon={pokemon} />}
-                </Tabs.Panel>
-                <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="moves">
-                  {activeTab === 'moves' && <FullMovesPanel pokemon={pokemon} />}
-                </Tabs.Panel>
-                <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="evo">
-                  {activeTab === 'evo' && <EvolutionPanel pokemon={pokemon} />}
-                </Tabs.Panel>
-              </Tabs>
+                  <Tabs.ListContainer>
+                    <Tabs.List aria-label="Pokemon info">
+                      <Tabs.Tab className="text-sm xl:text-base" id="stats">
+                        Stats
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab className="text-sm xl:text-base" id="battle">
+                        Battle
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab className="text-sm xl:text-base" id="bio">
+                        Bio
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab className="text-sm xl:text-base" id="moves">
+                        Moves
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab className="text-sm xl:text-base" id="evo">
+                        Evol
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                    </Tabs.List>
+                  </Tabs.ListContainer>
+                  <Tabs.Panel
+                    className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
+                    id="stats"
+                  >
+                    {activeTab === 'stats' && (
+                      <FullStatsPanel bst={bst} pokemon={pokemon} />
+                    )}
+                  </Tabs.Panel>
+                  <Tabs.Panel
+                    className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
+                    id="battle"
+                  >
+                    {activeTab === 'battle' && (
+                      <FullBattlePanel pokemon={pokemon} />
+                    )}
+                  </Tabs.Panel>
+                  <Tabs.Panel
+                    className={`${TAB_PANEL_SCROLL} pt-4 text-sm xl:text-base`}
+                    id="bio"
+                  >
+                    {activeTab === 'bio' && <FullBioPanel pokemon={pokemon} />}
+                  </Tabs.Panel>
+                  <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="moves">
+                    {activeTab === 'moves' && (
+                      <FullMovesPanel pokemon={pokemon} />
+                    )}
+                  </Tabs.Panel>
+                  <Tabs.Panel className={`${TAB_PANEL_SCROLL} pt-4`} id="evo">
+                    {activeTab === 'evo' && (
+                      <EvolutionPanel pokemon={pokemon} />
+                    )}
+                  </Tabs.Panel>
+                </Tabs>
+              </div>
             </div>
 
-            {/* TOP-RIGHT CONTROLS */}
+            {/* ── TOP-RIGHT CONTROLS ── */}
             <div className="absolute right-4 top-4 z-20 flex items-center gap-1">
               <button
-                aria-label="Previous Pokemon"
+                aria-label="Previous"
                 className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={onPrev}
                 type="button"
@@ -306,7 +372,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 <TbChevronLeft size={16} />
               </button>
               <button
-                aria-label="Next Pokemon"
+                aria-label="Next"
                 className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={onNext}
                 type="button"
@@ -315,7 +381,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               </button>
               <button
                 aria-label="Minimize to card"
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                className="ml-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={() => setFullModalOpen(false)}
                 type="button"
               >
@@ -323,7 +389,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               </button>
               <button
                 aria-label="Close"
-                className="ml-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/20 text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={closeAll}
                 type="button"
               >
@@ -338,11 +404,21 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
   )
 }
 
-function SidebarStat({ label, value }: { label: string; value: string | number }) {
+function PhysicalStat({
+  label,
+  value
+}: {
+  label: string
+  value: string | number
+}) {
   return (
-    <div className="flex flex-col">
-      <span className="text-white/50 text-xs xl:text-sm">{label}</span>
-      <span className="font-medium text-white text-sm xl:text-base">{value}</span>
+    <div className="flex flex-col gap-0.5">
+      <span className="text-[11px] font-medium uppercase tracking-wider text-white/40">
+        {label}
+      </span>
+      <span className="font-semibold text-white text-sm xl:text-base">
+        {value}
+      </span>
     </div>
   )
 }
