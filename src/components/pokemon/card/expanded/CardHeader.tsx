@@ -21,7 +21,7 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
           >
             {pokemon.name}
           </motion.h2>
-          {(pokemon.isLegendary || pokemon.isMythical) && (
+          {(pokemon.isLegendary ?? pokemon.isMythical) && (
             <motion.div
               layoutId={`star-${pokemon.id}-${id}`}
               transition={CARD_TRANSITION}
@@ -29,14 +29,26 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               {pokemon.isMythical ? (
                 <>
                   <TbSparkles className="text-pink-400 xl:hidden" size={22} />
-                  <TbSparkles className="text-pink-400 hidden xl:block 2xl:hidden" size={26} />
-                  <TbSparkles className="text-pink-400 hidden 2xl:block" size={30} />
+                  <TbSparkles
+                    className="text-pink-400 hidden xl:block 2xl:hidden"
+                    size={26}
+                  />
+                  <TbSparkles
+                    className="text-pink-400 hidden 2xl:block"
+                    size={30}
+                  />
                 </>
               ) : (
                 <>
                   <IoMdStar className="text-yellow-400 xl:hidden" size={22} />
-                  <IoMdStar className="text-yellow-400 hidden xl:block 2xl:hidden" size={26} />
-                  <IoMdStar className="text-yellow-400 hidden 2xl:block" size={30} />
+                  <IoMdStar
+                    className="text-yellow-400 hidden xl:block 2xl:hidden"
+                    size={26}
+                  />
+                  <IoMdStar
+                    className="text-yellow-400 hidden 2xl:block"
+                    size={30}
+                  />
                 </>
               )}
             </motion.div>

@@ -397,12 +397,17 @@ async function main() {
     p.typeMatchups = computeTypeMatchups(p.types, typeChart)
   }
 
-  // Fetch details for all unique level-up moves (deduplicated across all Pokemon)
-  console.log('\nFetching level-up move details...')
+  // Fetch details for all unique moves (level-up, egg, machine — deduplicated)
+  console.log('\nFetching move details...')
   const moveUrlMap = new Map()
   for (const p of results) {
     for (const m of p.learnset.levelUp) {
       if (!moveUrlMap.has(m.name)) moveUrlMap.set(m.name, m._url)
+    }
+    for (const name of [...p.learnset.egg, ...p.learnset.machine]) {
+      if (!moveUrlMap.has(name)) {
+        moveUrlMap.set(name, `${POKEAPI}/move/${name}`)
+      }
     }
   }
 
@@ -427,11 +432,19 @@ async function main() {
     )
   }
 
-  // Attach move details and strip temp _url field
+  // Attach move details — level-up gets level preserved, egg/machine become MoveDetail objects
   for (const p of results) {
     p.learnset.levelUp = p.learnset.levelUp.map(({ _url, ...rest }) => ({
       ...rest,
       ...(moveDetails[rest.name] ?? {})
+    }))
+    p.learnset.egg = p.learnset.egg.map(name => ({
+      name,
+      ...(moveDetails[name] ?? { accuracy: null, category: 'status', power: null, pp: 0, type: 'Normal' })
+    }))
+    p.learnset.machine = p.learnset.machine.map(name => ({
+      name,
+      ...(moveDetails[name] ?? { accuracy: null, category: 'status', power: null, pp: 0, type: 'Normal' })
     }))
   }
 
