@@ -39,7 +39,13 @@ export default function PokemonGrid() {
   const setSelectedId = useSelectionStore(s => s.setSelectedId)
 
   const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
-    usePokemonQuery(debouncedSearch, sortBy, sortOrder, selectedTypes, selectedGens)
+    usePokemonQuery(
+      debouncedSearch,
+      sortBy,
+      sortOrder,
+      selectedTypes,
+      selectedGens
+    )
 
   const { directData, needsDirect } = useDirectCard(pokemon)
 
@@ -73,22 +79,27 @@ export default function PokemonGrid() {
       {needsDirect && directData && <DirectCard pokemon={directData} />}
       <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
-          <motion.div className="overflow-hidden" style={{ height: titleHeight, opacity: titleOpacity }}>
+          <motion.div
+            className="overflow-hidden"
+            style={{ height: titleHeight, opacity: titleOpacity }}
+          >
             <div className="mb-3 2xl:mb-4 flex items-center justify-between">
-              <a className="flex items-center gap-1.5 2xl:gap-2" href="/">
+              <a href="/">
                 <Image
-                  alt=""
-                  aria-hidden="true"
-                  className="h-5 w-5 2xl:h-6 2xl:w-6"
-                  height={64}
+                  alt="Opendex"
+                  className="h-6 w-auto"
+                  height={128}
                   src="/opendex.png"
                   unoptimized
-                  width={64}
+                  width={128}
                 />
-                <h1 className="text-lg 2xl:text-xl font-bold tracking-tight">Opendex</h1>
               </a>
               <Button asChild size="sm" variant="outline">
-                <a href="https://ko-fi.com/amgdev" rel="noopener noreferrer" target="_blank">
+                <a
+                  href="https://ko-fi.com/amgdev"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
                   ☕ Support on Ko-fi
                 </a>
               </Button>
@@ -98,7 +109,10 @@ export default function PokemonGrid() {
         </div>
       </div>
       <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl p-4 pt-32 xl:pt-40">
-        <GridStatus empty={status === 'success' && pokemon.length === 0} status={status} />
+        <GridStatus
+          empty={status === 'success' && pokemon.length === 0}
+          status={status}
+        />
         <div className="relative w-full" style={{ height: totalHeight }}>
           {virtualItems.map(row => (
             <div
