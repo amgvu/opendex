@@ -29,7 +29,9 @@ export function FilterControls() {
 
   const filteredTypes = useMemo(() => {
     if (!normalizedQuery) return ALL_TYPES
-    return ALL_TYPES.filter(type => type.toLowerCase().includes(normalizedQuery))
+    return ALL_TYPES.filter(type =>
+      type.toLowerCase().includes(normalizedQuery)
+    )
   }, [normalizedQuery])
 
   const addTypeFromInput = () => {
@@ -54,7 +56,7 @@ export function FilterControls() {
         </span>
         <Popover onOpenChange={setTypePopoverOpen} open={isTypePopoverOpen}>
           <PopoverAnchor asChild>
-            <div className="relative w-64">
+            <div className="relative 2xl:w-64">
               <div
                 className="border-input dark:bg-input/30 bg-transparent focus-within:border-ring focus-within:ring-ring/50 flex min-h-8 w-full flex-wrap items-center gap-1 rounded-md border px-2 py-1 text-xs shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]"
                 onClick={() => setTypePopoverOpen(true)}
@@ -89,7 +91,11 @@ export function FilterControls() {
                     e.preventDefault()
                     addTypeFromInput()
                   }}
-                  placeholder={selectedTypes.length > 0 ? 'Add type...' : 'Search or add type...'}
+                  placeholder={
+                    selectedTypes.length > 0
+                      ? 'Add type...'
+                      : 'Search or add type...'
+                  }
                   value={typeQuery}
                 />
               </div>
