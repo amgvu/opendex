@@ -17,6 +17,7 @@ const GROWTH_RATE_LABELS: Record<string, string> = {
   'medium-slow': 'Med. Slow',
   slow: 'Slow'
 }
+const STATS_TEXT_SIZE = 'text-xs sm:text-sm xl:text-lg 2xl:text-xl'
 
 export function StatsPanel({
   bst,
@@ -30,7 +31,7 @@ export function StatsPanel({
   return (
     <TabPanelContent>
       <div className="flex flex-col gap-0.5">
-        <div className="flex items-center gap-3 text-xs sm:text-sm xl:text-base 2xl:text-lg mb-2">
+        <div className={`mb-3 flex items-center gap-3 xl:mb-4 xl:gap-4 ${STATS_TEXT_SIZE}`}>
           <div className="flex items-center gap-1 shrink-0">
             <span className="font-medium text-white/50">Base Stats</span>
             <button
@@ -89,7 +90,7 @@ export function StatsPanel({
           )}
         </AnimatePresence>
 
-        <div className="grid grid-cols-3 gap-2 mt-2">
+        <div className={`mt-3 grid grid-cols-3 gap-2.5 xl:mt-4 xl:gap-4 ${STATS_TEXT_SIZE}`}>
           <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
           <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
           <InfoStat label="Gen" value={pokemon.generation} />
