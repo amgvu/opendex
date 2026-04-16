@@ -2,7 +2,12 @@ import type { LearnsetMove, MoveDetail, Pokemon } from '@/types/pokemon'
 
 import { getTypeColor } from '@/lib/pokemon'
 
-import { TabPanelContent } from './shared'
+import {
+  MetaLabel,
+  PANEL_BADGE_TEXT,
+  PANEL_BODY_TEXT,
+  TabPanelContent
+} from './shared'
 
 const CATEGORY_STYLES: Record<string, string> = {
   physical: 'bg-orange-500/30 text-orange-300',
@@ -32,10 +37,10 @@ export function MoveTable({
 }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-xs xl:text-sm 2xl:text-base">
+      <table className={`w-full border-collapse ${PANEL_BODY_TEXT}`}>
         <thead>
           <tr className="text-left text-white/40">
-            {showLevel && <th className="pb-1 pr-2 font-medium w-7">Lv</th>}
+            {showLevel && <th className={`w-7 pb-1 pr-2 font-medium ${PANEL_BADGE_TEXT}`}>Lv</th>}
             <th className="pb-1 pr-2 font-medium">Move</th>
             <th className="pb-1 pr-2 font-medium">Type</th>
             <th className="pb-1 pr-2 font-medium">Cat</th>
@@ -60,14 +65,14 @@ export function MoveTable({
               </td>
               <td className="py-1 pr-2">
                 <span
-                  className={`inline-block rounded-full px-1.5 py-px text-[10px] xl:text-xs font-medium text-white ${getTypeColor(move.type)}`}
+                  className={`inline-block rounded-full px-1.5 py-px font-medium text-white ${getTypeColor(move.type)} ${PANEL_BADGE_TEXT}`}
                 >
                   {move.type}
                 </span>
               </td>
               <td className="py-1 pr-2">
                 <span
-                  className={`inline-block rounded px-1 py-px text-[10px] xl:text-xs font-medium ${CATEGORY_STYLES[move.category] ?? CATEGORY_STYLES.status}`}
+                  className={`inline-block rounded px-1 py-px font-medium ${CATEGORY_STYLES[move.category] ?? CATEGORY_STYLES.status} ${PANEL_BADGE_TEXT}`}
                 >
                   {CATEGORY_LABELS[move.category] ?? move.category}
                 </span>
@@ -104,27 +109,27 @@ export function LearnsetPanel({ pokemon }: { pokemon: Pokemon }) {
     <TabPanelContent className="flex flex-col gap-4">
       {learnset.levelUp.length > 0 && (
         <div>
-          <p className="mb-1.5 text-[10px] xl:text-xs font-medium uppercase tracking-wider text-white/40">
-            Level Up
-          </p>
+          <div className="mb-1.5">
+            <MetaLabel>Level Up</MetaLabel>
+          </div>
           <MoveTable moves={learnset.levelUp} showLevel />
         </div>
       )}
 
       {learnset.egg.length > 0 && (
         <div>
-          <p className="mb-1.5 text-[10px] xl:text-xs font-medium uppercase tracking-wider text-white/40">
-            Egg Moves
-          </p>
+          <div className="mb-1.5">
+            <MetaLabel>Egg Moves</MetaLabel>
+          </div>
           <MoveTable moves={learnset.egg} />
         </div>
       )}
 
       {learnset.machine.length > 0 && (
         <div>
-          <p className="mb-1.5 text-[10px] xl:text-xs font-medium uppercase tracking-wider text-white/40">
-            TM / Tutor
-          </p>
+          <div className="mb-1.5">
+            <MetaLabel>TM / Tutor</MetaLabel>
+          </div>
           <MoveTable moves={learnset.machine} />
         </div>
       )}

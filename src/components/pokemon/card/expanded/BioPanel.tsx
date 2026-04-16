@@ -1,31 +1,38 @@
 import type { Pokemon } from '@/types/pokemon'
 
-import { InfoStat, TabPanelContent } from './shared'
+import {
+  InfoStat,
+  MetaLabel,
+  PANEL_BODY_TEXT,
+  TabPanelContent
+} from './shared'
 
 export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
   return (
     <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
       {pokemon.genus && (
-        <p className="text-xs xl:text-sm 2xl:text-base italic text-white/50">
+        <p className={`${PANEL_BODY_TEXT} italic text-white/50`}>
           {pokemon.genus}
         </p>
       )}
-      <p className="text-white/70 leading-snug">{pokemon.description}</p>
+      <p className={`${PANEL_BODY_TEXT} text-white/70 leading-snug`}>
+        {pokemon.description}
+      </p>
       {pokemon.flavorTexts && pokemon.flavorTexts.length > 1 && (
         <div className="flex flex-col gap-2">
           {pokemon.flavorTexts.slice(1).map(({ game, text }) => (
             <div key={game}>
-              <span className="text-[10px] xl:text-xs 2xl:text-sm tracking-wider text-white/30 capitalize">
+              <span className="text-xs uppercase tracking-wider text-white/30 capitalize sm:text-sm xl:text-base 2xl:text-lg">
                 {game.replace(/-/g, ' ')}
               </span>
-              <p className="text-xs xl:text-sm 2xl:text-base text-white/50 leading-snug">
+              <p className={`${PANEL_BODY_TEXT} text-white/50 leading-snug`}>
                 {text}
               </p>
             </div>
           ))}
         </div>
       )}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs xl:text-sm 2xl:text-base">
+      <div className={`grid grid-cols-2 gap-x-4 gap-y-2 ${PANEL_BODY_TEXT}`}>
         {pokemon.habitat != null && (
           <InfoStat
             label="Habitat"
@@ -70,14 +77,18 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
       </div>
       {pokemon.heldItems && pokemon.heldItems.length > 0 && (
         <div>
-          <p className="mb-1 text-[10px] xl:text-xs font-medium uppercase tracking-wider text-white/40">
-            Wild Held Items
-          </p>
+          <div className="mb-1">
+            <MetaLabel>Wild Held Items</MetaLabel>
+          </div>
           <div className="flex flex-col gap-1">
             {pokemon.heldItems.map(item => (
               <div className="flex items-center gap-1.5" key={item.name}>
-                <span className="text-xs xl:text-sm 2xl:text-base text-white/70">{item.name}</span>
-                <span className="text-xs text-white/35">({item.rarity}%)</span>
+                <span className={`${PANEL_BODY_TEXT} text-white/70`}>
+                  {item.name}
+                </span>
+                <span className="text-xs text-white/35 sm:text-sm">
+                  ({item.rarity}%)
+                </span>
               </div>
             ))}
           </div>
