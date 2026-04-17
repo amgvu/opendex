@@ -222,7 +222,7 @@ export function ExpandedCard({
               </div>
             </motion.div>
           </div>
-          <FullModal pokemon={pokemon} />
+          <FullModal id={id} pokemon={pokemon} />
         </>
       )}
     </AnimatePresence>

@@ -34,7 +34,7 @@ import { FullStatsPanel } from './FullStatsPanel'
 const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain mb-4 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
-export function FullModal({ pokemon }: { pokemon: Pokemon }) {
+export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
   const {
     activeTab,
     fullModalOpen,
