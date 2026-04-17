@@ -21,7 +21,7 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
           <motion.h2
             animate={{ opacity: fullModalOpen ? 0 : 1 }}
             className={`min-w-0 truncate pb-1 font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
-            layoutId={`name-${pokemon.id}-${id}`}
+            layoutId={`name-${pokemon.name}-${id}`}
             transition={CARD_TRANSITION}
           >
             {pokemon.name}
@@ -34,7 +34,7 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
           {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
               animate={{ opacity: fullModalOpen ? 0 : 1 }}
-              layoutId={`star-${pokemon.id}-${id}`}
+              layoutId={`star-${pokemon.name}-${id}`}
               transition={CARD_TRANSITION}
             >
               {pokemon.isMythical ? (
@@ -72,7 +72,7 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
       <motion.div
         animate={{ opacity: fullModalOpen ? 0 : 1 }}
         className="flex shrink-0 flex-wrap gap-1"
-        layoutId={`types-${pokemon.id}-${id}`}
+        layoutId={`types-${pokemon.name}-${id}`}
         transition={CARD_TRANSITION}
       >
         {pokemon.types.map(type => (

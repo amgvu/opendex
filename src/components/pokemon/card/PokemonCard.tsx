@@ -4,11 +4,11 @@ import { LayoutGroup } from 'motion/react'
 import { memo, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
-import { usePokemonByIdQuery } from '@/hooks/query/usePokemonByIdQuery'
+import { usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { DefaultCard } from './default/DefaultCard'
@@ -28,16 +28,15 @@ export const PokemonCard = memo(
   }) {
     const ref = useRef<HTMLDivElement>(null)
     const id = useId()
-    const setSelectedId = useSelectionStore(s => s.setSelectedId)
-    const onClose = () => setSelectedId(null)
-    const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
-    const { pokemon: detail } = usePokemonByIdQuery(active ? pokemon.id : null, variantIndex)
+    const setSelectedName = useSelectionStore(s => s.setSelectedName)
+    const onClose = () => setSelectedName(null)
+    const { pokemon: detail } = usePokemonByNameQuery(active ? pokemon.name : null)
 
     useOutsideClick(ref, onClose, active)
     useBodyScrollLock(active, onClose)
 
     return (
-      <LayoutGroup id={`pokemon-${String(pokemon.id)}-${variantIndex ?? 'base'}`}>
+      <LayoutGroup id={`pokemon-${pokemon.name}`}>
         {createPortal(
           <ExpandedCard active={active} id={id} pokemon={detail ?? pokemon} ref={ref} />,
           document.body

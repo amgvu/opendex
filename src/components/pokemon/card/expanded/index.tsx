@@ -61,7 +61,7 @@ export function ExpandedCard({
               dragControls={dragControls}
               dragElastic={0.1}
               dragListener={false}
-              layoutId={`card-${pokemon.id}-${id}`}
+              layoutId={`card-${pokemon.name}-${id}`}
               onDragEnd={(_, info) => {
                 setDragging(false)
                 if (info.offset.x < -50) onNext()

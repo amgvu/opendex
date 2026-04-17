@@ -13,8 +13,8 @@ import { ExpandedCard } from './expanded'
 
 export function DirectCard({ pokemon }: { pokemon: PokemonEntry }) {
   const ref = useRef<HTMLDivElement>(null)
-  const setSelectedId = useSelectionStore(s => s.setSelectedId)
-  const onClose = () => setSelectedId(null)
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
+  const onClose = () => setSelectedName(null)
   useOutsideClick(ref, onClose, true)
   useBodyScrollLock(true, onClose)
   return createPortal(

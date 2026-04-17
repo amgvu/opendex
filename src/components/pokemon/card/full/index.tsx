@@ -45,7 +45,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
     setGifEnabled
   } = useCardContext()
   const { onNext, onPrev } = useNavContext()
-  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled)
   const [copied, setCopied] = useState(false)
@@ -60,7 +60,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
   function handleCopy() {
     const params = new URLSearchParams(window.location.search)
-    params.set('pokemon', String(pokemon.id))
+    params.set('pokemon', pokemon.name)
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     void navigator.clipboard.writeText(url)
     setCopied(true)
@@ -69,7 +69,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
   const closeAll = () => {
     setFullModalOpen(false)
-    setSelectedId(null)
+    setSelectedName(null)
   }
 
   return createPortal(
@@ -129,7 +129,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                     animate={{ opacity: 1 }}
                     className="relative w-full"
                     initial={{ opacity: 0 }}
-                    layoutId={`image-${pokemon.id}-${id}`}
+                    layoutId={`image-${pokemon.name}-${id}`}
                     style={{ aspectRatio: '1' }}
                     transition={CARD_TRANSITION}
                   >
@@ -250,7 +250,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
                       initial={{ opacity: 0 }}
-                      layoutId={`name-${pokemon.id}-${id}`}
+                      layoutId={`name-${pokemon.name}-${id}`}
                       transition={CARD_TRANSITION}
                     >
                       {pokemon.name}
@@ -259,7 +259,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                       <motion.div
                         animate={{ opacity: 1 }}
                         initial={{ opacity: 0 }}
-                        layoutId={`star-${pokemon.id}-${id}`}
+                        layoutId={`star-${pokemon.name}-${id}`}
                         transition={CARD_TRANSITION}
                       >
                         {pokemon.isMythical && (
@@ -294,7 +294,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                   animate={{ opacity: 1 }}
                   className="mt-3 flex flex-wrap items-center gap-2"
                   initial={{ opacity: 0 }}
-                  layoutId={`types-${pokemon.id}-${id}`}
+                  layoutId={`types-${pokemon.name}-${id}`}
                   transition={CARD_TRANSITION}
                 >
                   {pokemon.types.map(type => (
