@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import { useSelectionStore } from '@/stores/selectionStore'
 
@@ -13,12 +13,17 @@ export function useCardNavigation({
   fetchNextPage: () => void
   hasNextPage: boolean
   isFetchingNextPage: boolean
-  pokemon: Pokemon[]
+  pokemon: PokemonEntry[]
 }) {
   const selectedId = useSelectionStore(s => s.selectedId)
+  const selectedVariantIndex = useSelectionStore(s => s.selectedVariantIndex)
   const setSelectedId = useSelectionStore(s => s.setSelectedId)
 
-  const selectedIndex = pokemon.findIndex(p => p.id === selectedId)
+  const selectedIndex = pokemon.findIndex(
+    p =>
+      p.id === selectedId &&
+      ((p as PokemonVariant).variantIndex ?? null) === selectedVariantIndex
+  )
   const pendingNextRef = useRef(false)
   const lastNavTimeRef = useRef(0)
 
@@ -33,7 +38,7 @@ export function useCardNavigation({
     if (!canNavigate() || selectedIndex === -1) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
-      setSelectedId(next.id)
+      setSelectedId(next.id, (next as PokemonVariant).variantIndex ?? null)
     } else if (hasNextPage && !isFetchingNextPage) {
       pendingNextRef.current = true
       void fetchNextPage()
@@ -43,7 +48,7 @@ export function useCardNavigation({
   const onPrev = useCallback(() => {
     if (!canNavigate() || selectedIndex === -1) return
     const prev = pokemon[selectedIndex - 1]
-    if (prev) setSelectedId(prev.id)
+    if (prev) setSelectedId(prev.id, (prev as PokemonVariant).variantIndex ?? null)
   }, [canNavigate, pokemon, selectedIndex, setSelectedId])
 
   useEffect(() => {
@@ -51,7 +56,7 @@ export function useCardNavigation({
     const next = pokemon[selectedIndex + 1]
     if (next) {
       pendingNextRef.current = false
-      setSelectedId(next.id)
+      setSelectedId(next.id, (next as PokemonVariant).variantIndex ?? null)
     }
   }, [pokemon, selectedIndex, setSelectedId])
 
