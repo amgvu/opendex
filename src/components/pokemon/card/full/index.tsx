@@ -242,26 +242,39 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 {/* Name row */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-2.5">
-                    <h2
+                    <motion.h2
+                      animate={{ opacity: 1 }}
                       className={`truncate font-black capitalize leading-tight text-white ${
                         pokemon.name.length > 12
                           ? 'text-3xl xl:text-4xl 2xl:text-5xl'
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
+                      initial={{ opacity: 0 }}
+                      layoutId={`name-${pokemon.id}-${id}`}
+                      transition={CARD_TRANSITION}
                     >
                       {pokemon.name}
-                    </h2>
-                    {pokemon.isMythical && (
-                      <TbSparkles
-                        className="mb-0.5 shrink-0 text-pink-400"
-                        size={22}
-                      />
-                    )}
-                    {pokemon.isLegendary && (
-                      <IoMdStar
-                        className="mb-0.5 shrink-0 text-yellow-400"
-                        size={22}
-                      />
+                    </motion.h2>
+                    {(pokemon.isMythical || pokemon.isLegendary) && (
+                      <motion.div
+                        animate={{ opacity: 1 }}
+                        initial={{ opacity: 0 }}
+                        layoutId={`star-${pokemon.id}-${id}`}
+                        transition={CARD_TRANSITION}
+                      >
+                        {pokemon.isMythical && (
+                          <TbSparkles
+                            className="mb-0.5 shrink-0 text-pink-400"
+                            size={22}
+                          />
+                        )}
+                        {pokemon.isLegendary && (
+                          <IoMdStar
+                            className="mb-0.5 shrink-0 text-yellow-400"
+                            size={22}
+                          />
+                        )}
+                      </motion.div>
                     )}
                   </div>
                   <span className="mt-1 shrink-0 font-mono text-base font-semibold tracking-widest text-white/30 xl:text-lg">
@@ -277,7 +290,13 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 )}
 
                 {/* Types + special badges */}
-                <div className="mt-3 flex flex-wrap items-center gap-2">
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  className="mt-3 flex flex-wrap items-center gap-2"
+                  initial={{ opacity: 0 }}
+                  layoutId={`types-${pokemon.id}-${id}`}
+                  transition={CARD_TRANSITION}
+                >
                   {pokemon.types.map(type => (
                     <TypeBadge key={type} size="lg" type={type} />
                   ))}
@@ -291,7 +310,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                       Legendary
                     </span>
                   )}
-                </div>
+                </motion.div>
               </div>
 
               {/* Divider */}
