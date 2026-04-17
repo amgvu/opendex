@@ -23,6 +23,24 @@ export type TypeMatchups = {
   weaknesses: { multiplier: number; type: string }[]
 }
 
+export type VariantType =
+  | 'alolan'
+  | 'galarian'
+  | 'hisuian'
+  | 'mega'
+  | 'mega-x'
+  | 'mega-y'
+  | 'paldean'
+
+export type PokemonVariant = Pokemon & {
+  variantIndex: number
+  variantOf: number
+  variantSlug: string
+  variantType: VariantType
+}
+
+export type PokemonEntry = Pokemon | PokemonVariant
+
 export type Pokemon = {
   abilities?: { description?: string; isHidden: boolean; name: string }[]
   attack: number
