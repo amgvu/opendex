@@ -92,12 +92,12 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
           {/* Modal card */}
           <motion.div
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1 }}
             className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
-            exit={{ opacity: 0, scale: 0.97 }}
-            initial={{ opacity: 0, scale: 0.97 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
             onClick={e => e.stopPropagation()}
-            transition={{ duration: 0.2 }}
+            transition={CARD_TRANSITION}
           >
             {/* Type watermark — large, bottom-right */}
             <Image
