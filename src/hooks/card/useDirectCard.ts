@@ -1,30 +1,21 @@
 import { useEffect } from 'react'
 
-import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
-import { usePokemonByIdQuery } from '@/hooks/query/usePokemonByIdQuery'
+import { fetchPokemonByName, usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 export function useDirectCard(pokemon: PokemonEntry[]) {
-  const selectedId = useSelectionStore(s => s.selectedId)
-  const selectedVariantIndex = useSelectionStore(s => s.selectedVariantIndex)
+  const selectedName = useSelectionStore(s => s.selectedName)
   const fromUrl = useSelectionStore(s => s.fromUrl)
 
-  const selectedInList =
-    selectedId !== null
-      ? (pokemon.find(
-          p =>
-            p.id === selectedId &&
-            ((p as PokemonVariant).variantIndex ?? null) === selectedVariantIndex
-        ) ?? null)
-      : null
+  const selectedInList = selectedName
+    ? (pokemon.find(p => p.name === selectedName) ?? null)
+    : null
 
-  const needsDirect = selectedId !== null && (fromUrl || selectedInList === null)
+  const needsDirect = selectedName !== null && (fromUrl || selectedInList === null)
 
-  const { pokemon: directPokemon } = usePokemonByIdQuery(
-    needsDirect ? selectedId : null,
-    selectedVariantIndex
-  )
+  const { pokemon: directPokemon } = usePokemonByNameQuery(needsDirect ? selectedName : null)
   const directData = needsDirect ? (selectedInList ?? directPokemon) : null
 
   useEffect(() => {
@@ -36,3 +27,5 @@ export function useDirectCard(pokemon: PokemonEntry[]) {
 
   return { directData, needsDirect }
 }
+
+export { fetchPokemonByName }
