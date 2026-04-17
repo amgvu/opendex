@@ -9,7 +9,8 @@ export function useSelectedPokemon() {
 
   useEffect(() => {
     const raw = parseInt(searchParams.get('pokemon') ?? '', 10)
-    if (!isNaN(raw)) setSelectedIdFromUrl(raw)
+    const vi = parseInt(searchParams.get('vi') ?? '', 10)
+    if (!isNaN(raw)) setSelectedIdFromUrl(raw, isNaN(vi) ? null : vi)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }

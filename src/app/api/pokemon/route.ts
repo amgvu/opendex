@@ -13,7 +13,7 @@ const SUMMARY_KEYS = new Set([
   'attack', 'blurDataURL', 'defense', 'description', 'generation',
   'height', 'hp', 'id', 'imageUrl', 'isLegendary', 'isMythical',
   'name', 'officialUrl', 'specialAttack', 'specialDefense', 'speed',
-  'types', 'weight'
+  'types', 'variantIndex', 'variantOf', 'variantSlug', 'variantType', 'weight'
 ])
 
 export function GET(request: NextRequest) {

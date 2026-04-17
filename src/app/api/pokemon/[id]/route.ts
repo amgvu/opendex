@@ -2,12 +2,12 @@ import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import pokemonData from '@/data/pokemon.json'
 
 export async function GET(
-  _: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
@@ -15,7 +15,17 @@ export async function GET(
   if (isNaN(numId)) {
     return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
   }
-  const pokemon = (pokemonData as Pokemon[]).find(p => p.id === numId)
+
+  const vi = req.nextUrl.searchParams.get('vi')
+  const variantIndex = vi !== null ? parseInt(vi) : null
+
+  const pokemon = (pokemonData as unknown as PokemonEntry[]).find(p =>
+    p.id === numId &&
+    (variantIndex !== null
+      ? (p as PokemonVariant).variantIndex === variantIndex
+      : !(p as PokemonVariant).variantType)
+  )
+
   if (!pokemon) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
