@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
 
-import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 import { Button } from '@/components/ui/button'
 import { NavProvider } from '@/context/navigation'
@@ -35,9 +35,8 @@ export default function PokemonGrid() {
   const sortOrder = useFilterStore(s => s.sortOrder)
   const selectedTypes = useFilterStore(s => s.selectedTypes)
   const selectedGens = useFilterStore(s => s.selectedGens)
-  const selectedId = useSelectionStore(s => s.selectedId)
-  const selectedVariantIndex = useSelectionStore(s => s.selectedVariantIndex)
-  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+  const selectedName = useSelectionStore(s => s.selectedName)
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
 
   const { hasNextPage, isFetchingNextPage, loadMore, pokemon, status } =
     usePokemonQuery(
@@ -67,13 +66,13 @@ export default function PokemonGrid() {
   return (
     <NavProvider onNext={onNext} onPrev={onPrev}>
       <AnimatePresence>
-        {selectedId && (
+        {selectedName && (
           <motion.div
             animate={{ opacity: 1 }}
             className="fixed inset-0 z-40 bg-black/40"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-            onClick={() => setSelectedId(null)}
+            onClick={() => setSelectedName(null)}
           />
         )}
       </AnimatePresence>
@@ -131,14 +130,10 @@ export default function PokemonGrid() {
             >
               {getRowPokemon(row.index).map((p: PokemonEntry, i: number) => (
                 <PokemonCard
-                  active={
-                    !needsDirect &&
-                    selectedId === p.id &&
-                    selectedVariantIndex === ((p as PokemonVariant).variantIndex ?? null)
-                  }
+                  active={!needsDirect && selectedName === p.name}
                   index={row.index * columns + i}
                   key={p.name}
-                  onClick={() => setSelectedId(p.id, (p as PokemonVariant).variantIndex ?? null)}
+                  onClick={() => setSelectedName(p.name)}
                   pokemon={p}
                 />
               ))}
