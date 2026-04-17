@@ -12,7 +12,7 @@ import {
   pokemonByNameQueryKey
 } from '@/hooks/query/usePokemonByNameQuery'
 import { CARD_TRANSITION } from '@/lib/constants'
-import { formatPokedexId, getTypeColor, VARIANT_LABELS } from '@/lib/pokemon'
+import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
@@ -34,9 +34,6 @@ export function DefaultCard({
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
   const queryClient = useQueryClient()
-  const variantLabel = (pokemon as PokemonVariant).variantType
-    ? VARIANT_LABELS[(pokemon as PokemonVariant).variantType]
-    : null
   const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
 
   return (
@@ -111,7 +108,7 @@ export function DefaultCard({
             layoutId={`name-${pokemon.name}-${id}`}
             transition={CARD_TRANSITION}
           >
-            {variantLabel ? `${variantLabel} ${pokemon.name}` : pokemon.name}
+            {pokemon.name}
           </motion.p>
           <span className="flex-shrink-0 text-[10px] font-mono sm:text-xs 2xl:text-sm tracking-wide font-semibold text-white">
             {formatPokedexId(pokemon.id, variantIndex)}
