@@ -27,5 +27,3 @@ export function useDirectCard(pokemon: PokemonEntry[]) {
 
   return { directData, needsDirect }
 }
-
-export { fetchPokemonByName }

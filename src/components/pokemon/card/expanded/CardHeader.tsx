@@ -26,11 +26,6 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
           >
             {pokemon.name}
           </motion.h2>
-          {variantLabel && (
-            <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs xl:text-sm font-semibold text-white shrink-0">
-              {variantLabel}
-            </span>
-          )}
           {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
               animate={{ opacity: fullModalOpen ? 0 : 1 }}

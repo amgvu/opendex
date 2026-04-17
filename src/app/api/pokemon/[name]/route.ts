@@ -6,12 +6,16 @@ import type { PokemonEntry } from '@/types/pokemon'
 
 import pokemonData from '@/data/pokemon.json'
 
+const pokemonByName = new Map(
+  (pokemonData as unknown as PokemonEntry[]).map(p => [p.name, p])
+)
+
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ name: string }> }
 ) {
   const { name } = await params
-  const pokemon = (pokemonData as unknown as PokemonEntry[]).find(p => p.name === name)
+  const pokemon = pokemonByName.get(name)
   if (!pokemon) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }

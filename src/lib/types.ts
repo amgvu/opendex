@@ -60,7 +60,6 @@ export type VariantType =
   | 'mega-y'
   | 'paldean'
 
-// Fields present on every entry (base and variant)
 type PokemonBase = {
   abilities: Ability[]
   attack: number
@@ -99,14 +98,12 @@ type PokemonBase = {
   weight: number
 }
 
-// A standard (base) Pokemon entry
 export type Pokemon = PokemonBase & {
   female: FemaleSprites | null
   gigantamax: GigantamaxData | null
   variantType?: never
 }
 
-// A variant entry (Mega, Regional form) — separate entry in the dataset
 export type PokemonVariant = PokemonBase & {
   female: null
   gigantamax: null

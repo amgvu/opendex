@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
@@ -18,7 +18,10 @@ export function useCardNavigation({
   const selectedName = useSelectionStore(s => s.selectedName)
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
 
-  const selectedIndex = pokemon.findIndex(p => p.name === selectedName)
+  const selectedIndex = useMemo(
+    () => pokemon.findIndex(p => p.name === selectedName),
+    [pokemon, selectedName]
+  )
   const pendingNextRef = useRef(false)
   const lastNavTimeRef = useRef(0)
 
