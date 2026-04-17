@@ -317,7 +317,12 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               <div className="mx-5 shrink-0 border-t border-white/10" />
 
               {/* Tabs */}
-              <div className="flex min-h-0 flex-1 flex-col px-8 pt-4">
+              <motion.div
+                animate={{ opacity: 1 }}
+                className="flex min-h-0 flex-1 flex-col px-8 pt-4"
+                initial={{ opacity: 0 }}
+                transition={{ ...CARD_TRANSITION, delay: 0.1 }}
+              >
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"
                   onSelectionChange={key =>
@@ -385,7 +390,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                     )}
                   </Tabs.Panel>
                 </Tabs>
-              </div>
+              </motion.div>
             </div>
 
             {/* ── TOP-RIGHT CONTROLS ── */}

@@ -43,7 +43,7 @@ export function ExpandedCard({
     pokemon.specialAttack +
     pokemon.specialDefense +
     pokemon.speed
-  const { activeTab, setActiveTab, setFullModalOpen } = useCardContext()
+  const { activeTab, fullModalOpen, setActiveTab, setFullModalOpen } = useCardContext()
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
@@ -115,12 +115,12 @@ export function ExpandedCard({
                   />
                 )}
                 <motion.div
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: fullModalOpen ? 0 : 1 }}
                   className="flex min-h-0 flex-1 flex-col cursor-auto"
                   data-no-drag
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
-                  transition={{ delay: 0.15, duration: 0.2 }}
+                  transition={fullModalOpen ? CARD_TRANSITION : { delay: 0.15, duration: 0.2 }}
                 >
                   <Tabs
                     className="flex min-h-0 flex-1 flex-col"
