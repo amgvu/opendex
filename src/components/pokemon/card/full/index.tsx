@@ -21,6 +21,7 @@ import type { Pokemon } from '@/types/pokemon'
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
+import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
@@ -124,7 +125,14 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               {/* Artwork — fills flex-1, scales with panel */}
               <div className="relative flex min-h-0 flex-1 items-center justify-center px-8 pt-16 pb-3">
                 {pokemon.officialUrl && (
-                  <div className="relative w-full" style={{ aspectRatio: '1' }}>
+                  <motion.div
+                    animate={{ opacity: 1 }}
+                    className="relative w-full"
+                    initial={{ opacity: 0 }}
+                    layoutId={`image-${pokemon.id}-${id}`}
+                    style={{ aspectRatio: '1' }}
+                    transition={CARD_TRANSITION}
+                  >
                     <motion.div
                       animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
                       className="h-full w-full"
@@ -158,7 +166,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                         transition={{ duration: 0.15 }}
                       />
                     )}
-                  </div>
+                  </motion.div>
                 )}
               </div>
 
