@@ -2,14 +2,18 @@ import { motion } from 'motion/react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import { CARD_TRANSITION } from '@/lib/constants'
-import { formatPokedexId } from '@/lib/pokemon'
+import { formatPokedexId, VARIANT_LABELS } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
-export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: boolean; id: string; pokemon: Pokemon }) {
+export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: boolean; id: string; pokemon: PokemonEntry }) {
+  const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
+  const variantLabel = (pokemon as PokemonVariant).variantType
+    ? VARIANT_LABELS[(pokemon as PokemonVariant).variantType]
+    : null
   return (
     <div className="mb-1 sm:mb-4 flex items-start justify-between gap-3">
       <div className="min-w-0 flex-1">
@@ -22,6 +26,11 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
           >
             {pokemon.name}
           </motion.h2>
+          {variantLabel && (
+            <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs xl:text-sm font-semibold text-white shrink-0">
+              {variantLabel}
+            </span>
+          )}
           {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
               animate={{ opacity: fullModalOpen ? 0 : 1 }}
@@ -57,7 +66,7 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
           )}
         </div>
         <span className="-mt-1 sm:mt-0 block text-sm xl:text-base 2xl:text-lg tracking-widest font-mono font-semibold text-white/60">
-          {formatPokedexId(pokemon.id)}
+          {formatPokedexId(pokemon.id, variantIndex)}
         </span>
       </div>
       <motion.div
@@ -77,6 +86,11 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
         {pokemon.isLegendary && (
           <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
             Legendary
+          </span>
+        )}
+        {variantLabel && (
+          <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-white">
+            {variantLabel}
           </span>
         )}
       </motion.div>

@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { TbCheck, TbLink } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
@@ -22,7 +22,7 @@ export function CardArtwork({
   typeColor
 }: {
   id: string
-  pokemon: Pokemon
+  pokemon: PokemonEntry
   typeColor: string
 }) {
   const { fullModalOpen, gifEnabled, setGifEnabled } = useCardContext()
@@ -33,6 +33,9 @@ export function CardArtwork({
   function handleCopy() {
     const params = new URLSearchParams(window.location.search)
     params.set('pokemon', String(pokemon.id))
+    const vi = (pokemon as PokemonVariant).variantIndex
+    if (vi != null) params.set('vi', String(vi))
+    else params.delete('vi')
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     navigator.clipboard.writeText(url)
     setCopied(true)

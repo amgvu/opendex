@@ -4,7 +4,7 @@ import { LayoutGroup } from 'motion/react'
 import { memo, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
@@ -24,19 +24,20 @@ export const PokemonCard = memo(
     active: boolean
     index: number
     onClick: () => void
-    pokemon: Pokemon
+    pokemon: PokemonEntry
   }) {
     const ref = useRef<HTMLDivElement>(null)
     const id = useId()
     const setSelectedId = useSelectionStore(s => s.setSelectedId)
     const onClose = () => setSelectedId(null)
-    const { pokemon: detail } = usePokemonByIdQuery(active ? pokemon.id : null)
+    const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
+    const { pokemon: detail } = usePokemonByIdQuery(active ? pokemon.id : null, variantIndex)
 
     useOutsideClick(ref, onClose, active)
     useBodyScrollLock(active, onClose)
 
     return (
-      <LayoutGroup id={`pokemon-${pokemon.id}`}>
+      <LayoutGroup id={`pokemon-${String(pokemon.id)}-${variantIndex ?? 'base'}`}>
         {createPortal(
           <ExpandedCard active={active} id={id} pokemon={detail ?? pokemon} ref={ref} />,
           document.body

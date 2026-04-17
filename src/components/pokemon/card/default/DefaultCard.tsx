@@ -5,14 +5,14 @@ import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import {
   fetchPokemonById,
   pokemonByIdQueryKey
 } from '@/hooks/query/usePokemonByIdQuery'
 import { CARD_TRANSITION } from '@/lib/constants'
-import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
+import { formatPokedexId, getTypeColor, VARIANT_LABELS } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
@@ -27,13 +27,17 @@ export function DefaultCard({
   id: string
   index: number
   onClick: () => void
-  pokemon: Pokemon
+  pokemon: PokemonEntry
 }) {
   const priority = index < 10
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
   const queryClient = useQueryClient()
+  const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
+  const variantLabel = (pokemon as PokemonVariant).variantType
+    ? VARIANT_LABELS[(pokemon as PokemonVariant).variantType]
+    : null
 
   return (
     <motion.div
@@ -47,8 +51,8 @@ export function DefaultCard({
           setHovered(true)
           void queryClient.prefetchQuery({
             gcTime: Infinity,
-            queryFn: () => fetchPokemonById(pokemon.id),
-            queryKey: pokemonByIdQueryKey(pokemon.id),
+            queryFn: () => fetchPokemonById(pokemon.id, variantIndex),
+            queryKey: pokemonByIdQueryKey(pokemon.id, variantIndex),
             staleTime: Infinity
           })
         }
@@ -107,10 +111,10 @@ export function DefaultCard({
             layoutId={`name-${pokemon.id}-${id}`}
             transition={CARD_TRANSITION}
           >
-            {pokemon.name}
+            {variantLabel ? `${variantLabel} ${pokemon.name}` : pokemon.name}
           </motion.p>
           <span className="flex-shrink-0 text-[10px] font-mono sm:text-xs 2xl:text-sm tracking-wide font-semibold text-white">
-            {formatPokedexId(pokemon.id)}
+            {formatPokedexId(pokemon.id, variantIndex)}
           </span>
         </div>
         <motion.div

@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
@@ -11,7 +11,7 @@ import { useSelectionStore } from '@/stores/selectionStore'
 
 import { ExpandedCard } from './expanded'
 
-export function DirectCard({ pokemon }: { pokemon: Pokemon }) {
+export function DirectCard({ pokemon }: { pokemon: PokemonEntry }) {
   const ref = useRef<HTMLDivElement>(null)
   const setSelectedId = useSelectionStore(s => s.setSelectedId)
   const onClose = () => setSelectedId(null)

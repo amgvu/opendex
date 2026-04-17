@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { type CSSProperties, type RefObject, useState } from 'react'
 import { TbArrowsDiagonal } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
@@ -33,7 +33,7 @@ export function ExpandedCard({
 }: {
   active: boolean
   id: string
-  pokemon: Pokemon
+  pokemon: PokemonEntry
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
