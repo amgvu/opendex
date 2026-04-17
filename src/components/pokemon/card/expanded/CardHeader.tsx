@@ -9,12 +9,13 @@ import { formatPokedexId } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
-export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
+export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: boolean; id: string; pokemon: Pokemon }) {
   return (
     <div className="mb-1 sm:mb-4 flex items-start justify-between gap-3">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
           <motion.h2
+            animate={{ opacity: fullModalOpen ? 0 : 1 }}
             className={`min-w-0 truncate pb-1 font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
             layoutId={`name-${pokemon.id}-${id}`}
             transition={CARD_TRANSITION}
@@ -23,6 +24,7 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
           </motion.h2>
           {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
+              animate={{ opacity: fullModalOpen ? 0 : 1 }}
               layoutId={`star-${pokemon.id}-${id}`}
               transition={CARD_TRANSITION}
             >
@@ -59,6 +61,7 @@ export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
         </span>
       </div>
       <motion.div
+        animate={{ opacity: fullModalOpen ? 0 : 1 }}
         className="flex shrink-0 flex-wrap gap-1"
         layoutId={`types-${pokemon.id}-${id}`}
         transition={CARD_TRANSITION}

@@ -21,6 +21,7 @@ import type { Pokemon } from '@/types/pokemon'
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
+import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
@@ -34,7 +35,7 @@ import { FullStatsPanel } from './FullStatsPanel'
 const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain mb-4 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
-export function FullModal({ pokemon }: { pokemon: Pokemon }) {
+export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
   const {
     activeTab,
     fullModalOpen,
@@ -91,12 +92,12 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
 
           {/* Modal card */}
           <motion.div
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1 }}
             className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
-            exit={{ opacity: 0, scale: 0.97 }}
-            initial={{ opacity: 0, scale: 0.97 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
             onClick={e => e.stopPropagation()}
-            transition={{ duration: 0.2 }}
+            transition={CARD_TRANSITION}
           >
             {/* Type watermark — large, bottom-right */}
             <Image
@@ -124,7 +125,14 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
               {/* Artwork — fills flex-1, scales with panel */}
               <div className="relative flex min-h-0 flex-1 items-center justify-center px-8 pt-16 pb-3">
                 {pokemon.officialUrl && (
-                  <div className="relative w-full" style={{ aspectRatio: '1' }}>
+                  <motion.div
+                    animate={{ opacity: 1 }}
+                    className="relative w-full"
+                    initial={{ opacity: 0 }}
+                    layoutId={`image-${pokemon.id}-${id}`}
+                    style={{ aspectRatio: '1' }}
+                    transition={CARD_TRANSITION}
+                  >
                     <motion.div
                       animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
                       className="h-full w-full"
@@ -158,7 +166,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                         transition={{ duration: 0.15 }}
                       />
                     )}
-                  </div>
+                  </motion.div>
                 )}
               </div>
 
@@ -234,26 +242,39 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 {/* Name row */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-2.5">
-                    <h2
+                    <motion.h2
+                      animate={{ opacity: 1 }}
                       className={`truncate font-black capitalize leading-tight text-white ${
                         pokemon.name.length > 12
                           ? 'text-3xl xl:text-4xl 2xl:text-5xl'
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
+                      initial={{ opacity: 0 }}
+                      layoutId={`name-${pokemon.id}-${id}`}
+                      transition={CARD_TRANSITION}
                     >
                       {pokemon.name}
-                    </h2>
-                    {pokemon.isMythical && (
-                      <TbSparkles
-                        className="mb-0.5 shrink-0 text-pink-400"
-                        size={22}
-                      />
-                    )}
-                    {pokemon.isLegendary && (
-                      <IoMdStar
-                        className="mb-0.5 shrink-0 text-yellow-400"
-                        size={22}
-                      />
+                    </motion.h2>
+                    {(pokemon.isMythical || pokemon.isLegendary) && (
+                      <motion.div
+                        animate={{ opacity: 1 }}
+                        initial={{ opacity: 0 }}
+                        layoutId={`star-${pokemon.id}-${id}`}
+                        transition={CARD_TRANSITION}
+                      >
+                        {pokemon.isMythical && (
+                          <TbSparkles
+                            className="mb-0.5 shrink-0 text-pink-400"
+                            size={22}
+                          />
+                        )}
+                        {pokemon.isLegendary && (
+                          <IoMdStar
+                            className="mb-0.5 shrink-0 text-yellow-400"
+                            size={22}
+                          />
+                        )}
+                      </motion.div>
                     )}
                   </div>
                   <span className="mt-1 shrink-0 font-mono text-base font-semibold tracking-widest text-white/30 xl:text-lg">
@@ -269,7 +290,13 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                 )}
 
                 {/* Types + special badges */}
-                <div className="mt-3 flex flex-wrap items-center gap-2">
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  className="mt-3 flex flex-wrap items-center gap-2"
+                  initial={{ opacity: 0 }}
+                  layoutId={`types-${pokemon.id}-${id}`}
+                  transition={CARD_TRANSITION}
+                >
                   {pokemon.types.map(type => (
                     <TypeBadge key={type} size="lg" type={type} />
                   ))}
@@ -283,14 +310,19 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                       Legendary
                     </span>
                   )}
-                </div>
+                </motion.div>
               </div>
 
               {/* Divider */}
               <div className="mx-5 shrink-0 border-t border-white/10" />
 
               {/* Tabs */}
-              <div className="flex min-h-0 flex-1 flex-col px-8 pt-4">
+              <motion.div
+                animate={{ opacity: 1 }}
+                className="flex min-h-0 flex-1 flex-col px-8 pt-4"
+                initial={{ opacity: 0 }}
+                transition={{ ...CARD_TRANSITION, delay: 0.1 }}
+              >
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"
                   onSelectionChange={key =>
@@ -358,7 +390,7 @@ export function FullModal({ pokemon }: { pokemon: Pokemon }) {
                     )}
                   </Tabs.Panel>
                 </Tabs>
-              </div>
+              </motion.div>
             </div>
 
             {/* ── TOP-RIGHT CONTROLS ── */}

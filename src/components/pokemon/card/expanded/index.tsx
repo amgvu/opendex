@@ -20,6 +20,8 @@ import { EvolutionPanel } from './EvolutionPanel'
 import { LearnsetPanel } from './LearnsetPanel'
 import { StatsPanel } from './StatsPanel'
 
+const TABS_ENTER_TRANSITION = { delay: 0.15, duration: 0.2 }
+
 const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
@@ -43,7 +45,7 @@ export function ExpandedCard({
     pokemon.specialAttack +
     pokemon.specialDefense +
     pokemon.speed
-  const { activeTab, setActiveTab, setFullModalOpen } = useCardContext()
+  const { activeTab, fullModalOpen, setActiveTab, setFullModalOpen } = useCardContext()
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
@@ -106,7 +108,7 @@ export function ExpandedCard({
                   }
                 }}
               >
-                <CardHeader id={id} pokemon={pokemon} />
+                <CardHeader fullModalOpen={fullModalOpen} id={id} pokemon={pokemon} />
                 {pokemon.officialUrl && (
                   <CardArtwork
                     id={id}
@@ -115,12 +117,12 @@ export function ExpandedCard({
                   />
                 )}
                 <motion.div
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: fullModalOpen ? 0 : 1 }}
                   className="flex min-h-0 flex-1 flex-col cursor-auto"
                   data-no-drag
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
-                  transition={{ delay: 0.15, duration: 0.2 }}
+                  transition={fullModalOpen ? CARD_TRANSITION : TABS_ENTER_TRANSITION}
                 >
                   <Tabs
                     className="flex min-h-0 flex-1 flex-col"
@@ -222,7 +224,7 @@ export function ExpandedCard({
               </div>
             </motion.div>
           </div>
-          <FullModal pokemon={pokemon} />
+          <FullModal id={id} pokemon={pokemon} />
         </>
       )}
     </AnimatePresence>
