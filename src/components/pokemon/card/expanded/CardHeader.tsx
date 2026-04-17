@@ -4,14 +4,12 @@ import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { useCardContext } from '@/context/card'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
-export function CardHeader({ id, pokemon }: { id: string; pokemon: Pokemon }) {
-  const { fullModalOpen } = useCardContext()
+export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: boolean; id: string; pokemon: Pokemon }) {
   return (
     <div className="mb-1 sm:mb-4 flex items-start justify-between gap-3">
       <div className="min-w-0 flex-1">

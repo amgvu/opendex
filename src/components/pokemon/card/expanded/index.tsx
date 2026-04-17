@@ -20,6 +20,8 @@ import { EvolutionPanel } from './EvolutionPanel'
 import { LearnsetPanel } from './LearnsetPanel'
 import { StatsPanel } from './StatsPanel'
 
+const TABS_ENTER_TRANSITION = { delay: 0.15, duration: 0.2 }
+
 const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
@@ -106,7 +108,7 @@ export function ExpandedCard({
                   }
                 }}
               >
-                <CardHeader id={id} pokemon={pokemon} />
+                <CardHeader fullModalOpen={fullModalOpen} id={id} pokemon={pokemon} />
                 {pokemon.officialUrl && (
                   <CardArtwork
                     id={id}
@@ -120,7 +122,7 @@ export function ExpandedCard({
                   data-no-drag
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
-                  transition={fullModalOpen ? CARD_TRANSITION : { delay: 0.15, duration: 0.2 }}
+                  transition={fullModalOpen ? CARD_TRANSITION : TABS_ENTER_TRANSITION}
                 >
                   <Tabs
                     className="flex min-h-0 flex-1 flex-col"
