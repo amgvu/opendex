@@ -70,6 +70,28 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
+// Showdown removes hyphens from the base name but keeps a single hyphen before
+// the variant suffix, collapsing any internal hyphens within that suffix.
+function toShowdownSlug(slug) {
+  const VARIANTS = [
+    ['-mega-x', '-megax'],
+    ['-mega-y', '-megay'],
+    ['-mega', '-mega'],
+    ['-alola', '-alola'],
+    ['-galar', '-galar'],
+    ['-hisui', '-hisui'],
+    ['-paldea', '-paldea'],
+  ]
+  for (const [apiSuffix, showdownSuffix] of VARIANTS) {
+    if (slug.endsWith(apiSuffix)) {
+      const base = slug.slice(0, -apiSuffix.length).replace(/-/g, '')
+      return base + showdownSuffix
+    }
+  }
+  return slug.replace(/-/g, '')
+}
+
 // Compute weaknesses/resistances/immunities for a Pokemon given its types
 // typeChart: { 'fire': { double_damage_from: ['water',...], half_damage_from: [...], no_damage_from: [...] } }
 function computeTypeMatchups(pokemonTypes, typeChart) {
@@ -796,11 +818,11 @@ async function main() {
         .map(s => ({ stat: s.stat.name, value: s.effort }))
 
       const sprites = pkmnData.sprites
-      const variantImageUrl = `https://play.pokemonshowdown.com/sprites/ani/${slug.replace(/-/g, '')}.gif`
+      const variantImageUrl = `https://play.pokemonshowdown.com/sprites/ani/${toShowdownSlug(slug)}.gif`
       const variantOfficialUrl =
         sprites.other?.['official-artwork']?.front_default ?? null
       const variantShiny = {
-        imageUrl: `https://play.pokemonshowdown.com/sprites/ani-shiny/${slug.replace(/-/g, '')}.gif`,
+        imageUrl: `https://play.pokemonshowdown.com/sprites/ani-shiny/${toShowdownSlug(slug)}.gif`,
         officialUrl: sprites.other?.['official-artwork']?.front_shiny ?? null
       }
 
