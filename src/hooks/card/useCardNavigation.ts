@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 import { useSelectionStore } from '@/stores/selectionStore'
 
@@ -13,12 +13,15 @@ export function useCardNavigation({
   fetchNextPage: () => void
   hasNextPage: boolean
   isFetchingNextPage: boolean
-  pokemon: Pokemon[]
+  pokemon: PokemonEntry[]
 }) {
-  const selectedId = useSelectionStore(s => s.selectedId)
-  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+  const selectedName = useSelectionStore(s => s.selectedName)
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
 
-  const selectedIndex = pokemon.findIndex(p => p.id === selectedId)
+  const selectedIndex = useMemo(
+    () => pokemon.findIndex(p => p.name === selectedName),
+    [pokemon, selectedName]
+  )
   const pendingNextRef = useRef(false)
   const lastNavTimeRef = useRef(0)
 
@@ -33,37 +36,37 @@ export function useCardNavigation({
     if (!canNavigate() || selectedIndex === -1) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
-      setSelectedId(next.id)
+      setSelectedName(next.name)
     } else if (hasNextPage && !isFetchingNextPage) {
       pendingNextRef.current = true
       void fetchNextPage()
     }
-  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, selectedIndex, setSelectedId])
+  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, selectedIndex, setSelectedName])
 
   const onPrev = useCallback(() => {
     if (!canNavigate() || selectedIndex === -1) return
     const prev = pokemon[selectedIndex - 1]
-    if (prev) setSelectedId(prev.id)
-  }, [canNavigate, pokemon, selectedIndex, setSelectedId])
+    if (prev) setSelectedName(prev.name)
+  }, [canNavigate, pokemon, selectedIndex, setSelectedName])
 
   useEffect(() => {
     if (!pendingNextRef.current) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
       pendingNextRef.current = false
-      setSelectedId(next.id)
+      setSelectedName(next.name)
     }
-  }, [pokemon, selectedIndex, setSelectedId])
+  }, [pokemon, selectedIndex, setSelectedName])
 
   useEffect(() => {
-    if (!selectedId) return
+    if (!selectedName) return
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'ArrowRight') { e.stopPropagation(); onNext() }
       else if (e.key === 'ArrowLeft') { e.stopPropagation(); onPrev() }
     }
     window.addEventListener('keydown', onKeyDown, { capture: true })
     return () => window.removeEventListener('keydown', onKeyDown, { capture: true })
-  }, [onNext, onPrev, selectedId])
+  }, [onNext, onPrev, selectedName])
 
   return { onNext, onPrev }
 }

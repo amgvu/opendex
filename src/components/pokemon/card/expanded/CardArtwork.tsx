@@ -1,20 +1,16 @@
-import { Label, Switch } from '@heroui/react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import {
-  type CSSProperties,
-  type SyntheticEvent,
-  useRef,
-  useState
-} from 'react'
+import { type SyntheticEvent, useRef, useState } from 'react'
 import { TbCheck, TbLink } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar } from '@/lib/pokemon'
+
+import { ArtworkSwitches } from '../ArtworkSwitches'
 
 export function CardArtwork({
   id,
@@ -22,19 +18,22 @@ export function CardArtwork({
   typeColor
 }: {
   id: string
-  pokemon: Pokemon
+  pokemon: PokemonEntry
   typeColor: string
 }) {
-  const { fullModalOpen, gifEnabled, setGifEnabled } = useCardContext()
-  const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled)
+  const { fullModalOpen, gifEnabled, setGifEnabled, shinyEnabled, setShinyEnabled } = useCardContext()
+  const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled, shinyEnabled)
   const [copied, setCopied] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
 
+  const artSrc = shinyEnabled ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl) : pokemon.officialUrl
+  const gifSrc = shinyEnabled ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl) : pokemon.imageUrl
+
   function handleCopy() {
     const params = new URLSearchParams(window.location.search)
-    params.set('pokemon', String(pokemon.id))
+    params.set('pokemon', pokemon.name)
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
-    navigator.clipboard.writeText(url)
+    void navigator.clipboard.writeText(url)
     setCopied(true)
     setTimeout(() => setCopied(false), 1500)
   }
@@ -53,7 +52,7 @@ export function CardArtwork({
       onContextMenu={e => e.preventDefault()}
       onLoad={handleArtworkLoad}
       sizes="(min-width: 1536px) 320px, 200px"
-      src={pokemon.officialUrl}
+      src={artSrc}
       style={{
         filter: `drop-shadow(0 25px 25px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`,
         opacity: 0,
@@ -68,7 +67,7 @@ export function CardArtwork({
     <motion.div
       animate={{ opacity: fullModalOpen ? 0 : 1 }}
       className="relative mb-1 sm:mb-4 flex justify-center"
-      layoutId={`image-${pokemon.id}-${id}`}
+      layoutId={`image-${pokemon.name}-${id}`}
       transition={CARD_TRANSITION}
     >
       <div
@@ -101,11 +100,11 @@ export function CardArtwork({
           onContextMenu={e => e.preventDefault()}
           onError={() => setGifError(true)}
           onLoad={() => setGifReady(true)}
-          src={pokemon.imageUrl}
+          src={gifSrc}
           transition={{ duration: 0.15 }}
         />
       )}
-      <div className="absolute bottom-0 left-0" data-no-drag>
+      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between" data-no-drag>
         <button
           className="flex items-center gap-1 text-xs font-medium text-white/70 select-none cursor-pointer"
           onClick={handleCopy}
@@ -113,33 +112,19 @@ export function CardArtwork({
           {copied ? <TbCheck size={16} /> : <TbLink size={16} />}
           <span>{copied ? 'Copied!' : 'Copy link'}</span>
         </button>
-      </div>
-      {!gifError && (
-        <div className="absolute bottom-0 right-0">
-          <Switch
-            isSelected={gifEnabled}
-            onChange={v => setGifEnabled(v)}
-            size="sm"
-            style={
-              {
-                '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                '--switch-control-bg-checked': bgClassToVar(typeColor),
-                '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
-                '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-              } as CSSProperties
-            }
-          >
-            <Switch.Control>
-              <Switch.Thumb />
-            </Switch.Control>
-            <Switch.Content>
-              <Label className="text-xs font-medium text-white/70 select-none">
-                3D
-              </Label>
-            </Switch.Content>
-          </Switch>
+        <div className="flex items-center gap-2">
+          <ArtworkSwitches
+            gifError={gifError}
+            gifEnabled={gifEnabled}
+            labelClassName="text-xs font-medium text-white/70 select-none"
+            pokemon={pokemon}
+            setGifEnabled={setGifEnabled}
+            setShinyEnabled={setShinyEnabled}
+            shinyEnabled={shinyEnabled}
+            typeColor={typeColor}
+          />
         </div>
-      )}
+      </div>
     </motion.div>
   )
 }

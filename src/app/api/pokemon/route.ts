@@ -2,14 +2,18 @@ import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
-import pokemonData from '@/data/pokemon.json'
+import type { PokemonEntry } from '@/lib/types'
 
-// Fields sent to the client for grid display — detail fields are fetched on demand via /api/pokemon/[id]
+import _pokemonData from '@/data/pokemon.json'
+
+const pokemonData = _pokemonData as unknown as PokemonEntry[]
+
+// Fields sent to the client for grid display — detail fields are fetched on demand via /api/pokemon/[name]
 const SUMMARY_KEYS = new Set([
   'attack', 'blurDataURL', 'defense', 'description', 'generation',
   'height', 'hp', 'id', 'imageUrl', 'isLegendary', 'isMythical',
   'name', 'officialUrl', 'specialAttack', 'specialDefense', 'speed',
-  'types', 'weight'
+  'types', 'variantIndex', 'variantOf', 'variantSlug', 'variantType', 'weight'
 ])
 
 export function GET(request: NextRequest) {

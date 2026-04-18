@@ -5,11 +5,11 @@ import { useSelectionStore } from '@/stores/selectionStore'
 
 export function useSelectedPokemon() {
   const searchParams = useSearchParams()
-  const setSelectedIdFromUrl = useSelectionStore(s => s.setSelectedIdFromUrl)
+  const setSelectedNameFromUrl = useSelectionStore(s => s.setSelectedNameFromUrl)
 
   useEffect(() => {
-    const raw = parseInt(searchParams.get('pokemon') ?? '', 10)
-    if (!isNaN(raw)) setSelectedIdFromUrl(raw)
+    const name = searchParams.get('pokemon')
+    if (name) setSelectedNameFromUrl(name)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }

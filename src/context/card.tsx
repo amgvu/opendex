@@ -9,7 +9,9 @@ type CardContextValue = {
   setActiveTab: (tab: 'battle' | 'bio' | 'evo' | 'moves' | 'stats') => void
   setFullModalOpen: (v: boolean) => void
   setGifEnabled: (v: boolean) => void
+  setShinyEnabled: (v: boolean) => void
   setStatsView: (v: 'bars' | 'radar') => void
+  shinyEnabled: boolean
   statsView: 'bars' | 'radar'
 }
 
@@ -17,13 +19,14 @@ const CardContext = createContext<CardContextValue | null>(null)
 
 export function CardProvider({ children }: { children: ReactNode }) {
   const [gifEnabled, setGifEnabled] = useState(false)
+  const [shinyEnabled, setShinyEnabled] = useState(false)
   const [activeTab, setActiveTab] = useState<'battle' | 'bio' | 'evo' | 'moves' | 'stats'>('stats')
   const [statsView, setStatsView] = useState<'bars' | 'radar'>('bars')
   const [fullModalOpen, setFullModalOpen] = useState(false)
 
   const value = useMemo(
-    () => ({ activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled, setStatsView, statsView }),
-    [activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled, setStatsView, statsView]
+    () => ({ activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled, setShinyEnabled, setStatsView, shinyEnabled, statsView }),
+    [activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled, setShinyEnabled, setStatsView, shinyEnabled, statsView]
   )
 
   return (

@@ -1,6 +1,6 @@
 'use client'
 
-import { Label, Switch, Tabs } from '@heroui/react'
+import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, useState } from 'react'
@@ -25,6 +25,7 @@ import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
+import { ArtworkSwitches } from '../ArtworkSwitches'
 import { EvolutionPanel } from '../expanded/EvolutionPanel'
 import { TypeBadge } from '../TypeBadge'
 import { FullBattlePanel } from './FullBattlePanel'
@@ -42,12 +43,17 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
     gifEnabled,
     setActiveTab,
     setFullModalOpen,
-    setGifEnabled
+    setGifEnabled,
+    setShinyEnabled,
+    shinyEnabled
   } = useCardContext()
   const { onNext, onPrev } = useNavContext()
-  const setSelectedId = useSelectionStore(s => s.setSelectedId)
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
-    useGifLoader(gifEnabled)
+    useGifLoader(gifEnabled, shinyEnabled)
+
+  const artSrc = shinyEnabled ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl) : pokemon.officialUrl
+  const gifSrc = shinyEnabled ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl) : pokemon.imageUrl
   const [copied, setCopied] = useState(false)
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const bst =
@@ -60,7 +66,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
   function handleCopy() {
     const params = new URLSearchParams(window.location.search)
-    params.set('pokemon', String(pokemon.id))
+    params.set('pokemon', pokemon.name)
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     void navigator.clipboard.writeText(url)
     setCopied(true)
@@ -69,7 +75,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
   const closeAll = () => {
     setFullModalOpen(false)
-    setSelectedId(null)
+    setSelectedName(null)
   }
 
   return createPortal(
@@ -129,7 +135,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                     animate={{ opacity: 1 }}
                     className="relative w-full"
                     initial={{ opacity: 0 }}
-                    layoutId={`image-${pokemon.id}-${id}`}
+                    layoutId={`image-${pokemon.name}-${id}`}
                     style={{ aspectRatio: '1' }}
                     transition={CARD_TRANSITION}
                   >
@@ -145,7 +151,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                         fill
                         onContextMenu={e => e.preventDefault()}
                         sizes="(min-width: 1536px) 420px, (min-width: 1280px) 360px, 300px"
-                        src={pokemon.officialUrl}
+                        src={artSrc}
                         style={{
                           filter: `drop-shadow(0 24px 40px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 50%))`
                         }}
@@ -162,7 +168,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                         onContextMenu={e => e.preventDefault()}
                         onError={() => setGifError(true)}
                         onLoad={() => setGifReady(true)}
-                        src={pokemon.imageUrl}
+                        src={gifSrc}
                         transition={{ duration: 0.15 }}
                       />
                     )}
@@ -180,31 +186,18 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                   {copied ? <TbCheck size={14} /> : <TbLink size={14} />}
                   {copied ? 'Copied!' : 'Copy link'}
                 </button>
-                {!gifError && (
-                  <Switch
-                    isSelected={gifEnabled}
-                    onChange={v => setGifEnabled(v)}
-                    size="sm"
-                    style={
-                      {
-                        '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                        '--switch-control-bg-checked': bgClassToVar(typeColor),
-                        '--switch-control-bg-checked-hover':
-                          bgClassToVar(typeColor),
-                        '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-                      } as CSSProperties
-                    }
-                  >
-                    <Switch.Control>
-                      <Switch.Thumb />
-                    </Switch.Control>
-                    <Switch.Content>
-                      <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
-                        3D
-                      </Label>
-                    </Switch.Content>
-                  </Switch>
-                )}
+                <div className="flex items-center gap-3">
+                  <ArtworkSwitches
+                    gifError={gifError}
+                    gifEnabled={gifEnabled}
+                    labelClassName="cursor-pointer select-none text-xs font-medium text-white/60"
+                    pokemon={pokemon}
+                    setGifEnabled={setGifEnabled}
+                    setShinyEnabled={setShinyEnabled}
+                    shinyEnabled={shinyEnabled}
+                    typeColor={typeColor}
+                  />
+                </div>
               </div>
 
               {/* Physical stats grid */}
@@ -250,7 +243,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
                       initial={{ opacity: 0 }}
-                      layoutId={`name-${pokemon.id}-${id}`}
+                      layoutId={`name-${pokemon.name}-${id}`}
                       transition={CARD_TRANSITION}
                     >
                       {pokemon.name}
@@ -259,7 +252,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                       <motion.div
                         animate={{ opacity: 1 }}
                         initial={{ opacity: 0 }}
-                        layoutId={`star-${pokemon.id}-${id}`}
+                        layoutId={`star-${pokemon.name}-${id}`}
                         transition={CARD_TRANSITION}
                       >
                         {pokemon.isMythical && (
@@ -294,7 +287,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                   animate={{ opacity: 1 }}
                   className="mt-3 flex flex-wrap items-center gap-2"
                   initial={{ opacity: 0 }}
-                  layoutId={`types-${pokemon.id}-${id}`}
+                  layoutId={`types-${pokemon.name}-${id}`}
                   transition={CARD_TRANSITION}
                 >
                   {pokemon.types.map(type => (

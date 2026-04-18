@@ -63,8 +63,33 @@ const BATTLE_TYPES = [
   'fairy'
 ]
 
+// Variant types that become separate entries (vs embedded in base)
+const REGIONAL_TYPES = new Set(['alolan', 'galarian', 'hisuian', 'paldean'])
+
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
+// Showdown removes hyphens from the base name but keeps a single hyphen before
+// the variant suffix, collapsing any internal hyphens within that suffix.
+function toShowdownSlug(slug) {
+  const VARIANTS = [
+    ['-mega-x', '-megax'],
+    ['-mega-y', '-megay'],
+    ['-mega', '-mega'],
+    ['-alola', '-alola'],
+    ['-galar', '-galar'],
+    ['-hisui', '-hisui'],
+    ['-paldea', '-paldea'],
+  ]
+  for (const [apiSuffix, showdownSuffix] of VARIANTS) {
+    if (slug.endsWith(apiSuffix)) {
+      const base = slug.slice(0, -apiSuffix.length).replace(/-/g, '')
+      return base + showdownSuffix
+    }
+  }
+  return slug.replace(/-/g, '')
 }
 
 // Compute weaknesses/resistances/immunities for a Pokemon given its types
@@ -168,6 +193,19 @@ function extractLearnset(moves) {
   }
 }
 
+// Classify a non-default variety slug into a variant type, or null to skip
+function classifyVariant(slug) {
+  if (slug.endsWith('-mega-x')) return 'mega-x'
+  if (slug.endsWith('-mega-y')) return 'mega-y'
+  if (slug.endsWith('-mega')) return 'mega'
+  if (slug.endsWith('-alola')) return 'alolan'
+  if (slug.endsWith('-galar')) return 'galarian'
+  if (slug.endsWith('-hisui')) return 'hisuian'
+  if (slug.endsWith('-paldea')) return 'paldean'
+  if (slug.endsWith('-gmax')) return 'gigantamax'
+  return null
+}
+
 async function fetchPokemon(id) {
   const [pokemon, species] = await Promise.all([
     fetch(`${POKEAPI}/pokemon/${id}`).then(r => r.json()),
@@ -206,8 +244,27 @@ async function fetchPokemon(id) {
 
   const genusEntry = species.genera?.find(g => g.language.name === 'en')
 
+  const sprites = pokemon.sprites
+
+  // Shiny sprite URLs (same Pokemon, different palette — no stat change)
+  const shiny = {
+    imageUrl: `https://play.pokemonshowdown.com/sprites/ani-shiny/${species.name.replace(/-/g, '')}.gif`,
+    officialUrl: sprites.other?.['official-artwork']?.front_shiny ?? null
+  }
+
+  // Female sprites — only populated when a visually distinct female form exists
+  const female = sprites.front_female
+    ? {
+        imageUrl: sprites.front_female,
+        officialUrl: sprites.other?.['official-artwork']?.front_female ?? null
+      }
+    : null
+
   return {
     _evolutionChainUrl: species.evolution_chain?.url ?? null,
+    _varieties: species.varieties
+      .filter(v => !v.is_default)
+      .map(v => v.pokemon.name),
     abilities,
     attack: stats['attack'],
     baseExperience: pokemon.base_experience ?? undefined,
@@ -220,6 +277,7 @@ async function fetchPokemon(id) {
     eggGroups:
       species.egg_groups?.map(g => g.name.replace(/-/g, ' ')) ?? undefined,
     evYield,
+    female,
     flavorTexts,
     genderRate: species.gender_rate,
     generation: GENERATION_MAP[species.generation.name] ?? 1,
@@ -236,6 +294,7 @@ async function fetchPokemon(id) {
     learnset: extractLearnset(pokemon.moves),
     name: pokemon.name,
     officialUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
+    shiny,
     specialAttack: stats['special-attack'],
     specialDefense: stats['special-defense'],
     speed: stats['speed'],
@@ -286,7 +345,7 @@ function getEnglishFlavorTexts(entries) {
   for (let i = entries.length - 1; i >= 0; i--) {
     const e = entries[i]
     if (e.language.name !== 'en') continue
-    const cleaned = e.flavor_text.replace(/[\n\f\r]/g, ' ').trim()
+    const cleaned = e.flavor_text.replace(/[\n\f\r\u00ad]/g, '').replace(/POKé/g, 'POKÉ').trim()
     if (seen.has(cleaned)) continue
     seen.add(cleaned)
     texts.push({ game: e.version.name, text: cleaned })
@@ -296,6 +355,36 @@ function getEnglishFlavorTexts(entries) {
 
 function idFromUrl(url) {
   return parseInt(url.split('/').filter(Boolean).pop(), 10)
+}
+
+// Attach fully resolved move details to a raw learnset (output of extractLearnset)
+function resolveLearnset(rawLearnset, moveDetails) {
+  return {
+    egg: rawLearnset.egg.map(name => ({
+      name,
+      ...(moveDetails[name] ?? {
+        accuracy: null,
+        category: 'status',
+        power: null,
+        pp: 0,
+        type: 'Normal'
+      })
+    })),
+    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
+      ...rest,
+      ...(moveDetails[rest.name] ?? {})
+    })),
+    machine: rawLearnset.machine.map(name => ({
+      name,
+      ...(moveDetails[name] ?? {
+        accuracy: null,
+        category: 'status',
+        power: null,
+        pp: 0,
+        type: 'Normal'
+      })
+    }))
+  }
 }
 
 async function main() {
@@ -434,25 +523,382 @@ async function main() {
 
   // Attach move details — level-up gets level preserved, egg/machine become MoveDetail objects
   for (const p of results) {
-    p.learnset.levelUp = p.learnset.levelUp.map(({ _url, ...rest }) => ({
-      ...rest,
-      ...(moveDetails[rest.name] ?? {})
-    }))
-    p.learnset.egg = p.learnset.egg.map(name => ({
-      name,
-      ...(moveDetails[name] ?? { accuracy: null, category: 'status', power: null, pp: 0, type: 'Normal' })
-    }))
-    p.learnset.machine = p.learnset.machine.map(name => ({
-      name,
-      ...(moveDetails[name] ?? { accuracy: null, category: 'status', power: null, pp: 0, type: 'Normal' })
-    }))
+    p.learnset = resolveLearnset(p.learnset, moveDetails)
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // VARIANT PROCESSING
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Collect and classify all non-default varieties from species data
+  const variantsToProcess = []
+  for (const p of results) {
+    const varieties = p._varieties ?? []
+    let variantIndex = 0
+    for (const slug of varieties) {
+      const variantType = classifyVariant(slug)
+      if (!variantType) continue
+      variantIndex++
+      variantsToProcess.push({ baseEntry: p, slug, variantType, variantIndex })
+    }
+    delete p._varieties
+  }
+
+  const gmaxVariants = variantsToProcess.filter(
+    v => v.variantType === 'gigantamax'
+  )
+  const separateVariants = variantsToProcess.filter(
+    v => v.variantType !== 'gigantamax'
+  )
+  console.log(
+    `\nFound ${variantsToProcess.length} variants: ${gmaxVariants.length} Gigantamax, ${separateVariants.length} Mega/Regional`
+  )
+
+  // ── Gigantamax (embedded in base entry) ──────────────────────────────────
+
+  if (gmaxVariants.length > 0) {
+    console.log(`\nFetching ${gmaxVariants.length} Gigantamax forms...`)
+    const newGmaxMoveNames = new Set()
+
+    for (let i = 0; i < gmaxVariants.length; i += CHUNK_SIZE) {
+      const chunk = gmaxVariants.slice(i, i + CHUNK_SIZE)
+      await Promise.all(
+        chunk.map(async ({ baseEntry, slug }) => {
+          const [formData, pkmnData] = await Promise.all([
+            fetch(`${POKEAPI}/pokemon-form/${slug}`).then(r => r.json()),
+            fetch(`${POKEAPI}/pokemon/${slug}`).then(r => r.json())
+          ])
+
+          const gmaxMoveNames = pkmnData.moves
+            .filter(m => m.move.name.startsWith('g-max'))
+            .map(m => m.move.name)
+
+          for (const n of gmaxMoveNames) {
+            if (!moveDetails[n]) newGmaxMoveNames.add(n)
+          }
+
+          baseEntry.gigantamax = {
+            imageUrl: formData.sprites?.front_default ?? null,
+            officialUrl:
+              formData.sprites?.other?.['official-artwork']?.front_default ??
+              null,
+            _gmaxMoveNames: gmaxMoveNames
+          }
+        })
+      )
+      console.log(
+        `  Gmax: ${Math.min(i + CHUNK_SIZE, gmaxVariants.length)}/${gmaxVariants.length}`
+      )
+    }
+
+    // Fetch details for any G-Max moves not already in moveDetails
+    if (newGmaxMoveNames.size > 0) {
+      const names = [...newGmaxMoveNames]
+      console.log(`  Fetching ${names.length} G-Max move details...`)
+      for (let i = 0; i < names.length; i += CHUNK_SIZE) {
+        const chunk = names.slice(i, i + CHUNK_SIZE)
+        await Promise.all(
+          chunk.map(async name => {
+            const data = await fetch(`${POKEAPI}/move/${name}`).then(r =>
+              r.json()
+            )
+            moveDetails[name] = {
+              accuracy: data.accuracy,
+              category: data.damage_class?.name ?? 'status',
+              power: data.power,
+              pp: data.pp,
+              type: capitalize(data.type?.name ?? 'normal')
+            }
+          })
+        )
+      }
+    }
+
+    // Resolve G-Max move details and clean up temp field
+    for (const p of results) {
+      if (p.gigantamax?._gmaxMoveNames) {
+        p.gigantamax.gmaxMoves = p.gigantamax._gmaxMoveNames.map(name => ({
+          name: name
+            .split('-')
+            .map(capitalize)
+            .join(' '),
+          ...(moveDetails[name] ?? {
+            accuracy: null,
+            category: 'status',
+            power: null,
+            pp: null,
+            type: 'Normal'
+          })
+        }))
+        delete p.gigantamax._gmaxMoveNames
+      }
+    }
+  }
+
+  // Ensure all base Pokemon without a Gigantamax form have gigantamax: null
+  for (const p of results) {
+    if (!p.gigantamax) p.gigantamax = null
+  }
+
+  // ── Mega + Regional (separate entries) ───────────────────────────────────
+
+  if (separateVariants.length > 0) {
+    console.log(
+      `\nFetching ${separateVariants.length} Mega/Regional variant Pokemon...`
+    )
+
+    // Step A: Fetch raw pokemon data for all separate variants
+    const rawVariants = []
+    for (let i = 0; i < separateVariants.length; i += CHUNK_SIZE) {
+      const chunk = separateVariants.slice(i, i + CHUNK_SIZE)
+      const fetched = await Promise.all(
+        chunk.map(async meta => {
+          const pkmnData = await fetch(
+            `${POKEAPI}/pokemon/${meta.slug}`
+          ).then(r => r.json())
+          return { meta, pkmnData }
+        })
+      )
+      rawVariants.push(...fetched)
+      console.log(
+        `  Pokemon data: ${Math.min(i + CHUNK_SIZE, separateVariants.length)}/${separateVariants.length}`
+      )
+    }
+
+    // Step B: Collect and fetch any new ability descriptions introduced by variants
+    const newAbilityNames = []
+    for (const { pkmnData } of rawVariants) {
+      for (const a of pkmnData.abilities) {
+        const name = a.ability.name.replace(/-/g, ' ')
+        if (!abilityUrls.has(name)) {
+          abilityUrls.set(name, a.ability.url)
+          newAbilityNames.push(name)
+        }
+      }
+    }
+
+    if (newAbilityNames.length > 0) {
+      console.log(
+        `\nFetching ${newAbilityNames.length} new ability descriptions...`
+      )
+      for (let i = 0; i < newAbilityNames.length; i += CHUNK_SIZE) {
+        const chunk = newAbilityNames.slice(i, i + CHUNK_SIZE)
+        await Promise.all(
+          chunk.map(async name => {
+            const data = await fetch(abilityUrls.get(name)).then(r => r.json())
+            const entry = data.effect_entries.find(
+              e => e.language.name === 'en'
+            )
+            abilityDescriptions[name] = entry?.short_effect ?? ''
+          })
+        )
+        console.log(
+          `  Abilities: ${Math.min(i + CHUNK_SIZE, newAbilityNames.length)}/${newAbilityNames.length}`
+        )
+      }
+    }
+
+    // Step C: Fetch species + evolution chains for regional forms
+    const regionalRaw = rawVariants.filter(({ meta }) =>
+      REGIONAL_TYPES.has(meta.variantType)
+    )
+
+    if (regionalRaw.length > 0) {
+      console.log(
+        `\nFetching species data for ${regionalRaw.length} regional forms...`
+      )
+
+      for (let i = 0; i < regionalRaw.length; i += CHUNK_SIZE) {
+        const chunk = regionalRaw.slice(i, i + CHUNK_SIZE)
+        await Promise.all(
+          chunk.map(async item => {
+            // Regional slugs (e.g. 'vulpix-alola') have no /pokemon-species entry of their own.
+            // Use the species URL from the already-fetched pokemon data instead.
+            item.speciesData = await fetch(item.pkmnData.species.url).then(
+              r => r.json()
+            )
+          })
+        )
+        console.log(
+          `  Regional species: ${Math.min(i + CHUNK_SIZE, regionalRaw.length)}/${regionalRaw.length}`
+        )
+      }
+
+      const uniqueRegionalChainUrls = [
+        ...new Set(
+          regionalRaw
+            .map(({ speciesData }) => speciesData?.evolution_chain?.url)
+            .filter(Boolean)
+        )
+      ]
+
+      console.log(
+        `\nFetching ${uniqueRegionalChainUrls.length} regional evolution chains...`
+      )
+      for (let i = 0; i < uniqueRegionalChainUrls.length; i += CHUNK_SIZE) {
+        const chunk = uniqueRegionalChainUrls.slice(i, i + CHUNK_SIZE)
+        await Promise.all(
+          chunk.map(async url => {
+            if (!chainUrlToSteps.has(url)) {
+              const data = await fetch(url).then(r => r.json())
+              chainUrlToSteps.set(url, parseChain(data.chain))
+            }
+          })
+        )
+        console.log(
+          `  Regional chains: ${Math.min(i + CHUNK_SIZE, uniqueRegionalChainUrls.length)}/${uniqueRegionalChainUrls.length}`
+        )
+      }
+    }
+
+    // Step D: Collect and fetch missing move details for regional forms
+    const newMoveUrlMap = new Map()
+    for (const { meta, pkmnData } of rawVariants) {
+      if (!REGIONAL_TYPES.has(meta.variantType)) continue
+      for (const m of pkmnData.moves) {
+        const name = m.move.name
+        if (!moveDetails[name] && !newMoveUrlMap.has(name)) {
+          newMoveUrlMap.set(name, m.move.url)
+        }
+      }
+    }
+
+    if (newMoveUrlMap.size > 0) {
+      console.log(
+        `\nFetching ${newMoveUrlMap.size} new move details for regional forms...`
+      )
+      const names = [...newMoveUrlMap.keys()]
+      for (let i = 0; i < names.length; i += CHUNK_SIZE) {
+        const chunk = names.slice(i, i + CHUNK_SIZE)
+        await Promise.all(
+          chunk.map(async name => {
+            const data = await fetch(newMoveUrlMap.get(name)).then(r =>
+              r.json()
+            )
+            moveDetails[name] = {
+              accuracy: data.accuracy,
+              category: data.damage_class?.name ?? 'status',
+              power: data.power,
+              pp: data.pp,
+              type: capitalize(data.type?.name ?? 'normal')
+            }
+          })
+        )
+        console.log(
+          `  Moves: ${Math.min(i + CHUNK_SIZE, names.length)}/${names.length}`
+        )
+      }
+    }
+
+    // Step E: Assemble final variant entries
+    const variantEntries = []
+    for (const { meta, pkmnData, speciesData } of rawVariants) {
+      const { baseEntry, slug, variantType, variantIndex } = meta
+      const isRegional = REGIONAL_TYPES.has(variantType)
+
+      const variantStats = Object.fromEntries(
+        pkmnData.stats.map(s => [s.stat.name, s.base_stat])
+      )
+
+      const variantTypes = pkmnData.types
+        .sort((a, b) => a.slot - b.slot)
+        .map(t => capitalize(t.type.name))
+
+      const variantAbilities = pkmnData.abilities
+        .sort((a, b) => a.slot - b.slot)
+        .map(a => ({
+          description:
+            abilityDescriptions[a.ability.name.replace(/-/g, ' ')] ?? '',
+          isHidden: a.is_hidden,
+          name: a.ability.name.replace(/-/g, ' ')
+        }))
+
+      const variantEvYield = pkmnData.stats
+        .filter(s => s.effort > 0)
+        .map(s => ({ stat: s.stat.name, value: s.effort }))
+
+      const sprites = pkmnData.sprites
+      const variantImageUrl = `https://play.pokemonshowdown.com/sprites/ani/${toShowdownSlug(slug)}.gif`
+      const variantOfficialUrl =
+        sprites.other?.['official-artwork']?.front_default ?? null
+      const variantShiny = {
+        imageUrl: `https://play.pokemonshowdown.com/sprites/ani-shiny/${toShowdownSlug(slug)}.gif`,
+        officialUrl: sprites.other?.['official-artwork']?.front_shiny ?? null
+      }
+
+      let learnset = baseEntry.learnset
+      let evolutionChain = baseEntry.evolutionChain
+
+      if (isRegional) {
+        learnset = resolveLearnset(extractLearnset(pkmnData.moves), moveDetails)
+        const chainUrl = speciesData?.evolution_chain?.url
+        evolutionChain = chainUrl
+          ? (chainUrlToSteps.get(chainUrl) ?? [])
+          : baseEntry.evolutionChain
+      }
+
+      variantEntries.push({
+        // Variant identification
+        id: baseEntry.id,
+        variantIndex,
+        variantOf: baseEntry.id,
+        variantSlug: slug,
+        variantType,
+
+        // Re-fetched data (differs from base)
+        abilities: variantAbilities,
+        attack: variantStats['attack'],
+        defense: variantStats['defense'],
+        evYield: variantEvYield,
+        evolutionChain,
+        height: parseFloat((pkmnData.height / 10).toFixed(1)),
+        hp: variantStats['hp'],
+        imageUrl: variantImageUrl,
+        learnset,
+        name: slug,
+        officialUrl: variantOfficialUrl,
+        shiny: variantShiny,
+        specialAttack: variantStats['special-attack'],
+        specialDefense: variantStats['special-defense'],
+        speed: variantStats['speed'],
+        typeMatchups: computeTypeMatchups(variantTypes, typeChart),
+        types: variantTypes,
+        weight: parseFloat((pkmnData.weight * 0.220462).toFixed(1)),
+
+        // Inherited from base (bio/breeding data stays the same)
+        baseExperience: baseEntry.baseExperience,
+        baseFriendship: baseEntry.baseFriendship,
+        catchRate: baseEntry.catchRate,
+        color: baseEntry.color,
+        description: baseEntry.description,
+        eggCycles: baseEntry.eggCycles,
+        eggGroups: baseEntry.eggGroups,
+        female: null,
+        flavorTexts: baseEntry.flavorTexts,
+        genderRate: baseEntry.genderRate,
+        generation: baseEntry.generation,
+        genus: baseEntry.genus,
+        gigantamax: null,
+        growthRate: baseEntry.growthRate,
+        habitat: baseEntry.habitat,
+        heldItems: baseEntry.heldItems,
+        isLegendary: baseEntry.isLegendary,
+        isMythical: baseEntry.isMythical
+      })
+    }
+
+    results.push(...variantEntries)
+    console.log(`\nAdded ${variantEntries.length} variant entries`)
   }
 
   const outputPath = path.join(__dirname, '..', 'src', 'data', 'pokemon.json')
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })
   fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
-  console.log(`\nDone! Saved ${results.length} Pokemon to ${outputPath}`)
+  const baseCount = results.filter(p => !p.variantType).length
+  const variantCount = results.filter(p => p.variantType).length
+  console.log(`\nDone! Saved ${results.length} entries to ${outputPath}`)
+  console.log(`  ${baseCount} base Pokemon, ${variantCount} variant entries`)
   console.log('Sample:', results[0].name, '|', results[0].types.join(', '))
   console.log(
     '  typeMatchups weaknesses:',

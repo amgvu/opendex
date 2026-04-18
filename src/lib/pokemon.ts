@@ -24,7 +24,20 @@ export const getTypeColor = (type: string) => colors[type] ?? 'bg-[#A8A77A]'
 export const bgClassToVar = (cls: string) =>
   cls.match(/bg-\[([^\]]+)\]/)?.[1] ?? `var(${cls.replace('bg-', '--color-')})`
 
-export const formatPokedexId = (id: number) => `#${String(id).padStart(4, '0')}`
+export const formatPokedexId = (id: number, variantIndex?: null | number) => {
+  const base = `#${String(id).padStart(4, '0')}`
+  return variantIndex != null ? `${base}-${variantIndex}` : base
+}
+
+export const VARIANT_LABELS: Record<string, string> = {
+  alolan: 'Alolan',
+  galarian: 'Galarian',
+  hisuian: 'Hisuian',
+  mega: 'Mega',
+  'mega-x': 'Mega X',
+  'mega-y': 'Mega Y',
+  paldean: 'Paldean'
+}
 
 export const EV_STAT_LABELS: Record<string, string> = {
   attack: 'Atk',

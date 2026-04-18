@@ -1,7 +1,7 @@
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/types/pokemon'
 
 export type PokemonResponse = {
-  data: Pokemon[]
+  data: PokemonEntry[]
   pagination: {
     hasNext: boolean
     hasPrev: boolean

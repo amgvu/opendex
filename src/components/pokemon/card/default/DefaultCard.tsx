@@ -5,12 +5,12 @@ import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
 import {
-  fetchPokemonById,
-  pokemonByIdQueryKey
-} from '@/hooks/query/usePokemonByIdQuery'
+  fetchPokemonByName,
+  pokemonByNameQueryKey
+} from '@/hooks/query/usePokemonByNameQuery'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
@@ -27,19 +27,20 @@ export function DefaultCard({
   id: string
   index: number
   onClick: () => void
-  pokemon: Pokemon
+  pokemon: PokemonEntry
 }) {
   const priority = index < 10
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
   const queryClient = useQueryClient()
+  const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
 
   return (
     <motion.div
       animate={{ opacity: active ? 0 : 1, y: !active && hovered ? -3 : 0 }}
       className={`relative h-20 cursor-pointer rounded-xl p-3 [clip-path:inset(0_round_0.85rem)] ${typeColor}`}
-      layoutId={`card-${pokemon.id}-${id}`}
+      layoutId={`card-${pokemon.name}-${id}`}
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
       onHoverStart={() => {
@@ -47,8 +48,8 @@ export function DefaultCard({
           setHovered(true)
           void queryClient.prefetchQuery({
             gcTime: Infinity,
-            queryFn: () => fetchPokemonById(pokemon.id),
-            queryKey: pokemonByIdQueryKey(pokemon.id),
+            queryFn: () => fetchPokemonByName(pokemon.name),
+            queryKey: pokemonByNameQueryKey(pokemon.name),
             staleTime: Infinity
           })
         }
@@ -69,7 +70,7 @@ export function DefaultCard({
       />
       <motion.div
         className="absolute -bottom-4 left-16 sm:left-20 md:left-20 lg:left-22 xl:left-24 2xl:left-28 h-28 w-28"
-        layoutId={`image-${pokemon.id}-${id}`}
+        layoutId={`image-${pokemon.name}-${id}`}
         style={
           pokemon.blurDataURL
             ? {
@@ -104,18 +105,18 @@ export function DefaultCard({
         <div className="flex items-start justify-between gap-1">
           <motion.p
             className={`min-w-0 truncate font-semibold capitalize text-white ${pokemon.name.length > 14 ? 'text-xs sm:text-sm 2xl:text-base' : 'text-sm sm:text-base lg:text-lg 2xl:text-xl'}`}
-            layoutId={`name-${pokemon.id}-${id}`}
+            layoutId={`name-${pokemon.name}-${id}`}
             transition={CARD_TRANSITION}
           >
             {pokemon.name}
           </motion.p>
           <span className="flex-shrink-0 text-[10px] font-mono sm:text-xs 2xl:text-sm tracking-wide font-semibold text-white">
-            {formatPokedexId(pokemon.id)}
+            {formatPokedexId(pokemon.id, variantIndex)}
           </span>
         </div>
         <motion.div
           className="relative flex flex-wrap gap-1"
-          layoutId={`types-${pokemon.id}-${id}`}
+          layoutId={`types-${pokemon.name}-${id}`}
           transition={CARD_TRANSITION}
         >
           {pokemon.types.map((type: string) => (
@@ -126,7 +127,7 @@ export function DefaultCard({
       {(pokemon.isLegendary || pokemon.isMythical) && (
         <motion.div
           className="absolute bottom-2 right-2"
-          layoutId={`star-${pokemon.id}-${id}`}
+          layoutId={`star-${pokemon.name}-${id}`}
           transition={CARD_TRANSITION}
         >
           {pokemon.isMythical ? (
