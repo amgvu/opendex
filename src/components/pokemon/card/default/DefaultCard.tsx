@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -7,10 +6,6 @@ import { TbSparkles } from 'react-icons/tb'
 
 import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
 
-import {
-  fetchPokemonByName,
-  pokemonByNameQueryKey
-} from '@/hooks/query/usePokemonByNameQuery'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
 
@@ -33,7 +28,6 @@ export function DefaultCard({
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
-  const queryClient = useQueryClient()
   const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
 
   return (
@@ -43,17 +37,7 @@ export function DefaultCard({
       layoutId={`card-${pokemon.name}-${id}`}
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
-      onHoverStart={() => {
-        if (!active) {
-          setHovered(true)
-          void queryClient.prefetchQuery({
-            gcTime: Infinity,
-            queryFn: () => fetchPokemonByName(pokemon.name),
-            queryKey: pokemonByNameQueryKey(pokemon.name),
-            staleTime: Infinity
-          })
-        }
-      }}
+      onHoverStart={() => { if (!active) setHovered(true) }}
       transition={CARD_TRANSITION}
     >
       <Image

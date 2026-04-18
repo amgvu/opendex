@@ -16,7 +16,7 @@ export function useDirectCard(pokemon: PokemonEntry[]) {
   const needsDirect = selectedName !== null && (fromUrl || selectedInList === null)
 
   const { pokemon: directPokemon } = usePokemonByNameQuery(needsDirect ? selectedName : null)
-  const directData = needsDirect ? (selectedInList ?? directPokemon) : null
+  const directData = needsDirect ? (directPokemon ?? selectedInList) : null
 
   useEffect(() => {
     const selected = directData ?? selectedInList

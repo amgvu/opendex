@@ -8,13 +8,6 @@ import _pokemonData from '@/data/pokemon.json'
 
 const pokemonData = _pokemonData as unknown as PokemonEntry[]
 
-// Fields sent to the client for grid display — detail fields are fetched on demand via /api/pokemon/[name]
-const SUMMARY_KEYS = new Set([
-  'attack', 'blurDataURL', 'defense', 'description', 'generation',
-  'height', 'hp', 'id', 'imageUrl', 'isLegendary', 'isMythical',
-  'name', 'officialUrl', 'specialAttack', 'specialDefense', 'speed',
-  'types', 'variantIndex', 'variantOf', 'variantSlug', 'variantType', 'weight'
-])
 
 export function GET(request: NextRequest) {
   try {
@@ -43,15 +36,9 @@ export function GET(request: NextRequest) {
     const endIndex = startIndex + limit
     const paginatedPokemon = filteredPokemon.slice(startIndex, endIndex)
 
-    const summaries = paginatedPokemon.map(p =>
-      Object.fromEntries(
-        Object.entries(p as Record<string, unknown>).filter(([k]) => SUMMARY_KEYS.has(k))
-      )
-    )
-
     return NextResponse.json(
       {
-        data: summaries,
+        data: paginatedPokemon,
         pagination: {
           hasNext: page < totalPages,
           hasPrev: page > 1,
