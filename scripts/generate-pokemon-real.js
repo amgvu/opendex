@@ -345,7 +345,7 @@ function getEnglishFlavorTexts(entries) {
   for (let i = entries.length - 1; i >= 0; i--) {
     const e = entries[i]
     if (e.language.name !== 'en') continue
-    const cleaned = e.flavor_text.replace(/[\n\f\r]/g, ' ').trim()
+    const cleaned = e.flavor_text.replace(/[\n\f\r\u00ad]/g, '').replace(/POKé/g, 'POKÉ').trim()
     if (seen.has(cleaned)) continue
     seen.add(cleaned)
     texts.push({ game: e.version.name, text: cleaned })
