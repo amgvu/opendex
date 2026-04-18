@@ -73,6 +73,7 @@ export type Pokemon = {
   officialUrl: string
   specialAttack: number
   specialDefense: number
+  shiny?: { imageUrl: string; officialUrl: string | null }
   speed: number
   typeMatchups?: TypeMatchups
   types: string[]
