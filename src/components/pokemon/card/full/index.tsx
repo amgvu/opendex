@@ -42,12 +42,17 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
     gifEnabled,
     setActiveTab,
     setFullModalOpen,
-    setGifEnabled
+    setGifEnabled,
+    setShinyEnabled,
+    shinyEnabled
   } = useCardContext()
   const { onNext, onPrev } = useNavContext()
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
-    useGifLoader(gifEnabled)
+    useGifLoader(gifEnabled, shinyEnabled)
+
+  const artSrc = shinyEnabled ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl) : pokemon.officialUrl
+  const gifSrc = shinyEnabled ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl) : pokemon.imageUrl
   const [copied, setCopied] = useState(false)
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const bst =
@@ -145,7 +150,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                         fill
                         onContextMenu={e => e.preventDefault()}
                         sizes="(min-width: 1536px) 420px, (min-width: 1280px) 360px, 300px"
-                        src={pokemon.officialUrl}
+                        src={artSrc}
                         style={{
                           filter: `drop-shadow(0 24px 40px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 50%))`
                         }}
@@ -154,6 +159,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                     </motion.div>
                     {!gifError && gifMounted && (
                       <motion.img
+                        key={String(shinyEnabled)}
                         alt=""
                         animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
                         className="absolute inset-0 h-full w-full object-contain"
@@ -162,7 +168,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                         onContextMenu={e => e.preventDefault()}
                         onError={() => setGifError(true)}
                         onLoad={() => setGifReady(true)}
-                        src={pokemon.imageUrl}
+                        src={gifSrc}
                         transition={{ duration: 0.15 }}
                       />
                     )}
@@ -180,31 +186,57 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                   {copied ? <TbCheck size={14} /> : <TbLink size={14} />}
                   {copied ? 'Copied!' : 'Copy link'}
                 </button>
-                {!gifError && (
-                  <Switch
-                    isSelected={gifEnabled}
-                    onChange={v => setGifEnabled(v)}
-                    size="sm"
-                    style={
-                      {
-                        '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                        '--switch-control-bg-checked': bgClassToVar(typeColor),
-                        '--switch-control-bg-checked-hover':
-                          bgClassToVar(typeColor),
-                        '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-                      } as CSSProperties
-                    }
-                  >
-                    <Switch.Control>
-                      <Switch.Thumb />
-                    </Switch.Control>
-                    <Switch.Content>
-                      <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
-                        3D
-                      </Label>
-                    </Switch.Content>
-                  </Switch>
-                )}
+                <div className="flex items-center gap-3">
+                  {pokemon.shiny && (
+                    <Switch
+                      isSelected={shinyEnabled}
+                      onChange={v => setShinyEnabled(v)}
+                      size="sm"
+                      style={
+                        {
+                          '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
+                          '--switch-control-bg-checked': bgClassToVar(typeColor),
+                          '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
+                          '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
+                        } as CSSProperties
+                      }
+                    >
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
+                      <Switch.Content>
+                        <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
+                          ✨
+                        </Label>
+                      </Switch.Content>
+                    </Switch>
+                  )}
+                  {!gifError && (
+                    <Switch
+                      isSelected={gifEnabled}
+                      onChange={v => setGifEnabled(v)}
+                      size="sm"
+                      style={
+                        {
+                          '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
+                          '--switch-control-bg-checked': bgClassToVar(typeColor),
+                          '--switch-control-bg-checked-hover':
+                            bgClassToVar(typeColor),
+                          '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
+                        } as CSSProperties
+                      }
+                    >
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
+                      <Switch.Content>
+                        <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
+                          3D
+                        </Label>
+                      </Switch.Content>
+                    </Switch>
+                  )}
+                </div>
               </div>
 
               {/* Physical stats grid */}
