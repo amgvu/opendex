@@ -108,7 +108,7 @@ export function ExpandedCard({
                   }
                 }}
               >
-                <CardHeader fullModalOpen={fullModalOpen} id={id} pokemon={pokemon} />
+                <CardHeader id={id} pokemon={pokemon} />
                 {pokemon.officialUrl && (
                   <CardArtwork
                     id={id}

@@ -9,7 +9,7 @@ import { formatPokedexId, VARIANT_LABELS } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
-export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: boolean; id: string; pokemon: PokemonEntry }) {
+export function CardHeader({ id, pokemon }: { id: string; pokemon: PokemonEntry }) {
   const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
   const variantLabel = (pokemon as PokemonVariant).variantType
     ? VARIANT_LABELS[(pokemon as PokemonVariant).variantType]
@@ -19,7 +19,6 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
           <motion.h2
-            animate={{ opacity: fullModalOpen ? 0 : 1 }}
             className={`min-w-0 truncate pb-1 font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
             layoutId={`name-${pokemon.name}-${id}`}
             transition={CARD_TRANSITION}
@@ -28,7 +27,6 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
           </motion.h2>
           {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
-              animate={{ opacity: fullModalOpen ? 0 : 1 }}
               layoutId={`star-${pokemon.name}-${id}`}
               transition={CARD_TRANSITION}
             >
@@ -65,7 +63,6 @@ export function CardHeader({ fullModalOpen, id, pokemon }: { fullModalOpen: bool
         </span>
       </div>
       <motion.div
-        animate={{ opacity: fullModalOpen ? 0 : 1 }}
         className="flex shrink-0 flex-wrap gap-1"
         layoutId={`types-${pokemon.name}-${id}`}
         transition={CARD_TRANSITION}

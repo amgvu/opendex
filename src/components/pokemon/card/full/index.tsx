@@ -98,10 +98,8 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
           {/* Modal card */}
           <motion.div
-            animate={{ opacity: 1 }}
             className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
+            layoutId={`card-${pokemon.name}-${id}`}
             onClick={e => e.stopPropagation()}
             transition={CARD_TRANSITION}
           >
@@ -132,9 +130,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               <div className="relative flex min-h-0 flex-1 items-center justify-center px-8 pt-16 pb-3">
                 {pokemon.officialUrl && (
                   <motion.div
-                    animate={{ opacity: 1 }}
                     className="relative w-full"
-                    initial={{ opacity: 0 }}
                     layoutId={`image-${pokemon.name}-${id}`}
                     style={{ aspectRatio: '1' }}
                     transition={CARD_TRANSITION}
@@ -236,13 +232,11 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-2.5">
                     <motion.h2
-                      animate={{ opacity: 1 }}
                       className={`truncate font-black capitalize leading-tight text-white ${
                         pokemon.name.length > 12
                           ? 'text-3xl xl:text-4xl 2xl:text-5xl'
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
-                      initial={{ opacity: 0 }}
                       layoutId={`name-${pokemon.name}-${id}`}
                       transition={CARD_TRANSITION}
                     >
@@ -250,8 +244,6 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                     </motion.h2>
                     {(pokemon.isMythical || pokemon.isLegendary) && (
                       <motion.div
-                        animate={{ opacity: 1 }}
-                        initial={{ opacity: 0 }}
                         layoutId={`star-${pokemon.name}-${id}`}
                         transition={CARD_TRANSITION}
                       >
@@ -284,9 +276,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
                 {/* Types + special badges */}
                 <motion.div
-                  animate={{ opacity: 1 }}
                   className="mt-3 flex flex-wrap items-center gap-2"
-                  initial={{ opacity: 0 }}
                   layoutId={`types-${pokemon.name}-${id}`}
                   transition={CARD_TRANSITION}
                 >
@@ -405,14 +395,6 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 <TbChevronRight size={16} />
               </button>
               <button
-                aria-label="Minimize to card"
-                className=" flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
-                onClick={() => setFullModalOpen(false)}
-                type="button"
-              >
-                <TbArrowsDiagonalMinimize2 size={16} />
-              </button>
-              <button
                 aria-label="Close"
                 className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
                 onClick={closeAll}
@@ -421,6 +403,16 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 <TbX size={16} />
               </button>
             </div>
+
+            {/* ── BOTTOM-RIGHT MINIMIZE ── */}
+            <button
+              aria-label="Minimize to card"
+              className="absolute bottom-4 right-4 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-white/60 transition-colors hover:bg-black/30 hover:text-white"
+              onClick={() => setFullModalOpen(false)}
+              type="button"
+            >
+              <TbArrowsDiagonalMinimize2 size={16} />
+            </button>
           </motion.div>
         </div>
       )}

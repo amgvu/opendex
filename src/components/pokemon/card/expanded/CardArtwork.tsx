@@ -21,7 +21,7 @@ export function CardArtwork({
   pokemon: PokemonEntry
   typeColor: string
 }) {
-  const { fullModalOpen, gifEnabled, setGifEnabled, shinyEnabled, setShinyEnabled } = useCardContext()
+  const { gifEnabled, setGifEnabled, shinyEnabled, setShinyEnabled } = useCardContext()
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled, shinyEnabled)
   const [copied, setCopied] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
@@ -65,7 +65,6 @@ export function CardArtwork({
 
   return (
     <motion.div
-      animate={{ opacity: fullModalOpen ? 0 : 1 }}
       className="relative mb-1 sm:mb-4 flex justify-center"
       layoutId={`image-${pokemon.name}-${id}`}
       transition={CARD_TRANSITION}
