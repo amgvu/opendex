@@ -1,6 +1,6 @@
 'use client'
 
-import { Label, Switch, Tabs } from '@heroui/react'
+import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, useState } from 'react'
@@ -25,6 +25,7 @@ import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, formatPokedexId, getTypeColor } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
+import { ArtworkSwitches } from '../ArtworkSwitches'
 import { EvolutionPanel } from '../expanded/EvolutionPanel'
 import { TypeBadge } from '../TypeBadge'
 import { FullBattlePanel } from './FullBattlePanel'
@@ -159,7 +160,6 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                     </motion.div>
                     {!gifError && gifMounted && (
                       <motion.img
-                        key={String(shinyEnabled)}
                         alt=""
                         animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
                         className="absolute inset-0 h-full w-full object-contain"
@@ -187,55 +187,16 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                   {copied ? 'Copied!' : 'Copy link'}
                 </button>
                 <div className="flex items-center gap-3">
-                  {pokemon.shiny && (
-                    <Switch
-                      isSelected={shinyEnabled}
-                      onChange={v => setShinyEnabled(v)}
-                      size="sm"
-                      style={
-                        {
-                          '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                          '--switch-control-bg-checked': bgClassToVar(typeColor),
-                          '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
-                          '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-                        } as CSSProperties
-                      }
-                    >
-                      <Switch.Control>
-                        <Switch.Thumb />
-                      </Switch.Control>
-                      <Switch.Content>
-                        <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
-                          ✨
-                        </Label>
-                      </Switch.Content>
-                    </Switch>
-                  )}
-                  {!gifError && (
-                    <Switch
-                      isSelected={gifEnabled}
-                      onChange={v => setGifEnabled(v)}
-                      size="sm"
-                      style={
-                        {
-                          '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-                          '--switch-control-bg-checked': bgClassToVar(typeColor),
-                          '--switch-control-bg-checked-hover':
-                            bgClassToVar(typeColor),
-                          '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-                        } as CSSProperties
-                      }
-                    >
-                      <Switch.Control>
-                        <Switch.Thumb />
-                      </Switch.Control>
-                      <Switch.Content>
-                        <Label className="cursor-pointer select-none text-xs font-medium text-white/60">
-                          3D
-                        </Label>
-                      </Switch.Content>
-                    </Switch>
-                  )}
+                  <ArtworkSwitches
+                    gifError={gifError}
+                    gifEnabled={gifEnabled}
+                    labelClassName="cursor-pointer select-none text-xs font-medium text-white/60"
+                    pokemon={pokemon}
+                    setGifEnabled={setGifEnabled}
+                    setShinyEnabled={setShinyEnabled}
+                    shinyEnabled={shinyEnabled}
+                    typeColor={typeColor}
+                  />
                 </div>
               </div>
 

@@ -1,12 +1,6 @@
-import { Label, Switch } from '@heroui/react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import {
-  type CSSProperties,
-  type SyntheticEvent,
-  useRef,
-  useState
-} from 'react'
+import { type SyntheticEvent, useRef, useState } from 'react'
 import { TbCheck, TbLink } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/types/pokemon'
@@ -15,6 +9,8 @@ import { useCardContext } from '@/context/card'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar } from '@/lib/pokemon'
+
+import { ArtworkSwitches } from '../ArtworkSwitches'
 
 export function CardArtwork({
   id,
@@ -67,13 +63,6 @@ export function CardArtwork({
     />
   )
 
-  const switchStyle = {
-    '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-    '--switch-control-bg-checked': bgClassToVar(typeColor),
-    '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
-    '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-  } as CSSProperties
-
   return (
     <motion.div
       animate={{ opacity: fullModalOpen ? 0 : 1 }}
@@ -103,7 +92,6 @@ export function CardArtwork({
       </div>
       {!gifError && gifMounted && (
         <motion.img
-          key={String(shinyEnabled)}
           alt=""
           animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
           className="absolute h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
@@ -125,40 +113,16 @@ export function CardArtwork({
           <span>{copied ? 'Copied!' : 'Copy link'}</span>
         </button>
         <div className="flex items-center gap-2">
-          {pokemon.shiny && (
-            <Switch
-              isSelected={shinyEnabled}
-              onChange={v => setShinyEnabled(v)}
-              size="sm"
-              style={switchStyle}
-            >
-              <Switch.Control>
-                <Switch.Thumb />
-              </Switch.Control>
-              <Switch.Content>
-                <Label className="text-xs font-medium text-white/70 select-none">
-                  ✨
-                </Label>
-              </Switch.Content>
-            </Switch>
-          )}
-          {!gifError && (
-            <Switch
-              isSelected={gifEnabled}
-              onChange={v => setGifEnabled(v)}
-              size="sm"
-              style={switchStyle}
-            >
-              <Switch.Control>
-                <Switch.Thumb />
-              </Switch.Control>
-              <Switch.Content>
-                <Label className="text-xs font-medium text-white/70 select-none">
-                  3D
-                </Label>
-              </Switch.Content>
-            </Switch>
-          )}
+          <ArtworkSwitches
+            gifError={gifError}
+            gifEnabled={gifEnabled}
+            labelClassName="text-xs font-medium text-white/70 select-none"
+            pokemon={pokemon}
+            setGifEnabled={setGifEnabled}
+            setShinyEnabled={setShinyEnabled}
+            shinyEnabled={shinyEnabled}
+            typeColor={typeColor}
+          />
         </div>
       </div>
     </motion.div>
