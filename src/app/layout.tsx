@@ -5,8 +5,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { IBM_Plex_Mono, Open_Sans } from 'next/font/google'
 
 import { QueryProvider } from '@/components/providers/QueryProvider'
-import { DEFAULT_METADATA, generatePokemonMetadata } from '@/lib/metadata'
-import { getPokemonByName } from '@/lib/pokemon-metadata'
 
 import './globals.css'
 
@@ -22,24 +20,10 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ['400', '500', '600', '700']
 })
 
-export async function generateMetadata({
-  searchParams
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>
-}): Promise<Metadata> {
-  try {
-    const params = await searchParams
-    const pokemonName = params?.pokemon
-
-    if (!pokemonName || typeof pokemonName !== 'string') {
-      return DEFAULT_METADATA
-    }
-
-    const pokemon = getPokemonByName(pokemonName)
-    return pokemon ? generatePokemonMetadata(pokemon) : DEFAULT_METADATA
-  } catch {
-    return DEFAULT_METADATA
-  }
+export const metadata: Metadata = {
+  description:
+    'Community-made Pokédex. Browse all 1,025 Pokémon - stats, types, abilities, and more.',
+  title: 'Opendex'
 }
 
 export default function RootLayout({
