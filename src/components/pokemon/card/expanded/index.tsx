@@ -1,13 +1,14 @@
 import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
-import { type CSSProperties, type RefObject, useState } from 'react'
+import { type CSSProperties, type RefObject, useEffect, useState } from 'react'
 import { TbArrowsDiagonal } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
+import { useSelectionStore } from '@/stores/selectionStore'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
 
@@ -28,11 +29,13 @@ const TAB_PANEL_SCROLL =
 export function ExpandedCard({
   active,
   id,
+  onExitComplete,
   pokemon,
   ref
 }: {
   active: boolean
   id: string
+  onExitComplete: () => void
   pokemon: PokemonEntry
   ref: RefObject<HTMLDivElement | null>
 }) {
@@ -49,8 +52,15 @@ export function ExpandedCard({
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
+  useEffect(
+    () => () => {
+      if (!useSelectionStore.getState().selectedName) setFullModalOpen(false)
+    },
+    [setFullModalOpen]
+  )
+
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={onExitComplete}>
       {active && (
         <>
           <div className="fixed inset-0 z-50 grid place-items-center p-4">

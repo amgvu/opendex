@@ -18,7 +18,7 @@ export function DirectCard({ pokemon }: { pokemon: PokemonEntry }) {
   useOutsideClick(ref, onClose, true)
   useBodyScrollLock(true, onClose)
   return createPortal(
-    <ExpandedCard active id="__direct__" pokemon={pokemon} ref={ref} />,
+    <ExpandedCard active id="__direct__" onExitComplete={() => {}} pokemon={pokemon} ref={ref} />,
     document.body
   )
 }

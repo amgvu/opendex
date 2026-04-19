@@ -11,29 +11,13 @@ import './globals.css'
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
   variable: '--font-ibm-plex-sans',
-  weight: [
-    '100', // Thin
-    '200', // Extra Light
-    '300', // Light
-    '400', // Regular
-    '500', // Medium
-    '600', // Semi Bold
-    '700' // Bold
-  ]
+  weight: ['400', '500', '700']
 })
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   variable: '--font-ibm-plex-mono',
-  weight: [
-    '100', // Thin
-    '200', // Extra Light
-    '300', // Light
-    '400', // Regular
-    '500', // Medium
-    '600', // Semi Bold
-    '700' // Bold
-  ]
+  weight: ['400', '700']
 })
 
 export const metadata: Metadata = {
@@ -42,27 +26,6 @@ export const metadata: Metadata = {
   title: 'Opendex'
 }
 
-const POKEMON_TYPES = [
-  'bug',
-  'dark',
-  'dragon',
-  'electric',
-  'fairy',
-  'fighting',
-  'fire',
-  'flying',
-  'ghost',
-  'grass',
-  'ground',
-  'ice',
-  'normal',
-  'poison',
-  'psychic',
-  'rock',
-  'steel',
-  'water'
-]
-
 export default function RootLayout({
   children
 }: Readonly<{
@@ -70,16 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {POKEMON_TYPES.map(type => (
-          <link
-            as="image"
-            href={`/icons/${type}.svg`}
-            key={type}
-            rel="preload"
-          />
-        ))}
-      </head>
+      <head />
       <body
         className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} font-sans dark antialiased`}
       >
