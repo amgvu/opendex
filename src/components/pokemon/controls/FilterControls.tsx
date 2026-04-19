@@ -111,7 +111,7 @@ export function FilterControls() {
           </PopoverAnchor>
           <PopoverContent align="start" className="w-64 p-2">
             <Command shouldFilter={false}>
-              <CommandList className="max-h-56 touch-pan-y overscroll-contain">
+              <CommandList className="max-h-128 xl:max-h-56">
                 <CommandEmpty>No matching type</CommandEmpty>
                 <CommandGroup>
                   {filteredTypes.map(type => {
