@@ -55,8 +55,12 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
 
-  const artSrc = shinyEnabled ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl) : pokemon.officialUrl
-  const gifSrc = shinyEnabled ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl) : pokemon.imageUrl
+  const artSrc = shinyEnabled
+    ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
+    : pokemon.officialUrl
+  const gifSrc = shinyEnabled
+    ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl)
+    : pokemon.imageUrl
   const [copied, setCopied] = useState(false)
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const bst =
@@ -101,7 +105,7 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
 
           {/* Modal card */}
           <motion.div
-            className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
+            className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-2xl before:pointer-events-none`}
             layoutId={skipFLIP ? undefined : `card-${pokemon.name}-${id}`}
             onClick={e => e.stopPropagation()}
             transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
@@ -118,15 +122,6 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               width={512}
             />
 
-            {/* Inset border + dark overlay */}
-            <div
-              className="pointer-events-none absolute inset-3 rounded-xl border bg-black/25"
-              style={{
-                borderColor: `color-mix(in oklab, ${bgClassToVar(typeColor)}, black 25%)`,
-                boxShadow: `inset 0 0 1px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
-              }}
-            />
-
             {/* ── LEFT: artwork + controls + stats ── */}
             <div className="relative z-10 flex w-[32%] shrink-0 flex-col border-r border-white/10">
               {/* Artwork — fills flex-1, scales with panel */}
@@ -134,7 +129,9 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 {pokemon.officialUrl && (
                   <motion.div
                     className="relative w-full"
-                    layoutId={skipFLIP ? undefined : `image-${pokemon.name}-${id}`}
+                    layoutId={
+                      skipFLIP ? undefined : `image-${pokemon.name}-${id}`
+                    }
                     style={{ aspectRatio: '1' }}
                     transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                   >
@@ -240,15 +237,21 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                           ? 'text-3xl xl:text-4xl 2xl:text-5xl'
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
-                      layoutId={skipFLIP ? undefined : `name-${pokemon.name}-${id}`}
+                      layoutId={
+                        skipFLIP ? undefined : `name-${pokemon.name}-${id}`
+                      }
                       transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                     >
                       {pokemon.name}
                     </motion.h2>
                     {(pokemon.isMythical || pokemon.isLegendary) && (
                       <motion.div
-                        layoutId={skipFLIP ? undefined : `star-${pokemon.name}-${id}`}
-                        transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
+                        layoutId={
+                          skipFLIP ? undefined : `star-${pokemon.name}-${id}`
+                        }
+                        transition={
+                          skipFLIP ? { duration: 0 } : CARD_TRANSITION
+                        }
                       >
                         {pokemon.isMythical && (
                           <TbSparkles
@@ -280,7 +283,9 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 {/* Types + special badges */}
                 <motion.div
                   className="mt-3 flex flex-wrap items-center gap-2"
-                  layoutId={skipFLIP ? undefined : `types-${pokemon.name}-${id}`}
+                  layoutId={
+                    skipFLIP ? undefined : `types-${pokemon.name}-${id}`
+                  }
                   transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                 >
                   {pokemon.types.map(type => (
@@ -305,9 +310,13 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               {/* Tabs */}
               <motion.div
                 animate={{ opacity: 1 }}
-                className="flex min-h-0 flex-1 flex-col px-8 pt-4"
+                className="flex min-h-0 flex-1 flex-col px-7 pt-5 sm:p-6 2xl:p-8"
                 initial={{ opacity: skipFLIP ? 1 : 0 }}
-                transition={skipFLIP ? { duration: 0 } : { ...CARD_TRANSITION, delay: 0.1 }}
+                transition={
+                  skipFLIP
+                    ? { duration: 0 }
+                    : { ...CARD_TRANSITION, delay: 0.1 }
+                }
               >
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"

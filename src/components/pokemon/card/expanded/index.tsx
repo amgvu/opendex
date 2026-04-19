@@ -24,7 +24,7 @@ import { StatsPanel } from './StatsPanel'
 const TABS_ENTER_TRANSITION = { delay: 0.15, duration: 0.2 }
 
 const TAB_PANEL_SCROLL =
-  'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
+  'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30 [mask-image:linear-gradient(to_bottom,transparent,black_1%,black_99%,transparent)]'
 
 export function ExpandedCard({
   active,
@@ -48,7 +48,8 @@ export function ExpandedCard({
     pokemon.specialAttack +
     pokemon.specialDefense +
     pokemon.speed
-  const { activeTab, fullModalOpen, setActiveTab, setFullModalOpen } = useCardContext()
+  const { activeTab, fullModalOpen, setActiveTab, setFullModalOpen } =
+    useCardContext()
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
@@ -65,7 +66,7 @@ export function ExpandedCard({
         <>
           <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
-              className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:inset(0_round_1rem)] ${typeColor}`}
+              className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-[1rem] before:pointer-events-none`}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragControls={dragControls}
@@ -84,13 +85,6 @@ export function ExpandedCard({
               }}
               transition={CARD_TRANSITION}
             >
-              <div
-                className="pointer-events-none absolute inset-3 rounded-lg border bg-black/25 sm:inset-4.5 sm:rounded-xl"
-                style={{
-                  borderColor: `color-mix(in oklab, ${bgClassToVar(typeColor)}, black 25%)`,
-                  boxShadow: `inset 0 0 1px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%)`
-                }}
-              />
               <button
                 aria-label="Open full view"
                 className="absolute bottom-8 right-8 z-10 hidden cursor-pointer items-center justify-center text-white/30 transition-colors hover:text-white/60 sm:flex"
@@ -111,7 +105,7 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative flex h-full cursor-grab flex-col px-7 pt-5 pb-3 sm:px-9 sm:py-8 2xl:px-11 2xl:py-10 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative flex h-full cursor-grab flex-col px-6 pt-6 pb-3 sm:p-6 2xl:p-8 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
@@ -132,7 +126,9 @@ export function ExpandedCard({
                   data-no-drag
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
-                  transition={fullModalOpen ? CARD_TRANSITION : TABS_ENTER_TRANSITION}
+                  transition={
+                    fullModalOpen ? CARD_TRANSITION : TABS_ENTER_TRANSITION
+                  }
                 >
                   <Tabs
                     className="flex min-h-0 flex-1 flex-col"

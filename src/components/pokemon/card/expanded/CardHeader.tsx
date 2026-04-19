@@ -9,7 +9,13 @@ import { formatPokedexId, VARIANT_LABELS } from '@/lib/pokemon'
 
 import { TypeBadge } from '../TypeBadge'
 
-export function CardHeader({ id, pokemon }: { id: string; pokemon: PokemonEntry }) {
+export function CardHeader({
+  id,
+  pokemon
+}: {
+  id: string
+  pokemon: PokemonEntry
+}) {
   const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
   const variantLabel = (pokemon as PokemonVariant).variantType
     ? VARIANT_LABELS[(pokemon as PokemonVariant).variantType]
