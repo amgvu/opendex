@@ -37,7 +37,9 @@ export function DefaultCard({
       layoutId={`card-${pokemon.name}-${id}`}
       onClick={onClick}
       onHoverEnd={() => setHovered(false)}
-      onHoverStart={() => { if (!active) setHovered(true) }}
+      onHoverStart={() => {
+        if (!active) setHovered(true)
+      }}
       transition={CARD_TRANSITION}
     >
       <Image
@@ -86,7 +88,7 @@ export function DefaultCard({
         />
       </motion.div>
       <div className="relative flex h-full flex-col justify-between">
-        <div className="flex items-start justify-between gap-1">
+        <div className="flex items-center justify-between gap-1">
           <motion.p
             className={`min-w-0 truncate font-semibold capitalize text-white ${pokemon.name.length > 14 ? 'text-xs sm:text-sm 2xl:text-base' : 'text-sm sm:text-base lg:text-lg 2xl:text-xl'}`}
             layoutId={`name-${pokemon.name}-${id}`}
