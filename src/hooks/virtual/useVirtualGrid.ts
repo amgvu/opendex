@@ -5,7 +5,7 @@ import type { PokemonEntry } from '@/types/pokemon'
 
 const CARD_HEIGHT = 80
 const GAP = 16
-const PRELOAD_ROWS = 10
+const PRELOAD_ROWS = 5
 
 const preloadedUrls = new Set<string>()
 
@@ -30,7 +30,7 @@ export function useVirtualGrid(
   const virtualizer = useWindowVirtualizer({
     count: rowCount,
     estimateSize: useCallback(() => CARD_HEIGHT + GAP, []),
-    overscan: 15
+    overscan: 5
   })
 
   const virtualItems = virtualizer.getVirtualItems()
@@ -47,7 +47,11 @@ export function useVirtualGrid(
       const url = pokemon[i]?.officialUrl
       if (url && !preloadedUrls.has(url)) {
         preloadedUrls.add(url)
-        new Image().src = url
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => { new Image().src = url })
+        } else {
+          setTimeout(() => { new Image().src = url }, 0)
+        }
       }
     }
   }, [virtualItems, rowCount, hasNextPage, isFetchingNextPage, onLoadMore, columns, pokemon])
