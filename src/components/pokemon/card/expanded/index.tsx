@@ -8,6 +8,7 @@ import type { PokemonEntry } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
+import { useSelectionStore } from '@/stores/selectionStore'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
 
@@ -51,7 +52,12 @@ export function ExpandedCard({
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
-  useEffect(() => () => setFullModalOpen(false), [setFullModalOpen])
+  useEffect(
+    () => () => {
+      if (!useSelectionStore.getState().selectedName) setFullModalOpen(false)
+    },
+    [setFullModalOpen]
+  )
 
   return (
     <AnimatePresence onExitComplete={onExitComplete}>

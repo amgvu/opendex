@@ -47,6 +47,9 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
     setShinyEnabled,
     shinyEnabled
   } = useCardContext()
+  // If fullModal is already open when this instance mounts (nav from full modal),
+  // skip all FLIP animations — the card should appear instantly.
+  const [skipFLIP] = useState(fullModalOpen)
   const { onNext, onPrev } = useNavContext()
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
@@ -91,17 +94,17 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
             animate={{ opacity: 1 }}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
+            initial={{ opacity: skipFLIP ? 1 : 0 }}
             onClick={closeAll}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: skipFLIP ? 0 : 0.2 }}
           />
 
           {/* Modal card */}
           <motion.div
             className={`relative flex h-full w-full max-w-7xl overflow-hidden rounded-2xl 2xl:max-w-screen-2xl ${typeColor}`}
-            layoutId={`card-${pokemon.name}-${id}`}
+            layoutId={skipFLIP ? undefined : `card-${pokemon.name}-${id}`}
             onClick={e => e.stopPropagation()}
-            transition={CARD_TRANSITION}
+            transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
           >
             {/* Type watermark — large, bottom-right */}
             <Image
@@ -131,9 +134,9 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 {pokemon.officialUrl && (
                   <motion.div
                     className="relative w-full"
-                    layoutId={`image-${pokemon.name}-${id}`}
+                    layoutId={skipFLIP ? undefined : `image-${pokemon.name}-${id}`}
                     style={{ aspectRatio: '1' }}
-                    transition={CARD_TRANSITION}
+                    transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                   >
                     <motion.div
                       animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
@@ -237,15 +240,15 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                           ? 'text-3xl xl:text-4xl 2xl:text-5xl'
                           : 'text-4xl xl:text-5xl 2xl:text-6xl'
                       }`}
-                      layoutId={`name-${pokemon.name}-${id}`}
-                      transition={CARD_TRANSITION}
+                      layoutId={skipFLIP ? undefined : `name-${pokemon.name}-${id}`}
+                      transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                     >
                       {pokemon.name}
                     </motion.h2>
                     {(pokemon.isMythical || pokemon.isLegendary) && (
                       <motion.div
-                        layoutId={`star-${pokemon.name}-${id}`}
-                        transition={CARD_TRANSITION}
+                        layoutId={skipFLIP ? undefined : `star-${pokemon.name}-${id}`}
+                        transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                       >
                         {pokemon.isMythical && (
                           <TbSparkles
@@ -277,8 +280,8 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 {/* Types + special badges */}
                 <motion.div
                   className="mt-3 flex flex-wrap items-center gap-2"
-                  layoutId={`types-${pokemon.name}-${id}`}
-                  transition={CARD_TRANSITION}
+                  layoutId={skipFLIP ? undefined : `types-${pokemon.name}-${id}`}
+                  transition={skipFLIP ? { duration: 0 } : CARD_TRANSITION}
                 >
                   {pokemon.types.map(type => (
                     <TypeBadge key={type} size="lg" type={type} />
@@ -303,8 +306,8 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
               <motion.div
                 animate={{ opacity: 1 }}
                 className="flex min-h-0 flex-1 flex-col px-8 pt-4"
-                initial={{ opacity: 0 }}
-                transition={{ ...CARD_TRANSITION, delay: 0.1 }}
+                initial={{ opacity: skipFLIP ? 1 : 0 }}
+                transition={skipFLIP ? { duration: 0 } : { ...CARD_TRANSITION, delay: 0.1 }}
               >
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"
