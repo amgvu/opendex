@@ -21,13 +21,19 @@ export function CardArtwork({
   pokemon: PokemonEntry
   typeColor: string
 }) {
-  const { gifEnabled, setGifEnabled, shinyEnabled, setShinyEnabled } = useCardContext()
-  const { gifError, gifMounted, gifReady, setGifError, setGifReady } = useGifLoader(gifEnabled, shinyEnabled)
+  const { gifEnabled, setGifEnabled, shinyEnabled, setShinyEnabled } =
+    useCardContext()
+  const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
+    useGifLoader(gifEnabled, shinyEnabled)
   const [copied, setCopied] = useState(false)
   const blurRef = useRef<HTMLDivElement>(null)
 
-  const artSrc = shinyEnabled ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl) : pokemon.officialUrl
-  const gifSrc = shinyEnabled ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl) : pokemon.imageUrl
+  const artSrc = shinyEnabled
+    ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
+    : pokemon.officialUrl
+  const gifSrc = shinyEnabled
+    ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl)
+    : pokemon.imageUrl
 
   function handleCopy() {
     const params = new URLSearchParams(window.location.search)
@@ -70,7 +76,7 @@ export function CardArtwork({
       transition={CARD_TRANSITION}
     >
       <div
-        className="relative h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80"
+        className="relative h-45 w-45 xl:h-69 xl:w-69 2xl:h-85 2xl:w-85"
         ref={blurRef}
         style={
           pokemon.blurDataURL
@@ -103,7 +109,10 @@ export function CardArtwork({
           transition={{ duration: 0.15 }}
         />
       )}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between" data-no-drag>
+      <div
+        className="absolute bottom-0 left-0 right-0 flex items-center justify-between"
+        data-no-drag
+      >
         <button
           className="flex items-center gap-1 text-xs font-medium text-white/70 select-none cursor-pointer"
           onClick={handleCopy}
