@@ -30,7 +30,7 @@ export function PokemonToolbar() {
     (sortBy !== 'id' || sortOrder !== 'asc' ? 1 : 0)
 
   return (
-    <div className="space-y-3">
+    <div className="xl:space-y-3">
       {/* Search + mobile drawer trigger */}
       <div className="flex gap-2">
         <Button asChild size="icon" variant="outline">
@@ -46,7 +46,9 @@ export function PokemonToolbar() {
           value={search}
         />
         <Drawer shouldScaleBackground={false}>
-          <DrawerTrigger className={`relative xl:hidden ${buttonVariants({ size: 'icon', variant: 'outline' })}`}>
+          <DrawerTrigger
+            className={`relative xl:hidden ${buttonVariants({ size: 'icon', variant: 'outline' })}`}
+          >
             <TbAdjustments size={16} />
             {activeCount > 0 && (
               <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-[10px] font-bold text-background">
