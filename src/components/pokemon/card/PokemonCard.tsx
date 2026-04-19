@@ -1,7 +1,7 @@
 'use client'
 
 import { LayoutGroup } from 'motion/react'
-import { memo, useEffect, useId, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import type { PokemonEntry } from '@/types/pokemon'
@@ -32,10 +32,16 @@ export const PokemonCard = memo(
     const onClose = () => setSelectedName(null)
     const { pokemon: detail } = usePokemonByNameQuery(active ? pokemon.name : null)
     const [showPortal, setShowPortal] = useState(false)
+    const activeRef = useRef(active)
+    activeRef.current = active
 
     useEffect(() => {
       if (active) setShowPortal(true)
     }, [active])
+
+    const handleExitComplete = useCallback(() => {
+      if (!activeRef.current) setShowPortal(false)
+    }, [])
 
     useOutsideClick(ref, onClose, active)
     useBodyScrollLock(active, onClose)
@@ -46,7 +52,7 @@ export const PokemonCard = memo(
           <ExpandedCard
             active={active}
             id={id}
-            onExitComplete={() => setShowPortal(false)}
+            onExitComplete={handleExitComplete}
             pokemon={detail ?? pokemon}
             ref={ref}
           />,

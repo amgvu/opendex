@@ -1,7 +1,7 @@
 import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
-import { type CSSProperties, type RefObject, useState } from 'react'
+import { type CSSProperties, type RefObject, useEffect, useState } from 'react'
 import { TbArrowsDiagonal } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/types/pokemon'
@@ -50,6 +50,8 @@ export function ExpandedCard({
   const { activeTab, fullModalOpen, setActiveTab, setFullModalOpen } = useCardContext()
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
+
+  useEffect(() => () => setFullModalOpen(false), [setFullModalOpen])
 
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
