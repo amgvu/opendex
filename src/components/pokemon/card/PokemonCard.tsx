@@ -1,6 +1,6 @@
 'use client'
 
-import { LayoutGroup } from 'motion/react'
+import { AnimatePresence, LayoutGroup } from 'motion/react'
 import { memo, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -37,10 +37,12 @@ export const PokemonCard = memo(
 
     return (
       <LayoutGroup id={`pokemon-${pokemon.name}`}>
-        {createPortal(
-          <ExpandedCard active={active} id={id} pokemon={detail ?? pokemon} ref={ref} />,
-          document.body
-        )}
+        <AnimatePresence>
+          {active && createPortal(
+            <ExpandedCard id={id} pokemon={detail ?? pokemon} ref={ref} />,
+            document.body
+          )}
+        </AnimatePresence>
         <DefaultCard
           active={active}
           id={id}
