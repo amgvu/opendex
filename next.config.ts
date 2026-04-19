@@ -23,34 +23,11 @@ const nextConfig: NextConfig = {
     ]
   },
   async headers() {
+    const immutable = [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }]
     return [
-      {
-        source: '/icons/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
-          }
-        ]
-      },
-      {
-        source: '/(:path*\\.png)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
-          }
-        ]
-      },
-      {
-        source: '/(:path*\\.svg)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
-          }
-        ]
-      }
+      { source: '/icons/:path*', headers: immutable },
+      { source: '/(:path*\\.png)', headers: immutable },
+      { source: '/(:path*\\.svg)', headers: immutable }
     ]
   }
 }

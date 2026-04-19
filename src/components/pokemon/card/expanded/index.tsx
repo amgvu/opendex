@@ -1,7 +1,7 @@
 import { Tabs } from '@heroui/react'
-import { motion, useDragControls } from 'motion/react'
+import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
-import { type CSSProperties, type RefObject, useEffect, useState } from 'react'
+import { type CSSProperties, type RefObject, useState } from 'react'
 import { TbArrowsDiagonal } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/types/pokemon'
@@ -26,11 +26,15 @@ const TAB_PANEL_SCROLL =
   'flex-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30'
 
 export function ExpandedCard({
+  active,
   id,
+  onExitComplete,
   pokemon,
   ref
 }: {
+  active: boolean
   id: string
+  onExitComplete: () => void
   pokemon: PokemonEntry
   ref: RefObject<HTMLDivElement | null>
 }) {
@@ -47,11 +51,11 @@ export function ExpandedCard({
   const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
 
-  useEffect(() => () => setFullModalOpen(false), [setFullModalOpen])
-
   return (
-    <>
-      <div className="fixed inset-0 z-50 grid place-items-center p-4">
+    <AnimatePresence onExitComplete={onExitComplete}>
+      {active && (
+        <>
+          <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <motion.div
               className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:inset(0_round_1rem)] ${typeColor}`}
               drag="x"
@@ -221,8 +225,10 @@ export function ExpandedCard({
                 </motion.div>
               </div>
             </motion.div>
-      </div>
-      <FullModal id={id} pokemon={pokemon} />
-    </>
+          </div>
+          <FullModal id={id} pokemon={pokemon} />
+        </>
+      )}
+    </AnimatePresence>
   )
 }
