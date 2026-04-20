@@ -8,9 +8,9 @@ import type { PokemonEntry } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
 import { useNavContext } from '@/context/navigation'
-import { useSelectionStore } from '@/stores/selectionStore'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
+import { useSelectionStore } from '@/stores/selectionStore'
 
 import { FullModal } from '../full'
 import { BattlePanel } from './BattlePanel'

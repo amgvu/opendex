@@ -146,9 +146,9 @@ describe('variant identification fields', () => {
       grouped[key].push(v.variantIndex)
     }
     for (const [id, indices] of Object.entries(grouped)) {
-      expect({ id: Number(id), duplicates: indices.length !== new Set(indices).size }).toEqual({
-        id: Number(id),
-        duplicates: false
+      expect({ duplicates: indices.length !== new Set(indices).size, id: Number(id) }).toEqual({
+        duplicates: false,
+        id: Number(id)
       })
     }
   })

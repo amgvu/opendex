@@ -70,26 +70,17 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
-// Showdown removes hyphens from the base name but keeps a single hyphen before
-// the variant suffix, collapsing any internal hyphens within that suffix.
-function toShowdownSlug(slug) {
-  const VARIANTS = [
-    ['-mega-x', '-megax'],
-    ['-mega-y', '-megay'],
-    ['-mega', '-mega'],
-    ['-alola', '-alola'],
-    ['-galar', '-galar'],
-    ['-hisui', '-hisui'],
-    ['-paldea', '-paldea'],
-  ]
-  for (const [apiSuffix, showdownSuffix] of VARIANTS) {
-    if (slug.endsWith(apiSuffix)) {
-      const base = slug.slice(0, -apiSuffix.length).replace(/-/g, '')
-      return base + showdownSuffix
-    }
-  }
-  return slug.replace(/-/g, '')
+// Classify a non-default variety slug into a variant type, or null to skip
+function classifyVariant(slug) {
+  if (slug.endsWith('-mega-x')) return 'mega-x'
+  if (slug.endsWith('-mega-y')) return 'mega-y'
+  if (slug.endsWith('-mega')) return 'mega'
+  if (slug.endsWith('-alola')) return 'alolan'
+  if (slug.endsWith('-galar')) return 'galarian'
+  if (slug.endsWith('-hisui')) return 'hisuian'
+  if (slug.endsWith('-paldea')) return 'paldean'
+  if (slug.endsWith('-gmax')) return 'gigantamax'
+  return null
 }
 
 // Compute weaknesses/resistances/immunities for a Pokemon given its types
@@ -191,19 +182,6 @@ function extractLearnset(moves) {
     levelUp,
     machine: [...machine].sort()
   }
-}
-
-// Classify a non-default variety slug into a variant type, or null to skip
-function classifyVariant(slug) {
-  if (slug.endsWith('-mega-x')) return 'mega-x'
-  if (slug.endsWith('-mega-y')) return 'mega-y'
-  if (slug.endsWith('-mega')) return 'mega'
-  if (slug.endsWith('-alola')) return 'alolan'
-  if (slug.endsWith('-galar')) return 'galarian'
-  if (slug.endsWith('-hisui')) return 'hisuian'
-  if (slug.endsWith('-paldea')) return 'paldean'
-  if (slug.endsWith('-gmax')) return 'gigantamax'
-  return null
 }
 
 async function fetchPokemon(id) {
@@ -355,36 +333,6 @@ function getEnglishFlavorTexts(entries) {
 
 function idFromUrl(url) {
   return parseInt(url.split('/').filter(Boolean).pop(), 10)
-}
-
-// Attach fully resolved move details to a raw learnset (output of extractLearnset)
-function resolveLearnset(rawLearnset, moveDetails) {
-  return {
-    egg: rawLearnset.egg.map(name => ({
-      name,
-      ...(moveDetails[name] ?? {
-        accuracy: null,
-        category: 'status',
-        power: null,
-        pp: 0,
-        type: 'Normal'
-      })
-    })),
-    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
-      ...rest,
-      ...(moveDetails[rest.name] ?? {})
-    })),
-    machine: rawLearnset.machine.map(name => ({
-      name,
-      ...(moveDetails[name] ?? {
-        accuracy: null,
-        category: 'status',
-        power: null,
-        pp: 0,
-        type: 'Normal'
-      })
-    }))
-  }
 }
 
 async function main() {
@@ -539,7 +487,7 @@ async function main() {
       const variantType = classifyVariant(slug)
       if (!variantType) continue
       variantIndex++
-      variantsToProcess.push({ baseEntry: p, slug, variantType, variantIndex })
+      variantsToProcess.push({ baseEntry: p, slug, variantIndex, variantType })
     }
     delete p._varieties
   }
@@ -578,11 +526,11 @@ async function main() {
           }
 
           baseEntry.gigantamax = {
+            _gmaxMoveNames: gmaxMoveNames,
             imageUrl: formData.sprites?.front_default ?? null,
             officialUrl:
               formData.sprites?.other?.['official-artwork']?.front_default ??
-              null,
-            _gmaxMoveNames: gmaxMoveNames
+              null
           }
         })
       )
@@ -793,7 +741,7 @@ async function main() {
     // Step E: Assemble final variant entries
     const variantEntries = []
     for (const { meta, pkmnData, speciesData } of rawVariants) {
-      const { baseEntry, slug, variantType, variantIndex } = meta
+      const { baseEntry, slug, variantIndex, variantType } = meta
       const isRegional = REGIONAL_TYPES.has(variantType)
 
       const variantStats = Object.fromEntries(
@@ -838,22 +786,38 @@ async function main() {
       }
 
       variantEntries.push({
-        // Variant identification
-        id: baseEntry.id,
-        variantIndex,
-        variantOf: baseEntry.id,
-        variantSlug: slug,
-        variantType,
-
         // Re-fetched data (differs from base)
         abilities: variantAbilities,
         attack: variantStats['attack'],
+        // Inherited from base (bio/breeding data stays the same)
+        baseExperience: baseEntry.baseExperience,
+        baseFriendship: baseEntry.baseFriendship,
+        catchRate: baseEntry.catchRate,
+
+        color: baseEntry.color,
         defense: variantStats['defense'],
-        evYield: variantEvYield,
+        description: baseEntry.description,
+        eggCycles: baseEntry.eggCycles,
+        eggGroups: baseEntry.eggGroups,
         evolutionChain,
+        evYield: variantEvYield,
+        female: null,
+        flavorTexts: baseEntry.flavorTexts,
+        genderRate: baseEntry.genderRate,
+        generation: baseEntry.generation,
+        genus: baseEntry.genus,
+        gigantamax: null,
+        growthRate: baseEntry.growthRate,
+        habitat: baseEntry.habitat,
         height: parseFloat((pkmnData.height / 10).toFixed(1)),
+        heldItems: baseEntry.heldItems,
         hp: variantStats['hp'],
+
+        // Variant identification
+        id: baseEntry.id,
         imageUrl: variantImageUrl,
+        isLegendary: baseEntry.isLegendary,
+        isMythical: baseEntry.isMythical,
         learnset,
         name: slug,
         officialUrl: variantOfficialUrl,
@@ -863,27 +827,11 @@ async function main() {
         speed: variantStats['speed'],
         typeMatchups: computeTypeMatchups(variantTypes, typeChart),
         types: variantTypes,
-        weight: parseFloat((pkmnData.weight * 0.220462).toFixed(1)),
-
-        // Inherited from base (bio/breeding data stays the same)
-        baseExperience: baseEntry.baseExperience,
-        baseFriendship: baseEntry.baseFriendship,
-        catchRate: baseEntry.catchRate,
-        color: baseEntry.color,
-        description: baseEntry.description,
-        eggCycles: baseEntry.eggCycles,
-        eggGroups: baseEntry.eggGroups,
-        female: null,
-        flavorTexts: baseEntry.flavorTexts,
-        genderRate: baseEntry.genderRate,
-        generation: baseEntry.generation,
-        genus: baseEntry.genus,
-        gigantamax: null,
-        growthRate: baseEntry.growthRate,
-        habitat: baseEntry.habitat,
-        heldItems: baseEntry.heldItems,
-        isLegendary: baseEntry.isLegendary,
-        isMythical: baseEntry.isMythical
+        variantIndex,
+        variantOf: baseEntry.id,
+        variantSlug: slug,
+        variantType,
+        weight: parseFloat((pkmnData.weight * 0.220462).toFixed(1))
       })
     }
 
@@ -925,6 +873,58 @@ function parseChain(node, steps = []) {
     parseChain(next, steps)
   }
   return steps
+}
+
+// Attach fully resolved move details to a raw learnset (output of extractLearnset)
+function resolveLearnset(rawLearnset, moveDetails) {
+  return {
+    egg: rawLearnset.egg.map(name => ({
+      name,
+      ...(moveDetails[name] ?? {
+        accuracy: null,
+        category: 'status',
+        power: null,
+        pp: 0,
+        type: 'Normal'
+      })
+    })),
+    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
+      ...rest,
+      ...(moveDetails[rest.name] ?? {})
+    })),
+    machine: rawLearnset.machine.map(name => ({
+      name,
+      ...(moveDetails[name] ?? {
+        accuracy: null,
+        category: 'status',
+        power: null,
+        pp: 0,
+        type: 'Normal'
+      })
+    }))
+  }
+}
+
+// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
+// Showdown removes hyphens from the base name but keeps a single hyphen before
+// the variant suffix, collapsing any internal hyphens within that suffix.
+function toShowdownSlug(slug) {
+  const VARIANTS = [
+    ['-mega-x', '-megax'],
+    ['-mega-y', '-megay'],
+    ['-mega', '-mega'],
+    ['-alola', '-alola'],
+    ['-galar', '-galar'],
+    ['-hisui', '-hisui'],
+    ['-paldea', '-paldea'],
+  ]
+  for (const [apiSuffix, showdownSuffix] of VARIANTS) {
+    if (slug.endsWith(apiSuffix)) {
+      const base = slug.slice(0, -apiSuffix.length).replace(/-/g, '')
+      return base + showdownSuffix
+    }
+  }
+  return slug.replace(/-/g, '')
 }
 
 main().catch(err => {

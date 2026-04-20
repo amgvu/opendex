@@ -1,6 +1,7 @@
 import type { Pokemon } from '@/types/pokemon'
 
 import { EV_STAT_LABELS, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
+
 import {
   InfoStat,
   PANEL_BADGE_TEXT,

@@ -17,7 +17,7 @@ export async function generateMetadata({
     types?: string
   }>
 }): Promise<Metadata> {
-  const { pokemon: name, types: typesParam, gens: gensParam, sortBy, sortOrder } =
+  const { gens: gensParam, pokemon: name, sortBy, sortOrder, types: typesParam } =
     await searchParams
 
   if (name) {
@@ -29,12 +29,12 @@ export async function generateMetadata({
       const title = `${displayName} — ${SITE_NAME}`
       return {
         description,
-        title,
         openGraph: {
           description,
           images: pokemon.officialUrl ? [{ url: pokemon.officialUrl }] : undefined,
           title
         },
+        title,
         twitter: {
           card: 'summary',
           description,
@@ -51,11 +51,11 @@ export async function generateMetadata({
 
   if (!filterMeta) return { title: SITE_NAME }
 
-  const { title, description } = filterMeta
+  const { description, title } = filterMeta
   return {
     description,
-    title,
     openGraph: { description, title },
+    title,
     twitter: { card: 'summary', description, title }
   }
 }

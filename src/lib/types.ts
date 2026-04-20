@@ -1,26 +1,3 @@
-export type TypeMatchups = {
-  immunities: string[]
-  resistances: { multiplier: number; type: string }[]
-  weaknesses: { multiplier: number; type: string }[]
-}
-
-export type Move = {
-  accuracy: number | null
-  category: string
-  name: string
-  power: number | null
-  pp: number | null
-  type: string
-}
-
-export type LevelUpMove = Move & { level: number }
-
-export type Learnset = {
-  egg: Move[]
-  levelUp: LevelUpMove[]
-  machine: Move[]
-}
-
 export type Ability = {
   description: string
   isHidden: boolean
@@ -35,20 +12,60 @@ export type EvolutionStep = {
   trigger: string
 }
 
+export type FemaleSprites = {
+  imageUrl: string
+  officialUrl: null | string
+}
+
 export type GigantamaxData = {
   gmaxMoves: Move[]
-  imageUrl: string | null
-  officialUrl: string | null
+  imageUrl: null | string
+  officialUrl: null | string
+}
+
+export type Learnset = {
+  egg: Move[]
+  levelUp: LevelUpMove[]
+  machine: Move[]
+}
+
+export type LevelUpMove = Move & { level: number }
+
+export type Move = {
+  accuracy: null | number
+  category: string
+  name: string
+  power: null | number
+  pp: null | number
+  type: string
+}
+
+export type Pokemon = PokemonBase & {
+  female: FemaleSprites | null
+  gigantamax: GigantamaxData | null
+  variantType?: never
+}
+
+export type PokemonEntry = Pokemon | PokemonVariant
+
+export type PokemonVariant = PokemonBase & {
+  female: null
+  gigantamax: null
+  variantIndex: number
+  variantOf: number
+  variantSlug: string
+  variantType: VariantType
 }
 
 export type SpriteSet = {
   imageUrl: string
-  officialUrl: string | null
+  officialUrl: null | string
 }
 
-export type FemaleSprites = {
-  imageUrl: string
-  officialUrl: string | null
+export type TypeMatchups = {
+  immunities: string[]
+  resistances: { multiplier: number; type: string }[]
+  weaknesses: { multiplier: number; type: string }[]
 }
 
 export type VariantType =
@@ -71,14 +88,14 @@ type PokemonBase = {
   description: string
   eggCycles?: number
   eggGroups?: string[]
-  evYield: { stat: string; value: number }[]
   evolutionChain: EvolutionStep[]
+  evYield: { stat: string; value: number }[]
   flavorTexts: { game: string; text: string }[]
   genderRate: number
   generation: number
   genus?: string
   growthRate?: string
-  habitat: string | null
+  habitat: null | string
   height: number
   heldItems: { name: string; rarity: number }[]
   hp: number
@@ -88,7 +105,7 @@ type PokemonBase = {
   isMythical: boolean
   learnset: Learnset
   name: string
-  officialUrl: string | null
+  officialUrl: null | string
   shiny: SpriteSet
   specialAttack: number
   specialDefense: number
@@ -97,20 +114,3 @@ type PokemonBase = {
   types: string[]
   weight: number
 }
-
-export type Pokemon = PokemonBase & {
-  female: FemaleSprites | null
-  gigantamax: GigantamaxData | null
-  variantType?: never
-}
-
-export type PokemonVariant = PokemonBase & {
-  female: null
-  gigantamax: null
-  variantIndex: number
-  variantOf: number
-  variantSlug: string
-  variantType: VariantType
-}
-
-export type PokemonEntry = Pokemon | PokemonVariant

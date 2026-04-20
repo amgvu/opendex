@@ -2,8 +2,8 @@
 // Patches imageUrl and shiny.imageUrl for variant entries in pokemon.json
 // to use the correct Showdown sprite naming convention.
 import { readFileSync, writeFileSync } from 'fs'
-import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const dataPath = join(__dirname, '../src/data/pokemon.json')
@@ -18,6 +18,15 @@ const VARIANTS = [
   ['-paldea', '-paldea'],
 ]
 
+function fixUrl(url, slug) {
+  if (!url) return url
+  const correct = `https://play.pokemonshowdown.com/sprites/ani/${toShowdownSlug(slug)}.gif`
+  const correctShiny = `https://play.pokemonshowdown.com/sprites/ani-shiny/${toShowdownSlug(slug)}.gif`
+  if (url.includes('/ani-shiny/')) return correctShiny
+  if (url.includes('/ani/')) return correct
+  return url
+}
+
 function toShowdownSlug(slug) {
   for (const [apiSuffix, showdownSuffix] of VARIANTS) {
     if (slug.endsWith(apiSuffix)) {
@@ -26,15 +35,6 @@ function toShowdownSlug(slug) {
     }
   }
   return slug.replace(/-/g, '')
-}
-
-function fixUrl(url, slug) {
-  if (!url) return url
-  const correct = `https://play.pokemonshowdown.com/sprites/ani/${toShowdownSlug(slug)}.gif`
-  const correctShiny = `https://play.pokemonshowdown.com/sprites/ani-shiny/${toShowdownSlug(slug)}.gif`
-  if (url.includes('/ani-shiny/')) return correctShiny
-  if (url.includes('/ani/')) return correct
-  return url
 }
 
 const data = JSON.parse(readFileSync(dataPath, 'utf8'))

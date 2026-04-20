@@ -1,7 +1,7 @@
 import type { SortField, SortOrder } from '@/types/sort'
 
-import { SORT_FIELDS } from '@/types/sort'
 import { capitalize, SITE_NAME } from '@/lib/pokemon'
+import { SORT_FIELDS } from '@/types/sort'
 
 const SORT_LABELS: Record<SortField, string> = {
   attack: 'Attack',
@@ -23,7 +23,7 @@ export function buildFilterMetadata(
   gens: number[],
   sortBy: string,
   sortOrder: string
-): { description: string; title: string } | null {
+): null | { description: string; title: string } {
   const validSortBy = VALID_SORT_FIELDS.has(sortBy as SortField)
     ? (sortBy as SortField)
     : 'id'

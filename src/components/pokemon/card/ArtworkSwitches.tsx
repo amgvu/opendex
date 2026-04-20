@@ -6,8 +6,8 @@ import type { Pokemon } from '@/types/pokemon'
 import { bgClassToVar } from '@/lib/pokemon'
 
 export function ArtworkSwitches({
-  gifError,
   gifEnabled,
+  gifError,
   labelClassName,
   pokemon,
   setGifEnabled,
@@ -15,8 +15,8 @@ export function ArtworkSwitches({
   shinyEnabled,
   typeColor
 }: {
-  gifError: boolean
   gifEnabled: boolean
+  gifError: boolean
   labelClassName: string
   pokemon: Pick<Pokemon, 'shiny'>
   setGifEnabled: (v: boolean) => void
