@@ -14,8 +14,10 @@ export default function AboutPage() {
       <main className="mx-auto max-w-7xl 2xl:max-w-screen-2xl p-4 pt-32 xl:pt-40">
         <h1 className="text-2xl font-semibold mb-4">About</h1>
         <p className="text-muted-foreground">
-          Opendex is a community-made Pokédex. Browse all 1,025 Pokémon — stats, types, abilities,
-          and more.
+          Hi! Thanks for using Opendex. This page is mostly under construction
+          until I figure out what I want to say, so enjoy the app in the
+          meantime and reach out to me on Discord at amg00 if you have any
+          feedback!
         </p>
       </main>
     </>
