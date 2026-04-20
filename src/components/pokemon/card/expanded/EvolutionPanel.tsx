@@ -12,7 +12,33 @@ type TreeNode = {
   name: string
 }
 
-function buildTree(steps: EvolutionStep[]): TreeNode | null {
+export function EvolutionPanel({ large, pokemon }: { large?: boolean; pokemon: Pokemon }) {
+  const chain = pokemon.evolutionChain
+
+  if (chain === undefined) {
+    return (
+      <TabPanelContent>
+        <p className="text-xs text-white/30">Loading...</p>
+      </TabPanelContent>
+    )
+  }
+
+  const tree = buildTree(chain)
+
+  return (
+    <TabPanelContent className="flex min-h-full w-full items-center justify-center p-2">
+      {!tree ? (
+        <p className="text-xs italic text-white/30">Does not evolve</p>
+      ) : (
+        <div className="inline-flex items-center">
+          <EvolutionNode currentId={pokemon.id} large={large} node={tree} />
+        </div>
+      )}
+    </TabPanelContent>
+  )
+}
+
+function buildTree(steps: EvolutionStep[]): null | TreeNode {
   if (!steps.length) return null
 
   const childrenOf = new Map<number, { toId: number; toName: string; trigger: string }[]>()
@@ -39,6 +65,32 @@ function buildTree(steps: EvolutionStep[]): TreeNode | null {
   }
 
   return build(root.fromId, root.fromName)
+}
+
+function EvolutionNode({
+  currentId,
+  large,
+  node
+}: {
+  currentId: number
+  large?: boolean
+  node: TreeNode
+}) {
+  return (
+    <div className="flex items-center">
+      <PokemonNode currentId={currentId} large={large} node={node} />
+      {node.children.length > 0 && (
+        <div className="flex flex-col justify-center">
+          {node.children.map(({ node: child, trigger }) => (
+            <div className="flex items-center" key={child.id}>
+              <TriggerConnector large={large} trigger={trigger} />
+              <EvolutionNode currentId={currentId} large={large} node={child} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function PokemonNode({
@@ -83,57 +135,5 @@ function TriggerConnector({ large, trigger }: { large?: boolean; trigger: string
       </span>
       <span className={`leading-none text-white/30 ${large ? 'text-base xl:text-lg' : 'text-xs xl:text-sm'}`}>→</span>
     </div>
-  )
-}
-
-function EvolutionNode({
-  currentId,
-  large,
-  node
-}: {
-  currentId: number
-  large?: boolean
-  node: TreeNode
-}) {
-  return (
-    <div className="flex items-center">
-      <PokemonNode currentId={currentId} large={large} node={node} />
-      {node.children.length > 0 && (
-        <div className="flex flex-col justify-center">
-          {node.children.map(({ node: child, trigger }) => (
-            <div className="flex items-center" key={child.id}>
-              <TriggerConnector large={large} trigger={trigger} />
-              <EvolutionNode currentId={currentId} large={large} node={child} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-export function EvolutionPanel({ large, pokemon }: { large?: boolean; pokemon: Pokemon }) {
-  const chain = pokemon.evolutionChain
-
-  if (chain === undefined) {
-    return (
-      <TabPanelContent>
-        <p className="text-xs text-white/30">Loading...</p>
-      </TabPanelContent>
-    )
-  }
-
-  const tree = buildTree(chain)
-
-  return (
-    <TabPanelContent className="flex min-h-full w-full items-center justify-center p-2">
-      {!tree ? (
-        <p className="text-xs italic text-white/30">Does not evolve</p>
-      ) : (
-        <div className="inline-flex items-center">
-          <EvolutionNode currentId={pokemon.id} large={large} node={tree} />
-        </div>
-      )}
-    </TabPanelContent>
   )
 }

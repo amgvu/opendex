@@ -1,11 +1,11 @@
 'use client'
 
-import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
-import { Button } from '@/components/ui/button'
+import { Navbar } from '@/components/layout/Navbar'
 import { NavProvider } from '@/context/navigation'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
 import { useDirectCard } from '@/hooks/card/useDirectCard'
@@ -56,10 +56,6 @@ export default function PokemonGrid() {
     pokemon
   })
 
-  const { scrollY } = useScroll()
-  const titleHeight = useTransform(scrollY, [0, 48], [44, 0])
-  const titleOpacity = useTransform(scrollY, [0, 32], [1, 0])
-
   const { columns, getRowPokemon, measureElement, totalHeight, virtualItems } =
     useVirtualGrid(pokemon, loadMore, hasNextPage, isFetchingNextPage)
 
@@ -77,37 +73,9 @@ export default function PokemonGrid() {
         )}
       </AnimatePresence>
       {needsDirect && directData && <DirectCard pokemon={directData} />}
-      <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
-        <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
-          <motion.div
-            className="overflow-hidden"
-            style={{ height: titleHeight, opacity: titleOpacity }}
-          >
-            <div className="mb-3 2xl:mb-4 flex items-center justify-between">
-              <a href="/">
-                <Image
-                  alt="Opendex"
-                  className="h-6 w-auto"
-                  height={128}
-                  src="/opendex.png"
-                  unoptimized
-                  width={128}
-                />
-              </a>
-              <Button asChild size="sm" variant="outline">
-                <a
-                  href="https://ko-fi.com/amgdev"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  ☕ Support on Ko-fi
-                </a>
-              </Button>
-            </div>
-          </motion.div>
-          <PokemonToolbar />
-        </div>
-      </div>
+      <Navbar>
+        <PokemonToolbar />
+      </Navbar>
       <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl p-4 pt-32 xl:pt-40">
         <GridStatus
           empty={status === 'success' && pokemon.length === 0}

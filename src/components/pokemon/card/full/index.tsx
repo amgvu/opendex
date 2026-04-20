@@ -184,8 +184,8 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                 </button>
                 <div className="flex items-center gap-3">
                   <ArtworkSwitches
-                    gifError={gifError}
                     gifEnabled={gifEnabled}
+                    gifError={gifError}
                     labelClassName="cursor-pointer select-none text-xs font-medium text-white/60"
                     pokemon={pokemon}
                     setGifEnabled={setGifEnabled}

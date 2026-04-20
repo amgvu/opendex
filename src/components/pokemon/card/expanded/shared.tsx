@@ -25,12 +25,12 @@ export function InfoStat({
   )
 }
 
-export function SectionLabel({ children }: { children: ReactNode }) {
-  return <span className={PANEL_SECTION_LABEL}>{children}</span>
-}
-
 export function MetaLabel({ children }: { children: ReactNode }) {
   return <p className={PANEL_META_LABEL}>{children}</p>
+}
+
+export function SectionLabel({ children }: { children: ReactNode }) {
+  return <span className={PANEL_SECTION_LABEL}>{children}</span>
 }
 
 export function TabPanelContent({

@@ -21,11 +21,47 @@ const CATEGORY_LABELS: Record<string, string> = {
   status: 'Stat'
 }
 
-function formatMoveName(name: string) {
-  return name
-    .split('-')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ')
+export function LearnsetPanel({ pokemon }: { pokemon: Pokemon }) {
+  const { learnset } = pokemon
+
+  if (!learnset) {
+    return (
+      <TabPanelContent>
+        <p className="text-white/30 text-xs">Loading...</p>
+      </TabPanelContent>
+    )
+  }
+
+  return (
+    <TabPanelContent className="flex flex-col gap-4">
+      {learnset.levelUp.length > 0 && (
+        <div>
+          <div className="mb-1.5">
+            <MetaLabel>Level Up</MetaLabel>
+          </div>
+          <MoveTable moves={learnset.levelUp} showLevel />
+        </div>
+      )}
+
+      {learnset.egg.length > 0 && (
+        <div>
+          <div className="mb-1.5">
+            <MetaLabel>Egg Moves</MetaLabel>
+          </div>
+          <MoveTable moves={learnset.egg} />
+        </div>
+      )}
+
+      {learnset.machine.length > 0 && (
+        <div>
+          <div className="mb-1.5">
+            <MetaLabel>TM / Tutor</MetaLabel>
+          </div>
+          <MoveTable moves={learnset.machine} />
+        </div>
+      )}
+    </TabPanelContent>
+  )
 }
 
 export function MoveTable({
@@ -94,45 +130,9 @@ export function MoveTable({
   )
 }
 
-export function LearnsetPanel({ pokemon }: { pokemon: Pokemon }) {
-  const { learnset } = pokemon
-
-  if (!learnset) {
-    return (
-      <TabPanelContent>
-        <p className="text-white/30 text-xs">Loading...</p>
-      </TabPanelContent>
-    )
-  }
-
-  return (
-    <TabPanelContent className="flex flex-col gap-4">
-      {learnset.levelUp.length > 0 && (
-        <div>
-          <div className="mb-1.5">
-            <MetaLabel>Level Up</MetaLabel>
-          </div>
-          <MoveTable moves={learnset.levelUp} showLevel />
-        </div>
-      )}
-
-      {learnset.egg.length > 0 && (
-        <div>
-          <div className="mb-1.5">
-            <MetaLabel>Egg Moves</MetaLabel>
-          </div>
-          <MoveTable moves={learnset.egg} />
-        </div>
-      )}
-
-      {learnset.machine.length > 0 && (
-        <div>
-          <div className="mb-1.5">
-            <MetaLabel>TM / Tutor</MetaLabel>
-          </div>
-          <MoveTable moves={learnset.machine} />
-        </div>
-      )}
-    </TabPanelContent>
-  )
+function formatMoveName(name: string) {
+  return name
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
 }

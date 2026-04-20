@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
 import { motion } from 'motion/react'
+import { useMemo } from 'react'
 
 import type { Pokemon } from '@/types/pokemon'
 
@@ -17,10 +17,6 @@ const AXES = [
   { angle: 210, key: 'specialAttack' as keyof Pokemon, label: 'SpA' }
 ]
 
-function toRad(deg: number) {
-  return (deg * Math.PI) / 180
-}
-
 function point(angle: number, r: number) {
   return {
     x: CX + r * Math.cos(toRad(angle)),
@@ -30,6 +26,10 @@ function point(angle: number, r: number) {
 
 function pointsStr(pts: { x: number; y: number }[]) {
   return pts.map(p => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ')
+}
+
+function toRad(deg: number) {
+  return (deg * Math.PI) / 180
 }
 
 const CENTER_STR = Array.from({ length: AXES.length }, () => `${CX},${CY}`).join(' ')

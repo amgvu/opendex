@@ -6,6 +6,8 @@ export type EvolutionStep = {
   trigger: string
 }
 
+export type LearnsetMove = MoveDetail & { level: number }
+
 export type MoveDetail = {
   accuracy: null | number
   category: string
@@ -14,32 +16,6 @@ export type MoveDetail = {
   pp: number
   type: string
 }
-
-export type LearnsetMove = MoveDetail & { level: number }
-
-export type TypeMatchups = {
-  immunities: string[]
-  resistances: { multiplier: number; type: string }[]
-  weaknesses: { multiplier: number; type: string }[]
-}
-
-export type VariantType =
-  | 'alolan'
-  | 'galarian'
-  | 'hisuian'
-  | 'mega'
-  | 'mega-x'
-  | 'mega-y'
-  | 'paldean'
-
-export type PokemonVariant = Pokemon & {
-  variantIndex: number
-  variantOf: number
-  variantSlug: string
-  variantType: VariantType
-}
-
-export type PokemonEntry = Pokemon | PokemonVariant
 
 export type Pokemon = {
   abilities?: { description?: string; isHidden: boolean; name: string }[]
@@ -71,11 +47,35 @@ export type Pokemon = {
   learnset?: { egg: MoveDetail[]; levelUp: LearnsetMove[]; machine: MoveDetail[] }
   name: string
   officialUrl: string
+  shiny?: { imageUrl: string; officialUrl: null | string }
   specialAttack: number
   specialDefense: number
-  shiny?: { imageUrl: string; officialUrl: string | null }
   speed: number
   typeMatchups?: TypeMatchups
   types: string[]
   weight: number
 }
+
+export type PokemonEntry = Pokemon | PokemonVariant
+
+export type PokemonVariant = Pokemon & {
+  variantIndex: number
+  variantOf: number
+  variantSlug: string
+  variantType: VariantType
+}
+
+export type TypeMatchups = {
+  immunities: string[]
+  resistances: { multiplier: number; type: string }[]
+  weaknesses: { multiplier: number; type: string }[]
+}
+
+export type VariantType =
+  | 'alolan'
+  | 'galarian'
+  | 'hisuian'
+  | 'mega'
+  | 'mega-x'
+  | 'mega-y'
+  | 'paldean'

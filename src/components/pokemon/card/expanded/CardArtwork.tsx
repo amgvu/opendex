@@ -21,7 +21,7 @@ export function CardArtwork({
   pokemon: PokemonEntry
   typeColor: string
 }) {
-  const { gifEnabled, setGifEnabled, shinyEnabled, setShinyEnabled } =
+  const { gifEnabled, setGifEnabled, setShinyEnabled, shinyEnabled } =
     useCardContext()
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
@@ -122,8 +122,8 @@ export function CardArtwork({
         </button>
         <div className="flex items-center gap-2 scale-75 origin-right sm:scale-100">
           <ArtworkSwitches
-            gifError={gifError}
             gifEnabled={gifEnabled}
+            gifError={gifError}
             labelClassName="text-xs font-medium text-white/70 select-none"
             pokemon={pokemon}
             setGifEnabled={setGifEnabled}
