@@ -34,7 +34,7 @@ export function Navbar({ children }: { children?: ReactNode }) {
                   alt="Opendex"
                   className="h-6 w-auto"
                   height={128}
-                  src="/opendex.png"
+                  src="/opendexball.svg"
                   unoptimized
                   width={128}
                 />
@@ -44,7 +44,9 @@ export function Navbar({ children }: { children?: ReactNode }) {
                   <Link
                     className={cn(
                       'transition-colors hover:text-foreground',
-                      pathname === href ? 'font-medium text-foreground' : 'text-muted-foreground'
+                      pathname === href
+                        ? 'font-medium text-foreground'
+                        : 'text-muted-foreground'
                     )}
                     href={href}
                     key={href}
