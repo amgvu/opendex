@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
-import { fetchPokemonByName, usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
+import { usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
+import { capitalize, SITE_NAME } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 export function useDirectCard(pokemon: PokemonEntry[]) {
@@ -21,8 +22,8 @@ export function useDirectCard(pokemon: PokemonEntry[]) {
   useEffect(() => {
     const selected = directData ?? selectedInList
     document.title = selected
-      ? `${selected.name.charAt(0).toUpperCase() + selected.name.slice(1)} | Opendex`
-      : 'Opendex'
+      ? `${capitalize(selected.name)} — ${SITE_NAME}`
+      : SITE_NAME
   }, [directData, selectedInList])
 
   return { directData, needsDirect }

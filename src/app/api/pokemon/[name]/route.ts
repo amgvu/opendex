@@ -2,13 +2,7 @@ import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
-import type { PokemonEntry } from '@/types/pokemon'
-
-import pokemonData from '@/data/pokemon.json'
-
-const pokemonByName = new Map(
-  (pokemonData as unknown as PokemonEntry[]).map(p => [p.name, p])
-)
+import { pokemonByName } from '@/lib/pokemon'
 
 export async function GET(
   _req: NextRequest,
