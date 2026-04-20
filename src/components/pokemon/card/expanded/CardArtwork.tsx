@@ -36,9 +36,7 @@ export function CardArtwork({
     : pokemon.imageUrl
 
   function handleCopy() {
-    const params = new URLSearchParams(window.location.search)
-    params.set('pokemon', pokemon.name)
-    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    const url = `${window.location.origin}${window.location.pathname}?pokemon=${pokemon.name}`
     void navigator.clipboard.writeText(url)
     setCopied(true)
     setTimeout(() => setCopied(false), 1500)
