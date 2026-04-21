@@ -184,12 +184,10 @@ export function FullModal({ id, pokemon }: { id: string; pokemon: Pokemon }) {
                   <ArtworkSwitches
                     gifEnabled={gifEnabled}
                     gifError={gifError}
-                    labelClassName="cursor-pointer select-none text-xs font-medium text-white/60"
                     pokemon={pokemon}
                     setGifEnabled={setGifEnabled}
                     setShinyEnabled={setShinyEnabled}
                     shinyEnabled={shinyEnabled}
-                    typeColor={typeColor}
                   />
                 </div>
               </div>

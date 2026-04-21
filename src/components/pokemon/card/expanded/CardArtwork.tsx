@@ -118,16 +118,14 @@ export function CardArtwork({
           {copied ? <TbCheck size={16} /> : <TbLink size={16} />}
           <span>{copied ? 'Copied!' : 'Copy link'}</span>
         </button>
-        <div className="flex items-center gap-2 scale-75 origin-right sm:scale-100">
+        <div className="flex items-center gap-1.5">
           <ArtworkSwitches
             gifEnabled={gifEnabled}
             gifError={gifError}
-            labelClassName="text-xs font-medium text-white/70 select-none"
             pokemon={pokemon}
             setGifEnabled={setGifEnabled}
             setShinyEnabled={setShinyEnabled}
             shinyEnabled={shinyEnabled}
-            typeColor={typeColor}
           />
         </div>
       </div>
