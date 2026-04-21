@@ -105,7 +105,7 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative flex h-full cursor-grab flex-col px-4.5 pt-4.5 pb-3 sm:p-6 2xl:p-7 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative flex h-full cursor-grab flex-col px-4.5 pt-4.5 pb-3 sm:p-6 2xl:p-7 2xl:pb-3 sm:pb-3 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
@@ -150,38 +150,23 @@ export function ExpandedCard({
                   >
                     <Tabs.ListContainer>
                       <Tabs.List aria-label="Pokemon info">
-                        <Tabs.Tab
-                          className="text-xs sm:text-sm"
-                          id="stats"
-                        >
+                        <Tabs.Tab className="text-xs sm:text-sm" id="stats">
                           Stats
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab
-                          className="text-xs sm:text-sm"
-                          id="battle"
-                        >
+                        <Tabs.Tab className="text-xs sm:text-sm" id="battle">
                           Battle
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab
-                          className="text-xs sm:text-sm"
-                          id="bio"
-                        >
+                        <Tabs.Tab className="text-xs sm:text-sm" id="bio">
                           Bio
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab
-                          className="text-xs sm:text-sm"
-                          id="moves"
-                        >
+                        <Tabs.Tab className="text-xs sm:text-sm" id="moves">
                           Moves
                           <Tabs.Indicator />
                         </Tabs.Tab>
-                        <Tabs.Tab
-                          className="text-xs sm:text-sm"
-                          id="evo"
-                        >
+                        <Tabs.Tab className="text-xs sm:text-sm" id="evo">
                           Evol
                           <Tabs.Indicator />
                         </Tabs.Tab>
