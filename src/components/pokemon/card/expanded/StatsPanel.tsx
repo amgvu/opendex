@@ -29,7 +29,7 @@ export function StatsPanel({
   return (
     <TabPanelContent>
       <div className="flex flex-col gap-0.5">
-        <div className={`mb-3 flex items-center gap-3 xl:mb-4 xl:gap-4 ${PANEL_BODY_TEXT}`}>
+        <div className={`mb-2 flex items-center gap-3 sm:mb-3 ${PANEL_BODY_TEXT}`}>
           <div className="flex items-center gap-1 shrink-0">
             <span className="font-medium text-white/50">Base Stats</span>
             <button
@@ -77,7 +77,7 @@ export function StatsPanel({
           ) : (
             <motion.div
               animate={{ opacity: 1 }}
-              className="h-44 sm:h-52 xl:h-60 2xl:h-72 w-full flex items-center justify-center"
+              className="h-40 sm:h-48 xl:h-52 2xl:h-60 w-full flex items-center justify-center"
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               key="radar"
@@ -88,7 +88,7 @@ export function StatsPanel({
           )}
         </AnimatePresence>
 
-        <div className={`mt-3 grid grid-cols-3 gap-2.5 xl:mt-4 xl:gap-4 ${PANEL_BODY_TEXT}`}>
+        <div className={`mt-2 grid grid-cols-3 gap-2 sm:mt-3 sm:gap-2.5 ${PANEL_BODY_TEXT}`}>
           <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
           <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
           <InfoStat label="Gen" value={pokemon.generation} />

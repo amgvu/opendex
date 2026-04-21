@@ -64,7 +64,7 @@ export function CardHeader({
             </motion.div>
           )}
         </div>
-        <span className="-mt-1 sm:mt-0 block text-sm xl:text-base 2xl:text-lg tracking-widest font-mono font-semibold text-white/60">
+        <span className="-mt-1 sm:mt-0 block text-xs sm:text-sm tracking-widest font-mono font-semibold text-white/60">
           {formatPokedexId(pokemon.id, variantIndex)}
         </span>
       </div>
@@ -77,17 +77,17 @@ export function CardHeader({
           <TypeBadge key={type} size="lg" type={type} />
         ))}
         {pokemon.isMythical && (
-          <span className="rounded-full bg-pink-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
+          <span className="rounded-full bg-pink-400 px-2 py-0.5 text-xs 2xl:px-3 2xl:text-sm font-medium text-black">
             Mythical
           </span>
         )}
         {pokemon.isLegendary && (
-          <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-black">
+          <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs 2xl:px-3 2xl:text-sm font-medium text-black">
             Legendary
           </span>
         )}
         {variantLabel && (
-          <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base font-medium text-white">
+          <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs 2xl:px-3 2xl:text-sm font-medium text-white">
             {variantLabel}
           </span>
         )}

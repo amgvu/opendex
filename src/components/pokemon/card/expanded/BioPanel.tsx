@@ -22,7 +22,7 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
         <div className="flex flex-col gap-2">
           {pokemon.flavorTexts.slice(1).map(({ game, text }) => (
             <div key={game}>
-              <span className="text-xs uppercase tracking-wider text-white/30 capitalize sm:text-sm xl:text-base 2xl:text-lg">
+              <span className="text-[10px] uppercase tracking-wider text-white/30 capitalize sm:text-xs">
                 {game.replace(/-/g, ' ')}
               </span>
               <p className={`${PANEL_BODY_TEXT} text-white/50 leading-snug`}>

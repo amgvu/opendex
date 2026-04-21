@@ -105,7 +105,7 @@ export function ExpandedCard({
                 width={512}
               />
               <div
-                className={`relative flex h-full cursor-grab flex-col px-4.5 pt-4.5 pb-3 sm:p-6 2xl:p-8 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+                className={`relative flex h-full cursor-grab flex-col px-4.5 pt-4.5 pb-3 sm:p-6 2xl:p-7 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
                 onPointerDown={e => {
                   if (!(e.target as Element).closest('[data-no-drag]')) {
                     dragControls.start(e)
@@ -151,35 +151,35 @@ export function ExpandedCard({
                     <Tabs.ListContainer>
                       <Tabs.List aria-label="Pokemon info">
                         <Tabs.Tab
-                          className="text-xs sm:text-sm xl:text-base"
+                          className="text-xs sm:text-sm"
                           id="stats"
                         >
                           Stats
                           <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab
-                          className="text-xs sm:text-sm xl:text-base"
+                          className="text-xs sm:text-sm"
                           id="battle"
                         >
                           Battle
                           <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab
-                          className="text-xs sm:text-sm xl:text-base"
+                          className="text-xs sm:text-sm"
                           id="bio"
                         >
                           Bio
                           <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab
-                          className="text-xs sm:text-sm xl:text-base"
+                          className="text-xs sm:text-sm"
                           id="moves"
                         >
                           Moves
                           <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab
-                          className="text-xs sm:text-sm xl:text-base"
+                          className="text-xs sm:text-sm"
                           id="evo"
                         >
                           Evol
@@ -188,7 +188,7 @@ export function ExpandedCard({
                       </Tabs.List>
                     </Tabs.ListContainer>
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm`}
                       id="stats"
                     >
                       {activeTab === 'stats' && (
@@ -196,7 +196,7 @@ export function ExpandedCard({
                       )}
                     </Tabs.Panel>
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm`}
                       id="battle"
                     >
                       {activeTab === 'battle' && (
@@ -204,7 +204,7 @@ export function ExpandedCard({
                       )}
                     </Tabs.Panel>
                     <Tabs.Panel
-                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base 2xl:text-lg`}
+                      className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm`}
                       id="bio"
                     >
                       {activeTab === 'bio' && <BioPanel pokemon={pokemon} />}

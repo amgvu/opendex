@@ -1,11 +1,11 @@
 import { motion } from 'motion/react'
 import { type ReactNode } from 'react'
 
-export const PANEL_BODY_TEXT = 'text-xs sm:text-sm xl:text-lg 2xl:text-xl'
+export const PANEL_BODY_TEXT = 'text-xs sm:text-sm'
 export const PANEL_META_LABEL =
-  'text-[10px] sm:text-xs xl:text-sm 2xl:text-base font-medium uppercase tracking-wider text-white/40'
+  'text-[10px] sm:text-xs font-medium uppercase tracking-wider text-white/40'
 export const PANEL_SECTION_LABEL = `${PANEL_BODY_TEXT} text-white/60`
-export const PANEL_CHIP_TEXT = 'text-xs sm:text-sm xl:text-base 2xl:text-lg'
+export const PANEL_CHIP_TEXT = 'text-xs sm:text-sm'
 export const PANEL_BADGE_TEXT = 'text-[10px] sm:text-xs'
 
 export function InfoStat({
