@@ -4,9 +4,11 @@ import { createContext, type ReactNode, useContext, useMemo, useState } from 're
 
 type CardContextValue = {
   activeTab: 'battle' | 'bio' | 'evo' | 'moves' | 'stats'
+  artworkCollapsed: boolean
   fullModalOpen: boolean
   gifEnabled: boolean
   setActiveTab: (tab: 'battle' | 'bio' | 'evo' | 'moves' | 'stats') => void
+  setArtworkCollapsed: (v: boolean) => void
   setFullModalOpen: (v: boolean) => void
   setGifEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
@@ -23,10 +25,11 @@ export function CardProvider({ children }: { children: ReactNode }) {
   const [activeTab, setActiveTab] = useState<'battle' | 'bio' | 'evo' | 'moves' | 'stats'>('stats')
   const [statsView, setStatsView] = useState<'bars' | 'radar'>('bars')
   const [fullModalOpen, setFullModalOpen] = useState(false)
+  const [artworkCollapsed, setArtworkCollapsed] = useState(false)
 
   const value = useMemo(
-    () => ({ activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled, setShinyEnabled, setStatsView, shinyEnabled, statsView }),
-    [activeTab, fullModalOpen, gifEnabled, setActiveTab, setFullModalOpen, setGifEnabled, setShinyEnabled, setStatsView, shinyEnabled, statsView]
+    () => ({ activeTab, artworkCollapsed, fullModalOpen, gifEnabled, setActiveTab, setArtworkCollapsed, setFullModalOpen, setGifEnabled, setShinyEnabled, setStatsView, shinyEnabled, statsView }),
+    [activeTab, artworkCollapsed, fullModalOpen, gifEnabled, setActiveTab, setArtworkCollapsed, setFullModalOpen, setGifEnabled, setShinyEnabled, setStatsView, shinyEnabled, statsView]
   )
 
   return (
