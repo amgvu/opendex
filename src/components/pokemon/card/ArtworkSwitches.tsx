@@ -1,67 +1,65 @@
-import { Label, Switch } from '@heroui/react'
-import { type CSSProperties } from 'react'
+import { type ReactNode } from 'react'
+import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { bgClassToVar } from '@/lib/pokemon'
+function ToggleChip({
+  active,
+  children,
+  onClick
+}: {
+  active: boolean
+  children: ReactNode
+  onClick: () => void
+}) {
+  return (
+    <button
+      className={`flex cursor-pointer select-none items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium transition-colors ${
+        active
+          ? 'bg-white/20 text-white/80'
+          : 'bg-white/10 text-white/35 hover:bg-white/15 hover:text-white/55'
+      }`}
+      onClick={onClick}
+      type="button"
+    >
+      {children}
+    </button>
+  )
+}
 
 export function ArtworkSwitches({
   gifEnabled,
   gifError,
-  labelClassName,
   pokemon,
   setGifEnabled,
   setShinyEnabled,
-  shinyEnabled,
-  typeColor
+  shinyEnabled
 }: {
   gifEnabled: boolean
   gifError: boolean
-  labelClassName: string
   pokemon: Pick<Pokemon, 'shiny'>
   setGifEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
   shinyEnabled: boolean
-  typeColor: string
 }) {
-  const switchStyle = {
-    '--switch-control-bg': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 40%)`,
-    '--switch-control-bg-checked': bgClassToVar(typeColor),
-    '--switch-control-bg-checked-hover': bgClassToVar(typeColor),
-    '--switch-control-bg-hover': `color-mix(in oklab, ${bgClassToVar(typeColor)}, white 30%)`
-  } as CSSProperties
-
   return (
     <>
       {pokemon.shiny && (
-        <Switch
-          isSelected={shinyEnabled}
-          onChange={v => setShinyEnabled(v)}
-          size="sm"
-          style={switchStyle}
+        <ToggleChip
+          active={shinyEnabled}
+          onClick={() => setShinyEnabled(!shinyEnabled)}
         >
-          <Switch.Control>
-            <Switch.Thumb />
-          </Switch.Control>
-          <Switch.Content>
-            <Label className={labelClassName}>Shiny</Label>
-          </Switch.Content>
-        </Switch>
+          <TbSparkles size={10} />
+          Shiny
+        </ToggleChip>
       )}
       {!gifError && (
-        <Switch
-          isSelected={gifEnabled}
-          onChange={v => setGifEnabled(v)}
-          size="sm"
-          style={switchStyle}
+        <ToggleChip
+          active={gifEnabled}
+          onClick={() => setGifEnabled(!gifEnabled)}
         >
-          <Switch.Control>
-            <Switch.Thumb />
-          </Switch.Control>
-          <Switch.Content>
-            <Label className={labelClassName}>3D</Label>
-          </Switch.Content>
-        </Switch>
+          3D
+        </ToggleChip>
       )}
     </>
   )

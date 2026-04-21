@@ -1,31 +1,33 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import { type SyntheticEvent, useRef, useState } from 'react'
-import { TbCheck, TbLink } from 'react-icons/tb'
+import { type SyntheticEvent, useRef } from 'react'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
 import { useCardContext } from '@/context/card'
-import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar } from '@/lib/pokemon'
 
-import { ArtworkSwitches } from '../ArtworkSwitches'
-
 export function CardArtwork({
+  gifError,
+  gifMounted,
+  gifReady,
   id,
   pokemon,
+  setGifError,
+  setGifReady,
   typeColor
 }: {
+  gifError: boolean
+  gifMounted: boolean
+  gifReady: boolean
   id: string
   pokemon: PokemonEntry
+  setGifError: (v: boolean) => void
+  setGifReady: (v: boolean) => void
   typeColor: string
 }) {
-  const { gifEnabled, setGifEnabled, setShinyEnabled, shinyEnabled } =
-    useCardContext()
-  const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
-    useGifLoader(gifEnabled, shinyEnabled)
-  const [copied, setCopied] = useState(false)
+  const { gifEnabled, shinyEnabled } = useCardContext()
   const blurRef = useRef<HTMLDivElement>(null)
 
   const artSrc = shinyEnabled
@@ -34,13 +36,6 @@ export function CardArtwork({
   const gifSrc = shinyEnabled
     ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl)
     : pokemon.imageUrl
-
-  function handleCopy() {
-    const url = `${window.location.origin}${window.location.pathname}?pokemon=${pokemon.name}`
-    void navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
-  }
 
   function handleArtworkLoad(e: SyntheticEvent<HTMLImageElement>) {
     e.currentTarget.style.opacity = '1'
@@ -69,7 +64,7 @@ export function CardArtwork({
 
   return (
     <motion.div
-      className="relative mb-1 sm:mb-4 flex justify-center"
+      className="relative flex justify-center"
       layoutId={`image-${pokemon.name}-${id}`}
       transition={CARD_TRANSITION}
     >
@@ -107,30 +102,6 @@ export function CardArtwork({
           transition={{ duration: 0.15 }}
         />
       )}
-      <div
-        className="absolute bottom-0 left-0 right-0 flex items-center justify-between"
-        data-no-drag
-      >
-        <button
-          className="flex items-center gap-1 text-xs font-medium text-white/70 select-none cursor-pointer"
-          onClick={handleCopy}
-        >
-          {copied ? <TbCheck size={16} /> : <TbLink size={16} />}
-          <span>{copied ? 'Copied!' : 'Copy link'}</span>
-        </button>
-        <div className="flex items-center gap-2 scale-75 origin-right sm:scale-100">
-          <ArtworkSwitches
-            gifEnabled={gifEnabled}
-            gifError={gifError}
-            labelClassName="text-xs font-medium text-white/70 select-none"
-            pokemon={pokemon}
-            setGifEnabled={setGifEnabled}
-            setShinyEnabled={setShinyEnabled}
-            shinyEnabled={shinyEnabled}
-            typeColor={typeColor}
-          />
-        </div>
-      </div>
     </motion.div>
   )
 }

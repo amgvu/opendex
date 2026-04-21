@@ -6,10 +6,10 @@ export function StatBar({ label, value }: { label: string; value: number }) {
   const rightClip = Math.round((1 - value / STAT_MAX) * 100)
 
   return (
-    <div className="flex items-center gap-3 text-xs sm:text-sm xl:gap-4 xl:text-lg 2xl:text-xl">
-      <span className="w-16 shrink-0 text-white/70 sm:w-20 xl:w-28 2xl:w-32">{label}</span>
-      <span className="w-7 shrink-0 text-right font-medium text-white sm:w-8 xl:w-10">{value}</span>
-      <div className="h-2 flex-1 rounded-full bg-white/20 sm:h-3 xl:h-3.5 2xl:h-4">
+    <div className="flex items-center gap-2 text-xs sm:gap-3 sm:text-sm">
+      <span className="w-14 shrink-0 text-white/70 sm:w-16 xl:w-20">{label}</span>
+      <span className="w-6 shrink-0 text-right font-medium text-white sm:w-7">{value}</span>
+      <div className="h-1.5 flex-1 rounded-full bg-white/20 sm:h-2 xl:h-2.5">
         <motion.div
           animate={{ clipPath: `inset(0 ${rightClip}% 0 0 round 9999px)` }}
           className="h-full w-full rounded-full bg-white/70"
