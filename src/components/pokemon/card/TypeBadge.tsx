@@ -9,7 +9,7 @@ export function TypeBadge({
 }) {
   const sizeClass =
     size === 'lg'
-      ? 'px-2 py-0.5 text-xs xl:px-3 xl:py-1 xl:text-sm 2xl:px-4 2xl:py-1.5 2xl:text-base'
+      ? 'px-2 py-0.5 text-xs 2xl:px-3 2xl:py-1 2xl:text-sm'
       : 'px-1.5 py-0.5 text-[10px] sm:px-2 sm:text-xs 2xl:px-2.5 2xl:text-sm'
   const hex = bgClassToVar(getTypeColor(type))
   return (

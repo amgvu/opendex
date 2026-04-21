@@ -77,17 +77,17 @@ export function CardHeader({
           <TypeBadge key={type} size="lg" type={type} />
         ))}
         {pokemon.isMythical && (
-          <span className="rounded-full bg-pink-400 px-2 py-0.5 text-xs 2xl:px-3 2xl:text-sm font-medium text-black">
+          <span className="rounded-full bg-pink-400 px-2 py-0.5 text-xs 2xl:px-3 2xl:py-1 2xl:text-sm font-medium text-black">
             Mythical
           </span>
         )}
         {pokemon.isLegendary && (
-          <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs 2xl:px-3 2xl:text-sm font-medium text-black">
+          <span className="rounded-full bg-yellow-400 px-2 py-0.5 text-xs 2xl:px-3 2xl:py-1 2xl:text-sm font-medium text-black">
             Legendary
           </span>
         )}
         {variantLabel && (
-          <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs 2xl:px-3 2xl:text-sm font-medium text-white">
+          <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs 2xl:px-3 2xl:py-1 2xl:text-sm font-medium text-white">
             {variantLabel}
           </span>
         )}
