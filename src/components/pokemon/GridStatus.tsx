@@ -12,7 +12,7 @@ export function GridStatus({
         <img
           alt="Loading"
           className="h-10 w-10 animate-spin grayscale"
-          src="/pokemon-icon.svg"
+          src="/opendexball.svg"
         />
       </div>
     )

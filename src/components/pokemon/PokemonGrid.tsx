@@ -114,7 +114,7 @@ export default function PokemonGrid() {
               alt="Loading"
               className="h-8 w-8 animate-spin grayscale"
               height={64}
-              src="/pokemon-icon.svg"
+              src="/opendexball.svg"
               width={64}
             />
           </div>
