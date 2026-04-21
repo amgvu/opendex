@@ -203,30 +203,30 @@ export function ExpandedCard({
                 >
                   <Tabs.ListContainer>
                     <Tabs.List aria-label="Pokemon info">
-                      <Tabs.Tab className="text-xs sm:text-sm" id="stats">
+                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="stats">
                         Stats
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm" id="battle">
+                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="battle">
                         Battle
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm" id="bio">
+                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="bio">
                         Bio
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm" id="moves">
+                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="moves">
                         Moves
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm" id="evo">
+                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="evo">
                         Evol
                         <Tabs.Indicator />
                       </Tabs.Tab>
                     </Tabs.List>
                   </Tabs.ListContainer>
                   <Tabs.Panel
-                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm`}
+                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base`}
                     id="stats"
                   >
                     {activeTab === 'stats' && (
@@ -234,7 +234,7 @@ export function ExpandedCard({
                     )}
                   </Tabs.Panel>
                   <Tabs.Panel
-                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm`}
+                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base`}
                     id="battle"
                   >
                     {activeTab === 'battle' && (
@@ -242,7 +242,7 @@ export function ExpandedCard({
                     )}
                   </Tabs.Panel>
                   <Tabs.Panel
-                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm`}
+                    className={`${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm xl:text-base`}
                     id="bio"
                   >
                     {activeTab === 'bio' && <BioPanel pokemon={pokemon} />}

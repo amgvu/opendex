@@ -62,6 +62,7 @@ export function StatsPanel({
           {statsView === 'bars' ? (
             <motion.div
               animate={{ opacity: 1 }}
+
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               key="bars"

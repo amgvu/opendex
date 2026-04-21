@@ -53,7 +53,6 @@ export function CardArtwork({
       sizes="(min-width: 1536px) 320px, 200px"
       src={artSrc}
       style={{
-        filter: `drop-shadow(0 25px 25px color-mix(in oklab, ${bgClassToVar(typeColor)}, black 40%))`,
         opacity: 0,
         transition: 'opacity 0.2s'
       }}
@@ -69,7 +68,7 @@ export function CardArtwork({
       transition={CARD_TRANSITION}
     >
       <div
-        className="relative h-45 w-45 xl:h-69 xl:w-69 2xl:h-85 2xl:w-85"
+        className="relative h-36 w-36 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80"
         ref={blurRef}
         style={
           pokemon.blurDataURL
