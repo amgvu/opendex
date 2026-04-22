@@ -7,8 +7,9 @@ import { type ReactNode, useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
-function useScrollHide() {
+function useScrollState() {
   const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const lastY = useRef(0)
 
   useEffect(() => {
@@ -16,13 +17,14 @@ function useScrollHide() {
       const y = window.scrollY
       if (y > lastY.current && y > 80) setHidden(true)
       else if (y < lastY.current) setHidden(false)
+      setScrolled(y > 20)
       lastY.current = y
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  return hidden
+  return { hidden, scrolled }
 }
 
 const NAV_LINKS = [
@@ -33,10 +35,10 @@ const NAV_LINKS = [
 
 export function Navbar({ children }: { children?: ReactNode }) {
   const pathname = usePathname()
-  const hidden = useScrollHide()
+  const { hidden, scrolled } = useScrollState()
 
   return (
-    <div className={`fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm transition-transform duration-300 ${hidden ? '-translate-y-full xl:translate-y-0' : ''}`}>
+    <div className={`fixed inset-x-0 top-0 z-30 backdrop-blur-sm transition duration-300 border-b ${scrolled ? 'bg-background/95 border-white/[0.08]' : 'bg-background/80 border-transparent'} ${hidden ? '-translate-y-full xl:translate-y-0' : ''}`}>
       <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
         <div className="mb-3 2xl:mb-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
