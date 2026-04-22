@@ -3,9 +3,27 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { type ReactNode } from 'react'
+import { type ReactNode, useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/lib/utils'
+
+function useScrollHide() {
+  const [hidden, setHidden] = useState(false)
+  const lastY = useRef(0)
+
+  useEffect(() => {
+    function onScroll() {
+      const y = window.scrollY
+      if (y > lastY.current && y > 80) setHidden(true)
+      else if (y < lastY.current) setHidden(false)
+      lastY.current = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return hidden
+}
 
 const NAV_LINKS = [
   { href: '/', label: 'Pokédex' },
@@ -15,9 +33,10 @@ const NAV_LINKS = [
 
 export function Navbar({ children }: { children?: ReactNode }) {
   const pathname = usePathname()
+  const hidden = useScrollHide()
 
   return (
-    <div className="fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm">
+    <div className={`fixed inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-sm transition-transform duration-300 ${hidden ? '-translate-y-full xl:translate-y-0' : ''}`}>
       <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
         <div className="mb-3 2xl:mb-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
