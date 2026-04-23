@@ -38,7 +38,9 @@ export function Navbar({ children }: { children?: ReactNode }) {
   const { hidden, scrolled } = useScrollState()
 
   return (
-    <div className={`fixed inset-x-0 top-0 z-30 backdrop-blur-sm transition duration-300 border-b ${scrolled ? 'bg-background/95 border-white/[0.08]' : 'bg-background/80 border-transparent'} ${hidden ? '-translate-y-full xl:translate-y-0' : ''}`}>
+    <div
+      className={`fixed inset-x-0 top-0 z-30 backdrop-blur-sm transition duration-300 border-b ${scrolled ? 'bg-background border-white/[0.08]' : 'bg-background/80 border-transparent'} ${hidden ? '-translate-y-full xl:translate-y-0' : ''}`}
+    >
       <div className="mx-auto max-w-7xl 2xl:max-w-screen-2xl px-4 py-3 2xl:px-6 2xl:py-4">
         <div className="mb-3 2xl:mb-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
