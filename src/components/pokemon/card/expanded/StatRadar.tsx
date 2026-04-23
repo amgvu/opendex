@@ -46,7 +46,7 @@ export function StatRadar({ pokemon }: { pokemon: Pokemon }) {
   const statPointsStr = useMemo(
     () => pointsStr(AXES.map(({ angle, key }) => {
       const value = (pokemon[key] as number) ?? 0
-      return point(angle, (value / STAT_MAX) * R)
+      return point(angle, Math.sqrt(value / STAT_MAX) * R)
     })),
     [pokemon]
   )
@@ -98,7 +98,7 @@ export function StatRadar({ pokemon }: { pokemon: Pokemon }) {
             <text
               dominantBaseline="auto"
               fill="rgba(255,255,255,0.45)"
-              fontSize="10"
+              fontSize="12"
               fontWeight="600"
               textAnchor="middle"
               x={pos.x.toFixed(2)}
@@ -109,7 +109,7 @@ export function StatRadar({ pokemon }: { pokemon: Pokemon }) {
             <text
               dominantBaseline="hanging"
               fill="rgba(255,255,255,0.9)"
-              fontSize="14"
+              fontSize="16"
               fontWeight="700"
               textAnchor="middle"
               x={pos.x.toFixed(2)}

@@ -8,9 +8,7 @@ type CardStore = {
   setArtworkCollapsed: (v: boolean) => void
   setGifEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
-  setStatsView: (v: 'bars' | 'radar') => void
   shinyEnabled: boolean
-  statsView: 'bars' | 'radar'
 }
 
 export const useCardStore = create<CardStore>(set => ({
@@ -21,7 +19,5 @@ export const useCardStore = create<CardStore>(set => ({
   setArtworkCollapsed: v => set({ artworkCollapsed: v }),
   setGifEnabled: v => set({ gifEnabled: v }),
   setShinyEnabled: v => set({ shinyEnabled: v }),
-  setStatsView: v => set({ statsView: v }),
-  shinyEnabled: false,
-  statsView: 'bars'
+  shinyEnabled: false
 }))

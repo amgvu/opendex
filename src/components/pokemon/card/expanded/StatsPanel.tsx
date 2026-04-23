@@ -1,9 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
-import { TbChartBar, TbChartRadar } from 'react-icons/tb'
-
 import type { Pokemon } from '@/types/pokemon'
-
-import { useCardStore } from '@/stores/cardStore'
 
 import { InfoStat, PANEL_BODY_TEXT, TabPanelContent } from './shared'
 import { StatBar } from './StatBar'
@@ -17,6 +12,7 @@ const GROWTH_RATE_LABELS: Record<string, string> = {
   'medium-slow': 'Med. Slow',
   slow: 'Slow'
 }
+
 export function StatsPanel({
   bst,
   pokemon
@@ -24,72 +20,31 @@ export function StatsPanel({
   bst: number
   pokemon: Pokemon
 }) {
-  const { setStatsView, statsView } = useCardStore()
-
   return (
     <TabPanelContent>
-      <div className="flex flex-col gap-0.5">
-        <div className={`mb-2 flex items-center gap-3 sm:mb-3 ${PANEL_BODY_TEXT}`}>
-          <div className="flex items-center gap-1 shrink-0">
-            <span className="font-medium text-white/50">Base Stats</span>
-            <button
-              aria-label={
-                statsView === 'bars'
-                  ? 'Switch to radar chart'
-                  : 'Switch to bar chart'
-              }
-              className="rounded cursor-pointer p-0.5 text-white/35 hover:text-white/65 transition-colors"
-              onClick={() =>
-                setStatsView(statsView === 'bars' ? 'radar' : 'bars')
-              }
-              type="button"
-            >
-              {statsView === 'bars' ? (
-                <TbChartRadar size={13} />
-              ) : (
-                <TbChartBar size={13} />
-              )}
-            </button>
+      <div className="flex flex-col gap-2 sm:gap-3">
+        <div className={`flex items-center justify-between ${PANEL_BODY_TEXT}`}>
+          <span className="font-medium text-white/50">Base Stats</span>
+          <span className="font-medium text-white/50">
+            BST <span className="font-bold text-white">{bst}</span>
+          </span>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:gap-4">
+          <div className="flex flex-col gap-0.5 sm:flex-1">
+            <StatBar label="HP" value={pokemon.hp} />
+            <StatBar label="Attack" value={pokemon.attack} />
+            <StatBar label="Defense" value={pokemon.defense} />
+            <StatBar label="Sp. Atk" value={pokemon.specialAttack} />
+            <StatBar label="Sp. Def" value={pokemon.specialDefense} />
+            <StatBar label="Speed" value={pokemon.speed} />
           </div>
-          <div className="flex-1 flex justify-end">
-            <span className="text-white/50 font-medium">
-              BST <span className="font-bold text-white">{bst}</span>
-            </span>
+          <div className="mt-1 h-28 sm:mt-0 sm:h-auto sm:w-28 xl:w-36 2xl:w-40 flex items-center justify-center">
+            <StatRadar pokemon={pokemon} />
           </div>
         </div>
 
-        <AnimatePresence mode="popLayout">
-          {statsView === 'bars' ? (
-            <motion.div
-              animate={{ opacity: 1 }}
-
-              exit={{ opacity: 0 }}
-              initial={{ opacity: 0 }}
-              key="bars"
-              transition={{ duration: 0.2 }}
-            >
-              <StatBar label="HP" value={pokemon.hp} />
-              <StatBar label="Attack" value={pokemon.attack} />
-              <StatBar label="Defense" value={pokemon.defense} />
-              <StatBar label="Sp. Atk" value={pokemon.specialAttack} />
-              <StatBar label="Sp. Def" value={pokemon.specialDefense} />
-              <StatBar label="Speed" value={pokemon.speed} />
-            </motion.div>
-          ) : (
-            <motion.div
-              animate={{ opacity: 1 }}
-              className="h-40 sm:h-48 xl:h-52 2xl:h-60 w-full flex items-center justify-center"
-              exit={{ opacity: 0 }}
-              initial={{ opacity: 0 }}
-              key="radar"
-              transition={{ duration: 0.2 }}
-            >
-              <StatRadar pokemon={pokemon} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <div className={`mt-2 grid grid-cols-3 gap-2 sm:mt-3 sm:gap-2.5 ${PANEL_BODY_TEXT}`}>
+        <div className={`grid grid-cols-3 gap-2 sm:gap-2.5 ${PANEL_BODY_TEXT}`}>
           <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
           <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
           <InfoStat label="Gen" value={pokemon.generation} />
