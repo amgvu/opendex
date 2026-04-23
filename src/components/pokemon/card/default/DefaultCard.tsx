@@ -27,6 +27,7 @@ export function DefaultCard({
   const priority = index < 10
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
+
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
   const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
 
@@ -74,15 +75,12 @@ export function DefaultCard({
           height={128}
           loading={priority ? undefined : 'lazy'}
           onLoad={e => {
-            const img = e.currentTarget as HTMLImageElement
-            img.style.opacity = '1'
-            if (img.parentElement)
-              img.parentElement.style.backgroundImage = 'none'
+            if (e.currentTarget.parentElement)
+              e.currentTarget.parentElement.style.backgroundImage = 'none'
           }}
           priority={priority}
           sizes="112px"
           src={pokemon.officialUrl}
-          style={{ opacity: 0, transition: 'opacity 0.2s' }}
           unoptimized
           width={128}
         />
