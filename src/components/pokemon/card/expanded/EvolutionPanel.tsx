@@ -32,7 +32,7 @@ export function EvolutionPanel({
   const tree = buildTree(chain)
 
   return (
-    <TabPanelContent className="flex flex-col min-h-[500px] sm:min-h-full w-full items-center justify-center p-2">
+    <TabPanelContent className="flex flex-col w-full items-center justify-center">
       {!tree ? (
         <p className="text-xs italic text-white/30">Does not evolve</p>
       ) : (
