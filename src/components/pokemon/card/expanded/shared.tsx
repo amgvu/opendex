@@ -3,10 +3,10 @@ import { type ReactNode } from 'react'
 
 export const PANEL_BODY_TEXT = 'text-xs sm:text-sm xl:text-base'
 export const PANEL_META_LABEL =
-  'text-[10px] sm:text-xs xl:text-sm font-medium uppercase tracking-wider text-white/40'
+  'text-xs xl:text-sm font-medium uppercase tracking-wider text-white/40'
 export const PANEL_SECTION_LABEL = `${PANEL_BODY_TEXT} text-white/60`
 export const PANEL_CHIP_TEXT = 'text-xs sm:text-sm xl:text-base'
-export const PANEL_BADGE_TEXT = 'text-[10px] sm:text-xs xl:text-sm'
+export const PANEL_BADGE_TEXT = 'text-xs xl:text-sm'
 
 export function InfoStat({
   label,

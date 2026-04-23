@@ -42,7 +42,7 @@ export function CardArtwork({
   const artworkImage = (
     <Image
       alt={pokemon.name}
-      className="h-56 w-56 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
+      className="h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
       draggable={false}
       height={384}
       onContextMenu={e => e.preventDefault()}
@@ -65,7 +65,7 @@ export function CardArtwork({
       transition={CARD_TRANSITION}
     >
       <div
-        className="relative h-56 w-56 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80"
+        className="relative h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80"
         ref={blurRef}
         style={
           pokemon.blurDataURL
@@ -88,7 +88,7 @@ export function CardArtwork({
         <motion.img
           alt=""
           animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
-          className="absolute h-56 w-56 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
+          className="absolute h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
           draggable={false}
           initial={{ opacity: 0 }}
           onContextMenu={e => e.preventDefault()}
