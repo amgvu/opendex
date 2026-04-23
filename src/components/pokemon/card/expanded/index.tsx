@@ -78,7 +78,7 @@ export function ExpandedCard({
       {active && (
         <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4">
           <motion.div
-            className={`relative h-full w-full sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
+            className={`relative h-full w-full overflow-y-auto sm:overflow-y-visible sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragControls={dragControls}
@@ -108,7 +108,7 @@ export function ExpandedCard({
               width={512}
             />
             <div
-              className={`relative flex h-full cursor-grab flex-col px-4.5 pt-4.5 pb-3 sm:p-6 sm:pb-3 2xl:p-7 2xl:pb-3 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
+              className={`relative flex min-h-full sm:h-full cursor-grab flex-col px-4.5 pt-4.5 pb-3 sm:p-6 sm:pb-3 2xl:p-7 2xl:pb-3 active:cursor-grabbing ${dragging ? 'select-none' : 'select-text'}`}
               onPointerDown={e => {
                 if (!(e.target as Element).closest('[data-no-drag]')) {
                   dragControls.start(e)
@@ -215,23 +215,38 @@ export function ExpandedCard({
                 >
                   <Tabs.ListContainer>
                     <Tabs.List aria-label="Pokemon info">
-                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="stats">
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="stats"
+                      >
                         Stats
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="battle">
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="battle"
+                      >
                         Battle
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="bio">
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="bio"
+                      >
                         Bio
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="moves">
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="moves"
+                      >
                         Moves
                         <Tabs.Indicator />
                       </Tabs.Tab>
-                      <Tabs.Tab className="text-xs sm:text-sm xl:text-base" id="evo">
+                      <Tabs.Tab
+                        className="text-xs sm:text-sm xl:text-base"
+                        id="evo"
+                      >
                         Evol
                         <Tabs.Indicator />
                       </Tabs.Tab>
