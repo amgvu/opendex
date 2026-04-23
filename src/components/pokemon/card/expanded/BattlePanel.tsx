@@ -73,12 +73,12 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
       {(weaknesses.length > 0 ||
         resistances.length > 0 ||
         immunities.length > 0) && (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <div className="min-w-0">
-            <div className="mb-1 block">
+            <div className="mb-1.5 block">
               <SectionLabel>Weak</SectionLabel>
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2.5">
               {weaknesses.map(({ multiplier, type }) => (
                 <span className="relative inline-flex" key={type}>
                   <span
@@ -87,7 +87,7 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
                     {type}
                   </span>
                   <span
-                    className={`absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/80 font-bold leading-none text-white ${PANEL_BADGE_TEXT}`}
+                    className={`absolute -right-1.5 -top-1.5 flex min-w-4 h-4 px-1 items-center justify-center rounded-full bg-black/80 font-bold leading-none text-white ${PANEL_BADGE_TEXT}`}
                   >
                     ×{multiplier}
                   </span>
@@ -96,10 +96,10 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
             </div>
           </div>
           <div className="min-w-0">
-            <div className="mb-1 block">
+            <div className="mb-1.5 block">
               <SectionLabel>Resist</SectionLabel>
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2.5">
               {resistances.length > 0 ? (
                 resistances.map(({ multiplier, type }) => (
                   <span className="relative inline-flex" key={type}>
@@ -109,7 +109,7 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
                       {type}
                     </span>
                     <span
-                      className={`absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/80 font-bold leading-none text-white ${PANEL_BADGE_TEXT}`}
+                      className={`absolute -right-1.5 -top-1.5 flex min-w-4 h-4 px-1 items-center justify-center rounded-full bg-black/80 font-bold leading-none text-white ${PANEL_BADGE_TEXT}`}
                     >
                       {multiplier === 0.25 ? '¼' : '½'}
                     </span>
@@ -121,10 +121,10 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
             </div>
           </div>
           <div className="min-w-0">
-            <div className="mb-1 block">
+            <div className="mb-1.5 block">
               <SectionLabel>Immune</SectionLabel>
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2.5">
               {immunities.length > 0 ? (
                 immunities.map(type => (
                   <span
