@@ -373,7 +373,9 @@ function getEnglishFlavorTexts(entries) {
     const e = entries[i]
     if (e.language.name !== 'en') continue
     const cleaned = e.flavor_text
-      .replace(/[\n\f\r\u00ad]/g, '')
+      .replace(/[\n\f\r]/g, ' ')
+      .replace(/\u00ad/g, '')
+      .replace(/\s+/g, ' ')
       .replace(/POKé/g, 'POKÉ')
       .trim()
     if (seen.has(cleaned)) continue
