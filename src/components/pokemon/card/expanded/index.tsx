@@ -145,7 +145,6 @@ export function ExpandedCard({
                       pokemon={pokemon}
                       setGifError={setGifError}
                       setGifReady={setGifReady}
-                      typeColor={typeColor}
                     />
                     <div
                       className="flex items-center justify-between pb-1 sm:pb-2"

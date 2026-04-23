@@ -32,13 +32,11 @@ export function EvolutionPanel({
   const tree = buildTree(chain)
 
   return (
-    <TabPanelContent className="flex min-h-[300px] sm:min-h-full w-full items-center justify-center p-2">
+    <TabPanelContent className="flex flex-col min-h-[500px] sm:min-h-full w-full items-center justify-center p-2">
       {!tree ? (
         <p className="text-xs italic text-white/30">Does not evolve</p>
       ) : (
-        <div className="inline-flex items-center">
-          <EvolutionNode currentId={pokemon.id} large={large} node={tree} />
-        </div>
+        <EvolutionNode currentId={pokemon.id} large={large} node={tree} />
       )}
     </TabPanelContent>
   )

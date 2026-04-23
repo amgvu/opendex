@@ -13,8 +13,7 @@ export function CardArtwork({
   id,
   pokemon,
   setGifError,
-  setGifReady,
-  typeColor
+  setGifReady
 }: {
   gifError: boolean
   gifMounted: boolean
@@ -23,7 +22,6 @@ export function CardArtwork({
   pokemon: PokemonEntry
   setGifError: (v: boolean) => void
   setGifReady: (v: boolean) => void
-  typeColor: string
 }) {
   const { gifEnabled, shinyEnabled } = useCardStore()
 
