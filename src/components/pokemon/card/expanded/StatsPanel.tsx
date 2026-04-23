@@ -31,7 +31,7 @@ export function StatsPanel({
         </div>
 
         <div className="flex flex-row gap-4">
-          <div className="flex flex-col gap-0.5 flex-1">
+          <div className="flex flex-col flex-1">
             <StatBar label="HP" value={pokemon.hp} />
             <StatBar label="Attack" value={pokemon.attack} />
             <StatBar label="Defense" value={pokemon.defense} />
@@ -39,7 +39,7 @@ export function StatsPanel({
             <StatBar label="Sp. Def" value={pokemon.specialDefense} />
             <StatBar label="Speed" value={pokemon.speed} />
           </div>
-          <div className="w-24 sm:w-28 xl:w-36 2xl:w-40 shrink-0 flex items-center justify-center">
+          <div className="w-28 xl:w-36 2xl:w-40 shrink-0 flex items-center justify-center">
             <StatRadar pokemon={pokemon} />
           </div>
         </div>
