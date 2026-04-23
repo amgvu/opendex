@@ -16,24 +16,26 @@ export default function AboutPage() {
           <h1 className="text-3xl font-semibold mb-6">About</h1>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Hi, I&apos;m Kevin. This started as a take-home interview project,
+              Hi, I&apos;m Kevin! This started as a take-home interview project,
               but after lots of positive feedback from Pokemon fans, I decided
-              to ship it and turn it into something people can actually use.
+              to ship Opendex and turn it into something people can actually
+              use.
             </p>
             <p>
-              My goal for Opendex is to be a comprehensive, easy-to-use resource
-              for Pokemon lore and data, with a strong focus on user experience.
-              Some features are already in development and planned to release
-              very soon, such as battle simulation for competitive players.
+              My goal for this app is to be a comprehensive, easy-to-use
+              resource for Pokemon lore and data, with a strong focus on user
+              experience. Some features are already in development and planned
+              to release very soon, such as battle simulation and Champions
+              related tools.
             </p>
             <p>
               I didn&apos;t actually know much about Pokemon going into this,
               but I enjoy building in new domains, so I&apos;m shaping Opendex
-              into something fans will love using.
+              into something even the most passionate fans will enjoy using.
             </p>
             <p>
               Something missing? A feature you&apos;d love to see? Reach out to
-              me directly on Discord at amg00 !
+              me directly on Discord at amg00
             </p>
           </div>
         </section>
