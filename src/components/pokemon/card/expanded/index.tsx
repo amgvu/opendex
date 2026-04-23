@@ -189,7 +189,7 @@ export function ExpandedCard({
               )}
               <motion.div
                 animate={{ opacity: 1 }}
-                className="flex min-h-0 flex-1 flex-col cursor-auto"
+                className="flex min-h-0 sm:flex-1 flex-col cursor-auto max-h-[calc(100svh-1rem)] sm:max-h-none overflow-y-auto sm:overflow-y-visible"
                 data-no-drag
                 exit={{ opacity: 0 }}
                 initial={{ opacity: 0 }}
