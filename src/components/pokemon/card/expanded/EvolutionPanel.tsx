@@ -26,7 +26,7 @@ export function EvolutionPanel({ large, pokemon }: { large?: boolean; pokemon: P
   const tree = buildTree(chain)
 
   return (
-    <TabPanelContent className="flex min-h-full w-full items-center justify-center p-2">
+    <TabPanelContent className="flex min-h-[300px] sm:min-h-full w-full items-center justify-center p-2">
       {!tree ? (
         <p className="text-xs italic text-white/30">Does not evolve</p>
       ) : (
