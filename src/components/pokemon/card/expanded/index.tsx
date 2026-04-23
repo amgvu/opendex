@@ -78,7 +78,7 @@ export function ExpandedCard({
       {active && (
         <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4">
           <motion.div
-            className={`relative h-full w-full overflow-y-auto sm:overflow-y-visible sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
+            className={`relative h-full w-full overflow-hidden sm:overflow-y-auto sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragControls={dragControls}
