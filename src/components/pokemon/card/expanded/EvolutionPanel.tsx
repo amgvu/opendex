@@ -132,7 +132,7 @@ function PokemonNode({
         {node.name}
       </span>
       <span
-        className={`leading-none text-white/40 ${large ? 'text-xs xl:text-sm' : 'text-[10px] xl:text-xs'}`}
+        className={`font-mono tabular-nums leading-none text-white/40 ${large ? 'text-xs xl:text-sm' : 'text-[10px] xl:text-xs'}`}
       >
         {formatPokedexId(node.id)}
       </span>

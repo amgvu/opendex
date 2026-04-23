@@ -36,6 +36,7 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
         {pokemon.habitat != null && (
           <InfoStat
             label="Habitat"
+            mono={false}
             muted
             value={
               <span className="capitalize">
@@ -47,6 +48,7 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
         {pokemon.color && (
           <InfoStat
             label="Color"
+            mono={false}
             muted
             value={<span className="capitalize">{pokemon.color}</span>}
           />
@@ -61,6 +63,7 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
         {pokemon.eggGroups && pokemon.eggGroups.length > 0 && (
           <InfoStat
             label="Egg Groups"
+            mono={false}
             muted
             value={
               <span className="capitalize">{pokemon.eggGroups.map(g => g.replace(/(\D)(\d)/, '$1 $2')).join(', ')}</span>
@@ -86,7 +89,7 @@ export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
                 <span className={`${PANEL_BODY_TEXT} text-white/70`}>
                   {item.name}
                 </span>
-                <span className="text-xs text-white/35 sm:text-sm xl:text-base">
+                <span className="font-mono tabular-nums text-xs text-white/35 sm:text-sm xl:text-base">
                   ({item.rarity}%)
                 </span>
               </div>

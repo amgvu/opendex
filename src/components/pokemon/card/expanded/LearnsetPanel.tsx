@@ -92,7 +92,7 @@ export function MoveTable({
               key={move.name}
             >
               {showLevel && (
-                <td className="py-1 pr-2 tabular-nums text-white/40">
+                <td className="py-1 pr-2 font-mono tabular-nums text-white/40">
                   {(move as LearnsetMove).level}
                 </td>
               )}
@@ -113,13 +113,13 @@ export function MoveTable({
                   {CATEGORY_LABELS[move.category] ?? move.category}
                 </span>
               </td>
-              <td className="py-1 pr-1 text-right tabular-nums text-white/80">
+              <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
                 {move.power ?? '—'}
               </td>
-              <td className="py-1 pr-1 text-right tabular-nums text-white/80">
+              <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
                 {move.accuracy ?? '—'}
               </td>
-              <td className="py-1 text-right tabular-nums text-white/50">
+              <td className="py-1 text-right font-mono tabular-nums text-white/50">
                 {move.pp}
               </td>
             </tr>

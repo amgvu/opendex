@@ -10,17 +10,19 @@ export const PANEL_BADGE_TEXT = 'text-xs xl:text-sm'
 
 export function InfoStat({
   label,
+  mono = true,
   muted,
   value
 }: {
   label: string
+  mono?: boolean
   muted?: boolean
   value: ReactNode
 }) {
   return (
     <div className="flex flex-col">
       <span className={muted ? 'text-white/50' : 'text-white/60'}>{label}</span>
-      <span className="font-medium text-white">{value}</span>
+      <span className={`font-medium text-white ${mono ? 'font-mono tabular-nums' : ''}`}>{value}</span>
     </div>
   )
 }

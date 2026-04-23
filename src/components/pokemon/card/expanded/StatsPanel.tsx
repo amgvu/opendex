@@ -26,7 +26,7 @@ export function StatsPanel({
         <div className={`flex items-center justify-between ${PANEL_BODY_TEXT}`}>
           <span className="font-medium text-white/50">Base Stats</span>
           <span className="font-medium text-white/50">
-            BST <span className="font-bold text-white">{bst}</span>
+            BST <span className="font-bold font-mono tabular-nums text-white">{bst}</span>
           </span>
         </div>
 
@@ -51,6 +51,7 @@ export function StatsPanel({
           {pokemon.growthRate && (
             <InfoStat
               label="Growth"
+              mono={false}
               value={
                 <span className="capitalize">
                   {GROWTH_RATE_LABELS[pokemon.growthRate] ??

@@ -98,7 +98,7 @@ export function StatRadar({ pokemon }: { pokemon: Pokemon }) {
             <text
               dominantBaseline="auto"
               fill="rgba(255,255,255,0.45)"
-              fontSize="12"
+              fontSize="14"
               fontWeight="600"
               textAnchor="middle"
               x={pos.x.toFixed(2)}
@@ -109,7 +109,8 @@ export function StatRadar({ pokemon }: { pokemon: Pokemon }) {
             <text
               dominantBaseline="hanging"
               fill="rgba(255,255,255,0.9)"
-              fontSize="16"
+              fontFamily="monospace"
+              fontSize="22"
               fontWeight="700"
               textAnchor="middle"
               x={pos.x.toFixed(2)}
