@@ -2,7 +2,7 @@ import { Tabs } from '@heroui/react'
 import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Image from 'next/image'
 import { type CSSProperties, type RefObject, useState } from 'react'
-import { TbCheck, TbChevronUp, TbLink } from 'react-icons/tb'
+import { TbCheck, TbChevronUp, TbLink, TbX } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
@@ -11,6 +11,7 @@ import { useNavContext } from '@/context/navigation'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { ARTWORK_COLLAPSE_TRANSITION, CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
+import { useSelectionStore } from '@/stores/selectionStore'
 
 import { ArtworkSwitches } from '../ArtworkSwitches'
 import { BattlePanel } from './BattlePanel'
@@ -61,6 +62,7 @@ export function ExpandedCard({
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
   const { onNext, onPrev } = useNavContext()
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const [dragging, setDragging] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -74,9 +76,9 @@ export function ExpandedCard({
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
       {active && (
-        <div className="fixed inset-0 z-50 grid place-items-center p-4">
+        <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4">
           <motion.div
-            className={`relative aspect-[63/88] max-h-[90svh] w-full max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-[1rem] before:pointer-events-none`}
+            className={`relative h-full w-full sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragControls={dragControls}
@@ -113,6 +115,16 @@ export function ExpandedCard({
                 }
               }}
             >
+              <button
+                aria-label="Close"
+                className="absolute top-2 right-2 z-10 p-2 text-white/50 transition-colors hover:text-white sm:hidden"
+                data-no-drag
+                onClick={() => setSelectedName(null)}
+                type="button"
+              >
+                <TbX size={24} />
+              </button>
+
               <CardHeader id={id} pokemon={pokemon} />
               {pokemon.officialUrl && (
                 <>
