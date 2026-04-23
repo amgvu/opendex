@@ -173,7 +173,7 @@ describe('shiny data', () => {
 
   test('variant entries have their own shiny URLs (not base)', () => {
     const charizardMegaX = getVariantBySlug('charizard-mega-x')
-    expect(charizardMegaX.shiny.imageUrl).toMatch(/charizardmegax/)
+    expect(charizardMegaX.shiny.imageUrl).toMatch(/charizard-megax/)
   })
 })
 
@@ -359,6 +359,37 @@ describe('regional forms', () => {
     expect(getVariantBySlug('growlithe-hisui')).toBeDefined()
     expect(getVariantBySlug('typhlosion-hisui')).toBeDefined()
     expect(getVariantBySlug('zorua-hisui')).toBeDefined()
+  })
+})
+
+// ─── Extended Forms & Deduplication ───────────────────────────────────────────
+
+describe('extended forms & deduplication', () => {
+  test('Magearna-Original-Mega is deduplicated (only one Mega entry exists)', () => {
+    const magearnaVariants = variants.filter(v => v.variantOf === 801 && v.variantType === 'mega')
+    // Should only have 1 entry (magearna-mega), magearna-original-mega is a duplicate stats-wise
+    expect(magearnaVariants.length).toBe(1)
+  })
+
+  test('Ogerpon mask forms are present', () => {
+    expect(getVariantBySlug('ogerpon-wellspring-mask')).toBeDefined()
+    expect(getVariantBySlug('ogerpon-hearthflame-mask')).toBeDefined()
+    expect(getVariantBySlug('ogerpon-cornerstone-mask')).toBeDefined()
+  })
+
+  test('Terapagos stellar form is present', () => {
+    expect(getVariantBySlug('terapagos-stellar')).toBeDefined()
+  })
+
+  test('Ursaluna Bloodmoon form is present', () => {
+    expect(getVariantBySlug('ursaluna-bloodmoon')).toBeDefined()
+  })
+
+  test('variants without specific PokeAPI artwork fall back to base artwork', () => {
+    // Some forms don't have unique official artwork in PokeAPI
+    // They should have inherited the base officialUrl instead of being null
+    const variantsWithoutArtwork = variants.filter(v => !v.officialUrl)
+    expect(variantsWithoutArtwork.length).toBe(0)
   })
 })
 

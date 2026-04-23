@@ -72,15 +72,64 @@ function capitalize(str) {
 
 // Classify a non-default variety slug into a variant type, or null to skip
 function classifyVariant(slug) {
-  if (slug.endsWith('-mega-x')) return 'mega-x'
-  if (slug.endsWith('-mega-y')) return 'mega-y'
-  if (slug.endsWith('-mega')) return 'mega'
-  if (slug.endsWith('-alola')) return 'alolan'
-  if (slug.endsWith('-galar')) return 'galarian'
-  if (slug.endsWith('-hisui')) return 'hisuian'
-  if (slug.endsWith('-paldea')) return 'paldean'
-  if (slug.endsWith('-gmax')) return 'gigantamax'
-  return null
+  const s = slug.toLowerCase()
+  if (s.endsWith('-mega-x')) return 'mega-x'
+  if (s.endsWith('-mega-y')) return 'mega-y'
+  if (s.endsWith('-mega')) return 'mega'
+  if (s.endsWith('-alola')) return 'alolan'
+  if (s.endsWith('-galar')) return 'galarian'
+  if (s.endsWith('-hisui')) return 'hisuian'
+  if (s.endsWith('-paldea')) return 'paldean'
+  if (s.endsWith('-gmax')) return 'gigantamax'
+  if (s.endsWith('-origin')) return 'origin'
+  if (s.endsWith('-therian')) return 'therian'
+  if (s.endsWith('-resolute')) return 'resolute'
+  if (s.endsWith('-pirouette')) return 'pirouette'
+  if (s.endsWith('-ash')) return 'ash'
+  if (s.endsWith('-complete')) return 'complete'
+  if (s.endsWith('-school')) return 'school'
+  if (s.endsWith('-ultra')) return 'ultra'
+  if (s.endsWith('-crowned')) return 'crowned'
+  if (s.endsWith('-rapid-strike')) return 'rapid-strike'
+  if (s.endsWith('-single-strike')) return 'single-strike'
+  if (s.endsWith('-ice')) return 'ice-rider'
+  if (s.endsWith('-shadow')) return 'shadow-rider'
+  if (s.includes('-eternamax')) return 'eternamax'
+  if (s.includes('-wellspring')) return 'wellspring-mask'
+  if (s.includes('-hearthflame')) return 'hearthflame-mask'
+  if (s.includes('-cornerstone')) return 'cornerstone-mask'
+  if (s.includes('-stellar')) return 'stellar'
+
+  const COMMON_FORMS = [
+    '-heat',
+    '-wash',
+    '-frost',
+    '-fan',
+    '-mow',
+    '-attack',
+    '-defense',
+    '-speed',
+    '-sky',
+    '-zen',
+    '-white',
+    '-black',
+    '-active',
+    '-unbound',
+    '-pom-pom',
+    '-pa-u',
+    '-sensu',
+    '-baile',
+    '-midnight',
+    '-dusk',
+    '-dada',
+    '-small',
+    '-large',
+    '-super',
+    '-bloodmoon'
+  ]
+  if (COMMON_FORMS.some(f => s.endsWith(f))) return 'form'
+
+  return 'form'
 }
 
 // Compute weaknesses/resistances/immunities for a Pokemon given its types
@@ -323,7 +372,10 @@ function getEnglishFlavorTexts(entries) {
   for (let i = entries.length - 1; i >= 0; i--) {
     const e = entries[i]
     if (e.language.name !== 'en') continue
-    const cleaned = e.flavor_text.replace(/[\n\f\r\u00ad]/g, '').replace(/POKé/g, 'POKÉ').trim()
+    const cleaned = e.flavor_text
+      .replace(/[\n\f\r\u00ad]/g, '')
+      .replace(/POKé/g, 'POKÉ')
+      .trim()
     if (seen.has(cleaned)) continue
     seen.add(cleaned)
     texts.push({ game: e.version.name, text: cleaned })
@@ -566,10 +618,7 @@ async function main() {
     for (const p of results) {
       if (p.gigantamax?._gmaxMoveNames) {
         p.gigantamax.gmaxMoves = p.gigantamax._gmaxMoveNames.map(name => ({
-          name: name
-            .split('-')
-            .map(capitalize)
-            .join(' '),
+          name: name.split('-').map(capitalize).join(' '),
           ...(moveDetails[name] ?? {
             accuracy: null,
             category: 'status',
@@ -601,9 +650,9 @@ async function main() {
       const chunk = separateVariants.slice(i, i + CHUNK_SIZE)
       const fetched = await Promise.all(
         chunk.map(async meta => {
-          const pkmnData = await fetch(
-            `${POKEAPI}/pokemon/${meta.slug}`
-          ).then(r => r.json())
+          const pkmnData = await fetch(`${POKEAPI}/pokemon/${meta.slug}`).then(
+            r => r.json()
+          )
           return { meta, pkmnData }
         })
       )
@@ -662,8 +711,8 @@ async function main() {
           chunk.map(async item => {
             // Regional slugs (e.g. 'vulpix-alola') have no /pokemon-species entry of their own.
             // Use the species URL from the already-fetched pokemon data instead.
-            item.speciesData = await fetch(item.pkmnData.species.url).then(
-              r => r.json()
+            item.speciesData = await fetch(item.pkmnData.species.url).then(r =>
+              r.json()
             )
           })
         )
@@ -740,6 +789,8 @@ async function main() {
 
     // Step E: Assemble final variant entries
     const variantEntries = []
+    const seenVariantKeys = new Set()
+
     for (const { meta, pkmnData, speciesData } of rawVariants) {
       const { baseEntry, slug, variantIndex, variantType } = meta
       const isRegional = REGIONAL_TYPES.has(variantType)
@@ -761,6 +812,20 @@ async function main() {
           name: a.ability.name.replace(/-/g, ' ')
         }))
 
+      const statsKey = pkmnData.stats.map(s => s.base_stat).join(',')
+      const typesKey = variantTypes.join(',')
+      const abilitiesKey = variantAbilities
+        .map(a => a.name)
+        .sort()
+        .join(',')
+      const dedupeKey = `${baseEntry.id}-${variantType}-${statsKey}-${typesKey}-${abilitiesKey}`
+
+      if (seenVariantKeys.has(dedupeKey)) {
+        console.log(`  Skipping duplicate variant: ${slug}`)
+        continue
+      }
+      seenVariantKeys.add(dedupeKey)
+
       const variantEvYield = pkmnData.stats
         .filter(s => s.effort > 0)
         .map(s => ({ stat: s.stat.name, value: s.effort }))
@@ -768,10 +833,13 @@ async function main() {
       const sprites = pkmnData.sprites
       const variantImageUrl = `https://play.pokemonshowdown.com/sprites/ani/${toShowdownSlug(slug)}.gif`
       const variantOfficialUrl =
-        sprites.other?.['official-artwork']?.front_default ?? null
+        sprites.other?.['official-artwork']?.front_default ??
+        baseEntry.officialUrl
       const variantShiny = {
         imageUrl: `https://play.pokemonshowdown.com/sprites/ani-shiny/${toShowdownSlug(slug)}.gif`,
-        officialUrl: sprites.other?.['official-artwork']?.front_shiny ?? null
+        officialUrl:
+          sprites.other?.['official-artwork']?.front_shiny ??
+          baseEntry.shiny.officialUrl
       }
 
       let learnset = baseEntry.learnset
@@ -906,25 +974,54 @@ function resolveLearnset(rawLearnset, moveDetails) {
 }
 
 // Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
-// Showdown removes hyphens from the base name but keeps a single hyphen before
-// the variant suffix, collapsing any internal hyphens within that suffix.
 function toShowdownSlug(slug) {
-  const VARIANTS = [
-    ['-mega-x', '-megax'],
-    ['-mega-y', '-megay'],
-    ['-mega', '-mega'],
-    ['-alola', '-alola'],
-    ['-galar', '-galar'],
-    ['-hisui', '-hisui'],
-    ['-paldea', '-paldea'],
+  const s = slug.toLowerCase()
+
+  // Regionals: keep the hyphen
+  if (s.endsWith('-alola'))
+    return s.replace('-alola', '-alola').replace(/[^-a-z0-9]/g, '')
+  if (s.endsWith('-galar'))
+    return s.replace('-galar', '-galar').replace(/[^-a-z0-9]/g, '')
+  if (s.endsWith('-hisui'))
+    return s.replace('-hisui', '-hisui').replace(/[^-a-z0-9]/g, '')
+  if (s.endsWith('-paldea'))
+    return s.replace('-paldea', '-paldea').replace(/[^-a-z0-9]/g, '')
+
+  // Megas: remove internal hyphens, use megax/megay
+  if (s.endsWith('-mega-x'))
+    return s.replace(/-/g, '').replace('megax', '-megax')
+  if (s.endsWith('-mega-y'))
+    return s.replace(/-/g, '').replace('megay', '-megay')
+  if (s.endsWith('-mega')) return s.replace(/-/g, '').replace('mega', '-mega')
+
+  // Other common ones that Showdown keeps hyphens for
+  const HYPHENATED_FORMS = [
+    '-origin',
+    '-therian',
+    '-resolute',
+    '-pirouette',
+    '-ash',
+    '-complete',
+    '-school',
+    '-meteor',
+    '-ultra',
+    '-crowned',
+    '-rapid-strike',
+    '-single-strike',
+    '-ice',
+    '-shadow',
+    '-wellspring',
+    '-hearthflame',
+    '-cornerstone',
+    '-stellar',
+    '-bloodmoon'
   ]
-  for (const [apiSuffix, showdownSuffix] of VARIANTS) {
-    if (slug.endsWith(apiSuffix)) {
-      const base = slug.slice(0, -apiSuffix.length).replace(/-/g, '')
-      return base + showdownSuffix
-    }
+  for (const f of HYPHENATED_FORMS) {
+    if (s.endsWith(f)) return s
   }
-  return slug.replace(/-/g, '')
+
+  // Fallback: remove all hyphens
+  return s.replace(/-/g, '')
 }
 
 main().catch(err => {
