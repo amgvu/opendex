@@ -43,7 +43,7 @@ export function TabPanelContent({
   return (
     <motion.div
       animate={{ opacity: 1, x: 0 }}
-      className={`pb-[calc(env(safe-area-inset-bottom)+5rem)] sm:pb-[env(safe-area-inset-bottom)] ${className ?? ''}`}
+      className={`min-h-full pb-[calc(env(safe-area-inset-bottom)+8rem)] sm:pb-[env(safe-area-inset-bottom)] ${className ?? ''}`}
       initial={{ opacity: 0, x: -10 }}
       transition={{ duration: 0.15 }}
     >

@@ -16,7 +16,7 @@ export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
     pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)
 
   return (
-    <TabPanelContent className="space-y-1.5 sm:space-y-2">
+    <TabPanelContent className="flex flex-col gap-1.5 sm:gap-2">
       <div className={`grid grid-cols-2 gap-x-4 gap-y-1.5 ${PANEL_BODY_TEXT}`}>
         {pokemon.catchRate !== undefined && (
           <InfoStat
