@@ -6,7 +6,7 @@ import { TbCheck, TbChevronUp, TbLink, TbX } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
-import { useCardContext } from '@/context/card'
+import { useCardStore } from '@/stores/cardStore'
 import { useNavContext } from '@/context/navigation'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { ARTWORK_COLLAPSE_TRANSITION, CARD_TRANSITION } from '@/lib/constants'
@@ -58,7 +58,7 @@ export function ExpandedCard({
     setGifEnabled,
     setShinyEnabled,
     shinyEnabled
-  } = useCardContext()
+  } = useCardStore()
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
   const { onNext, onPrev } = useNavContext()

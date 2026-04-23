@@ -1,0 +1,27 @@
+import { create } from 'zustand'
+
+type CardStore = {
+  activeTab: 'battle' | 'bio' | 'evo' | 'moves' | 'stats'
+  artworkCollapsed: boolean
+  gifEnabled: boolean
+  setActiveTab: (tab: 'battle' | 'bio' | 'evo' | 'moves' | 'stats') => void
+  setArtworkCollapsed: (v: boolean) => void
+  setGifEnabled: (v: boolean) => void
+  setShinyEnabled: (v: boolean) => void
+  setStatsView: (v: 'bars' | 'radar') => void
+  shinyEnabled: boolean
+  statsView: 'bars' | 'radar'
+}
+
+export const useCardStore = create<CardStore>(set => ({
+  activeTab: 'stats',
+  artworkCollapsed: false,
+  gifEnabled: false,
+  setActiveTab: tab => set({ activeTab: tab }),
+  setArtworkCollapsed: v => set({ artworkCollapsed: v }),
+  setGifEnabled: v => set({ gifEnabled: v }),
+  setShinyEnabled: v => set({ shinyEnabled: v }),
+  setStatsView: v => set({ statsView: v }),
+  shinyEnabled: false,
+  statsView: 'bars'
+}))

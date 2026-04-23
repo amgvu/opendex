@@ -4,10 +4,8 @@ import { type SyntheticEvent, useRef } from 'react'
 
 import type { PokemonEntry } from '@/types/pokemon'
 
-import { useCardContext } from '@/context/card'
 import { CARD_TRANSITION } from '@/lib/constants'
-import { bgClassToVar } from '@/lib/pokemon'
-
+import { useCardStore } from '@/stores/cardStore'
 export function CardArtwork({
   gifError,
   gifMounted,
@@ -27,7 +25,8 @@ export function CardArtwork({
   setGifReady: (v: boolean) => void
   typeColor: string
 }) {
-  const { gifEnabled, shinyEnabled } = useCardContext()
+  const { gifEnabled, shinyEnabled } = useCardStore()
+
   const blurRef = useRef<HTMLDivElement>(null)
 
   const artSrc = shinyEnabled

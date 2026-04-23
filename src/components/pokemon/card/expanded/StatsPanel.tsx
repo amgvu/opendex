@@ -3,7 +3,7 @@ import { TbChartBar, TbChartRadar } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
-import { useCardContext } from '@/context/card'
+import { useCardStore } from '@/stores/cardStore'
 
 import { InfoStat, PANEL_BODY_TEXT, TabPanelContent } from './shared'
 import { StatBar } from './StatBar'
@@ -24,7 +24,7 @@ export function StatsPanel({
   bst: number
   pokemon: Pokemon
 }) {
-  const { setStatsView, statsView } = useCardContext()
+  const { setStatsView, statsView } = useCardStore()
 
   return (
     <TabPanelContent>
