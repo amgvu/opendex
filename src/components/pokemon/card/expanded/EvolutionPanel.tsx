@@ -12,7 +12,13 @@ type TreeNode = {
   name: string
 }
 
-export function EvolutionPanel({ large, pokemon }: { large?: boolean; pokemon: Pokemon }) {
+export function EvolutionPanel({
+  large,
+  pokemon
+}: {
+  large?: boolean
+  pokemon: Pokemon
+}) {
   const chain = pokemon.evolutionChain
 
   if (chain === undefined) {
@@ -41,12 +47,17 @@ export function EvolutionPanel({ large, pokemon }: { large?: boolean; pokemon: P
 function buildTree(steps: EvolutionStep[]): null | TreeNode {
   if (!steps.length) return null
 
-  const childrenOf = new Map<number, { toId: number; toName: string; trigger: string }[]>()
+  const childrenOf = new Map<
+    number,
+    { toId: number; toName: string; trigger: string }[]
+  >()
   const allToIds = new Set<number>()
 
   for (const s of steps) {
     if (!childrenOf.has(s.fromId)) childrenOf.set(s.fromId, [])
-    childrenOf.get(s.fromId)!.push({ toId: s.toId, toName: s.toName, trigger: s.trigger })
+    childrenOf
+      .get(s.fromId)!
+      .push({ toId: s.toId, toName: s.toName, trigger: s.trigger })
     allToIds.add(s.toId)
   }
 
@@ -117,23 +128,41 @@ function PokemonNode({
         unoptimized
         width={large ? 160 : 80}
       />
-      <span className={`truncate text-center font-medium capitalize leading-tight text-white ${large ? 'max-w-[120px] text-sm xl:text-base' : 'max-w-[80px] xl:max-w-[96px] text-xs xl:text-sm'}`}>
+      <span
+        className={`truncate text-center font-medium capitalize leading-tight text-white ${large ? 'max-w-[120px] text-sm xl:text-base' : 'max-w-[80px] xl:max-w-[96px] text-xs xl:text-sm'}`}
+      >
         {node.name}
       </span>
-      <span className={`leading-none text-white/40 ${large ? 'text-xs xl:text-sm' : 'text-[10px] xl:text-xs'}`}>
+      <span
+        className={`leading-none text-white/40 ${large ? 'text-xs xl:text-sm' : 'text-[10px] xl:text-xs'}`}
+      >
         {formatPokedexId(node.id)}
       </span>
     </div>
   )
 }
 
-function TriggerConnector({ large, trigger }: { large?: boolean; trigger: string }) {
+function TriggerConnector({
+  large,
+  trigger
+}: {
+  large?: boolean
+  trigger: string
+}) {
   return (
-    <div className={`flex flex-col items-center justify-center gap-1 px-3 ${large ? 'min-w-[100px]' : 'min-w-[52px] xl:min-w-[64px]'}`}>
-      <span className={`line-clamp-2 text-center leading-tight text-white/40 ${large ? 'max-w-[96px] text-xs xl:text-sm' : 'max-w-[60px] xl:max-w-[72px] text-[10px] xl:text-xs'}`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-1 px-3 ${large ? 'min-w-[100px]' : 'min-w-[52px] xl:min-w-[64px]'}`}
+    >
+      <span
+        className={`line-clamp-2 text-center leading-tight text-white/40 ${large ? 'max-w-[96px] text-xs xl:text-sm' : 'max-w-[60px] xl:max-w-[72px] text-[10px] xl:text-xs'}`}
+      >
         {trigger}
       </span>
-      <span className={`leading-none text-white/30 ${large ? 'text-base xl:text-lg' : 'text-xs xl:text-sm'}`}>→</span>
+      <span
+        className={`leading-none text-white/30 ${large ? 'text-base xl:text-lg' : 'text-xs xl:text-sm'}`}
+      >
+        →
+      </span>
     </div>
   )
 }
