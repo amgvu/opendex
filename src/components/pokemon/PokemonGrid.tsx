@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { Navbar } from '@/components/layout/Navbar'
 import { NavProvider } from '@/context/navigation'

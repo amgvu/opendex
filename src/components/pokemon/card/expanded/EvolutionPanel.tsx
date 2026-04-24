@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import type { EvolutionStep, Pokemon } from '@/types/pokemon'
+import type { EvolutionStep, Pokemon } from '@/lib/types'
 
 import { formatPokedexId } from '@/lib/pokemon'
 

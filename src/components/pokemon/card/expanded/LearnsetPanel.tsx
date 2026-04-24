@@ -1,4 +1,4 @@
-import type { LearnsetMove, MoveDetail, Pokemon } from '@/types/pokemon'
+import type { LevelUpMove, Move, Pokemon } from '@/lib/types'
 
 import { getTypeColor } from '@/lib/pokemon'
 
@@ -68,7 +68,7 @@ export function MoveTable({
   moves,
   showLevel
 }: {
-  moves: LearnsetMove[] | MoveDetail[]
+  moves: LevelUpMove[] | Move[]
   showLevel?: boolean
 }) {
   return (
@@ -93,7 +93,7 @@ export function MoveTable({
             >
               {showLevel && (
                 <td className="py-1 pr-2 font-mono tabular-nums text-white/40">
-                  {(move as LearnsetMove).level}
+                  {(move as LevelUpMove).level}
                 </td>
               )}
               <td className="py-1 pr-2 font-medium text-white whitespace-nowrap">

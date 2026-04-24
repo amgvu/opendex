@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { Pokemon } from '@/lib/types'
 
 export function ArtworkSwitches({
   gifEnabled,

@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import { type SyntheticEvent, useRef } from 'react'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { useCardStore } from '@/stores/cardStore'

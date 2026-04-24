@@ -73,19 +73,37 @@ export type TypeMatchups = {
 
 export type VariantType =
   | 'alolan'
+  | 'ash'
+  | 'complete'
+  | 'cornerstone-mask'
+  | 'crowned'
+  | 'eternamax'
   | 'form'
   | 'galarian'
+  | 'hearthflame-mask'
   | 'hisuian'
+  | 'ice-rider'
   | 'mega'
   | 'mega-x'
   | 'mega-y'
+  | 'origin'
   | 'paldean'
+  | 'pirouette'
+  | 'rapid-strike'
+  | 'resolute'
+  | 'school'
+  | 'shadow-rider'
+  | 'stellar'
+  | 'therian'
+  | 'ultra'
+  | 'wellspring-mask'
 
 type PokemonBase = {
   abilities: Ability[]
   attack: number
   baseExperience?: number
   baseFriendship?: number
+  blurDataURL?: string
   catchRate: number
   color?: string
   defense: number

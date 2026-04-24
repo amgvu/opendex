@@ -1,4 +1,4 @@
-import type { Pokemon } from '@/types/pokemon'
+import type { Pokemon } from '@/lib/types'
 
 import { InfoStat, PANEL_BODY_TEXT, TabPanelContent } from './shared'
 import { StatBar } from './StatBar'

@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, VARIANT_LABELS } from '@/lib/pokemon'

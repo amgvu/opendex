@@ -1,4 +1,4 @@
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import pokemonData from '@/data/pokemon.json'
 

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import { useMemo } from 'react'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { Pokemon } from '@/lib/types'
 
 const CX = 100
 const CY = 100
