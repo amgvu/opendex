@@ -4,13 +4,13 @@ import Image from 'next/image'
 import { type CSSProperties, type RefObject, useState } from 'react'
 import { TbCheck, TbChevronUp, TbLink, TbX } from 'react-icons/tb'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
-import { useCardStore } from '@/stores/cardStore'
 import { useNavContext } from '@/context/navigation'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { ARTWORK_COLLAPSE_TRANSITION, CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
+import { useCardStore } from '@/stores/cardStore'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { ArtworkSwitches } from '../ArtworkSwitches'

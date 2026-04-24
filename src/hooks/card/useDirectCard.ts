@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
 import { capitalize, SITE_NAME } from '@/lib/pokemon'

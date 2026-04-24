@@ -1,7 +1,7 @@
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { fetchPokemon, type PokemonResponse } from '@/lib/api'
 

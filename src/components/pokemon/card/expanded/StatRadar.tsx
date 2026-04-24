@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import { useMemo } from 'react'
 
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 const CX = 100
 const CY = 100
@@ -9,12 +9,12 @@ const R = 65
 const STAT_MAX = 255
 
 const AXES = [
-  { angle: 270, key: 'hp' as keyof Pokemon, label: 'HP' },
-  { angle: 330, key: 'attack' as keyof Pokemon, label: 'Atk' },
-  { angle: 30, key: 'defense' as keyof Pokemon, label: 'Def' },
-  { angle: 90, key: 'speed' as keyof Pokemon, label: 'Spd' },
-  { angle: 150, key: 'specialDefense' as keyof Pokemon, label: 'SpD' },
-  { angle: 210, key: 'specialAttack' as keyof Pokemon, label: 'SpA' }
+  { angle: 270, key: 'hp' as keyof PokemonEntry, label: 'HP' },
+  { angle: 330, key: 'attack' as keyof PokemonEntry, label: 'Atk' },
+  { angle: 30, key: 'defense' as keyof PokemonEntry, label: 'Def' },
+  { angle: 90, key: 'speed' as keyof PokemonEntry, label: 'Spd' },
+  { angle: 150, key: 'specialDefense' as keyof PokemonEntry, label: 'SpD' },
+  { angle: 210, key: 'specialAttack' as keyof PokemonEntry, label: 'SpA' }
 ]
 
 function point(angle: number, r: number) {
@@ -42,7 +42,7 @@ const AXIS_TIPS = AXES.map(({ angle }) => point(angle, R))
 
 const LABEL_POS = AXES.map(({ angle }) => point(angle, R + 22))
 
-export function StatRadar({ pokemon }: { pokemon: Pokemon }) {
+export function StatRadar({ pokemon }: { pokemon: PokemonEntry }) {
   const statPointsStr = useMemo(
     () => pointsStr(AXES.map(({ angle, key }) => {
       const value = (pokemon[key] as number) ?? 0

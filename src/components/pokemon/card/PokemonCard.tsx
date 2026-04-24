@@ -4,7 +4,7 @@ import { LayoutGroup } from 'motion/react'
 import { memo, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'

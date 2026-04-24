@@ -1,4 +1,4 @@
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 export type PokemonResponse = {
   data: PokemonEntry[]

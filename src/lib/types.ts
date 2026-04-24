@@ -1,6 +1,7 @@
 export type Ability = {
   description: string
   isHidden: boolean
+  longEffect: string
   name: string
 }
 
@@ -34,9 +35,11 @@ export type LevelUpMove = Move & { level: number }
 export type Move = {
   accuracy: null | number
   category: string
+  effect: string
   name: string
   power: null | number
   pp: null | number
+  shortEffect: string
   type: string
 }
 
@@ -70,24 +73,44 @@ export type TypeMatchups = {
 
 export type VariantType =
   | 'alolan'
+  | 'ash'
+  | 'complete'
+  | 'cornerstone-mask'
+  | 'crowned'
+  | 'eternamax'
+  | 'form'
   | 'galarian'
+  | 'hearthflame-mask'
   | 'hisuian'
+  | 'ice-rider'
   | 'mega'
   | 'mega-x'
   | 'mega-y'
+  | 'origin'
   | 'paldean'
+  | 'pirouette'
+  | 'rapid-strike'
+  | 'resolute'
+  | 'school'
+  | 'shadow-rider'
+  | 'stellar'
+  | 'therian'
+  | 'ultra'
+  | 'wellspring-mask'
 
 type PokemonBase = {
   abilities: Ability[]
   attack: number
   baseExperience?: number
   baseFriendship?: number
+  blurDataURL?: string
   catchRate: number
   color?: string
   defense: number
   description: string
   eggCycles?: number
   eggGroups?: string[]
+  encounterLocations: { location: string; versions: string[] }[]
   evolutionChain: EvolutionStep[]
   evYield: { stat: string; value: number }[]
   flavorTexts: { game: string; text: string }[]
@@ -96,21 +119,25 @@ type PokemonBase = {
   genus?: string
   growthRate?: string
   habitat: null | string
-  height: number
+  heightFt: string
+  heightM: number
   heldItems: { name: string; rarity: number }[]
   hp: number
   id: number
   imageUrl: string
+  isBaby: boolean
   isLegendary: boolean
   isMythical: boolean
   learnset: Learnset
   name: string
   officialUrl: null | string
+  shape: null | string
   shiny: SpriteSet
   specialAttack: number
   specialDefense: number
   speed: number
   typeMatchups: TypeMatchups
   types: string[]
-  weight: number
+  weightKg: number
+  weightLbs: number
 }

@@ -1,4 +1,4 @@
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { InfoStat, PANEL_BODY_TEXT, TabPanelContent } from './shared'
 import { StatBar } from './StatBar'
@@ -18,7 +18,7 @@ export function StatsPanel({
   pokemon
 }: {
   bst: number
-  pokemon: Pokemon
+  pokemon: PokemonEntry
 }) {
   return (
     <TabPanelContent>
@@ -45,8 +45,22 @@ export function StatsPanel({
         </div>
 
         <div className={`grid grid-cols-3 gap-2 sm:gap-2.5 ${PANEL_BODY_TEXT}`}>
-          <InfoStat label="Height" value={`${pokemon.height.toFixed(1)}m`} />
-          <InfoStat label="Weight" value={`${pokemon.weight.toFixed(1)} lbs`} />
+          <InfoStat
+            label="Height"
+            value={
+              pokemon.heightM != null
+                ? `${pokemon.heightFt} / ${pokemon.heightM.toFixed(1)}m`
+                : '—'
+            }
+          />
+          <InfoStat
+            label="Weight"
+            value={
+              pokemon.weightKg != null
+                ? `${pokemon.weightLbs.toFixed(1)} lbs / ${pokemon.weightKg.toFixed(1)} kg`
+                : '—'
+            }
+          />
           <InfoStat label="Gen" value={pokemon.generation} />
           {pokemon.growthRate && (
             <InfoStat

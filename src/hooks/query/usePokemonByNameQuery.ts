@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 export const pokemonByNameQueryKey = (name: string) => ['pokemon-by-name', name]
 

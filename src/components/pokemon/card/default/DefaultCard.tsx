@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { PokemonEntry, PokemonVariant } from '@/types/pokemon'
+import type { PokemonEntry, PokemonVariant } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
@@ -80,7 +80,7 @@ export function DefaultCard({
           }}
           priority={priority}
           sizes="112px"
-          src={pokemon.officialUrl}
+          src={pokemon.officialUrl ?? pokemon.imageUrl}
           unoptimized
           width={128}
         />

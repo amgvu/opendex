@@ -1,4 +1,4 @@
-import type { Pokemon } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 import { EV_STAT_LABELS, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
 
@@ -11,7 +11,7 @@ import {
   TabPanelContent
 } from './shared'
 
-export function BattlePanel({ pokemon }: { pokemon: Pokemon }) {
+export function BattlePanel({ pokemon }: { pokemon: PokemonEntry }) {
   const { immunities, resistances, weaknesses } =
     pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)
 

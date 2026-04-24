@@ -1,7 +1,7 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual'
 import { useCallback, useEffect, useState } from 'react'
 
-import type { PokemonEntry } from '@/types/pokemon'
+import type { PokemonEntry } from '@/lib/types'
 
 const CARD_HEIGHT = 80
 const GAP = 16
