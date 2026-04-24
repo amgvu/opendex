@@ -3,30 +3,6 @@ import { TbSparkles } from 'react-icons/tb'
 
 import type { Pokemon } from '@/types/pokemon'
 
-function ToggleChip({
-  active,
-  children,
-  onClick
-}: {
-  active: boolean
-  children: ReactNode
-  onClick: () => void
-}) {
-  return (
-    <button
-      className={`flex cursor-pointer select-none items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium transition-colors ${
-        active
-          ? 'bg-white/20 text-white/80'
-          : 'bg-white/10 text-white/35 hover:bg-white/15 hover:text-white/55'
-      }`}
-      onClick={onClick}
-      type="button"
-    >
-      {children}
-    </button>
-  )
-}
-
 export function ArtworkSwitches({
   gifEnabled,
   gifError,
@@ -62,5 +38,29 @@ export function ArtworkSwitches({
         </ToggleChip>
       )}
     </>
+  )
+}
+
+function ToggleChip({
+  active,
+  children,
+  onClick
+}: {
+  active: boolean
+  children: ReactNode
+  onClick: () => void
+}) {
+  return (
+    <button
+      className={`flex cursor-pointer select-none items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium transition-colors ${
+        active
+          ? 'bg-white/20 text-white/80'
+          : 'bg-white/10 text-white/35 hover:bg-white/15 hover:text-white/55'
+      }`}
+      onClick={onClick}
+      type="button"
+    >
+      {children}
+    </button>
   )
 }

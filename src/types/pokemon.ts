@@ -11,9 +11,11 @@ export type LearnsetMove = MoveDetail & { level: number }
 export type MoveDetail = {
   accuracy: null | number
   category: string
+  effect: string
   name: string
   power: null | number
   pp: number
+  shortEffect: string
   type: string
 }
 
@@ -37,23 +39,27 @@ export type Pokemon = {
   genus?: string
   growthRate?: string
   habitat?: null | string
-  height: number
+  heightFt: string
+  heightM: number
   heldItems?: { name: string; rarity: number }[]
   hp: number
   id: number
   imageUrl: string
+  isBaby?: boolean
   isLegendary?: boolean
   isMythical?: boolean
   learnset?: { egg: MoveDetail[]; levelUp: LearnsetMove[]; machine: MoveDetail[] }
   name: string
   officialUrl: string
+  shape?: null | string
   shiny?: { imageUrl: string; officialUrl: null | string }
   specialAttack: number
   specialDefense: number
   speed: number
   typeMatchups?: TypeMatchups
   types: string[]
-  weight: number
+  weightKg: number
+  weightLbs: number
 }
 
 export type PokemonEntry = Pokemon | PokemonVariant
@@ -73,6 +79,7 @@ export type TypeMatchups = {
 
 export type VariantType =
   | 'alolan'
+  | 'form'
   | 'galarian'
   | 'hisuian'
   | 'mega'

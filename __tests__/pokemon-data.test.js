@@ -4,17 +4,9 @@ const data = require('../src/data/pokemon.json')
 
 const base = data.filter(p => !p.variantType)
 const variants = data.filter(p => p.variantType)
-const megas = variants.filter(p => ['mega', 'mega-x', 'mega-y'].includes(p.variantType))
-const regionals = variants.filter(p =>
-  ['alolan', 'galarian', 'hisuian', 'paldean'].includes(p.variantType)
-)
 
 function getBase(id) {
   return data.find(p => p.id === id && !p.variantType)
-}
-
-function getVariant(id, variantType) {
-  return data.find(p => p.id === id && p.variantType === variantType)
 }
 
 function getVariantBySlug(slug) {
@@ -52,12 +44,21 @@ describe('required fields — all entries', () => {
   const REQUIRED = [
     'id', 'name', 'types', 'abilities', 'typeMatchups',
     'imageUrl', 'officialUrl', 'shiny', 'learnset', 'evolutionChain',
+    'heightM', 'heightFt', 'weightKg', 'weightLbs',
+    'isBaby', 'shape', 'encounterLocations',
     ...STAT_FIELDS
   ]
 
   test.each(REQUIRED)('every entry has field: %s', field => {
     const missing = data.filter(p => p[field] === undefined)
     expect(missing.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('no entry has legacy height or weight fields', () => {
+    const badHeight = data.filter(p => 'height' in p)
+    const badWeight = data.filter(p => 'weight' in p)
+    expect(badHeight.map(p => p.variantSlug ?? p.name)).toEqual([])
+    expect(badWeight.map(p => p.variantSlug ?? p.name)).toEqual([])
   })
 
   test('every entry has at least one type', () => {
@@ -110,10 +111,7 @@ describe('required fields — base entries only', () => {
     const BIO_FIELDS = ['generation', 'genus', 'description', 'flavorTexts', 'genderRate']
     for (const field of BIO_FIELDS) {
       const bad = base.filter(p => p[field] === undefined)
-      expect({ field, missing: bad.map(p => p.name) }).toEqual({
-        field,
-        missing: []
-      })
+      expect({ field, missing: bad.map(p => p.name) }).toEqual({ field, missing: [] })
     }
   })
 })
@@ -125,10 +123,7 @@ describe('variant identification fields', () => {
     const FIELDS = ['variantIndex', 'variantOf', 'variantSlug', 'variantType']
     for (const field of FIELDS) {
       const bad = variants.filter(p => p[field] === undefined || p[field] === null)
-      expect({ field, missing: bad.map(p => p.variantSlug) }).toEqual({
-        field,
-        missing: []
-      })
+      expect({ field, missing: bad.map(p => p.variantSlug) }).toEqual({ field, missing: [] })
     }
   })
 
@@ -141,9 +136,8 @@ describe('variant identification fields', () => {
   test('variantIndex is unique per base pokemon', () => {
     const grouped = {}
     for (const v of variants) {
-      const key = v.variantOf
-      grouped[key] = grouped[key] ?? []
-      grouped[key].push(v.variantIndex)
+      grouped[v.variantOf] = grouped[v.variantOf] ?? []
+      grouped[v.variantOf].push(v.variantIndex)
     }
     for (const [id, indices] of Object.entries(grouped)) {
       expect({ duplicates: indices.length !== new Set(indices).size, id: Number(id) }).toEqual({
@@ -154,21 +148,233 @@ describe('variant identification fields', () => {
   })
 })
 
+// ─── Height & weight ──────────────────────────────────────────────────────────
+
+describe('height and weight', () => {
+  test('heightM is a positive number', () => {
+    const bad = data.filter(p => typeof p.heightM !== 'number' || p.heightM <= 0)
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('heightFt matches feet\'inches format', () => {
+    const bad = data.filter(p => !/^\d+'\d{2}"$/.test(p.heightFt))
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('weightKg is a non-negative number', () => {
+    const bad = data.filter(p => typeof p.weightKg !== 'number' || p.weightKg < 0)
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('weightLbs is a non-negative number', () => {
+    const bad = data.filter(p => typeof p.weightLbs !== 'number' || p.weightLbs < 0)
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('Bulbasaur has correct metric values', () => {
+    const bulbasaur = getBase(1)
+    expect(bulbasaur.heightM).toBe(0.7)
+    expect(bulbasaur.weightKg).toBe(6.9)
+  })
+
+  test('Bulbasaur imperial values are in the right ballpark', () => {
+    const bulbasaur = getBase(1)
+    expect(bulbasaur.heightFt).toBe("2'04\"")
+    expect(bulbasaur.weightLbs).toBeCloseTo(15.2, 1)
+  })
+
+  test('weightKg and weightLbs are consistent (lbs ≈ kg × 2.205)', () => {
+    const bad = data.filter(p => {
+      const expected = parseFloat((p.weightKg * 2.20462).toFixed(1))
+      return Math.abs(p.weightLbs - expected) > 0.2
+    })
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+})
+
+// ─── isBaby ───────────────────────────────────────────────────────────────────
+
+describe('isBaby', () => {
+  test('isBaby is a boolean on every entry', () => {
+    const bad = data.filter(p => typeof p.isBaby !== 'boolean')
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('known baby Pokemon are flagged', () => {
+    expect(getBase(172).isBaby).toBe(true)  // Pichu
+    expect(getBase(173).isBaby).toBe(true)  // Cleffa
+    expect(getBase(174).isBaby).toBe(true)  // Igglybuff
+    expect(getBase(175).isBaby).toBe(true)  // Togepi
+    expect(getBase(236).isBaby).toBe(true)  // Tyrogue
+  })
+
+  test('non-baby Pokemon are not flagged', () => {
+    expect(getBase(1).isBaby).toBe(false)   // Bulbasaur
+    expect(getBase(25).isBaby).toBe(false)  // Pikachu
+    expect(getBase(150).isBaby).toBe(false) // Mewtwo
+  })
+})
+
+// ─── Shape ────────────────────────────────────────────────────────────────────
+
+describe('shape', () => {
+  test('shape is a string or null on every entry', () => {
+    const bad = data.filter(p => p.shape !== null && typeof p.shape !== 'string')
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('most entries have a non-null shape', () => {
+    const withShape = data.filter(p => p.shape !== null)
+    expect(withShape.length).toBeGreaterThan(data.length * 0.95)
+  })
+
+  test('Bulbasaur has a quadruped shape', () => {
+    expect(getBase(1).shape).toBe('quadruped')
+  })
+})
+
+// ─── Encounter locations ──────────────────────────────────────────────────────
+
+describe('encounterLocations', () => {
+  test('encounterLocations is an array on every entry', () => {
+    const bad = data.filter(p => !Array.isArray(p.encounterLocations))
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('starter-only Pokemon have no wild encounter locations', () => {
+    expect(getBase(810).encounterLocations).toEqual([])  // Grookey
+    expect(getBase(813).encounterLocations).toEqual([])  // Scorbunny
+    expect(getBase(816).encounterLocations).toEqual([])  // Sobble
+  })
+
+  test('common wild Pokemon have encounter locations', () => {
+    const rattata = getBase(19) // found in many routes
+    expect(rattata.encounterLocations.length).toBeGreaterThan(0)
+  })
+
+  test('each encounter location has location string and versions array', () => {
+    const withEncounters = data.filter(p => p.encounterLocations.length > 0)
+    expect(withEncounters.length).toBeGreaterThan(0)
+    for (const p of withEncounters.slice(0, 20)) {
+      for (const enc of p.encounterLocations) {
+        expect(typeof enc.location).toBe('string')
+        expect(Array.isArray(enc.versions)).toBe(true)
+        expect(enc.versions.length).toBeGreaterThan(0)
+      }
+    }
+  })
+
+  test('no temp _encounterUrl fields left in data', () => {
+    const bad = data.filter(p => '_encounterUrl' in p)
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+})
+
+// ─── Ability descriptions ─────────────────────────────────────────────────────
+
+describe('ability descriptions', () => {
+  test('every ability has description (short) string', () => {
+    const bad = data.filter(p =>
+      p.abilities.some(a => typeof a.description !== 'string')
+    )
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('every ability has longEffect string', () => {
+    const bad = data.filter(p =>
+      p.abilities.some(a => typeof a.longEffect !== 'string')
+    )
+    expect(bad.map(p => p.variantSlug ?? p.name)).toEqual([])
+  })
+
+  test('most abilities have non-empty descriptions', () => {
+    const allAbilities = data.flatMap(p => p.abilities)
+    const withDesc = allAbilities.filter(a => a.description.length > 0)
+    expect(withDesc.length).toBeGreaterThan(allAbilities.length * 0.9)
+  })
+
+  test('Bulbasaur Overgrow has short and long descriptions', () => {
+    const overgrow = getBase(1).abilities.find(a => a.name === 'overgrow')
+    expect(overgrow.description.length).toBeGreaterThan(0)
+    expect(overgrow.longEffect.length).toBeGreaterThan(overgrow.description.length)
+  })
+})
+
+// ─── Move details ─────────────────────────────────────────────────────────────
+
+describe('move details', () => {
+  test('every learnset move has effect and shortEffect strings', () => {
+    const categories = ['levelUp', 'egg', 'machine']
+    const bad = []
+    for (const p of data) {
+      for (const cat of categories) {
+        for (const move of p.learnset[cat]) {
+          if (typeof move.effect !== 'string' || typeof move.shortEffect !== 'string') {
+            bad.push(`${p.variantSlug ?? p.name}:${move.name}`)
+          }
+        }
+      }
+    }
+    expect(bad).toEqual([])
+  })
+
+  test('every learnset move has type, category, pp', () => {
+    const categories = ['levelUp', 'egg', 'machine']
+    const bad = []
+    for (const p of data) {
+      for (const cat of categories) {
+        for (const move of p.learnset[cat]) {
+          if (typeof move.type !== 'string' || typeof move.category !== 'string' || move.pp === undefined) {
+            bad.push(`${p.variantSlug ?? p.name}:${move.name}`)
+          }
+        }
+      }
+    }
+    expect(bad).toEqual([])
+  })
+
+  test('levelUp moves have a level field', () => {
+    const bad = []
+    for (const p of data) {
+      for (const move of p.learnset.levelUp) {
+        if (typeof move.level !== 'number') {
+          bad.push(`${p.variantSlug ?? p.name}:${move.name}`)
+        }
+      }
+    }
+    expect(bad).toEqual([])
+  })
+
+  test('most damaging moves have non-empty shortEffect', () => {
+    const damagingMoves = data
+      .flatMap(p => [...p.learnset.levelUp, ...p.learnset.machine])
+      .filter(m => m.power !== null)
+    const withEffect = damagingMoves.filter(m => m.shortEffect.length > 0)
+    expect(withEffect.length).toBeGreaterThan(damagingMoves.length * 0.8)
+  })
+
+  test('Gigantamax moves have effect and shortEffect fields when present', () => {
+    const withGmaxMoves = base.filter(p => p.gigantamax?.gmaxMoves?.length > 0)
+    for (const p of withGmaxMoves) {
+      for (const move of p.gigantamax.gmaxMoves) {
+        expect(typeof move.effect).toBe('string')
+        expect(typeof move.shortEffect).toBe('string')
+      }
+    }
+  })
+})
+
 // ─── Shiny data ───────────────────────────────────────────────────────────────
 
 describe('shiny data', () => {
   test('Bulbasaur shiny imageUrl uses Showdown shiny sprite pattern', () => {
     const bulbasaur = getBase(1)
-    expect(bulbasaur.shiny.imageUrl).toMatch(
-      /play\.pokemonshowdown\.com\/sprites\/ani-shiny\//
-    )
+    expect(bulbasaur.shiny.imageUrl).toMatch(/play\.pokemonshowdown\.com\/sprites\/ani-shiny\//)
   })
 
   test('Bulbasaur shiny officialUrl points to GitHub artwork shiny path', () => {
     const bulbasaur = getBase(1)
-    expect(bulbasaur.shiny.officialUrl).toMatch(
-      /sprites\/pokemon\/other\/official-artwork\/shiny\/1\.png/
-    )
+    expect(bulbasaur.shiny.officialUrl).toMatch(/sprites\/pokemon\/other\/official-artwork\/shiny\/1\.png/)
   })
 
   test('variant entries have their own shiny URLs (not base)', () => {
@@ -181,13 +387,12 @@ describe('shiny data', () => {
 
 describe('female data', () => {
   test('Pokémon without visual gender differences have female: null', () => {
-    expect(getBase(1).female).toBeNull()   // Bulbasaur
-    expect(getBase(81).female).toBeNull()  // Magnemite (genderless)
-    expect(getBase(150).female).toBeNull() // Mewtwo (genderless)
+    expect(getBase(1).female).toBeNull()    // Bulbasaur
+    expect(getBase(81).female).toBeNull()   // Magnemite (genderless)
+    expect(getBase(150).female).toBeNull()  // Mewtwo (genderless)
   })
 
   test('Pokémon with visual differences have female object', () => {
-    // Unfezant (#521) has a distinct female sprite
     const unfezant = getBase(521)
     expect(unfezant.female).not.toBeNull()
     expect(unfezant.female.imageUrl).toBeTruthy()
@@ -233,63 +438,48 @@ describe('gigantamax data', () => {
 describe('mega evolutions', () => {
   test('Venusaur Mega has correct signature ability (Thick Fat)', () => {
     const mega = getVariantBySlug('venusaur-mega')
-    const abilityNames = mega.abilities.map(a => a.name)
-    expect(abilityNames).toContain('thick fat')
+    expect(mega.abilities.map(a => a.name)).toContain('thick fat')
   })
 
   test('Mega Charizard X types are Fire/Dragon, not Fire/Flying', () => {
-    const megaX = getVariantBySlug('charizard-mega-x')
-    expect(megaX.types).toEqual(['Fire', 'Dragon'])
+    expect(getVariantBySlug('charizard-mega-x').types).toEqual(['Fire', 'Dragon'])
   })
 
   test('Mega Charizard Y types remain Fire/Flying', () => {
-    const megaY = getVariantBySlug('charizard-mega-y')
-    expect(megaY.types).toEqual(['Fire', 'Flying'])
+    expect(getVariantBySlug('charizard-mega-y').types).toEqual(['Fire', 'Flying'])
   })
 
-  test('Mega Charizard X has Ground immunity (Dragon type removes it)', () => {
+  test('Mega Charizard X has no Ground immunity (Dragon type removes it)', () => {
     const megaX = getVariantBySlug('charizard-mega-x')
-    // Fire/Dragon loses the Flying-type Ground immunity — Ground should now hit normally
-    const groundImmunity = megaX.typeMatchups.immunities.includes('Ground')
-    expect(groundImmunity).toBe(false)
+    expect(megaX.typeMatchups.immunities.includes('Ground')).toBe(false)
   })
 
   test('Mega Gyarados types are Water/Dark (not Water/Flying)', () => {
-    const mega = getVariantBySlug('gyarados-mega')
-    expect(mega.types).toEqual(['Water', 'Dark'])
+    expect(getVariantBySlug('gyarados-mega').types).toEqual(['Water', 'Dark'])
   })
 
   test('Mewtwo has both Mega-X and Mega-Y entries', () => {
     const megaX = getVariantBySlug('mewtwo-mega-x')
     const megaY = getVariantBySlug('mewtwo-mega-y')
-    expect(megaX).toBeDefined()
-    expect(megaY).toBeDefined()
-    expect(megaX.variantType).toBe('mega-x')
-    expect(megaY.variantType).toBe('mega-y')
+    expect(megaX?.variantType).toBe('mega-x')
+    expect(megaY?.variantType).toBe('mega-y')
   })
 
   test('Mega entries have higher BST than base', () => {
-    const bst = p =>
-      p.hp + p.attack + p.defense + p.specialAttack + p.specialDefense + p.speed
-
-    const venusaur = getBase(3)
-    const megaVenusaur = getVariantBySlug('venusaur-mega')
-    expect(bst(megaVenusaur)).toBeGreaterThan(bst(venusaur))
-
-    const charizard = getBase(6)
-    const megaCharizardX = getVariantBySlug('charizard-mega-x')
-    expect(bst(megaCharizardX)).toBeGreaterThan(bst(charizard))
+    const bst = p => p.hp + p.attack + p.defense + p.specialAttack + p.specialDefense + p.speed
+    expect(bst(getVariantBySlug('venusaur-mega'))).toBeGreaterThan(bst(getBase(3)))
+    expect(bst(getVariantBySlug('charizard-mega-x'))).toBeGreaterThan(bst(getBase(6)))
   })
 
   test('Mega entries inherit bio data from base', () => {
     const mega = getVariantBySlug('venusaur-mega')
-    const base = getBase(3)
-    expect(mega.description).toBe(base.description)
-    expect(mega.genderRate).toBe(base.genderRate)
-    expect(mega.catchRate).toBe(base.catchRate)
+    const venusaur = getBase(3)
+    expect(mega.description).toBe(venusaur.description)
+    expect(mega.genderRate).toBe(venusaur.genderRate)
+    expect(mega.catchRate).toBe(venusaur.catchRate)
   })
 
-  test('Mega entry variantOf matches base id', () => {
+  test('Mega entry variantOf and id match base', () => {
     const mega = getVariantBySlug('venusaur-mega')
     expect(mega.variantOf).toBe(3)
     expect(mega.id).toBe(3)
@@ -300,47 +490,39 @@ describe('mega evolutions', () => {
 
 describe('regional forms', () => {
   test('Alolan Ninetales types are Ice/Fairy (not Fire)', () => {
-    const alolan = getVariantBySlug('ninetales-alola')
-    expect(alolan.types).toEqual(['Ice', 'Fairy'])
+    expect(getVariantBySlug('ninetales-alola').types).toEqual(['Ice', 'Fairy'])
   })
 
   test('Alolan Exeggutor type is Grass/Dragon (not Grass/Psychic)', () => {
-    const alolan = getVariantBySlug('exeggutor-alola')
-    expect(alolan.types).toEqual(['Grass', 'Dragon'])
+    expect(getVariantBySlug('exeggutor-alola').types).toEqual(['Grass', 'Dragon'])
   })
 
   test('Galarian Weezing types are Poison/Fairy', () => {
-    const galarian = getVariantBySlug('weezing-galar')
-    expect(galarian.types).toEqual(['Poison', 'Fairy'])
+    expect(getVariantBySlug('weezing-galar').types).toEqual(['Poison', 'Fairy'])
   })
 
   test('Hisuian Zorua types are Normal/Ghost', () => {
-    const hisuian = getVariantBySlug('zorua-hisui')
-    expect(hisuian.types).toEqual(['Normal', 'Ghost'])
+    expect(getVariantBySlug('zorua-hisui').types).toEqual(['Normal', 'Ghost'])
   })
 
   test('regional forms have their own learnset (not empty)', () => {
     const alolan = getVariantBySlug('ninetales-alola')
     const totalMoves =
-      alolan.learnset.levelUp.length +
-      alolan.learnset.egg.length +
-      alolan.learnset.machine.length
+      alolan.learnset.levelUp.length + alolan.learnset.egg.length + alolan.learnset.machine.length
     expect(totalMoves).toBeGreaterThan(0)
   })
 
   test('regional type matchups reflect new typing', () => {
-    // Alolan Ninetales (Ice/Fairy) should be weak to Steel and Fire
-    const alolan = getVariantBySlug('ninetales-alola')
-    const weakTypes = alolan.typeMatchups.weaknesses.map(w => w.type)
+    const weakTypes = getVariantBySlug('ninetales-alola').typeMatchups.weaknesses.map(w => w.type)
     expect(weakTypes).toContain('Steel')
     expect(weakTypes).toContain('Fire')
   })
 
   test('regional forms inherit bio data from base', () => {
     const alolan = getVariantBySlug('ninetales-alola')
-    const baseNinetales = getBase(38)
-    expect(alolan.catchRate).toBe(baseNinetales.catchRate)
-    expect(alolan.generation).toBe(baseNinetales.generation)
+    const ninetales = getBase(38)
+    expect(alolan.catchRate).toBe(ninetales.catchRate)
+    expect(alolan.generation).toBe(ninetales.generation)
   })
 
   test('regional form variantOf matches base id', () => {
@@ -365,10 +547,9 @@ describe('regional forms', () => {
 // ─── Extended Forms & Deduplication ───────────────────────────────────────────
 
 describe('extended forms & deduplication', () => {
-  test('Magearna-Original-Mega is deduplicated (only one Mega entry exists)', () => {
-    const magearnaVariants = variants.filter(v => v.variantOf === 801 && v.variantType === 'mega')
-    // Should only have 1 entry (magearna-mega), magearna-original-mega is a duplicate stats-wise
-    expect(magearnaVariants.length).toBe(1)
+  test('Magearna-Original appears exactly once (not duplicated)', () => {
+    const entries = data.filter(p => p.variantSlug === 'magearna-original')
+    expect(entries.length).toBe(1)
   })
 
   test('Ogerpon mask forms are present', () => {
@@ -386,8 +567,6 @@ describe('extended forms & deduplication', () => {
   })
 
   test('variants without specific PokeAPI artwork fall back to base artwork', () => {
-    // Some forms don't have unique official artwork in PokeAPI
-    // They should have inherited the base officialUrl instead of being null
     const variantsWithoutArtwork = variants.filter(v => !v.officialUrl)
     expect(variantsWithoutArtwork.length).toBe(0)
   })
@@ -397,8 +576,7 @@ describe('extended forms & deduplication', () => {
 
 describe('type matchup integrity', () => {
   test('Normal type has Ghost immunity', () => {
-    const rattata = getBase(19)
-    expect(rattata.typeMatchups.immunities).toContain('Ghost')
+    expect(getBase(19).typeMatchups.immunities).toContain('Ghost')
   })
 
   test('Ghost type has Normal and Fighting immunities', () => {
@@ -408,7 +586,6 @@ describe('type matchup integrity', () => {
   })
 
   test('Steel type has many resistances', () => {
-    const magnemite = getBase(81)
-    expect(magnemite.typeMatchups.resistances.length).toBeGreaterThanOrEqual(6)
+    expect(getBase(81).typeMatchups.resistances.length).toBeGreaterThanOrEqual(6)
   })
 })

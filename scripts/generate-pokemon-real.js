@@ -74,16 +74,22 @@ const HYPHENATED_SHOWDOWN_FORMS = [
   '-bloodmoon'
 ]
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+function buildMoveDetails(data) {
+  const enEntry = data.effect_entries?.find(e => e.language.name === 'en')
+  const effectChance = data.effect_chance != null ? String(data.effect_chance) : ''
+  return {
+    accuracy: data.accuracy,
+    category: data.damage_class?.name ?? 'status',
+    effect: enEntry?.effect?.replace(/\$effect_chance/g, effectChance).replace(/\s+/g, ' ').trim() ?? '',
+    power: data.power,
+    pp: data.pp,
+    shortEffect: enEntry?.short_effect?.replace(/\$effect_chance/g, effectChance).trim() ?? '',
+    type: capitalize(data.type?.name ?? 'normal')
+  }
 }
 
-// PokeAPI height is decimeters → meters; imperial as "5'11""
-function toImperialHeight(meters) {
-  const totalInches = meters / 0.0254
-  const feet = Math.floor(totalInches / 12)
-  const inches = Math.round(totalInches % 12)
-  return `${feet}'${String(inches).padStart(2, '0')}"`
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 function classifyVariant(slug) {
@@ -215,20 +221,6 @@ function extractLearnset(moves) {
     egg: [...egg].sort(),
     levelUp,
     machine: [...machine].sort()
-  }
-}
-
-function buildMoveDetails(data) {
-  const enEntry = data.effect_entries?.find(e => e.language.name === 'en')
-  const effectChance = data.effect_chance != null ? String(data.effect_chance) : ''
-  return {
-    accuracy: data.accuracy,
-    category: data.damage_class?.name ?? 'status',
-    effect: enEntry?.effect?.replace(/\$effect_chance/g, effectChance).replace(/\s+/g, ' ').trim() ?? '',
-    power: data.power,
-    pp: data.pp,
-    shortEffect: enEntry?.short_effect?.replace(/\$effect_chance/g, effectChance).trim() ?? '',
-    type: capitalize(data.type?.name ?? 'normal')
   }
 }
 
@@ -391,60 +383,6 @@ function getEnglishFlavorTexts(entries) {
 
 function idFromUrl(url) {
   return parseInt(url.split('/').filter(Boolean).pop(), 10)
-}
-
-function parseChain(node, steps = []) {
-  for (const next of node.evolves_to) {
-    const details = next.evolution_details[0] ?? {}
-    steps.push({
-      fromId: idFromUrl(node.species.url),
-      fromName: node.species.name,
-      toId: idFromUrl(next.species.url),
-      toName: next.species.name,
-      trigger: formatTrigger(details)
-    })
-    parseChain(next, steps)
-  }
-  return steps
-}
-
-function resolveLearnset(rawLearnset, moveDetails) {
-  const fallback = {
-    accuracy: null,
-    category: 'status',
-    effect: '',
-    power: null,
-    pp: 0,
-    shortEffect: '',
-    type: 'Normal'
-  }
-  return {
-    egg: rawLearnset.egg.map(name => ({ name, ...(moveDetails[name] ?? fallback) })),
-    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
-      ...rest,
-      ...(moveDetails[rest.name] ?? fallback)
-    })),
-    machine: rawLearnset.machine.map(name => ({ name, ...(moveDetails[name] ?? fallback) }))
-  }
-}
-
-// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
-function toShowdownSlug(slug) {
-  const s = slug.toLowerCase()
-
-  // Regionals: Showdown keeps the suffix hyphen as-is
-  if (s.endsWith('-alola') || s.endsWith('-galar') || s.endsWith('-hisui') || s.endsWith('-paldea'))
-    return s
-
-  // Megas: remove internal hyphens, use megax/megay
-  if (s.endsWith('-mega-x')) return s.replace(/-/g, '').replace('megax', '-megax')
-  if (s.endsWith('-mega-y')) return s.replace(/-/g, '').replace('megay', '-megay')
-  if (s.endsWith('-mega')) return s.replace(/-/g, '').replace('mega', '-mega')
-
-  if (HYPHENATED_SHOWDOWN_FORMS.some(f => s.endsWith(f))) return s
-
-  // Fallback: remove all hyphens
-  return s.replace(/-/g, '')
 }
 
 async function main() {
@@ -939,9 +877,9 @@ async function main() {
         heightM: parseFloat((pkmnData.height / 10).toFixed(1)),
         heldItems: baseEntry.heldItems,
         hp: variantStats['hp'],
-        isBaby: baseEntry.isBaby,
         id: baseEntry.id,
         imageUrl: variantImageUrl,
+        isBaby: baseEntry.isBaby,
         isLegendary: baseEntry.isLegendary,
         isMythical: baseEntry.isMythical,
         learnset,
@@ -1020,6 +958,68 @@ async function main() {
   console.log('  learnset egg count:', results[0].learnset.egg.length)
   console.log('  learnset machine count:', results[0].learnset.machine.length)
   console.log('  flavorTexts count:', results[0].flavorTexts.length)
+}
+
+function parseChain(node, steps = []) {
+  for (const next of node.evolves_to) {
+    const details = next.evolution_details[0] ?? {}
+    steps.push({
+      fromId: idFromUrl(node.species.url),
+      fromName: node.species.name,
+      toId: idFromUrl(next.species.url),
+      toName: next.species.name,
+      trigger: formatTrigger(details)
+    })
+    parseChain(next, steps)
+  }
+  return steps
+}
+
+function resolveLearnset(rawLearnset, moveDetails) {
+  const fallback = {
+    accuracy: null,
+    category: 'status',
+    effect: '',
+    power: null,
+    pp: 0,
+    shortEffect: '',
+    type: 'Normal'
+  }
+  return {
+    egg: rawLearnset.egg.map(name => ({ name, ...(moveDetails[name] ?? fallback) })),
+    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
+      ...rest,
+      ...(moveDetails[rest.name] ?? fallback)
+    })),
+    machine: rawLearnset.machine.map(name => ({ name, ...(moveDetails[name] ?? fallback) }))
+  }
+}
+
+// PokeAPI height is decimeters → meters; imperial as "5'11""
+function toImperialHeight(meters) {
+  const totalInches = meters / 0.0254
+  const feet = Math.floor(totalInches / 12)
+  const inches = Math.round(totalInches % 12)
+  return `${feet}'${String(inches).padStart(2, '0')}"`
+}
+
+// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
+function toShowdownSlug(slug) {
+  const s = slug.toLowerCase()
+
+  // Regionals: Showdown keeps the suffix hyphen as-is
+  if (s.endsWith('-alola') || s.endsWith('-galar') || s.endsWith('-hisui') || s.endsWith('-paldea'))
+    return s
+
+  // Megas: remove internal hyphens, use megax/megay
+  if (s.endsWith('-mega-x')) return s.replace(/-/g, '').replace('megax', '-megax')
+  if (s.endsWith('-mega-y')) return s.replace(/-/g, '').replace('megay', '-megay')
+  if (s.endsWith('-mega')) return s.replace(/-/g, '').replace('mega', '-mega')
+
+  if (HYPHENATED_SHOWDOWN_FORMS.some(f => s.endsWith(f))) return s
+
+  // Fallback: remove all hyphens
+  return s.replace(/-/g, '')
 }
 
 main().catch(err => {
