@@ -98,6 +98,32 @@ export function BioPanel({ pokemon }: { pokemon: PokemonEntry }) {
           </div>
         </div>
       )}
+      {pokemon.encounterLocations && pokemon.encounterLocations.length > 0 && (
+        <div>
+          <div className="mb-1">
+            <MetaLabel>Where to Find</MetaLabel>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            {pokemon.encounterLocations.map(({ location, versions }) => (
+              <div className="flex items-start gap-2" key={location}>
+                <span className={`${PANEL_BODY_TEXT} text-white/70 capitalize flex-1`}>
+                  {location.replace(/-/g, ' ')}
+                </span>
+                <div className="flex flex-wrap justify-end gap-1">
+                  {versions.map(v => (
+                    <span
+                      className={`rounded-full bg-white/10 px-2 py-px text-white/40 capitalize ${PANEL_CHIP_TEXT}`}
+                      key={v}
+                    >
+                      {v.replace(/-/g, ' ')}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </TabPanelContent>
   )
 }
