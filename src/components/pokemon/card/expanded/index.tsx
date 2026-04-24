@@ -169,8 +169,6 @@ export function ExpandedCard({
                           gifEnabled={gifEnabled}
                           gifError={gifError}
                           gmaxEnabled={gmaxEnabled}
-                          hasFemale={!!pokemon.female}
-                          hasGigantamax={!!pokemon.gigantamax}
                           pokemon={pokemon}
                           setFemaleEnabled={setFemaleEnabled}
                           setGifEnabled={setGifEnabled}

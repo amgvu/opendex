@@ -1,15 +1,32 @@
 import { type ReactNode } from 'react'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { Pokemon } from '@/lib/types'
+import type { PokemonEntry } from '@/lib/types'
+
+type ToggleState = {
+  femaleEnabled: boolean
+  gmaxEnabled: boolean
+  shinyEnabled: boolean
+}
+
+function getAvailableToggles(
+  pokemon: PokemonEntry,
+  gifError: boolean,
+  { femaleEnabled, gmaxEnabled, shinyEnabled }: ToggleState
+) {
+  return {
+    show3D: !gifError && !gmaxEnabled && !femaleEnabled,
+    showFemale: !!pokemon.female && !gmaxEnabled && !shinyEnabled,
+    showGmax: !!pokemon.gigantamax,
+    showShiny: !gmaxEnabled && !femaleEnabled,
+  }
+}
 
 export function ArtworkSwitches({
   femaleEnabled,
   gifEnabled,
   gifError,
   gmaxEnabled,
-  hasGigantamax,
-  hasFemale,
   pokemon,
   setFemaleEnabled,
   setGifEnabled,
@@ -21,26 +38,36 @@ export function ArtworkSwitches({
   gifEnabled: boolean
   gifError: boolean
   gmaxEnabled: boolean
-  hasGigantamax: boolean
-  hasFemale: boolean
-  pokemon: Pick<Pokemon, 'shiny'>
+  pokemon: PokemonEntry
   setFemaleEnabled: (v: boolean) => void
   setGifEnabled: (v: boolean) => void
   setGmaxEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
   shinyEnabled: boolean
 }) {
+  const { show3D, showFemale, showGmax, showShiny } = getAvailableToggles(
+    pokemon,
+    gifError,
+    { femaleEnabled, gmaxEnabled, shinyEnabled }
+  )
+
   return (
     <>
-      {hasGigantamax && (
+      {showGmax && (
         <ToggleChip
           active={gmaxEnabled}
-          onClick={() => setGmaxEnabled(!gmaxEnabled)}
+          onClick={() => {
+            if (!gmaxEnabled) {
+              setShinyEnabled(false)
+              setFemaleEnabled(false)
+            }
+            setGmaxEnabled(!gmaxEnabled)
+          }}
         >
           G-Max
         </ToggleChip>
       )}
-      {hasFemale && (
+      {showFemale && (
         <ToggleChip
           active={femaleEnabled}
           onClick={() => setFemaleEnabled(!femaleEnabled)}
@@ -48,7 +75,7 @@ export function ArtworkSwitches({
           ♀
         </ToggleChip>
       )}
-      {pokemon.shiny && (
+      {showShiny && (
         <ToggleChip
           active={shinyEnabled}
           onClick={() => setShinyEnabled(!shinyEnabled)}
@@ -57,7 +84,7 @@ export function ArtworkSwitches({
           Shiny
         </ToggleChip>
       )}
-      {!gifError && !gmaxEnabled && (
+      {show3D && (
         <ToggleChip
           active={gifEnabled}
           onClick={() => setGifEnabled(!gifEnabled)}
