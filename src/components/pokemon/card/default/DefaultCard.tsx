@@ -80,7 +80,7 @@ export function DefaultCard({
           }}
           priority={priority}
           sizes="112px"
-          src={pokemon.officialUrl}
+          src={pokemon.officialUrl ?? pokemon.imageUrl}
           unoptimized
           width={128}
         />

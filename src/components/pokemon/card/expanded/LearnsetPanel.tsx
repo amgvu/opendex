@@ -1,4 +1,4 @@
-import type { LevelUpMove, Move, Pokemon } from '@/lib/types'
+import type { LevelUpMove, Move, PokemonEntry } from '@/lib/types'
 
 import { getTypeColor } from '@/lib/pokemon'
 
@@ -21,7 +21,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   status: 'Stat'
 }
 
-export function LearnsetPanel({ pokemon }: { pokemon: Pokemon }) {
+export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry }) {
   const { learnset } = pokemon
 
   if (!learnset) {

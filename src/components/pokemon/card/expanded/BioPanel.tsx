@@ -1,4 +1,4 @@
-import type { Pokemon } from '@/lib/types'
+import type { PokemonEntry } from '@/lib/types'
 
 import {
   InfoStat,
@@ -7,7 +7,7 @@ import {
   TabPanelContent
 } from './shared'
 
-export function BioPanel({ pokemon }: { pokemon: Pokemon }) {
+export function BioPanel({ pokemon }: { pokemon: PokemonEntry }) {
   return (
     <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
       {pokemon.genus && (

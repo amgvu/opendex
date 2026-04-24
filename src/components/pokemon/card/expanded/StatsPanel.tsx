@@ -1,4 +1,4 @@
-import type { Pokemon } from '@/lib/types'
+import type { PokemonEntry } from '@/lib/types'
 
 import { InfoStat, PANEL_BODY_TEXT, TabPanelContent } from './shared'
 import { StatBar } from './StatBar'
@@ -18,7 +18,7 @@ export function StatsPanel({
   pokemon
 }: {
   bst: number
-  pokemon: Pokemon
+  pokemon: PokemonEntry
 }) {
   return (
     <TabPanelContent>

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import type { EvolutionStep, Pokemon } from '@/lib/types'
+import type { EvolutionStep, PokemonEntry } from '@/lib/types'
 
 import { formatPokedexId } from '@/lib/pokemon'
 
@@ -17,7 +17,7 @@ export function EvolutionPanel({
   pokemon
 }: {
   large?: boolean
-  pokemon: Pokemon
+  pokemon: PokemonEntry
 }) {
   const chain = pokemon.evolutionChain
 

@@ -27,9 +27,9 @@ export function CardArtwork({
 
   const blurRef = useRef<HTMLDivElement>(null)
 
-  const artSrc = shinyEnabled
+  const artSrc = (shinyEnabled
     ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
-    : pokemon.officialUrl
+    : pokemon.officialUrl) ?? pokemon.imageUrl
   const gifSrc = shinyEnabled
     ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl)
     : pokemon.imageUrl
