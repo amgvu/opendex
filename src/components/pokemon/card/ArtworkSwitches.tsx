@@ -4,21 +4,27 @@ import { TbSparkles } from 'react-icons/tb'
 import type { Pokemon } from '@/lib/types'
 
 export function ArtworkSwitches({
+  femaleEnabled,
   gifEnabled,
   gifError,
   gmaxEnabled,
   hasGigantamax,
+  hasFemale,
   pokemon,
+  setFemaleEnabled,
   setGifEnabled,
   setGmaxEnabled,
   setShinyEnabled,
   shinyEnabled
 }: {
+  femaleEnabled: boolean
   gifEnabled: boolean
   gifError: boolean
   gmaxEnabled: boolean
   hasGigantamax: boolean
+  hasFemale: boolean
   pokemon: Pick<Pokemon, 'shiny'>
+  setFemaleEnabled: (v: boolean) => void
   setGifEnabled: (v: boolean) => void
   setGmaxEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
@@ -32,6 +38,14 @@ export function ArtworkSwitches({
           onClick={() => setGmaxEnabled(!gmaxEnabled)}
         >
           G-Max
+        </ToggleChip>
+      )}
+      {hasFemale && (
+        <ToggleChip
+          active={femaleEnabled}
+          onClick={() => setFemaleEnabled(!femaleEnabled)}
+        >
+          ♀
         </ToggleChip>
       )}
       {pokemon.shiny && (
