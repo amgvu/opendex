@@ -86,6 +86,11 @@ export function CardHeader({
             Legendary
           </span>
         )}
+        {pokemon.isBaby && (
+          <span className="rounded-full bg-blue-300/80 px-2 py-0.5 text-xs xl:text-sm 2xl:px-3 2xl:py-1 2xl:text-base font-medium text-black">
+            Baby
+          </span>
+        )}
         {variantLabel && (
           <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs xl:text-sm 2xl:px-3 2xl:py-1 2xl:text-base font-medium text-white">
             {variantLabel}

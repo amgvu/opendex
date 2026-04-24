@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { PokemonEntry } from '@/lib/types'
 
 import { EV_STAT_LABELS, getTypeColor, getTypeMatchups } from '@/lib/pokemon'
@@ -31,6 +33,7 @@ export function StatsPanel({
 }) {
   const { immunities, resistances, weaknesses } =
     pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)
+  const [expandedAbility, setExpandedAbility] = useState<null | string>(null)
 
   return (
     <TabPanelContent>
@@ -126,7 +129,13 @@ export function StatsPanel({
             <SectionLabel>Abilities</SectionLabel>
             <div className="flex flex-col gap-1.5">
               {pokemon.abilities.map(a => (
-                <div className="rounded-lg bg-white/10 px-3 py-2" key={a.name}>
+                <div
+                  className="rounded-lg bg-white/10 px-3 py-2 cursor-pointer"
+                  key={a.name}
+                  onClick={() =>
+                    setExpandedAbility(expandedAbility === a.name ? null : a.name)
+                  }
+                >
                   <div className="flex items-center gap-1.5">
                     <span className="font-medium capitalize text-white">
                       {a.name}
@@ -142,6 +151,13 @@ export function StatsPanel({
                       className={`mt-0.5 text-white/60 leading-snug ${PANEL_BODY_TEXT}`}
                     >
                       {a.description}
+                    </p>
+                  )}
+                  {expandedAbility === a.name && a.longEffect && (
+                    <p
+                      className={`mt-1.5 border-t border-white/10 pt-1.5 text-white/40 leading-snug ${PANEL_BODY_TEXT}`}
+                    >
+                      {a.longEffect}
                     </p>
                   )}
                 </div>

@@ -61,6 +61,18 @@ export function BioPanel({ pokemon }: { pokemon: PokemonEntry }) {
             value={`${pokemon.eggCycles} cycles`}
           />
         )}
+        {pokemon.shape && (
+          <InfoStat
+            label="Shape"
+            mono={false}
+            muted
+            value={
+              <span className="capitalize">
+                {pokemon.shape.replace(/-/g, ' ')}
+              </span>
+            }
+          />
+        )}
       </div>
       <p className={`${PANEL_BODY_TEXT} text-white/70 leading-snug`}>
         {pokemon.description}

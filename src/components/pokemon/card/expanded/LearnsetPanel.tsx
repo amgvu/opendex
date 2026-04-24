@@ -139,13 +139,18 @@ export function MoveTable({
                   {move.pp}
                 </td>
               </tr>
-              {expandedMove === move.name && move.shortEffect && (
+              {expandedMove === move.name && (move.shortEffect || move.effect) && (
                 <tr className="border-t border-white/5 bg-white/5">
                   <td
-                    className="py-1.5 px-1 text-white/60 leading-snug text-xs"
+                    className="py-1.5 px-1 leading-snug text-xs"
                     colSpan={showLevel ? 7 : 6}
                   >
-                    {move.shortEffect}
+                    {move.shortEffect && (
+                      <p className="text-white/60">{move.shortEffect}</p>
+                    )}
+                    {move.effect && move.effect !== move.shortEffect && (
+                      <p className="mt-1 text-white/35">{move.effect}</p>
+                    )}
                   </td>
                 </tr>
               )}
