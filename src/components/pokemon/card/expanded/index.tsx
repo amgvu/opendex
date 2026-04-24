@@ -8,6 +8,7 @@ import type { PokemonEntry } from '@/lib/types'
 
 import { useNavContext } from '@/context/navigation'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
+import { useTabSwipe } from '@/hooks/card/useTabSwipe'
 import { ARTWORK_COLLAPSE_TRANSITION, CARD_TRANSITION } from '@/lib/constants'
 import { bgClassToVar, getTypeColor } from '@/lib/pokemon'
 import { useCardStore } from '@/stores/cardStore'
@@ -66,6 +67,7 @@ export function ExpandedCard({
   } = useCardStore()
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
+  const tabSwipe = useTabSwipe(activeTab, setActiveTab)
   const { onNext, onPrev } = useNavContext()
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const [dragging, setDragging] = useState(false)
@@ -202,6 +204,7 @@ export function ExpandedCard({
                 exit={{ opacity: 0 }}
                 initial={{ opacity: 0 }}
                 transition={TABS_ENTER_TRANSITION}
+                {...tabSwipe}
               >
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"
