@@ -4,6 +4,7 @@ import {
   InfoStat,
   MetaLabel,
   PANEL_BODY_TEXT,
+  PANEL_CHIP_TEXT,
   TabPanelContent
 } from './shared'
 

@@ -14,7 +14,6 @@ import { useCardStore } from '@/stores/cardStore'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { ArtworkSwitches } from '../ArtworkSwitches'
-import { BattlePanel } from './BattlePanel'
 import { BioPanel } from './BioPanel'
 import { CardArtwork } from './CardArtwork'
 import { CardHeader } from './CardHeader'
@@ -55,9 +54,11 @@ export function ExpandedCard({
     activeTab,
     artworkCollapsed,
     gifEnabled,
+    gmaxEnabled,
     setActiveTab,
     setArtworkCollapsed,
     setGifEnabled,
+    setGmaxEnabled,
     setShinyEnabled,
     shinyEnabled
   } = useCardStore()
@@ -164,8 +165,11 @@ export function ExpandedCard({
                         <ArtworkSwitches
                           gifEnabled={gifEnabled}
                           gifError={gifError}
+                          gmaxEnabled={gmaxEnabled}
+                          hasGigantamax={!!pokemon.gigantamax}
                           pokemon={pokemon}
                           setGifEnabled={setGifEnabled}
+                          setGmaxEnabled={setGmaxEnabled}
                           setShinyEnabled={setShinyEnabled}
                           shinyEnabled={shinyEnabled}
                         />
@@ -199,9 +203,7 @@ export function ExpandedCard({
                 <Tabs
                   className="flex min-h-0 flex-1 flex-col"
                   onSelectionChange={key =>
-                    setActiveTab(
-                      key as 'battle' | 'bio' | 'evo' | 'moves' | 'stats'
-                    )
+                    setActiveTab(key as 'bio' | 'evo' | 'moves' | 'stats')
                   }
                   selectedKey={activeTab}
                   style={
@@ -221,13 +223,6 @@ export function ExpandedCard({
                         id="stats"
                       >
                         Stats
-                        <Tabs.Indicator />
-                      </Tabs.Tab>
-                      <Tabs.Tab
-                        className="text-xs sm:text-sm xl:text-base"
-                        id="battle"
-                      >
-                        Battle
                         <Tabs.Indicator />
                       </Tabs.Tab>
                       <Tabs.Tab
@@ -256,11 +251,6 @@ export function ExpandedCard({
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="stats">
                     {activeTab === 'stats' && (
                       <StatsPanel bst={bst} pokemon={pokemon} />
-                    )}
-                  </Tabs.Panel>
-                  <Tabs.Panel className={TAB_PANEL_CLASSES} id="battle">
-                    {activeTab === 'battle' && (
-                      <BattlePanel pokemon={pokemon} />
                     )}
                   </Tabs.Panel>
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="bio">
