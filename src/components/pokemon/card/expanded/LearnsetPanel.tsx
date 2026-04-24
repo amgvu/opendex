@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'motion/react'
 import { Fragment, useState } from 'react'
 
 import type { LevelUpMove, Move, PokemonEntry } from '@/lib/types'
@@ -139,21 +140,30 @@ export function MoveTable({
                   {move.pp}
                 </td>
               </tr>
-              {expandedMove === move.name && (move.shortEffect || move.effect) && (
-                <tr className="border-t border-white/5 bg-white/5">
-                  <td
-                    className="py-1.5 px-1 leading-snug text-xs"
-                    colSpan={showLevel ? 7 : 6}
-                  >
-                    {move.shortEffect && (
-                      <p className="text-white/60">{move.shortEffect}</p>
-                    )}
-                    {move.effect && move.effect !== move.shortEffect && (
-                      <p className="mt-1 text-white/35">{move.effect}</p>
-                    )}
-                  </td>
-                </tr>
-              )}
+              <AnimatePresence>
+                {expandedMove === move.name && (move.shortEffect || move.effect) && (
+                  <tr className="bg-white/5">
+                    <td colSpan={showLevel ? 7 : 6} className="border-t border-white/5">
+                      <motion.div
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        initial={{ height: 0, opacity: 0 }}
+                        style={{ overflow: 'hidden' }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                      >
+                        <div className="px-1 py-1.5 leading-snug text-xs">
+                          {move.shortEffect && (
+                            <p className="text-white/60">{move.shortEffect}</p>
+                          )}
+                          {move.effect && move.effect !== move.shortEffect && (
+                            <p className="mt-1 text-white/35">{move.effect}</p>
+                          )}
+                        </div>
+                      </motion.div>
+                    </td>
+                  </tr>
+                )}
+              </AnimatePresence>
             </Fragment>
           ))}
         </tbody>

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
 import type { PokemonEntry } from '@/lib/types'
@@ -130,7 +131,7 @@ export function StatsPanel({
             <div className="flex flex-col gap-1.5">
               {pokemon.abilities.map(a => (
                 <div
-                  className="rounded-lg bg-white/10 px-3 py-2 cursor-pointer"
+                  className="rounded-lg bg-white/10 px-3 py-2 cursor-pointer transition-colors hover:bg-white/15"
                   key={a.name}
                   onClick={() =>
                     setExpandedAbility(expandedAbility === a.name ? null : a.name)
@@ -153,13 +154,23 @@ export function StatsPanel({
                       {a.description}
                     </p>
                   )}
-                  {expandedAbility === a.name && a.longEffect && (
-                    <p
-                      className={`mt-1.5 border-t border-white/10 pt-1.5 text-white/40 leading-snug ${PANEL_BODY_TEXT}`}
-                    >
-                      {a.longEffect}
-                    </p>
-                  )}
+                  <AnimatePresence>
+                    {expandedAbility === a.name && a.longEffect && (
+                      <motion.div
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        initial={{ height: 0, opacity: 0 }}
+                        style={{ overflow: 'hidden' }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                      >
+                        <p
+                          className={`mt-1.5 border-t border-white/10 pt-1.5 text-white/40 leading-snug ${PANEL_BODY_TEXT}`}
+                        >
+                          {a.longEffect}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               ))}
             </div>
