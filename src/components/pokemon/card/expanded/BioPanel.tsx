@@ -16,23 +16,6 @@ export function BioPanel({ pokemon }: { pokemon: PokemonEntry }) {
           {pokemon.genus}
         </p>
       )}
-      <p className={`${PANEL_BODY_TEXT} text-white/70 leading-snug`}>
-        {pokemon.description}
-      </p>
-      {pokemon.flavorTexts && pokemon.flavorTexts.length > 1 && (
-        <div className="flex flex-col gap-2">
-          {pokemon.flavorTexts.slice(1).map(({ game, text }) => (
-            <div key={game}>
-              <span className="text-[10px] uppercase tracking-wider text-white/30 capitalize sm:text-xs xl:text-sm">
-                {game.replace(/-/g, ' ')}
-              </span>
-              <p className={`${PANEL_BODY_TEXT} text-white/50 leading-snug`}>
-                {text}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
       <div className={`grid grid-cols-2 gap-x-4 gap-y-2 ${PANEL_BODY_TEXT}`}>
         {pokemon.habitat != null && (
           <InfoStat
@@ -79,6 +62,23 @@ export function BioPanel({ pokemon }: { pokemon: PokemonEntry }) {
           />
         )}
       </div>
+      <p className={`${PANEL_BODY_TEXT} text-white/70 leading-snug`}>
+        {pokemon.description}
+      </p>
+      {pokemon.flavorTexts && pokemon.flavorTexts.length > 1 && (
+        <div className="flex flex-col gap-2">
+          {pokemon.flavorTexts.slice(1).map(({ game, text }) => (
+            <div key={game}>
+              <span className="text-[10px] uppercase tracking-wider text-white/30 capitalize sm:text-xs xl:text-sm">
+                {game.replace(/-/g, ' ')}
+              </span>
+              <p className={`${PANEL_BODY_TEXT} text-white/50 leading-snug`}>
+                {text}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
       {pokemon.heldItems && pokemon.heldItems.length > 0 && (
         <div>
           <div className="mb-1">
