@@ -6,20 +6,34 @@ import type { Pokemon } from '@/lib/types'
 export function ArtworkSwitches({
   gifEnabled,
   gifError,
+  gmaxEnabled,
+  hasGigantamax,
   pokemon,
   setGifEnabled,
+  setGmaxEnabled,
   setShinyEnabled,
   shinyEnabled
 }: {
   gifEnabled: boolean
   gifError: boolean
+  gmaxEnabled: boolean
+  hasGigantamax: boolean
   pokemon: Pick<Pokemon, 'shiny'>
   setGifEnabled: (v: boolean) => void
+  setGmaxEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
   shinyEnabled: boolean
 }) {
   return (
     <>
+      {hasGigantamax && (
+        <ToggleChip
+          active={gmaxEnabled}
+          onClick={() => setGmaxEnabled(!gmaxEnabled)}
+        >
+          G-Max
+        </ToggleChip>
+      )}
       {pokemon.shiny && (
         <ToggleChip
           active={shinyEnabled}
@@ -29,7 +43,7 @@ export function ArtworkSwitches({
           Shiny
         </ToggleChip>
       )}
-      {!gifError && (
+      {!gifError && !gmaxEnabled && (
         <ToggleChip
           active={gifEnabled}
           onClick={() => setGifEnabled(!gifEnabled)}

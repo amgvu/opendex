@@ -23,16 +23,19 @@ export function CardArtwork({
   setGifError: (v: boolean) => void
   setGifReady: (v: boolean) => void
 }) {
-  const { gifEnabled, shinyEnabled } = useCardStore()
+  const { gifEnabled, gmaxEnabled, shinyEnabled } = useCardStore()
 
   const blurRef = useRef<HTMLDivElement>(null)
 
-  const artSrc = (shinyEnabled
-    ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
-    : pokemon.officialUrl) ?? pokemon.imageUrl
+  const artSrc = gmaxEnabled && pokemon.gigantamax
+    ? (pokemon.gigantamax.officialUrl ?? pokemon.gigantamax.imageUrl ?? pokemon.officialUrl ?? pokemon.imageUrl)
+    : (shinyEnabled
+        ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
+        : pokemon.officialUrl) ?? pokemon.imageUrl
   const gifSrc = shinyEnabled
     ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl)
     : pokemon.imageUrl
+  const showGif = gifEnabled && !gmaxEnabled
 
   function handleArtworkLoad(e: SyntheticEvent<HTMLImageElement>) {
     e.currentTarget.style.opacity = '1'
@@ -78,7 +81,7 @@ export function CardArtwork({
         }
       >
         <motion.div
-          animate={{ opacity: gifError || !gifEnabled ? 1 : 0 }}
+          animate={{ opacity: gifError || !showGif ? 1 : 0 }}
           transition={{ duration: 0.2 }}
         >
           {artworkImage}
@@ -87,7 +90,7 @@ export function CardArtwork({
       {!gifError && gifMounted && (
         <motion.img
           alt=""
-          animate={{ opacity: gifEnabled && gifReady ? 1 : 0 }}
+          animate={{ opacity: showGif && gifReady ? 1 : 0 }}
           className="absolute h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
           draggable={false}
           initial={{ opacity: 0 }}

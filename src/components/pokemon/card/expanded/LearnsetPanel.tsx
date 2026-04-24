@@ -1,3 +1,5 @@
+import { Fragment, useState } from 'react'
+
 import type { LevelUpMove, Move, PokemonEntry } from '@/lib/types'
 
 import { getTypeColor } from '@/lib/pokemon'
@@ -60,6 +62,15 @@ export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry }) {
           <MoveTable moves={learnset.machine} />
         </div>
       )}
+
+      {pokemon.gigantamax?.gmaxMoves && pokemon.gigantamax.gmaxMoves.length > 0 && (
+        <div>
+          <div className="mb-1.5">
+            <MetaLabel>G-Max Moves</MetaLabel>
+          </div>
+          <MoveTable moves={pokemon.gigantamax.gmaxMoves} />
+        </div>
+      )}
     </TabPanelContent>
   )
 }
@@ -71,6 +82,8 @@ export function MoveTable({
   moves: LevelUpMove[] | Move[]
   showLevel?: boolean
 }) {
+  const [expandedMove, setExpandedMove] = useState<null | string>(null)
+
   return (
     <div className="overflow-x-auto">
       <table className={`w-full border-collapse ${PANEL_BODY_TEXT}`}>
@@ -87,42 +100,56 @@ export function MoveTable({
         </thead>
         <tbody>
           {moves.map(move => (
-            <tr
-              className="border-t border-white/5 hover:bg-white/5 transition-colors"
-              key={move.name}
-            >
-              {showLevel && (
-                <td className="py-1 pr-2 font-mono tabular-nums text-white/40">
-                  {(move as LevelUpMove).level}
+            <Fragment key={move.name}>
+              <tr
+                className="border-t border-white/5 hover:bg-white/5 transition-colors cursor-pointer"
+                onClick={() =>
+                  setExpandedMove(expandedMove === move.name ? null : move.name)
+                }
+              >
+                {showLevel && (
+                  <td className="py-1 pr-2 font-mono tabular-nums text-white/40">
+                    {(move as LevelUpMove).level}
+                  </td>
+                )}
+                <td className="py-1 pr-2 font-medium text-white whitespace-nowrap">
+                  {formatMoveName(move.name)}
                 </td>
+                <td className="py-1 pr-2">
+                  <span
+                    className={`inline-block rounded-full px-1.5 py-px font-medium text-white ${getTypeColor(move.type)} ${PANEL_BADGE_TEXT}`}
+                  >
+                    {move.type}
+                  </span>
+                </td>
+                <td className="py-1 pr-2">
+                  <span
+                    className={`inline-block rounded px-1 py-px font-medium ${CATEGORY_STYLES[move.category] ?? CATEGORY_STYLES.status} ${PANEL_BADGE_TEXT}`}
+                  >
+                    {CATEGORY_LABELS[move.category] ?? move.category}
+                  </span>
+                </td>
+                <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
+                  {move.power ?? '—'}
+                </td>
+                <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
+                  {move.accuracy ?? '—'}
+                </td>
+                <td className="py-1 text-right font-mono tabular-nums text-white/50">
+                  {move.pp}
+                </td>
+              </tr>
+              {expandedMove === move.name && move.shortEffect && (
+                <tr className="border-t border-white/5 bg-white/5">
+                  <td
+                    className="py-1.5 px-1 text-white/60 leading-snug text-xs"
+                    colSpan={showLevel ? 7 : 6}
+                  >
+                    {move.shortEffect}
+                  </td>
+                </tr>
               )}
-              <td className="py-1 pr-2 font-medium text-white whitespace-nowrap">
-                {formatMoveName(move.name)}
-              </td>
-              <td className="py-1 pr-2">
-                <span
-                  className={`inline-block rounded-full px-1.5 py-px font-medium text-white ${getTypeColor(move.type)} ${PANEL_BADGE_TEXT}`}
-                >
-                  {move.type}
-                </span>
-              </td>
-              <td className="py-1 pr-2">
-                <span
-                  className={`inline-block rounded px-1 py-px font-medium ${CATEGORY_STYLES[move.category] ?? CATEGORY_STYLES.status} ${PANEL_BADGE_TEXT}`}
-                >
-                  {CATEGORY_LABELS[move.category] ?? move.category}
-                </span>
-              </td>
-              <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
-                {move.power ?? '—'}
-              </td>
-              <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
-                {move.accuracy ?? '—'}
-              </td>
-              <td className="py-1 text-right font-mono tabular-nums text-white/50">
-                {move.pp}
-              </td>
-            </tr>
+            </Fragment>
           ))}
         </tbody>
       </table>
