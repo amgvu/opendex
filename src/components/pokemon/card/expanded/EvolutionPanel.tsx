@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { EvolutionStep, PokemonEntry } from '@/lib/types'
 
 import { formatPokedexId } from '@/lib/pokemon'
+import { useSelectionStore } from '@/stores/selectionStore'
 
 import { TabPanelContent } from './shared'
 
@@ -112,11 +113,15 @@ function PokemonNode({
   node: TreeNode
 }) {
   const isCurrent = node.id === currentId
+  const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${node.id}.png`
 
   return (
-    <div
-      className={`flex flex-col items-center gap-1 transition-opacity ${isCurrent ? 'opacity-100' : 'opacity-60'}`}
+    <button
+      className={`flex flex-col items-center gap-1 transition-opacity ${isCurrent ? 'opacity-100 cursor-default' : 'opacity-60 cursor-pointer hover:opacity-100'}`}
+      disabled={isCurrent}
+      onClick={() => !isCurrent && setSelectedName(node.name)}
+      type="button"
     >
       <Image
         alt={node.name}
@@ -136,7 +141,7 @@ function PokemonNode({
       >
         {formatPokedexId(node.id)}
       </span>
-    </div>
+    </button>
   )
 }
 
