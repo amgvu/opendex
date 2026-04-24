@@ -66,11 +66,26 @@ const BATTLE_TYPES = [
 // Variant types that become separate entries (vs embedded in base)
 const REGIONAL_TYPES = new Set(['alolan', 'galarian', 'hisuian', 'paldean'])
 
+// Forms that Showdown keeps hyphenated in their sprite filenames
+const HYPHENATED_SHOWDOWN_FORMS = [
+  '-origin', '-therian', '-resolute', '-pirouette', '-ash', '-complete',
+  '-school', '-meteor', '-ultra', '-crowned', '-rapid-strike', '-single-strike',
+  '-ice', '-shadow', '-wellspring', '-hearthflame', '-cornerstone', '-stellar',
+  '-bloodmoon'
+]
+
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-// Classify a non-default variety slug into a variant type, or null to skip
+// PokeAPI height is decimeters → meters; imperial as "5'11""
+function toImperialHeight(meters) {
+  const totalInches = meters / 0.0254
+  const feet = Math.floor(totalInches / 12)
+  const inches = Math.round(totalInches % 12)
+  return `${feet}'${String(inches).padStart(2, '0')}"`
+}
+
 function classifyVariant(slug) {
   const s = slug.toLowerCase()
   if (s.endsWith('-mega-x')) return 'mega-x'
@@ -99,36 +114,6 @@ function classifyVariant(slug) {
   if (s.includes('-hearthflame')) return 'hearthflame-mask'
   if (s.includes('-cornerstone')) return 'cornerstone-mask'
   if (s.includes('-stellar')) return 'stellar'
-
-  const COMMON_FORMS = [
-    '-heat',
-    '-wash',
-    '-frost',
-    '-fan',
-    '-mow',
-    '-attack',
-    '-defense',
-    '-speed',
-    '-sky',
-    '-zen',
-    '-white',
-    '-black',
-    '-active',
-    '-unbound',
-    '-pom-pom',
-    '-pa-u',
-    '-sensu',
-    '-baile',
-    '-midnight',
-    '-dusk',
-    '-dada',
-    '-small',
-    '-large',
-    '-super',
-    '-bloodmoon'
-  ]
-  if (COMMON_FORMS.some(f => s.endsWith(f))) return 'form'
-
   return 'form'
 }
 
@@ -233,6 +218,20 @@ function extractLearnset(moves) {
   }
 }
 
+function buildMoveDetails(data) {
+  const enEntry = data.effect_entries?.find(e => e.language.name === 'en')
+  const effectChance = data.effect_chance != null ? String(data.effect_chance) : ''
+  return {
+    accuracy: data.accuracy,
+    category: data.damage_class?.name ?? 'status',
+    effect: enEntry?.effect?.replace(/\$effect_chance/g, effectChance).replace(/\s+/g, ' ').trim() ?? '',
+    power: data.power,
+    pp: data.pp,
+    shortEffect: enEntry?.short_effect?.replace(/\$effect_chance/g, effectChance).trim() ?? '',
+    type: capitalize(data.type?.name ?? 'normal')
+  }
+}
+
 async function fetchPokemon(id) {
   const [pokemon, species] = await Promise.all([
     fetch(`${POKEAPI}/pokemon/${id}`).then(r => r.json()),
@@ -288,6 +287,7 @@ async function fetchPokemon(id) {
     : null
 
   return {
+    _encounterUrl: pokemon.location_area_encounters,
     _evolutionChainUrl: species.evolution_chain?.url ?? null,
     _varieties: species.varieties
       .filter(v => !v.is_default)
@@ -311,22 +311,26 @@ async function fetchPokemon(id) {
     genus: genusEntry?.genus ?? undefined,
     growthRate: species.growth_rate?.name ?? undefined,
     habitat: species.habitat?.name ?? null,
-    height: parseFloat((pokemon.height / 10).toFixed(1)),
+    heightFt: toImperialHeight(pokemon.height / 10),
+    heightM: parseFloat((pokemon.height / 10).toFixed(1)),
     heldItems,
     hp: stats['hp'],
     id: pokemon.id,
     imageUrl: `https://play.pokemonshowdown.com/sprites/ani/${species.name.replace(/-/g, '')}.gif`,
+    isBaby: species.is_baby,
     isLegendary: species.is_legendary,
     isMythical: species.is_mythical,
     learnset: extractLearnset(pokemon.moves),
     name: pokemon.name,
     officialUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
+    shape: species.shape?.name ?? null,
     shiny,
     specialAttack: stats['special-attack'],
     specialDefense: stats['special-defense'],
     speed: stats['speed'],
     types,
-    weight: parseFloat((pokemon.weight * 0.220462).toFixed(1))
+    weightKg: parseFloat((pokemon.weight / 10).toFixed(1)),
+    weightLbs: parseFloat((pokemon.weight * 0.220462).toFixed(1))
   }
 }
 
@@ -389,6 +393,60 @@ function idFromUrl(url) {
   return parseInt(url.split('/').filter(Boolean).pop(), 10)
 }
 
+function parseChain(node, steps = []) {
+  for (const next of node.evolves_to) {
+    const details = next.evolution_details[0] ?? {}
+    steps.push({
+      fromId: idFromUrl(node.species.url),
+      fromName: node.species.name,
+      toId: idFromUrl(next.species.url),
+      toName: next.species.name,
+      trigger: formatTrigger(details)
+    })
+    parseChain(next, steps)
+  }
+  return steps
+}
+
+function resolveLearnset(rawLearnset, moveDetails) {
+  const fallback = {
+    accuracy: null,
+    category: 'status',
+    effect: '',
+    power: null,
+    pp: 0,
+    shortEffect: '',
+    type: 'Normal'
+  }
+  return {
+    egg: rawLearnset.egg.map(name => ({ name, ...(moveDetails[name] ?? fallback) })),
+    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
+      ...rest,
+      ...(moveDetails[rest.name] ?? fallback)
+    })),
+    machine: rawLearnset.machine.map(name => ({ name, ...(moveDetails[name] ?? fallback) }))
+  }
+}
+
+// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
+function toShowdownSlug(slug) {
+  const s = slug.toLowerCase()
+
+  // Regionals: Showdown keeps the suffix hyphen as-is
+  if (s.endsWith('-alola') || s.endsWith('-galar') || s.endsWith('-hisui') || s.endsWith('-paldea'))
+    return s
+
+  // Megas: remove internal hyphens, use megax/megay
+  if (s.endsWith('-mega-x')) return s.replace(/-/g, '').replace('megax', '-megax')
+  if (s.endsWith('-mega-y')) return s.replace(/-/g, '').replace('megay', '-megay')
+  if (s.endsWith('-mega')) return s.replace(/-/g, '').replace('mega', '-mega')
+
+  if (HYPHENATED_SHOWDOWN_FORMS.some(f => s.endsWith(f))) return s
+
+  // Fallback: remove all hyphens
+  return s.replace(/-/g, '')
+}
+
 async function main() {
   console.log(`Fetching ${TOTAL} Pokemon from PokeAPI...`)
 
@@ -418,7 +476,10 @@ async function main() {
       chunk.map(async name => {
         const data = await fetch(abilityUrls.get(name)).then(r => r.json())
         const entry = data.effect_entries.find(e => e.language.name === 'en')
-        abilityDescriptions[name] = entry?.short_effect ?? ''
+        abilityDescriptions[name] = {
+          long: entry?.effect ?? '',
+          short: entry?.short_effect ?? ''
+        }
       })
     )
     console.log(
@@ -429,8 +490,9 @@ async function main() {
   // Attach ability descriptions and strip URL
   for (const p of results) {
     p.abilities = p.abilities.map(({ isHidden, name }) => ({
-      description: abilityDescriptions[name] ?? '',
+      description: abilityDescriptions[name]?.short ?? '',
       isHidden,
+      longEffect: abilityDescriptions[name]?.long ?? '',
       name
     }))
   }
@@ -509,13 +571,7 @@ async function main() {
     await Promise.all(
       chunk.map(async name => {
         const data = await fetch(moveUrlMap.get(name)).then(r => r.json())
-        moveDetails[name] = {
-          accuracy: data.accuracy,
-          category: data.damage_class?.name ?? 'status',
-          power: data.power,
-          pp: data.pp,
-          type: capitalize(data.type?.name ?? 'normal')
-        }
+        moveDetails[name] = buildMoveDetails(data)
       })
     )
     console.log(
@@ -539,7 +595,6 @@ async function main() {
     let variantIndex = 0
     for (const slug of varieties) {
       const variantType = classifyVariant(slug)
-      if (!variantType) continue
       variantIndex++
       variantsToProcess.push({ baseEntry: p, slug, variantIndex, variantType })
     }
@@ -604,14 +659,11 @@ async function main() {
             const data = await fetch(`${POKEAPI}/move/${name}`).then(r =>
               r.json()
             )
-            moveDetails[name] = {
-              accuracy: data.accuracy,
-              category: data.damage_class?.name ?? 'status',
-              power: data.power,
-              pp: data.pp,
-              type: capitalize(data.type?.name ?? 'normal')
-            }
+            moveDetails[name] = buildMoveDetails(data)
           })
+        )
+        console.log(
+          `  G-Max moves: ${Math.min(i + CHUNK_SIZE, names.length)}/${names.length}`
         )
       }
     }
@@ -624,8 +676,10 @@ async function main() {
           ...(moveDetails[name] ?? {
             accuracy: null,
             category: 'status',
+            effect: '',
             power: null,
             pp: null,
+            shortEffect: '',
             type: 'Normal'
           })
         }))
@@ -688,7 +742,10 @@ async function main() {
             const entry = data.effect_entries.find(
               e => e.language.name === 'en'
             )
-            abilityDescriptions[name] = entry?.short_effect ?? ''
+            abilityDescriptions[name] = {
+              long: entry?.effect ?? '',
+              short: entry?.short_effect ?? ''
+            }
           })
         )
         console.log(
@@ -774,13 +831,7 @@ async function main() {
             const data = await fetch(newMoveUrlMap.get(name)).then(r =>
               r.json()
             )
-            moveDetails[name] = {
-              accuracy: data.accuracy,
-              category: data.damage_class?.name ?? 'status',
-              power: data.power,
-              pp: data.pp,
-              type: capitalize(data.type?.name ?? 'normal')
-            }
+            moveDetails[name] = buildMoveDetails(data)
           })
         )
         console.log(
@@ -807,12 +858,16 @@ async function main() {
 
       const variantAbilities = pkmnData.abilities
         .sort((a, b) => a.slot - b.slot)
-        .map(a => ({
-          description:
-            abilityDescriptions[a.ability.name.replace(/-/g, ' ')] ?? '',
-          isHidden: a.is_hidden,
-          name: a.ability.name.replace(/-/g, ' ')
-        }))
+        .map(a => {
+          const name = a.ability.name.replace(/-/g, ' ')
+          const desc = abilityDescriptions[name]
+          return {
+            description: desc?.short ?? '',
+            isHidden: a.is_hidden,
+            longEffect: desc?.long ?? '',
+            name
+          }
+        })
 
       const statsKey = pkmnData.stats.map(s => s.base_stat).join(',')
       const typesKey = variantTypes.join(',')
@@ -856,6 +911,8 @@ async function main() {
       }
 
       variantEntries.push({
+        // Temp fields (resolved in later steps)
+        _encounterUrl: pkmnData.location_area_encounters,
         // Re-fetched data (differs from base)
         abilities: variantAbilities,
         attack: variantStats['attack'],
@@ -863,7 +920,6 @@ async function main() {
         baseExperience: baseEntry.baseExperience,
         baseFriendship: baseEntry.baseFriendship,
         catchRate: baseEntry.catchRate,
-
         color: baseEntry.color,
         defense: variantStats['defense'],
         description: baseEntry.description,
@@ -879,11 +935,11 @@ async function main() {
         gigantamax: null,
         growthRate: baseEntry.growthRate,
         habitat: baseEntry.habitat,
-        height: parseFloat((pkmnData.height / 10).toFixed(1)),
+        heightFt: toImperialHeight(pkmnData.height / 10),
+        heightM: parseFloat((pkmnData.height / 10).toFixed(1)),
         heldItems: baseEntry.heldItems,
         hp: variantStats['hp'],
-
-        // Variant identification
+        isBaby: baseEntry.isBaby,
         id: baseEntry.id,
         imageUrl: variantImageUrl,
         isLegendary: baseEntry.isLegendary,
@@ -891,22 +947,58 @@ async function main() {
         learnset,
         name: slug,
         officialUrl: variantOfficialUrl,
+        shape: baseEntry.shape,
         shiny: variantShiny,
         specialAttack: variantStats['special-attack'],
         specialDefense: variantStats['special-defense'],
         speed: variantStats['speed'],
         typeMatchups: computeTypeMatchups(variantTypes, typeChart),
         types: variantTypes,
+        // Variant identification
         variantIndex,
         variantOf: baseEntry.id,
         variantSlug: slug,
         variantType,
-        weight: parseFloat((pkmnData.weight * 0.220462).toFixed(1))
+        weightKg: parseFloat((pkmnData.weight / 10).toFixed(1)),
+        weightLbs: parseFloat((pkmnData.weight * 0.220462).toFixed(1))
       })
     }
 
     results.push(...variantEntries)
     console.log(`\nAdded ${variantEntries.length} variant entries`)
+  }
+
+  // Fetch encounter locations for all entries (base + variants)
+  console.log('\nFetching encounter locations...')
+  for (let i = 0; i < results.length; i += CHUNK_SIZE) {
+    const chunk = results.slice(i, i + CHUNK_SIZE)
+    await Promise.all(
+      chunk.map(async entry => {
+        const url = entry._encounterUrl
+        delete entry._encounterUrl
+        if (!url) {
+          entry.encounterLocations = []
+          return
+        }
+        try {
+          const data = await fetch(url).then(r => r.json())
+          const locMap = new Map()
+          for (const { location_area, version_details } of data) {
+            const loc = location_area.name
+            if (!locMap.has(loc)) locMap.set(loc, [])
+            for (const vd of version_details) locMap.get(loc).push(vd.version.name)
+          }
+          entry.encounterLocations = [...locMap.entries()].map(
+            ([location, versions]) => ({ location, versions })
+          )
+        } catch {
+          entry.encounterLocations = []
+        }
+      })
+    )
+    console.log(
+      `  Encounters: ${Math.min(i + CHUNK_SIZE, results.length)}/${results.length}`
+    )
   }
 
   const outputPath = path.join(__dirname, '..', 'src', 'data', 'pokemon.json')
@@ -928,102 +1020,6 @@ async function main() {
   console.log('  learnset egg count:', results[0].learnset.egg.length)
   console.log('  learnset machine count:', results[0].learnset.machine.length)
   console.log('  flavorTexts count:', results[0].flavorTexts.length)
-}
-
-function parseChain(node, steps = []) {
-  for (const next of node.evolves_to) {
-    const details = next.evolution_details[0] ?? {}
-    steps.push({
-      fromId: idFromUrl(node.species.url),
-      fromName: node.species.name,
-      toId: idFromUrl(next.species.url),
-      toName: next.species.name,
-      trigger: formatTrigger(details)
-    })
-    parseChain(next, steps)
-  }
-  return steps
-}
-
-// Attach fully resolved move details to a raw learnset (output of extractLearnset)
-function resolveLearnset(rawLearnset, moveDetails) {
-  return {
-    egg: rawLearnset.egg.map(name => ({
-      name,
-      ...(moveDetails[name] ?? {
-        accuracy: null,
-        category: 'status',
-        power: null,
-        pp: 0,
-        type: 'Normal'
-      })
-    })),
-    levelUp: rawLearnset.levelUp.map(({ _url, ...rest }) => ({
-      ...rest,
-      ...(moveDetails[rest.name] ?? {})
-    })),
-    machine: rawLearnset.machine.map(name => ({
-      name,
-      ...(moveDetails[name] ?? {
-        accuracy: null,
-        category: 'status',
-        power: null,
-        pp: 0,
-        type: 'Normal'
-      })
-    }))
-  }
-}
-
-// Converts a PokeAPI slug to the Pokémon Showdown sprite filename (without .gif).
-function toShowdownSlug(slug) {
-  const s = slug.toLowerCase()
-
-  // Regionals: keep the hyphen
-  if (s.endsWith('-alola'))
-    return s.replace('-alola', '-alola').replace(/[^-a-z0-9]/g, '')
-  if (s.endsWith('-galar'))
-    return s.replace('-galar', '-galar').replace(/[^-a-z0-9]/g, '')
-  if (s.endsWith('-hisui'))
-    return s.replace('-hisui', '-hisui').replace(/[^-a-z0-9]/g, '')
-  if (s.endsWith('-paldea'))
-    return s.replace('-paldea', '-paldea').replace(/[^-a-z0-9]/g, '')
-
-  // Megas: remove internal hyphens, use megax/megay
-  if (s.endsWith('-mega-x'))
-    return s.replace(/-/g, '').replace('megax', '-megax')
-  if (s.endsWith('-mega-y'))
-    return s.replace(/-/g, '').replace('megay', '-megay')
-  if (s.endsWith('-mega')) return s.replace(/-/g, '').replace('mega', '-mega')
-
-  // Other common ones that Showdown keeps hyphens for
-  const HYPHENATED_FORMS = [
-    '-origin',
-    '-therian',
-    '-resolute',
-    '-pirouette',
-    '-ash',
-    '-complete',
-    '-school',
-    '-meteor',
-    '-ultra',
-    '-crowned',
-    '-rapid-strike',
-    '-single-strike',
-    '-ice',
-    '-shadow',
-    '-wellspring',
-    '-hearthflame',
-    '-cornerstone',
-    '-stellar',
-    '-bloodmoon'
-  ]
-  for (const f of HYPHENATED_FORMS) {
-    if (s.endsWith(f)) return s
-  }
-
-  // Fallback: remove all hyphens
-  return s.replace(/-/g, '')
 }
 
 main().catch(err => {
