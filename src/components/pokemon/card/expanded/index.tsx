@@ -7,6 +7,7 @@ import { TbCheck, TbChevronUp, TbLink, TbX } from 'react-icons/tb'
 import type { PokemonEntry } from '@/lib/types'
 
 import { useNavContext } from '@/context/navigation'
+import { useArtworkSwipe } from '@/hooks/card/useArtworkSwipe'
 import { useGifLoader } from '@/hooks/card/useGifLoader'
 import { useTabSwipe } from '@/hooks/card/useTabSwipe'
 import { ARTWORK_COLLAPSE_TRANSITION, CARD_TRANSITION } from '@/lib/constants'
@@ -68,6 +69,7 @@ export function ExpandedCard({
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
   const tabSwipe = useTabSwipe(activeTab, setActiveTab)
+  const artworkSwipe = useArtworkSwipe(artworkCollapsed, setArtworkCollapsed)
   const { onNext, onPrev } = useNavContext()
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const [dragging, setDragging] = useState(false)
@@ -132,6 +134,7 @@ export function ExpandedCard({
                 <TbX size={24} />
               </button>
 
+              <div {...artworkSwipe}>
               <CardHeader id={id} pokemon={pokemon} />
               {pokemon.officialUrl && (
                 <>
@@ -197,6 +200,7 @@ export function ExpandedCard({
                   </button>
                 </>
               )}
+              </div>
               <motion.div
                 animate={{ opacity: 1 }}
                 className="flex min-h-0 sm:flex-1 flex-col cursor-auto max-h-[calc(100svh-1rem)] sm:max-h-none overflow-y-auto sm:overflow-y-visible"
