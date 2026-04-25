@@ -20,9 +20,6 @@
 # production
 /build
 
-# generated artwork
-/public/artwork
-
 # misc
 .DS_Store
 *.pem
