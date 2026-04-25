@@ -11,19 +11,25 @@ const POKEMON_JSON = path.join(ROOT, 'src', 'data', 'pokemon.json')
 const CONCURRENCY = 20
 const BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'
 
-function urlToLocalPath(url) {
-  const suffix = url.replace(BASE, '') // e.g. "1.png" or "shiny/1.png"
-  return suffix.replace(/\.png$/, '.webp')
+// /artwork/1.webp → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
+// https://raw...1.png → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
+function resolveEntry(val) {
+  if (val.startsWith('/artwork/')) {
+    const localRelative = val.slice('/artwork/'.length)
+    const remoteSuffix = localRelative.replace(/\.webp$/, '.png')
+    return { localRelative, remoteUrl: BASE + remoteSuffix }
+  }
+  if (val.startsWith('http')) {
+    const localRelative = val.replace(BASE, '').replace(/\.png$/, '.webp')
+    return { localRelative, remoteUrl: val }
+  }
+  return null
 }
 
-function localPathToPublicUrl(localRelative) {
-  return `/artwork/${localRelative}`
-}
-
-async function downloadAndConvert(url, destAbs) {
+async function downloadAndConvert(remoteUrl, destAbs) {
   fs.mkdirSync(path.dirname(destAbs), { recursive: true })
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
+  const res = await fetch(remoteUrl)
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${remoteUrl}`)
   const buf = Buffer.from(await res.arrayBuffer())
   await sharp(buf).webp({ quality: 90 }).toFile(destAbs)
 }
@@ -40,64 +46,62 @@ async function runPool(tasks, concurrency) {
       if (done % 50 === 0 || done === total) process.stdout.write(`\r  ${done}/${total}`)
     }
   }
-  const workers = Array.from({ length: concurrency }, worker)
-  await Promise.all(workers)
+  await Promise.all(Array.from({ length: concurrency }, worker))
   console.log()
 }
 
 async function main() {
   const pokemon = JSON.parse(fs.readFileSync(POKEMON_JSON, 'utf8'))
 
-  // Collect all unique URLs
-  const allUrls = new Set()
+  // Collect all unique entries from every officialUrl field
+  const entries = new Map() // localRelative → remoteUrl
   for (const p of pokemon) {
-    if (p.officialUrl) allUrls.add(p.officialUrl)
-    if (p.shiny?.officialUrl) allUrls.add(p.shiny.officialUrl)
-    if (p.female?.officialUrl) allUrls.add(p.female.officialUrl)
-    if (p.gigantamax?.officialUrl) allUrls.add(p.gigantamax.officialUrl)
+    for (const val of [
+      p.officialUrl,
+      p.shiny?.officialUrl,
+      p.female?.officialUrl,
+      p.gigantamax?.officialUrl
+    ]) {
+      if (!val) continue
+      const entry = resolveEntry(val)
+      if (entry) entries.set(entry.localRelative, entry.remoteUrl)
+    }
   }
 
-  console.log(`Found ${allUrls.size} unique artwork URLs`)
+  console.log(`Found ${entries.size} unique artwork images`)
 
-  // Build url → local relative path map
-  const urlMap = new Map()
-  for (const url of allUrls) {
-    urlMap.set(url, urlToLocalPath(url))
-  }
-
-  // Download + convert, skipping already done
-  const toDownload = [...allUrls].filter(url => {
-    const dest = path.join(PUBLIC_ARTWORK, urlMap.get(url))
-    return !fs.existsSync(dest)
+  // Download + convert missing files
+  const toDownload = [...entries.entries()].filter(([localRelative]) => {
+    return !fs.existsSync(path.join(PUBLIC_ARTWORK, localRelative))
   })
 
   if (toDownload.length === 0) {
-    console.log('All images already downloaded, skipping fetch step.')
+    console.log('All images already present, skipping download.')
   } else {
-    console.log(`Downloading and converting ${toDownload.length} images (${allUrls.size - toDownload.length} already exist)...`)
-    const tasks = toDownload.map(url => async () => {
-      const dest = path.join(PUBLIC_ARTWORK, urlMap.get(url))
-      await downloadAndConvert(url, dest)
+    console.log(`Downloading and converting ${toDownload.length} images (${entries.size - toDownload.length} already exist)...`)
+    const tasks = toDownload.map(([localRelative, remoteUrl]) => async () => {
+      await downloadAndConvert(remoteUrl, path.join(PUBLIC_ARTWORK, localRelative))
     })
     await runPool(tasks, CONCURRENCY)
   }
 
-  // Update pokemon.json
+  // Rewrite pokemon.json to local paths (idempotent)
   console.log('Updating pokemon.json with local paths...')
   for (const p of pokemon) {
-    if (p.officialUrl && urlMap.has(p.officialUrl))
-      p.officialUrl = localPathToPublicUrl(urlMap.get(p.officialUrl))
-    if (p.shiny?.officialUrl && urlMap.has(p.shiny.officialUrl))
-      p.shiny.officialUrl = localPathToPublicUrl(urlMap.get(p.shiny.officialUrl))
-    if (p.female?.officialUrl && urlMap.has(p.female.officialUrl))
-      p.female.officialUrl = localPathToPublicUrl(urlMap.get(p.female.officialUrl))
-    if (p.gigantamax?.officialUrl && urlMap.has(p.gigantamax.officialUrl))
-      p.gigantamax.officialUrl = localPathToPublicUrl(urlMap.get(p.gigantamax.officialUrl))
+    for (const [obj, key] of [
+      [p, 'officialUrl'],
+      [p.shiny, 'officialUrl'],
+      [p.female, 'officialUrl'],
+      [p.gigantamax, 'officialUrl']
+    ]) {
+      if (!obj?.[key]) continue
+      const entry = resolveEntry(obj[key])
+      if (entry) obj[key] = `/artwork/${entry.localRelative}`
+    }
   }
 
   fs.writeFileSync(POKEMON_JSON, JSON.stringify(pokemon, null, 2))
-  console.log('Done! pokemon.json updated.')
-  console.log(`Images saved to public/artwork/ — add to .gitignore if not committing them.`)
+  console.log('Done!')
 }
 
 main().catch(err => { console.error(err); process.exit(1) })

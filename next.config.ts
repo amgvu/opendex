@@ -5,8 +5,10 @@ const nextConfig: NextConfig = {
     const immutable = [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }]
     return [
       { headers: immutable, source: '/icons/:path*' },
+      { headers: immutable, source: '/artwork/:path*' },
       { headers: immutable, source: '/(:path*\\.png)' },
-      { headers: immutable, source: '/(:path*\\.svg)' }
+      { headers: immutable, source: '/(:path*\\.svg)' },
+      { headers: immutable, source: '/(:path*\\.webp)' }
     ]
   },
   images: {
