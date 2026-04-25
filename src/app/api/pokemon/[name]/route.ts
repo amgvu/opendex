@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
-import { pokemonByName } from '@/lib/pokemon'
+import { pokemonByName } from '@/lib/pokemon-data'
 
 export async function GET(
   _req: NextRequest,
