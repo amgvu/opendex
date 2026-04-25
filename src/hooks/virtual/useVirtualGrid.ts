@@ -6,6 +6,7 @@ import type { PokemonEntry } from '@/lib/types'
 const CARD_HEIGHT = 80
 const GAP = 16
 const PRELOAD_ROWS = 5
+const OVERSCAN = 2
 
 const preloadedUrls = new Set<string>()
 
@@ -30,7 +31,7 @@ export function useVirtualGrid(
   const virtualizer = useWindowVirtualizer({
     count: rowCount,
     estimateSize: useCallback(() => CARD_HEIGHT + GAP, []),
-    overscan: 5
+    overscan: OVERSCAN
   })
 
   const virtualItems = virtualizer.getVirtualItems()
@@ -38,7 +39,7 @@ export function useVirtualGrid(
   useEffect(() => {
     const lastItem = virtualItems[virtualItems.length - 1]
     if (!lastItem) return
-    if (lastItem.index >= rowCount - 3 && hasNextPage && !isFetchingNextPage) {
+    if (lastItem.index >= rowCount - OVERSCAN - 3 && hasNextPage && !isFetchingNextPage) {
       onLoadMore()
     }
     const preloadStart = (lastItem.index + 1) * columns
