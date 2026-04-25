@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "node scripts/download-artwork.mjs && next build",
     "start": "next start",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
