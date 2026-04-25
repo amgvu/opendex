@@ -51,6 +51,7 @@ export function DefaultCard({
         height={128}
         loading="eager"
         onContextMenu={e => e.preventDefault()}
+        sizes="(max-width: 768px) 112px, 140px"
         src={iconSrc}
         unoptimized
         width={128}
