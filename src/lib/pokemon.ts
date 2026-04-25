@@ -1,14 +1,6 @@
-import type { PokemonEntry } from '@/lib/types'
-
-import pokemonData from '@/data/pokemon.json'
-
 export const SITE_NAME = 'Opendex'
 
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
-
-export const pokemonByName = new Map(
-  (pokemonData as unknown as PokemonEntry[]).map(p => [p.name, p])
-)
 
 export const colors: Record<string, string> = {
   Bug: 'bg-[#A6B91A]',
