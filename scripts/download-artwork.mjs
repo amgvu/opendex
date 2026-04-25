@@ -9,7 +9,8 @@ const PUBLIC_ARTWORK = path.join(ROOT, 'public', 'artwork')
 const POKEMON_JSON = path.join(ROOT, 'src', 'data', 'pokemon.json')
 
 const CONCURRENCY = 20
-const BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'
+const BASE =
+  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'
 
 // /artwork/1.webp → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
 // https://raw...1.png → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
@@ -43,7 +44,8 @@ async function runPool(tasks, concurrency) {
       const task = tasks[i++]
       await task()
       done++
-      if (done % 50 === 0 || done === total) process.stdout.write(`\r  ${done}/${total}`)
+      if (done % 50 === 0 || done === total)
+        process.stdout.write(`\r  ${done}/${total}`)
     }
   }
   await Promise.all(Array.from({ length: concurrency }, worker))
@@ -78,11 +80,36 @@ async function main() {
   if (toDownload.length === 0) {
     console.log('All images already present, skipping download.')
   } else {
-    console.log(`Downloading and converting ${toDownload.length} images (${entries.size - toDownload.length} already exist)...`)
+    console.log(
+      `Downloading and converting ${toDownload.length} images (${entries.size - toDownload.length} already exist)...`
+    )
     const tasks = toDownload.map(([localRelative, remoteUrl]) => async () => {
-      await downloadAndConvert(remoteUrl, path.join(PUBLIC_ARTWORK, localRelative))
+      await downloadAndConvert(
+        remoteUrl,
+        path.join(PUBLIC_ARTWORK, localRelative)
+      )
     })
     await runPool(tasks, CONCURRENCY)
+  }
+
+  const PUBLIC_THUMBS = path.join(PUBLIC_ARTWORK, 'thumbs')
+  const allLocal = [...entries.keys()]
+  const toThumb = allLocal.filter(localRelative => {
+    const thumbPath = path.join(PUBLIC_THUMBS, localRelative)
+    return !fs.existsSync(thumbPath)
+  })
+
+  if (toThumb.length === 0) {
+    console.log('All thumbnails already present, skipping.')
+  } else {
+    console.log(`Generating ${toThumb.length} thumbnails...`)
+    const thumbTasks = toThumb.map(localRelative => async () => {
+      const srcPath = path.join(PUBLIC_ARTWORK, localRelative)
+      const destPath = path.join(PUBLIC_THUMBS, localRelative)
+      fs.mkdirSync(path.dirname(destPath), { recursive: true })
+      await sharp(srcPath).resize(256).webp({ quality: 80 }).toFile(destPath)
+    })
+    await runPool(thumbTasks, CONCURRENCY)
   }
 
   // Rewrite pokemon.json to local paths (idempotent)
@@ -104,4 +131,7 @@ async function main() {
   console.log('Done!')
 }
 
-main().catch(err => { console.error(err); process.exit(1) })
+main().catch(err => {
+  console.error(err)
+  process.exit(1)
+})
