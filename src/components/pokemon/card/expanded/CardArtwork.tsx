@@ -55,6 +55,7 @@ export function CardArtwork({
         className="h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
         draggable={false}
         height={384}
+        loading="eager"
         onContextMenu={e => e.preventDefault()}
         onLoad={handleArtworkLoad}
         sizes="(min-width: 1536px) 320px, (min-width: 1280px) 256px, (min-width: 640px) 160px, 224px"
