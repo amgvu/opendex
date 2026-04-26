@@ -8,6 +8,7 @@ import type { PokemonEntry, PokemonVariant } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
+import { clearBlurOnLoad } from '@/lib/utils'
 
 import { TypeBadge } from '../TypeBadge'
 
@@ -75,10 +76,7 @@ export function DefaultCard({
           className="h-28 w-28 object-contain drop-shadow-md"
           height={128}
           loading={priority ? undefined : 'lazy'}
-          onLoad={e => {
-            if (e.currentTarget.parentElement)
-              e.currentTarget.parentElement.style.backgroundImage = 'none'
-          }}
+          onLoad={clearBlurOnLoad}
           priority={priority}
           sizes="112px"
           src={pokemon.officialUrl?.replace('/artwork/', '/artwork/thumbs/') ?? pokemon.imageUrl}

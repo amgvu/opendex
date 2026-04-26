@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { EvolutionStep, PokemonEntry } from '@/lib/types'
 
 import { formatPokedexId } from '@/lib/pokemon'
+import { clearBlurOnLoad } from '@/lib/utils'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { TabPanelContent } from './shared'
@@ -114,7 +115,6 @@ function PokemonNode({
 }) {
   const isCurrent = node.id === currentId
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
-  const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${node.id}.png`
 
   return (
     <button
@@ -127,7 +127,10 @@ function PokemonNode({
         alt={node.name}
         className={`object-contain drop-shadow-md ${large ? 'h-44 w-44 xl:h-52 xl:w-52 2xl:h-60 2xl:w-60' : 'h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28'}`}
         height={large ? 240 : 80}
-        src={spriteUrl}
+        loading="lazy"
+        onLoad={clearBlurOnLoad}
+        sizes={large ? '(min-width: 1536px) 240px, (min-width: 1280px) 208px, 176px' : '(min-width: 1536px) 112px, (min-width: 1280px) 96px, 80px'}
+        src={`/artwork/thumbs/${node.id}.webp`}
         unoptimized
         width={large ? 160 : 80}
       />
