@@ -35,6 +35,7 @@ export function ExpandedCard({
   detail,
   disableFlip,
   id,
+  onContainerClick,
   onExitComplete,
   pokemon,
   ref
@@ -43,6 +44,7 @@ export function ExpandedCard({
   detail?: PokemonEntry
   disableFlip?: boolean
   id: string
+  onContainerClick?: () => void
   onExitComplete: () => void
   pokemon: PokemonListEntry
   ref: RefObject<HTMLDivElement | null>
@@ -88,7 +90,7 @@ export function ExpandedCard({
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
       {active && (
-        <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4">
+        <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4" onClick={onContainerClick}>
           <motion.div
             className={`relative h-full w-full overflow-hidden sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
             drag="x"
@@ -103,6 +105,7 @@ export function ExpandedCard({
               if (info.offset.x < -50) onNext()
               else if (info.offset.x > 50) onPrev()
             }}
+            onClick={onContainerClick ? e => e.stopPropagation() : undefined}
             onDragStart={() => setDragging(true)}
             ref={ref}
             style={{

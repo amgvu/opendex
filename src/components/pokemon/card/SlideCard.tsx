@@ -84,6 +84,7 @@ export function SlideCard({
             detail={displayDetail}
             disableFlip
             id="__slide__"
+            onContainerClick={onClose}
             onExitComplete={() => {}}
             pokemon={displayPokemon}
             ref={ref}
