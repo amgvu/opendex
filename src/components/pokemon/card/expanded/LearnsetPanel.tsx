@@ -28,25 +28,25 @@ function LearnsetPanelSkeleton() {
   return (
     <TabPanelContent className="flex flex-col gap-4">
       <div className="animate-pulse">
-        <div className="h-3 w-14 rounded bg-white/10 mb-1.5" />
+        <div className="h-3 xl:h-3.5 w-14 xl:w-16 rounded bg-white/10 mb-1.5" />
         <div className="flex gap-2 pb-1 mb-0.5">
-          <div className="h-3 w-5 rounded bg-white/10" />
-          <div className="h-3 flex-1 rounded bg-white/10" />
-          <div className="h-3 w-10 rounded bg-white/10" />
-          <div className="h-3 w-8 rounded bg-white/10" />
-          <div className="h-3 w-6 rounded bg-white/10" />
-          <div className="h-3 w-6 rounded bg-white/10" />
-          <div className="h-3 w-6 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-5 xl:w-6 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 flex-1 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-8 xl:w-10 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
         </div>
         {Array.from({ length: 8 }).map((_, i) => (
           <div className="flex gap-2 py-1 border-t border-white/5" key={i}>
-            <div className="h-4 w-5 rounded bg-white/10" />
-            <div className="h-4 flex-1 rounded bg-white/10" />
-            <div className="h-4 w-10 rounded bg-white/10" />
-            <div className="h-4 w-8 rounded bg-white/10" />
-            <div className="h-4 w-6 rounded bg-white/10" />
-            <div className="h-4 w-6 rounded bg-white/10" />
-            <div className="h-4 w-6 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-5 xl:w-6 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 flex-1 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-10 xl:w-12 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-8 xl:w-10 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
           </div>
         ))}
       </div>

@@ -12,19 +12,19 @@ function BioPanelSkeleton() {
   return (
     <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
       <div className="animate-pulse flex flex-col gap-2 sm:gap-3">
-        <div className="h-4 w-36 rounded bg-white/10" />
+        <div className="h-4 xl:h-5 w-36 xl:w-44 rounded bg-white/10" />
         <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           {Array.from({ length: 4 }).map((_, i) => (
             <div className="flex flex-col gap-1" key={i}>
-              <div className="h-3 w-12 rounded bg-white/10" />
-              <div className="h-4 w-20 rounded bg-white/10" />
+              <div className="h-3 xl:h-3.5 w-12 xl:w-14 rounded bg-white/10" />
+              <div className="h-4 xl:h-5 w-20 xl:w-24 rounded bg-white/10" />
             </div>
           ))}
         </div>
         <div className="flex flex-col gap-1.5">
-          <div className="h-3.5 w-full rounded bg-white/10" />
-          <div className="h-3.5 w-full rounded bg-white/10" />
-          <div className="h-3.5 w-3/4 rounded bg-white/10" />
+          <div className="h-3.5 xl:h-4 w-full rounded bg-white/10" />
+          <div className="h-3.5 xl:h-4 w-full rounded bg-white/10" />
+          <div className="h-3.5 xl:h-4 w-3/4 rounded bg-white/10" />
         </div>
       </div>
     </TabPanelContent>
