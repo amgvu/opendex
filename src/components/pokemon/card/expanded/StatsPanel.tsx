@@ -30,8 +30,20 @@ export function StatsPanel({
   pokemon
 }: {
   bst: number
-  pokemon: PokemonEntry
+  pokemon: PokemonEntry | undefined
 }) {
+  if (!pokemon) {
+    return (
+      <TabPanelContent>
+        <div className="animate-pulse space-y-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div className="h-5 rounded bg-white/10" key={i} />
+          ))}
+        </div>
+      </TabPanelContent>
+    )
+  }
+
   const { immunities, resistances, weaknesses } =
     pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)
   const [expandedAbility, setExpandedAbility] = useState<null | string>(null)

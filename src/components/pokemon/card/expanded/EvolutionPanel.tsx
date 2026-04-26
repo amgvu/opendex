@@ -19,8 +19,16 @@ export function EvolutionPanel({
   pokemon
 }: {
   large?: boolean
-  pokemon: PokemonEntry
+  pokemon: PokemonEntry | undefined
 }) {
+  if (!pokemon) {
+    return (
+      <TabPanelContent>
+        <p className="text-xs text-white/30">Loading...</p>
+      </TabPanelContent>
+    )
+  }
+
   const chain = pokemon.evolutionChain
 
   if (chain === undefined) {

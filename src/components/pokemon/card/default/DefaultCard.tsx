@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { PokemonEntry, PokemonVariant } from '@/lib/types'
+import type { PokemonListEntry, PokemonListVariant } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, getTypeColor } from '@/lib/pokemon'
@@ -23,14 +23,14 @@ export function DefaultCard({
   id: string
   index: number
   onClick: () => void
-  pokemon: PokemonEntry
+  pokemon: PokemonListEntry
 }) {
   const priority = index < 10
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const [hovered, setHovered] = useState(false)
 
   const iconSrc = `/icons/${(pokemon.types[0] ?? 'normal').toLowerCase()}.svg`
-  const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
+  const variantIndex = (pokemon as PokemonListVariant).variantIndex ?? null
 
   return (
     <motion.div

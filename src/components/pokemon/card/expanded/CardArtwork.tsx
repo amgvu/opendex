@@ -2,11 +2,12 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonEntry, PokemonListEntry } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { useCardStore } from '@/stores/cardStore'
 export function CardArtwork({
+  detail,
   gifError,
   gifMounted,
   gifReady,
@@ -16,12 +17,13 @@ export function CardArtwork({
   setGifError,
   setGifReady
 }: {
+  detail?: PokemonEntry
   gifError: boolean
   gifMounted: boolean
   gifReady: boolean
   gmaxEnabled: boolean
   id: string
-  pokemon: PokemonEntry
+  pokemon: PokemonListEntry
   setGifError: (v: boolean) => void
   setGifReady: (v: boolean) => void
 }) {
@@ -29,8 +31,8 @@ export function CardArtwork({
 
   const blurRef = useRef<HTMLDivElement>(null)
 
-  const artSrc = gmaxEnabled && pokemon.gigantamax
-    ? (pokemon.gigantamax.officialUrl ?? pokemon.gigantamax.imageUrl ?? pokemon.officialUrl ?? pokemon.imageUrl)
+  const artSrc = gmaxEnabled && detail?.gigantamax
+    ? (detail.gigantamax.officialUrl ?? detail.gigantamax.imageUrl ?? pokemon.officialUrl ?? pokemon.imageUrl)
     : (shinyEnabled
         ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
         : pokemon.officialUrl) ?? pokemon.imageUrl

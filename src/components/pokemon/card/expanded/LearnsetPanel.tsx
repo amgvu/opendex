@@ -24,7 +24,19 @@ const CATEGORY_LABELS: Record<string, string> = {
   status: 'Stat'
 }
 
-export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry }) {
+export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
+  if (!pokemon) {
+    return (
+      <TabPanelContent>
+        <div className="animate-pulse space-y-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div className="h-5 rounded bg-white/10" key={i} />
+          ))}
+        </div>
+      </TabPanelContent>
+    )
+  }
+
   const { learnset } = pokemon
 
   if (!learnset) {

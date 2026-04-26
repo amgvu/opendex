@@ -1,7 +1,7 @@
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonListEntry } from '@/lib/types'
 
 import { fetchPokemon, type PokemonResponse } from '@/lib/api'
 
@@ -26,7 +26,7 @@ export function usePokemonQuery(
       staleTime: Infinity
     })
 
-  const pokemon: PokemonEntry[] = data ?? []
+  const pokemon: PokemonListEntry[] = data ?? []
   const loadMore = useCallback(() => { void fetchNextPage() }, [fetchNextPage])
 
   return { hasNextPage, isFetchingNextPage, loadMore, pokemon, status }
