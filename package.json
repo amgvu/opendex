@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "node scripts/download-artwork.mjs && next build",
+    "build": "node scripts/download-artwork.mjs && node scripts/generate-pokemon-list.mjs && next build",
     "start": "next start",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
