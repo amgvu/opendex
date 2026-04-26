@@ -14,6 +14,30 @@ type TreeNode = {
   name: string
 }
 
+function EvolutionPanelSkeleton() {
+  return (
+    <TabPanelContent className="flex w-full items-center justify-center">
+      <div className="animate-pulse flex items-center">
+        {([0, 1, 2] as const).map(i => (
+          <div className="flex items-center" key={i}>
+            <div className="flex flex-col items-center gap-1">
+              <div className="h-20 w-20 rounded-full bg-white/10" />
+              <div className="h-3 w-14 rounded bg-white/10" />
+              <div className="h-3 w-8 rounded bg-white/10" />
+            </div>
+            {i < 2 && (
+              <div className="flex flex-col items-center gap-1 px-3 min-w-[52px] xl:min-w-[64px]">
+                <div className="h-3 w-10 rounded bg-white/10" />
+                <div className="h-3 w-4 rounded bg-white/10" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </TabPanelContent>
+  )
+}
+
 export function EvolutionPanel({
   large,
   pokemon
@@ -21,13 +45,7 @@ export function EvolutionPanel({
   large?: boolean
   pokemon: PokemonEntry | undefined
 }) {
-  if (!pokemon) {
-    return (
-      <TabPanelContent>
-        <p className="text-xs text-white/30">Loading...</p>
-      </TabPanelContent>
-    )
-  }
+  if (!pokemon) return <EvolutionPanelSkeleton />
 
   const chain = pokemon.evolutionChain
 

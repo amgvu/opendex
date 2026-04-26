@@ -8,18 +8,31 @@ import {
   TabPanelContent
 } from './shared'
 
-export function BioPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
-  if (!pokemon) {
-    return (
-      <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
-        <div className="animate-pulse space-y-2">
+function BioPanelSkeleton() {
+  return (
+    <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
+      <div className="animate-pulse flex flex-col gap-2 sm:gap-3">
+        <div className="h-4 w-36 rounded bg-white/10" />
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div className="h-4 rounded bg-white/10" key={i} />
+            <div className="flex flex-col gap-1" key={i}>
+              <div className="h-3 w-12 rounded bg-white/10" />
+              <div className="h-4 w-20 rounded bg-white/10" />
+            </div>
           ))}
         </div>
-      </TabPanelContent>
-    )
-  }
+        <div className="flex flex-col gap-1.5">
+          <div className="h-3.5 w-full rounded bg-white/10" />
+          <div className="h-3.5 w-full rounded bg-white/10" />
+          <div className="h-3.5 w-3/4 rounded bg-white/10" />
+        </div>
+      </div>
+    </TabPanelContent>
+  )
+}
+
+export function BioPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
+  if (!pokemon) return <BioPanelSkeleton />
 
   return (
     <TabPanelContent className="flex flex-col gap-2 sm:gap-3">

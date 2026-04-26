@@ -25,6 +25,41 @@ const GROWTH_RATE_LABELS: Record<string, string> = {
   slow: 'Slow'
 }
 
+function StatsPanelSkeleton() {
+  return (
+    <TabPanelContent>
+      <div className="animate-pulse flex flex-col gap-2 sm:gap-3">
+        <div className="flex items-center justify-between">
+          <div className="h-4 w-20 rounded bg-white/10" />
+          <div className="h-4 w-16 rounded bg-white/10" />
+        </div>
+        <div className="flex flex-row gap-4">
+          <div className="flex flex-col flex-1 gap-1.5">
+            {(['w-8', 'w-12', 'w-14', 'w-14', 'w-14', 'w-10'] as const).map((w, i) => (
+              <div className="flex items-center gap-2 sm:gap-3" key={i}>
+                <div className={`h-3.5 ${w} shrink-0 rounded bg-white/10`} />
+                <div className="h-3.5 w-6 shrink-0 rounded bg-white/10" />
+                <div className="h-2 flex-1 rounded-full bg-white/10" />
+              </div>
+            ))}
+          </div>
+          <div className="w-28 xl:w-36 2xl:w-40 shrink-0 flex items-center justify-center">
+            <div className="h-24 w-24 rounded-full bg-white/10" />
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div className="flex flex-col gap-1" key={i}>
+              <div className="h-3 w-10 rounded bg-white/10" />
+              <div className="h-4 w-16 rounded bg-white/10" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </TabPanelContent>
+  )
+}
+
 export function StatsPanel({
   bst,
   pokemon
@@ -32,17 +67,7 @@ export function StatsPanel({
   bst: number
   pokemon: PokemonEntry | undefined
 }) {
-  if (!pokemon) {
-    return (
-      <TabPanelContent>
-        <div className="animate-pulse space-y-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div className="h-5 rounded bg-white/10" key={i} />
-          ))}
-        </div>
-      </TabPanelContent>
-    )
-  }
+  if (!pokemon) return <StatsPanelSkeleton />
 
   const { immunities, resistances, weaknesses } =
     pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)

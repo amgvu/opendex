@@ -24,18 +24,38 @@ const CATEGORY_LABELS: Record<string, string> = {
   status: 'Stat'
 }
 
-export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
-  if (!pokemon) {
-    return (
-      <TabPanelContent>
-        <div className="animate-pulse space-y-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div className="h-5 rounded bg-white/10" key={i} />
-          ))}
+function LearnsetPanelSkeleton() {
+  return (
+    <TabPanelContent className="flex flex-col gap-4">
+      <div className="animate-pulse">
+        <div className="h-3 w-14 rounded bg-white/10 mb-1.5" />
+        <div className="flex gap-2 pb-1 mb-0.5">
+          <div className="h-3 w-5 rounded bg-white/10" />
+          <div className="h-3 flex-1 rounded bg-white/10" />
+          <div className="h-3 w-10 rounded bg-white/10" />
+          <div className="h-3 w-8 rounded bg-white/10" />
+          <div className="h-3 w-6 rounded bg-white/10" />
+          <div className="h-3 w-6 rounded bg-white/10" />
+          <div className="h-3 w-6 rounded bg-white/10" />
         </div>
-      </TabPanelContent>
-    )
-  }
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div className="flex gap-2 py-1 border-t border-white/5" key={i}>
+            <div className="h-4 w-5 rounded bg-white/10" />
+            <div className="h-4 flex-1 rounded bg-white/10" />
+            <div className="h-4 w-10 rounded bg-white/10" />
+            <div className="h-4 w-8 rounded bg-white/10" />
+            <div className="h-4 w-6 rounded bg-white/10" />
+            <div className="h-4 w-6 rounded bg-white/10" />
+            <div className="h-4 w-6 rounded bg-white/10" />
+          </div>
+        ))}
+      </div>
+    </TabPanelContent>
+  )
+}
+
+export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
+  if (!pokemon) return <LearnsetPanelSkeleton />
 
   const { learnset } = pokemon
 
