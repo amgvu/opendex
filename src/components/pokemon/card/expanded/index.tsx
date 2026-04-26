@@ -56,11 +56,9 @@ export function ExpandedCard({
     activeTab,
     artworkCollapsed,
     gifEnabled,
-    gmaxEnabled,
     setActiveTab,
     setArtworkCollapsed,
     setGifEnabled,
-    setGmaxEnabled,
     setShinyEnabled,
     shinyEnabled
   } = useCardStore()
@@ -70,6 +68,7 @@ export function ExpandedCard({
   const tabSwipe = useTabSwipe(activeTab, setActiveTab)
   const artworkSwipe = useArtworkSwipe(artworkCollapsed, setArtworkCollapsed, () => setSelectedName(null))
   const { onNext, onPrev } = useNavContext()
+  const [gmaxEnabled, setGmaxEnabled] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -149,6 +148,7 @@ export function ExpandedCard({
                       gifError={gifError}
                       gifMounted={gifMounted}
                       gifReady={gifReady}
+                      gmaxEnabled={gmaxEnabled}
                       id={id}
                       pokemon={pokemon}
                       setGifError={setGifError}

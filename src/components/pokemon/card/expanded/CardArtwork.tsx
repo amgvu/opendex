@@ -10,6 +10,7 @@ export function CardArtwork({
   gifError,
   gifMounted,
   gifReady,
+  gmaxEnabled,
   id,
   pokemon,
   setGifError,
@@ -18,12 +19,13 @@ export function CardArtwork({
   gifError: boolean
   gifMounted: boolean
   gifReady: boolean
+  gmaxEnabled: boolean
   id: string
   pokemon: PokemonEntry
   setGifError: (v: boolean) => void
   setGifReady: (v: boolean) => void
 }) {
-  const { gifEnabled, gmaxEnabled, shinyEnabled } = useCardStore()
+  const { gifEnabled, shinyEnabled } = useCardStore()
 
   const blurRef = useRef<HTMLDivElement>(null)
 
