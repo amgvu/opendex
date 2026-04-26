@@ -906,6 +906,22 @@ async function main() {
     console.log(`\nAdded ${variantEntries.length} variant entries`)
   }
 
+  const entryNames = new Set(results.map(p => p.name))
+  for (const p of results) {
+    for (const step of (p.evolutionChain ?? [])) {
+      if (!entryNames.has(step.fromName)) {
+        const match = results.find(r => r.name.startsWith(step.fromName + '-') && !r.variantType)
+          ?? results.find(r => r.name.startsWith(step.fromName + '-'))
+        if (match) step.fromName = match.name
+      }
+      if (!entryNames.has(step.toName)) {
+        const match = results.find(r => r.name.startsWith(step.toName + '-') && !r.variantType)
+          ?? results.find(r => r.name.startsWith(step.toName + '-'))
+        if (match) step.toName = match.name
+      }
+    }
+  }
+
   // Fetch encounter locations for all entries (base + variants)
   console.log('\nFetching encounter locations...')
   for (let i = 0; i < results.length; i += CHUNK_SIZE) {
