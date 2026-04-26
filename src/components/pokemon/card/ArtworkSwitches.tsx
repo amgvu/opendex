@@ -1,9 +1,10 @@
 import { type ReactNode } from 'react'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonEntry, PokemonListEntry } from '@/lib/types'
 
 export function ArtworkSwitches({
+  detail,
   gifEnabled,
   gifError,
   gmaxEnabled,
@@ -13,17 +14,18 @@ export function ArtworkSwitches({
   setShinyEnabled,
   shinyEnabled
 }: {
+  detail?: PokemonEntry
   gifEnabled: boolean
   gifError: boolean
   gmaxEnabled: boolean
-  pokemon: PokemonEntry
+  pokemon: PokemonListEntry
   setGifEnabled: (v: boolean) => void
   setGmaxEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
   shinyEnabled: boolean
 }) {
   const { show3D, showGmax, showShiny } = getAvailableToggles(
-    pokemon,
+    detail,
     gifError,
     gmaxEnabled
   )
@@ -65,13 +67,13 @@ export function ArtworkSwitches({
 }
 
 function getAvailableToggles(
-  pokemon: PokemonEntry,
+  detail: PokemonEntry | undefined,
   gifError: boolean,
   gmaxEnabled: boolean
 ) {
   return {
     show3D: !gifError && !gmaxEnabled,
-    showGmax: !!pokemon.gigantamax,
+    showGmax: !!detail?.gigantamax,
     showShiny: !gmaxEnabled,
   }
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonListEntry } from '@/lib/types'
 
 import { useSelectionStore } from '@/stores/selectionStore'
 
@@ -13,7 +13,7 @@ export function useCardNavigation({
   fetchNextPage: () => void
   hasNextPage: boolean
   isFetchingNextPage: boolean
-  pokemon: PokemonEntry[]
+  pokemon: PokemonListEntry[]
 }) {
   const selectedName = useSelectionStore(s => s.selectedName)
   const setSelectedName = useSelectionStore(s => s.setSelectedName)

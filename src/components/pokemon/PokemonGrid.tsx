@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonListEntry } from '@/lib/types'
 
 import { Navbar } from '@/components/layout/Navbar'
 import { NavProvider } from '@/context/navigation'
@@ -99,7 +99,7 @@ export default function PokemonGrid() {
                 transform: `translateY(${row.start}px)`
               }}
             >
-              {getRowPokemon(row.index).map((p: PokemonEntry, i: number) => (
+              {getRowPokemon(row.index).map((p: PokemonListEntry, i: number) => (
                 <PokemonCard
                   active={!needsDirect && selectedName === p.name}
                   index={row.index * columns + i}

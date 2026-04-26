@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonListEntry } from '@/lib/types'
 
 import { usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
 import { capitalize, SITE_NAME } from '@/lib/pokemon'
 import { useSelectionStore } from '@/stores/selectionStore'
 
-export function useDirectCard(pokemon: PokemonEntry[]) {
+export function useDirectCard(pokemon: PokemonListEntry[]) {
   const selectedName = useSelectionStore(s => s.selectedName)
   const fromUrl = useSelectionStore(s => s.fromUrl)
 

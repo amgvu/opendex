@@ -4,7 +4,7 @@ import { LayoutGroup } from 'motion/react'
 import { memo, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonEntry, PokemonListEntry } from '@/lib/types'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
@@ -24,7 +24,7 @@ export const PokemonCard = memo(
     active: boolean
     index: number
     onClick: () => void
-    pokemon: PokemonEntry
+    pokemon: PokemonListEntry
   }) {
     const ref = useRef<HTMLDivElement>(null)
     const id = useId()
@@ -51,9 +51,10 @@ export const PokemonCard = memo(
         {showPortal && createPortal(
           <ExpandedCard
             active={active}
+            detail={detail ?? undefined}
             id={id}
             onExitComplete={handleExitComplete}
-            pokemon={detail ?? pokemon}
+            pokemon={pokemon}
             ref={ref}
           />,
           document.body

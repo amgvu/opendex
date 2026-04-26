@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { type CSSProperties, type RefObject, useState } from 'react'
 import { TbCheck, TbChevronUp, TbLink, TbX } from 'react-icons/tb'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonEntry, PokemonListEntry } from '@/lib/types'
 
 import { useNavContext } from '@/context/navigation'
 import { useArtworkSwipe } from '@/hooks/card/useArtworkSwipe'
@@ -32,15 +32,17 @@ const TAB_PANEL_CLASSES = `${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm x
 
 export function ExpandedCard({
   active,
+  detail,
   id,
   onExitComplete,
   pokemon,
   ref
 }: {
   active: boolean
+  detail?: PokemonEntry
   id: string
   onExitComplete: () => void
-  pokemon: PokemonEntry
+  pokemon: PokemonListEntry
   ref: RefObject<HTMLDivElement | null>
 }) {
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
@@ -145,6 +147,7 @@ export function ExpandedCard({
                     transition={ARTWORK_COLLAPSE_TRANSITION}
                   >
                     <CardArtwork
+                      detail={detail}
                       gifError={gifError}
                       gifMounted={gifMounted}
                       gifReady={gifReady}
@@ -168,6 +171,7 @@ export function ExpandedCard({
                       </button>
                       <div className="flex items-center gap-1.5">
                         <ArtworkSwitches
+                          detail={detail}
                           gifEnabled={gifEnabled}
                           gifError={gifError}
                           gmaxEnabled={gmaxEnabled}
@@ -256,20 +260,20 @@ export function ExpandedCard({
                   </Tabs.ListContainer>
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="stats">
                     {activeTab === 'stats' && (
-                      <StatsPanel bst={bst} pokemon={pokemon} />
+                      <StatsPanel bst={bst} pokemon={detail} />
                     )}
                   </Tabs.Panel>
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="bio">
-                    {activeTab === 'bio' && <BioPanel pokemon={pokemon} />}
+                    {activeTab === 'bio' && <BioPanel pokemon={detail} />}
                   </Tabs.Panel>
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="moves">
                     {activeTab === 'moves' && (
-                      <LearnsetPanel pokemon={pokemon} />
+                      <LearnsetPanel pokemon={detail} />
                     )}
                   </Tabs.Panel>
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="evo">
                     {activeTab === 'evo' && (
-                      <EvolutionPanel pokemon={pokemon} />
+                      <EvolutionPanel pokemon={detail} />
                     )}
                   </Tabs.Panel>
                 </Tabs>

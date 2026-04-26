@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import { IoMdStar } from 'react-icons/io'
 import { TbSparkles } from 'react-icons/tb'
 
-import type { PokemonEntry, PokemonVariant } from '@/lib/types'
+import type { PokemonListEntry, PokemonListVariant } from '@/lib/types'
 
 import { CARD_TRANSITION } from '@/lib/constants'
 import { formatPokedexId, VARIANT_LABELS } from '@/lib/pokemon'
@@ -14,11 +14,11 @@ export function CardHeader({
   pokemon
 }: {
   id: string
-  pokemon: PokemonEntry
+  pokemon: PokemonListEntry
 }) {
-  const variantIndex = (pokemon as PokemonVariant).variantIndex ?? null
-  const variantLabel = (pokemon as PokemonVariant).variantType
-    ? VARIANT_LABELS[(pokemon as PokemonVariant).variantType]
+  const variantIndex = (pokemon as PokemonListVariant).variantIndex ?? null
+  const variantLabel = (pokemon as PokemonListVariant).variantType
+    ? VARIANT_LABELS[(pokemon as PokemonListVariant).variantType]
     : null
   return (
     <div className="mb-1 sm:mb-4 flex items-start justify-between gap-3 pr-8 sm:pr-0">
