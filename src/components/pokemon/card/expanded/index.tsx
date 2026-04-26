@@ -68,10 +68,10 @@ export function ExpandedCard({
   } = useCardStore()
   const { gifError, gifMounted, gifReady, setGifError, setGifReady } =
     useGifLoader(gifEnabled, shinyEnabled)
-  const tabSwipe = useTabSwipe(activeTab, setActiveTab)
-  const artworkSwipe = useArtworkSwipe(artworkCollapsed, setArtworkCollapsed)
-  const { onNext, onPrev } = useNavContext()
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
+  const tabSwipe = useTabSwipe(activeTab, setActiveTab)
+  const artworkSwipe = useArtworkSwipe(artworkCollapsed, setArtworkCollapsed, () => setSelectedName(null))
+  const { onNext, onPrev } = useNavContext()
   const [dragging, setDragging] = useState(false)
   const [copied, setCopied] = useState(false)
 
