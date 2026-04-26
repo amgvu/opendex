@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <Navbar />
       <main className="mx-auto max-w-3xl p-4 pt-32 xl:pt-40">
-        <section className="mb-12">
+        <section className="mb-8">
           <h1 className="text-3xl font-semibold mb-6">About</h1>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
@@ -38,6 +38,20 @@ export default function AboutPage() {
             </p>
           </div>
         </section>
+
+        <footer className="mt-4 pt-4 border-t border-white/[0.08] text-sm text-muted-foreground">
+          <p>
+            Made possible by{' '}
+            <a
+              className="text-foreground hover:underline"
+              href="https://pokeapi.co"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              PokeAPI
+            </a>
+          </p>
+        </footer>
       </main>
     </>
   )
