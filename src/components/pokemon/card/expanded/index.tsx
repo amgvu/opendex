@@ -33,6 +33,7 @@ const TAB_PANEL_CLASSES = `${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm x
 export function ExpandedCard({
   active,
   detail,
+  disableFlip,
   id,
   onExitComplete,
   pokemon,
@@ -40,11 +41,14 @@ export function ExpandedCard({
 }: {
   active: boolean
   detail?: PokemonEntry
+  disableFlip?: boolean
   id: string
   onExitComplete: () => void
   pokemon: PokemonListEntry
   ref: RefObject<HTMLDivElement | null>
 }) {
+  const mode = useSelectionStore(s => s.mode)
+  const effectiveId = disableFlip || mode === 'slide' ? undefined : id
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const dragControls = useDragControls()
   const bst =
@@ -92,7 +96,8 @@ export function ExpandedCard({
             dragControls={dragControls}
             dragElastic={0.1}
             dragListener={false}
-            layoutId={`card-${pokemon.name}-${id}`}
+            exit={!effectiveId ? { opacity: 0, transition: { duration: 0.15 } } : undefined}
+            layoutId={effectiveId ? `card-${pokemon.name}-${effectiveId}` : undefined}
             onDragEnd={(_, info) => {
               setDragging(false)
               if (info.offset.x < -50) onNext()
@@ -134,7 +139,7 @@ export function ExpandedCard({
               </button>
 
               <div {...artworkSwipe}>
-              <CardHeader id={id} pokemon={pokemon} />
+              <CardHeader id={effectiveId} pokemon={pokemon} />
               {pokemon.officialUrl && (
                 <>
                   <motion.div
@@ -152,7 +157,7 @@ export function ExpandedCard({
                       gifMounted={gifMounted}
                       gifReady={gifReady}
                       gmaxEnabled={gmaxEnabled}
-                      id={id}
+                      id={effectiveId}
                       pokemon={pokemon}
                       setGifError={setGifError}
                       setGifReady={setGifReady}
