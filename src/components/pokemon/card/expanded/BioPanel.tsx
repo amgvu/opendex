@@ -8,7 +8,19 @@ import {
   TabPanelContent
 } from './shared'
 
-export function BioPanel({ pokemon }: { pokemon: PokemonEntry }) {
+export function BioPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
+  if (!pokemon) {
+    return (
+      <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
+        <div className="animate-pulse space-y-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div className="h-4 rounded bg-white/10" key={i} />
+          ))}
+        </div>
+      </TabPanelContent>
+    )
+  }
+
   return (
     <TabPanelContent className="flex flex-col gap-2 sm:gap-3">
       {pokemon.genus && (

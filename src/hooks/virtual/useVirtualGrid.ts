@@ -1,7 +1,7 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual'
 import { useCallback, useEffect, useState } from 'react'
 
-import type { PokemonEntry } from '@/lib/types'
+import type { PokemonListEntry } from '@/lib/types'
 
 const CARD_HEIGHT = 80
 const GAP = 16
@@ -11,7 +11,7 @@ const OVERSCAN = 2
 const preloadedUrls = new Set<string>()
 
 export function useVirtualGrid(
-  pokemon: PokemonEntry[],
+  pokemon: PokemonListEntry[],
   onLoadMore: () => void,
   hasNextPage: boolean,
   isFetchingNextPage: boolean
@@ -57,7 +57,7 @@ export function useVirtualGrid(
     }
   }, [virtualItems, rowCount, hasNextPage, isFetchingNextPage, onLoadMore, columns, pokemon])
 
-  function getRowPokemon(rowIndex: number): PokemonEntry[] {
+  function getRowPokemon(rowIndex: number): PokemonListEntry[] {
     const start = rowIndex * columns
     return pokemon.slice(start, start + columns)
   }

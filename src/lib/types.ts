@@ -51,6 +51,40 @@ export type Pokemon = PokemonBase & {
 
 export type PokemonEntry = Pokemon | PokemonVariant
 
+type PokemonListBase = {
+  attack: number
+  blurDataURL?: string
+  defense: number
+  description: string
+  generation: number
+  hp: number
+  id: number
+  imageUrl: string
+  isBaby: boolean
+  isLegendary: boolean
+  isMythical: boolean
+  name: string
+  officialUrl: null | string
+  shiny: SpriteSet
+  specialAttack: number
+  specialDefense: number
+  speed: number
+  types: string[]
+}
+
+export type PokemonList = PokemonListBase & {
+  variantType?: never
+}
+
+export type PokemonListVariant = PokemonListBase & {
+  variantIndex: number
+  variantOf: number
+  variantSlug: string
+  variantType: VariantType
+}
+
+export type PokemonListEntry = PokemonList | PokemonListVariant
+
 export type PokemonVariant = PokemonBase & {
   female: null
   gigantamax: null

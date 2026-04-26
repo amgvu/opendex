@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
-import { getPokemonData } from '@/lib/pokemon-data'
+import { getPokemonListData } from '@/lib/pokemon-data'
 
 export function GET(request: NextRequest) {
   try {
@@ -58,7 +58,7 @@ function getFilteredSorted(
   types: string[],
   gens: number[]
 ) {
-  const data = getPokemonData()
+  const data = getPokemonListData()
   const term = search.toLowerCase()
   let result = search
     ? data.filter(
