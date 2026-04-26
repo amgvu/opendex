@@ -22,15 +22,15 @@ export default function AboutPage() {
             </p>
             <p>
               My goal for this app is to be a comprehensive, easy-to-use
-              resource for Pokemon lore and data, with a strong focus on user
-              experience. Some features are already in development and planned
-              to release very soon, such as battle simulation and Champions
-              related tools.
+              resource for Pokemon lore and data, with a strong focus on a
+              seamless user experience. Some features are already in development
+              and planned to release very soon, such as battle simulation and
+              Champions related tools.
             </p>
             <p>
-              I didn&apos;t actually know much about Pokemon going into this,
-              but I enjoy building in new domains, so I&apos;m shaping Opendex
-              into something even the most passionate fans will enjoy using.
+              I didn&apos;t know much about Pokemon going into this, but I enjoy
+              building in new domains, so I&apos;m shaping Opendex into
+              something even the most passionate fans will enjoy using.
             </p>
             <p>
               Something missing? A feature you&apos;d love to see? Reach out to
