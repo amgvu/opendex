@@ -17,6 +17,11 @@ export function useCardNavigation({
 }) {
   const selectedName = useSelectionStore(s => s.selectedName)
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
+  const navigateTo = useSelectionStore(s => s.navigateTo)
+
+  function isMobile() {
+    return typeof window !== 'undefined' && window.innerWidth < 640
+  }
 
   const selectedIndex = useMemo(
     () => pokemon.findIndex(p => p.name === selectedName),
@@ -36,27 +41,32 @@ export function useCardNavigation({
     if (!canNavigate() || selectedIndex === -1) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
-      setSelectedName(next.name)
+      if (isMobile()) navigateTo(next.name, 'left')
+      else setSelectedName(next.name)
     } else if (hasNextPage && !isFetchingNextPage) {
       pendingNextRef.current = true
       void fetchNextPage()
     }
-  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, pokemon, selectedIndex, setSelectedName])
+  }, [canNavigate, fetchNextPage, hasNextPage, isFetchingNextPage, navigateTo, pokemon, selectedIndex, setSelectedName])
 
   const onPrev = useCallback(() => {
     if (!canNavigate() || selectedIndex === -1) return
     const prev = pokemon[selectedIndex - 1]
-    if (prev) setSelectedName(prev.name)
-  }, [canNavigate, pokemon, selectedIndex, setSelectedName])
+    if (prev) {
+      if (isMobile()) navigateTo(prev.name, 'right')
+      else setSelectedName(prev.name)
+    }
+  }, [canNavigate, navigateTo, pokemon, selectedIndex, setSelectedName])
 
   useEffect(() => {
     if (!pendingNextRef.current) return
     const next = pokemon[selectedIndex + 1]
     if (next) {
       pendingNextRef.current = false
-      setSelectedName(next.name)
+      if (isMobile()) navigateTo(next.name, 'left')
+      else setSelectedName(next.name)
     }
-  }, [pokemon, selectedIndex, setSelectedName])
+  }, [navigateTo, pokemon, selectedIndex, setSelectedName])
 
   useEffect(() => {
     if (!selectedName) return

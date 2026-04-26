@@ -7,7 +7,7 @@ import type { PokemonListEntry } from '@/lib/types'
 import { Navbar } from '@/components/layout/Navbar'
 import { NavProvider } from '@/context/navigation'
 import { useCardNavigation } from '@/hooks/card/useCardNavigation'
-import { useDirectCard } from '@/hooks/card/useDirectCard'
+import { useSlideCard } from '@/hooks/card/useSlideCard'
 import { useFilters } from '@/hooks/filters/useFilters'
 import { useSearch } from '@/hooks/filters/useSearch'
 import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
@@ -19,8 +19,8 @@ import { useFilterStore } from '@/stores/filterStore'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { DefaultCardSkeleton } from './card/default/DefaultCardSkeleton'
-import { DirectCard } from './card/DirectCard'
 import { PokemonCard } from './card/PokemonCard'
+import { SlideCard } from './card/SlideCard'
 import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
 
@@ -50,7 +50,8 @@ export default function PokemonGrid() {
       selectedGens
     )
 
-  const { directData, needsDirect } = useDirectCard(pokemon)
+  const { needsSlide, slideData, slideDetail } = useSlideCard(pokemon)
+  const mode = useSelectionStore(s => s.mode)
 
   const { onNext, onPrev } = useCardNavigation({
     fetchNextPage: loadMore,
@@ -75,7 +76,7 @@ export default function PokemonGrid() {
           />
         )}
       </AnimatePresence>
-      {needsDirect && directData && <DirectCard pokemon={directData} />}
+      <SlideCard active={needsSlide} detail={slideDetail} pokemon={slideData} />
       <Navbar>
         <PokemonToolbar />
       </Navbar>
@@ -101,7 +102,7 @@ export default function PokemonGrid() {
             >
               {getRowPokemon(row.index).map((p: PokemonListEntry, i: number) => (
                 <PokemonCard
-                  active={!needsDirect && selectedName === p.name}
+                  active={mode === 'flip' && selectedName === p.name}
                   index={row.index * columns + i}
                   key={p.name}
                   onClick={() => setSelectedName(p.name)}

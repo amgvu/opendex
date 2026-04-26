@@ -33,18 +33,24 @@ const TAB_PANEL_CLASSES = `${TAB_PANEL_SCROLL} pt-2 sm:pt-3 text-xs sm:text-sm x
 export function ExpandedCard({
   active,
   detail,
+  disableFlip,
   id,
+  onContainerClick,
   onExitComplete,
   pokemon,
   ref
 }: {
   active: boolean
   detail?: PokemonEntry
+  disableFlip?: boolean
   id: string
+  onContainerClick?: () => void
   onExitComplete: () => void
   pokemon: PokemonListEntry
   ref: RefObject<HTMLDivElement | null>
 }) {
+  const mode = useSelectionStore(s => s.mode)
+  const effectiveId = disableFlip || mode === 'slide' ? undefined : id
   const typeColor = getTypeColor(pokemon.types[0] ?? '')
   const dragControls = useDragControls()
   const bst =
@@ -84,7 +90,7 @@ export function ExpandedCard({
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
       {active && (
-        <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4">
+        <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4" onClick={onContainerClick}>
           <motion.div
             className={`relative h-full w-full overflow-hidden sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
             drag="x"
@@ -92,12 +98,14 @@ export function ExpandedCard({
             dragControls={dragControls}
             dragElastic={0.1}
             dragListener={false}
-            layoutId={`card-${pokemon.name}-${id}`}
+            exit={!effectiveId ? { opacity: 0, transition: { duration: 0.15 } } : undefined}
+            layoutId={effectiveId ? `card-${pokemon.name}-${effectiveId}` : undefined}
             onDragEnd={(_, info) => {
               setDragging(false)
               if (info.offset.x < -50) onNext()
               else if (info.offset.x > 50) onPrev()
             }}
+            onClick={onContainerClick ? e => e.stopPropagation() : undefined}
             onDragStart={() => setDragging(true)}
             ref={ref}
             style={{
@@ -134,7 +142,7 @@ export function ExpandedCard({
               </button>
 
               <div {...artworkSwipe}>
-              <CardHeader id={id} pokemon={pokemon} />
+              <CardHeader id={effectiveId} pokemon={pokemon} />
               {pokemon.officialUrl && (
                 <>
                   <motion.div
@@ -152,7 +160,7 @@ export function ExpandedCard({
                       gifMounted={gifMounted}
                       gifReady={gifReady}
                       gmaxEnabled={gmaxEnabled}
-                      id={id}
+                      id={effectiveId}
                       pokemon={pokemon}
                       setGifError={setGifError}
                       setGifReady={setGifReady}

@@ -13,7 +13,7 @@ export function CardHeader({
   id,
   pokemon
 }: {
-  id: string
+  id: string | undefined
   pokemon: PokemonListEntry
 }) {
   const variantIndex = (pokemon as PokemonListVariant).variantIndex ?? null
@@ -26,14 +26,14 @@ export function CardHeader({
         <div className="flex items-center gap-1.5">
           <motion.h2
             className={`min-w-0 truncate pb-1 font-bold capitalize text-white ${pokemon.name.length > 14 ? 'text-lg xl:text-xl 2xl:text-2xl' : 'text-2xl xl:text-3xl 2xl:text-4xl'}`}
-            layoutId={`name-${pokemon.name}-${id}`}
+            layoutId={id ? `name-${pokemon.name}-${id}` : undefined}
             transition={CARD_TRANSITION}
           >
             {pokemon.name}
           </motion.h2>
           {(pokemon.isLegendary || pokemon.isMythical) && (
             <motion.div
-              layoutId={`star-${pokemon.name}-${id}`}
+              layoutId={id ? `star-${pokemon.name}-${id}` : undefined}
               transition={CARD_TRANSITION}
             >
               {pokemon.isMythical ? (
@@ -70,7 +70,7 @@ export function CardHeader({
       </div>
       <motion.div
         className="flex shrink-0 flex-wrap gap-1"
-        layoutId={`types-${pokemon.name}-${id}`}
+        layoutId={id ? `types-${pokemon.name}-${id}` : undefined}
         transition={CARD_TRANSITION}
       >
         {pokemon.types.map(type => (

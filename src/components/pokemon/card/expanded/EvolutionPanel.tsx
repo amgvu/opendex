@@ -140,13 +140,14 @@ function PokemonNode({
   node: TreeNode
 }) {
   const isCurrent = node.id === currentId
-  const setSelectedName = useSelectionStore(s => s.setSelectedName)
+  const navigateTo = useSelectionStore(s => s.navigateTo)
+  const direction = node.id > currentId ? 'left' : 'right'
 
   return (
     <button
       className={`flex flex-col items-center gap-1 transition-opacity ${isCurrent ? 'opacity-100 cursor-default' : 'opacity-60 cursor-pointer hover:opacity-100'}`}
       disabled={isCurrent}
-      onClick={() => !isCurrent && setSelectedName(node.name)}
+      onClick={() => !isCurrent && navigateTo(node.name, direction)}
       type="button"
     >
       <Image

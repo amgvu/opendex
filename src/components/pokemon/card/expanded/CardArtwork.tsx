@@ -22,7 +22,7 @@ export function CardArtwork({
   gifMounted: boolean
   gifReady: boolean
   gmaxEnabled: boolean
-  id: string
+  id: string | undefined
   pokemon: PokemonListEntry
   setGifError: (v: boolean) => void
   setGifReady: (v: boolean) => void
@@ -71,7 +71,7 @@ export function CardArtwork({
   return (
     <motion.div
       className="relative flex justify-center"
-      layoutId={`image-${pokemon.name}-${id}`}
+      layoutId={id ? `image-${pokemon.name}-${id}` : undefined}
       transition={CARD_TRANSITION}
     >
       <div
