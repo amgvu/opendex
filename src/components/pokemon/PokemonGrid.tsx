@@ -1,7 +1,6 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
-import Image from 'next/image'
 
 import type { PokemonEntry } from '@/lib/types'
 
@@ -15,13 +14,17 @@ import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
 import { useSort } from '@/hooks/filters/useSort'
 import { usePokemonQuery } from '@/hooks/query/usePokemonQuery'
 import { useVirtualGrid } from '@/hooks/virtual/useVirtualGrid'
+import { POKEMON_GRID_COLS } from '@/lib/constants'
 import { useFilterStore } from '@/stores/filterStore'
 import { useSelectionStore } from '@/stores/selectionStore'
 
+import { DefaultCardSkeleton } from './card/default/DefaultCardSkeleton'
 import { DirectCard } from './card/DirectCard'
 import { PokemonCard } from './card/PokemonCard'
 import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
+
+const NEXT_PAGE_SKELETONS = Array.from({ length: 6 })
 
 export default function PokemonGrid() {
   // URL sync — side-effect only
@@ -109,14 +112,10 @@ export default function PokemonGrid() {
           ))}
         </div>
         {isFetchingNextPage && (
-          <div className="flex justify-center py-4">
-            <Image
-              alt="Loading"
-              className="h-8 w-8 animate-spin grayscale"
-              height={64}
-              src="/opendexball.svg"
-              width={64}
-            />
+          <div className={`${POKEMON_GRID_COLS} pb-4`}>
+            {NEXT_PAGE_SKELETONS.map((_, i) => (
+              <DefaultCardSkeleton key={i} />
+            ))}
           </div>
         )}
       </div>

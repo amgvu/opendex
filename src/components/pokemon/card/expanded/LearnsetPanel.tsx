@@ -143,7 +143,7 @@ export function MoveTable({
               <AnimatePresence>
                 {expandedMove === move.name && (move.shortEffect || move.effect) && (
                   <tr className="bg-white/5">
-                    <td colSpan={showLevel ? 7 : 6} className="border-t border-white/5">
+                    <td className="border-t border-white/5" colSpan={showLevel ? 7 : 6}>
                       <motion.div
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}

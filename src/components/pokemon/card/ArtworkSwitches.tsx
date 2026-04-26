@@ -3,18 +3,6 @@ import { TbSparkles } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/lib/types'
 
-function getAvailableToggles(
-  pokemon: PokemonEntry,
-  gifError: boolean,
-  gmaxEnabled: boolean
-) {
-  return {
-    show3D: !gifError && !gmaxEnabled,
-    showGmax: !!pokemon.gigantamax,
-    showShiny: !gmaxEnabled,
-  }
-}
-
 export function ArtworkSwitches({
   gifEnabled,
   gifError,
@@ -74,6 +62,18 @@ export function ArtworkSwitches({
       )}
     </>
   )
+}
+
+function getAvailableToggles(
+  pokemon: PokemonEntry,
+  gifError: boolean,
+  gmaxEnabled: boolean
+) {
+  return {
+    show3D: !gifError && !gmaxEnabled,
+    showGmax: !!pokemon.gigantamax,
+    showShiny: !gmaxEnabled,
+  }
 }
 
 function ToggleChip({

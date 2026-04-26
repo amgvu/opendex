@@ -6,7 +6,7 @@ export function useSwipeGesture(
   onSwipe: (direction: SwipeDirection) => void,
   threshold = 50
 ) {
-  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const touchStart = useRef<null | { x: number; y: number }>(null)
 
   function onTouchStart(e: React.TouchEvent) {
     if (!e.touches[0]) return

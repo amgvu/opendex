@@ -8,7 +8,7 @@ export function useArtworkSwipe(
   setArtworkCollapsed: (v: boolean) => void,
   onDismiss?: () => void
 ) {
-  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const touchStart = useRef<null | { x: number; y: number }>(null)
 
   function onTouchStart(e: React.TouchEvent) {
     if (!e.touches[0]) return

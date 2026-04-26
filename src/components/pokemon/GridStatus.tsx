@@ -1,4 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
+import { POKEMON_GRID_COLS } from '@/lib/constants'
+
+import { DefaultCardSkeleton } from './card/default/DefaultCardSkeleton'
+
+const SKELETONS = Array.from({ length: 18 })
+
 export function GridStatus({
   empty,
   status
@@ -8,12 +13,10 @@ export function GridStatus({
 }) {
   if (status === 'pending')
     return (
-      <div className="flex justify-center py-8">
-        <img
-          alt="Loading"
-          className="h-10 w-10 animate-spin grayscale"
-          src="/opendexball.svg"
-        />
+      <div className={POKEMON_GRID_COLS}>
+        {SKELETONS.map((_, i) => (
+          <DefaultCardSkeleton key={i} />
+        ))}
       </div>
     )
   if (status === 'error')

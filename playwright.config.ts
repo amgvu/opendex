@@ -65,12 +65,12 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
-
   webServer: {
     command: 'pnpm dev',
     reuseExistingServer: !process.env.CI,
     url: 'http://localhost:3000',
   },
+
+  /* Opt out of parallel tests on CI. */
+  workers: process.env.CI ? 1 : undefined,
 });

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.join(__dirname, '..')
@@ -11,21 +11,6 @@ const POKEMON_JSON = path.join(ROOT, 'src', 'data', 'pokemon.json')
 const CONCURRENCY = 20
 const BASE =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'
-
-// /artwork/1.webp → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
-// https://raw...1.png → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
-function resolveEntry(val) {
-  if (val.startsWith('/artwork/')) {
-    const localRelative = val.slice('/artwork/'.length)
-    const remoteSuffix = localRelative.replace(/\.webp$/, '.png')
-    return { localRelative, remoteUrl: BASE + remoteSuffix }
-  }
-  if (val.startsWith('http')) {
-    const localRelative = val.replace(BASE, '').replace(/\.png$/, '.webp')
-    return { localRelative, remoteUrl: val }
-  }
-  return null
-}
 
 async function downloadAndConvert(remoteUrl, destAbs, retries = 3) {
   fs.mkdirSync(path.dirname(destAbs), { recursive: true })
@@ -41,23 +26,6 @@ async function downloadAndConvert(remoteUrl, destAbs, retries = 3) {
       await new Promise(r => setTimeout(r, 500 * attempt))
     }
   }
-}
-
-async function runPool(tasks, concurrency) {
-  let i = 0
-  let done = 0
-  const total = tasks.length
-  async function worker() {
-    while (i < tasks.length) {
-      const task = tasks[i++]
-      await task()
-      done++
-      if (done % 50 === 0 || done === total)
-        process.stdout.write(`\r  ${done}/${total}`)
-    }
-  }
-  await Promise.all(Array.from({ length: concurrency }, worker))
-  console.log()
 }
 
 async function main() {
@@ -137,6 +105,38 @@ async function main() {
 
   fs.writeFileSync(POKEMON_JSON, JSON.stringify(pokemon, null, 2))
   console.log('Done!')
+}
+
+// /artwork/1.webp → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
+// https://raw...1.png → { localRelative: '1.webp', remoteUrl: 'https://...1.png' }
+function resolveEntry(val) {
+  if (val.startsWith('/artwork/')) {
+    const localRelative = val.slice('/artwork/'.length)
+    const remoteSuffix = localRelative.replace(/\.webp$/, '.png')
+    return { localRelative, remoteUrl: BASE + remoteSuffix }
+  }
+  if (val.startsWith('http')) {
+    const localRelative = val.replace(BASE, '').replace(/\.png$/, '.webp')
+    return { localRelative, remoteUrl: val }
+  }
+  return null
+}
+
+async function runPool(tasks, concurrency) {
+  let i = 0
+  let done = 0
+  const total = tasks.length
+  async function worker() {
+    while (i < tasks.length) {
+      const task = tasks[i++]
+      await task()
+      done++
+      if (done % 50 === 0 || done === total)
+        process.stdout.write(`\r  ${done}/${total}`)
+    }
+  }
+  await Promise.all(Array.from({ length: concurrency }, worker))
+  console.log()
 }
 
 main().catch(err => {
