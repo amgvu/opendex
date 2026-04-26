@@ -18,8 +18,7 @@ export default function AboutPage() {
             <p>
               Hi, I&apos;m Kevin! This started as a take-home interview project,
               but after lots of positive feedback from Pokemon fans, I decided
-              to ship Opendex and turn it into something people can actually
-              use.
+              to ship Opendex and turn it into something people can use.
             </p>
             <p>
               My goal for this app is to be a comprehensive, easy-to-use
