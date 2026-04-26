@@ -21,9 +21,9 @@ const slideVariants = {
     x: dir === 'left' ? '100%' : dir === 'right' ? '-100%' : 0
   }),
   exit: (dir: SlideDirection) => ({
-    opacity: dir === null ? 0 : 0.85,
+    opacity: 0,
     scale: dir === null ? 0.95 : 1,
-    x: dir === 'left' ? '-55%' : dir === 'right' ? '55%' : 0
+    x: dir === 'left' ? '-30%' : dir === 'right' ? '30%' : 0
   })
 }
 
