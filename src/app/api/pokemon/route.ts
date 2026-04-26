@@ -2,12 +2,7 @@ import type { NextRequest } from 'next/server'
 
 import { NextResponse } from 'next/server'
 
-import type { PokemonEntry } from '@/lib/types'
-
-import _pokemonData from '@/data/pokemon.json'
-
-const pokemonData = _pokemonData as unknown as PokemonEntry[]
-
+import { getPokemonData } from '@/lib/pokemon-data'
 
 export function GET(request: NextRequest) {
   try {
@@ -21,15 +16,8 @@ export function GET(request: NextRequest) {
     const gens =
       searchParams.get('gens')?.split(',').map(Number).filter(Boolean) ?? []
 
-    const filteredPokemon = getFilteredSorted(
-      search,
-      sortBy,
-      sortOrder,
-      types,
-      gens
-    )
+    const filteredPokemon = getFilteredSorted(search, sortBy, sortOrder, types, gens)
 
-    // Calculate pagination
     const total = filteredPokemon.length
     const totalPages = Math.ceil(total / limit)
     const startIndex = (page - 1) * limit
@@ -70,16 +58,17 @@ function getFilteredSorted(
   types: string[],
   gens: number[]
 ) {
+  const data = getPokemonData()
   const term = search.toLowerCase()
   let result = search
-    ? pokemonData.filter(
+    ? data.filter(
         p =>
           p.name.toLowerCase().includes(term) ||
           p.types.some(t => t.toLowerCase().includes(term)) ||
           p.description.toLowerCase().includes(term) ||
           String(p.id) === search
       )
-    : [...pokemonData]
+    : [...data]
 
   if (types.length > 0) {
     result = result.filter(p => types.every(t => p.types.includes(t)))

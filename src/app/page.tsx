@@ -4,8 +4,8 @@ import { Suspense } from 'react'
 
 import PokemonGrid from '@/components/pokemon/PokemonGrid'
 import { buildFilterMetadata } from '@/lib/metadata'
-import { pokemonByName } from '@/lib/pokemon-data'
 import { capitalize, SITE_NAME } from '@/lib/pokemon'
+import { getPokemonByName } from '@/lib/pokemon-data'
 
 export async function generateMetadata({
   searchParams
@@ -22,7 +22,7 @@ export async function generateMetadata({
     await searchParams
 
   if (name) {
-    const pokemon = pokemonByName.get(name)
+    const pokemon = getPokemonByName().get(name)
     if (pokemon) {
       const displayName = capitalize(pokemon.name)
       const types = pokemon.types.join(' · ')
