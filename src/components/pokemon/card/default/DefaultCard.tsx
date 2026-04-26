@@ -50,7 +50,7 @@ export function DefaultCard({
         className="absolute bottom-2 -left-9 h-[128px] w-[128px] scale-[1.5] origin-top-left opacity-20 grayscale"
         draggable={false}
         height={128}
-        loading="eager"
+        loading="lazy"
         onContextMenu={e => e.preventDefault()}
         sizes="(max-width: 768px) 112px, 140px"
         src={iconSrc}
@@ -79,7 +79,10 @@ export function DefaultCard({
           onLoad={clearBlurOnLoad}
           priority={priority}
           sizes="112px"
-          src={pokemon.officialUrl?.replace('/artwork/', '/artwork/thumbs/') ?? pokemon.imageUrl}
+          src={
+            pokemon.officialUrl?.replace('/artwork/', '/artwork/thumbs/') ??
+            pokemon.imageUrl
+          }
           unoptimized
           width={128}
         />
