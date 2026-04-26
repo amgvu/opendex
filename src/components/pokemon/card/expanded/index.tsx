@@ -55,12 +55,10 @@ export function ExpandedCard({
   const {
     activeTab,
     artworkCollapsed,
-    femaleEnabled,
     gifEnabled,
     gmaxEnabled,
     setActiveTab,
     setArtworkCollapsed,
-    setFemaleEnabled,
     setGifEnabled,
     setGmaxEnabled,
     setShinyEnabled,
@@ -170,12 +168,10 @@ export function ExpandedCard({
                       </button>
                       <div className="flex items-center gap-1.5">
                         <ArtworkSwitches
-                          femaleEnabled={femaleEnabled}
                           gifEnabled={gifEnabled}
                           gifError={gifError}
                           gmaxEnabled={gmaxEnabled}
                           pokemon={pokemon}
-                          setFemaleEnabled={setFemaleEnabled}
                           setGifEnabled={setGifEnabled}
                           setGmaxEnabled={setGmaxEnabled}
                           setShinyEnabled={setShinyEnabled}

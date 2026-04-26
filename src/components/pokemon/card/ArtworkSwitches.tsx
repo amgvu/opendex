@@ -3,52 +3,41 @@ import { TbSparkles } from 'react-icons/tb'
 
 import type { PokemonEntry } from '@/lib/types'
 
-type ToggleState = {
-  femaleEnabled: boolean
-  gmaxEnabled: boolean
-  shinyEnabled: boolean
-}
-
 function getAvailableToggles(
   pokemon: PokemonEntry,
   gifError: boolean,
-  { femaleEnabled, gmaxEnabled, shinyEnabled }: ToggleState
+  gmaxEnabled: boolean
 ) {
   return {
-    show3D: !gifError && !gmaxEnabled && !femaleEnabled,
-    showFemale: !!pokemon.female && !gmaxEnabled && !shinyEnabled,
+    show3D: !gifError && !gmaxEnabled,
     showGmax: !!pokemon.gigantamax,
-    showShiny: !gmaxEnabled && !femaleEnabled,
+    showShiny: !gmaxEnabled,
   }
 }
 
 export function ArtworkSwitches({
-  femaleEnabled,
   gifEnabled,
   gifError,
   gmaxEnabled,
   pokemon,
-  setFemaleEnabled,
   setGifEnabled,
   setGmaxEnabled,
   setShinyEnabled,
   shinyEnabled
 }: {
-  femaleEnabled: boolean
   gifEnabled: boolean
   gifError: boolean
   gmaxEnabled: boolean
   pokemon: PokemonEntry
-  setFemaleEnabled: (v: boolean) => void
   setGifEnabled: (v: boolean) => void
   setGmaxEnabled: (v: boolean) => void
   setShinyEnabled: (v: boolean) => void
   shinyEnabled: boolean
 }) {
-  const { show3D, showFemale, showGmax, showShiny } = getAvailableToggles(
+  const { show3D, showGmax, showShiny } = getAvailableToggles(
     pokemon,
     gifError,
-    { femaleEnabled, gmaxEnabled, shinyEnabled }
+    gmaxEnabled
   )
 
   return (
@@ -59,20 +48,11 @@ export function ArtworkSwitches({
           onClick={() => {
             if (!gmaxEnabled) {
               setShinyEnabled(false)
-              setFemaleEnabled(false)
             }
             setGmaxEnabled(!gmaxEnabled)
           }}
         >
           G-Max
-        </ToggleChip>
-      )}
-      {showFemale && (
-        <ToggleChip
-          active={femaleEnabled}
-          onClick={() => setFemaleEnabled(!femaleEnabled)}
-        >
-          ♀
         </ToggleChip>
       )}
       {showShiny && (

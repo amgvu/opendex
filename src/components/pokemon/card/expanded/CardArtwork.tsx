@@ -23,20 +23,16 @@ export function CardArtwork({
   setGifError: (v: boolean) => void
   setGifReady: (v: boolean) => void
 }) {
-  const { femaleEnabled, gifEnabled, gmaxEnabled, shinyEnabled } = useCardStore()
+  const { gifEnabled, gmaxEnabled, shinyEnabled } = useCardStore()
 
   const blurRef = useRef<HTMLDivElement>(null)
 
   const artSrc = gmaxEnabled && pokemon.gigantamax
     ? (pokemon.gigantamax.officialUrl ?? pokemon.gigantamax.imageUrl ?? pokemon.officialUrl ?? pokemon.imageUrl)
-    : femaleEnabled && pokemon.female
-      ? (pokemon.female.officialUrl ?? pokemon.female.imageUrl)
-      : (shinyEnabled
-          ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
-          : pokemon.officialUrl) ?? pokemon.imageUrl
-  const gifSrc = femaleEnabled && pokemon.female
-    ? pokemon.female.imageUrl
-    : shinyEnabled
+    : (shinyEnabled
+        ? (pokemon.shiny?.officialUrl ?? pokemon.officialUrl)
+        : pokemon.officialUrl) ?? pokemon.imageUrl
+  const gifSrc = shinyEnabled
       ? (pokemon.shiny?.imageUrl ?? pokemon.imageUrl)
       : pokemon.imageUrl
   const showGif = gifEnabled && !gmaxEnabled
