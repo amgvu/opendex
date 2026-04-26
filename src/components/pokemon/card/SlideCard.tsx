@@ -43,13 +43,19 @@ export function SlideCard({
   const activeRef = useRef(active)
   activeRef.current = active
 
-  // Keep the last valid pokemon so the exit animation has data
+  // Keep the last valid pokemon so the exit animation has data.
+  // Clear refs when a new session starts so stale data from a prior session isn't shown.
   const lastPokemonRef = useRef<null | PokemonListEntry>(null)
-  if (pokemon) lastPokemonRef.current = pokemon
-  const displayPokemon = pokemon ?? lastPokemonRef.current
-
   const lastDetailRef = useRef<PokemonEntry | undefined>(undefined)
+  const prevSessionActiveRef = useRef(false)
+  if (active && !prevSessionActiveRef.current) {
+    lastPokemonRef.current = null
+    lastDetailRef.current = undefined
+  }
+  prevSessionActiveRef.current = active
+  if (pokemon) lastPokemonRef.current = pokemon
   if (detail) lastDetailRef.current = detail
+  const displayPokemon = pokemon ?? lastPokemonRef.current
   const displayDetail = detail ?? lastDetailRef.current
 
   useEffect(() => {
