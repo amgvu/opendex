@@ -1,6 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
+import { TbLoader2 } from 'react-icons/tb'
 
 import type { PokemonListEntry } from '@/lib/types'
 
@@ -14,17 +15,13 @@ import { useSelectedPokemon } from '@/hooks/filters/useSelectedPokemon'
 import { useSort } from '@/hooks/filters/useSort'
 import { usePokemonQuery } from '@/hooks/query/usePokemonQuery'
 import { useVirtualGrid } from '@/hooks/virtual/useVirtualGrid'
-import { POKEMON_GRID_COLS } from '@/lib/constants'
 import { useFilterStore } from '@/stores/filterStore'
 import { useSelectionStore } from '@/stores/selectionStore'
 
-import { DefaultCardSkeleton } from './card/default/DefaultCardSkeleton'
 import { PokemonCard } from './card/PokemonCard'
 import { SlideCard } from './card/SlideCard'
 import { PokemonToolbar } from './controls/PokemonToolbar'
 import { GridStatus } from './GridStatus'
-
-const NEXT_PAGE_SKELETONS = Array.from({ length: 6 })
 
 export default function PokemonGrid() {
   // URL sync — side-effect only
@@ -113,10 +110,8 @@ export default function PokemonGrid() {
           ))}
         </div>
         {isFetchingNextPage && (
-          <div className={`${POKEMON_GRID_COLS} pb-4`}>
-            {NEXT_PAGE_SKELETONS.map((_, i) => (
-              <DefaultCardSkeleton key={i} />
-            ))}
+          <div className="flex justify-center py-6">
+            <TbLoader2 className="animate-spin text-white/50" size={28} />
           </div>
         )}
       </div>
