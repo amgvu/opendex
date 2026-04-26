@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import { type SyntheticEvent, useRef } from 'react'
+import { useRef } from 'react'
 
 import type { PokemonEntry } from '@/lib/types'
 
@@ -39,28 +39,30 @@ export function CardArtwork({
       : pokemon.imageUrl
   const showGif = gifEnabled && !gmaxEnabled
 
-  function handleArtworkLoad(e: SyntheticEvent<HTMLImageElement>) {
-    e.currentTarget.style.opacity = '1'
+  function handleArtworkLoad() {
     if (blurRef.current) blurRef.current.style.backgroundImage = 'none'
   }
 
   const artworkImage = (
-    <Image
-      alt={pokemon.name}
-      className="h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
-      draggable={false}
-      height={384}
-      onContextMenu={e => e.preventDefault()}
-      onLoad={handleArtworkLoad}
-      sizes="(min-width: 1536px) 320px, (min-width: 1280px) 256px, (min-width: 640px) 160px, 224px"
-      src={artSrc}
-      style={{
-        opacity: 0,
-        transition: 'opacity 0.2s'
-      }}
-      unoptimized
-      width={384}
-    />
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      key={artSrc}
+      transition={{ duration: 0.15 }}
+    >
+      <Image
+        alt={pokemon.name}
+        className="h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
+        draggable={false}
+        height={384}
+        onContextMenu={e => e.preventDefault()}
+        onLoad={handleArtworkLoad}
+        sizes="(min-width: 1536px) 320px, (min-width: 1280px) 256px, (min-width: 640px) 160px, 224px"
+        src={artSrc}
+        unoptimized
+        width={384}
+      />
+    </motion.div>
   )
 
   return (
@@ -96,6 +98,7 @@ export function CardArtwork({
           className="absolute h-48 w-48 sm:h-40 sm:w-40 xl:h-64 xl:w-64 2xl:h-80 2xl:w-80 object-contain"
           draggable={false}
           initial={{ opacity: 0 }}
+          key={gifSrc}
           onContextMenu={e => e.preventDefault()}
           onError={() => setGifError(true)}
           onLoad={() => setGifReady(true)}
