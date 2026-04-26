@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import type { PokemonEntry, PokemonListEntry } from '@/lib/types'
 
@@ -12,9 +12,10 @@ export function useSlideCard(pokemon: PokemonListEntry[]) {
   const selectedName = useSelectionStore(s => s.selectedName)
   const mode = useSelectionStore(s => s.mode)
 
-  const selectedInList = selectedName
-    ? (pokemon.find(p => p.name === selectedName) ?? null)
-    : null
+  const selectedInList = useMemo(
+    () => (selectedName ? (pokemon.find(p => p.name === selectedName) ?? null) : null),
+    [pokemon, selectedName]
+  )
 
   const needsSlide = mode === 'slide' && selectedName !== null
 
