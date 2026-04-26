@@ -20,7 +20,7 @@ export function useSlideCard(pokemon: PokemonListEntry[]) {
 
   const { pokemon: fetchedEntry } = usePokemonByNameQuery(needsSlide ? selectedName : null)
 
-  const slideData: PokemonListEntry | null = needsSlide
+  const slideData: null | PokemonListEntry = needsSlide
     ? ((selectedInList ?? (fetchedEntry as unknown as PokemonListEntry)) ?? null)
     : null
 

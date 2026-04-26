@@ -1,3 +1,4 @@
+/** @deprecated Use useSlideCard instead. Safe to delete once SlideCard is verified. */
 import { useEffect } from 'react'
 
 import type { PokemonListEntry } from '@/lib/types'

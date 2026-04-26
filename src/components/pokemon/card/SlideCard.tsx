@@ -15,11 +15,11 @@ import { ExpandedCard } from './expanded'
 type SlideDirection = 'left' | 'right' | null
 
 const slideVariants = {
+  center: { opacity: 1, x: 0 },
   enter: (dir: SlideDirection) => ({
     opacity: dir === null ? 0 : 1,
     x: dir === 'left' ? '100%' : dir === 'right' ? '-100%' : 0
   }),
-  center: { opacity: 1, x: 0 },
   exit: (dir: SlideDirection) => ({
     opacity: dir === null ? 0 : 0.85,
     scale: dir === null ? 0.95 : 1,
@@ -34,7 +34,7 @@ export function SlideCard({
 }: {
   active: boolean
   detail: PokemonEntry | undefined
-  pokemon: PokemonListEntry
+  pokemon: null | PokemonListEntry
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const slideDirection = useSelectionStore(s => s.slideDirection)
@@ -42,6 +42,15 @@ export function SlideCard({
   const [show, setShow] = useState(active)
   const activeRef = useRef(active)
   activeRef.current = active
+
+  // Keep the last valid pokemon so the exit animation has data
+  const lastPokemonRef = useRef<null | PokemonListEntry>(null)
+  if (pokemon) lastPokemonRef.current = pokemon
+  const displayPokemon = pokemon ?? lastPokemonRef.current
+
+  const lastDetailRef = useRef<PokemonEntry | undefined>(undefined)
+  if (detail) lastDetailRef.current = detail
+  const displayDetail = detail ?? lastDetailRef.current
 
   useEffect(() => {
     if (active) setShow(true)
@@ -55,28 +64,28 @@ export function SlideCard({
   useOutsideClick(ref, onClose, active)
   useBodyScrollLock(active, onClose)
 
-  if (!show) return null
+  if (!show || !displayPokemon) return null
 
   return createPortal(
     <AnimatePresence custom={slideDirection} onExitComplete={handleExitComplete}>
       {active && (
         <motion.div
-          key={pokemon.name}
           animate="center"
           className="fixed inset-0 z-50"
           custom={slideDirection}
           exit="exit"
           initial="enter"
+          key={displayPokemon.name}
           transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
           variants={slideVariants}
         >
           <ExpandedCard
             active
-            detail={detail}
+            detail={displayDetail}
             disableFlip
             id="__slide__"
             onExitComplete={() => {}}
-            pokemon={pokemon}
+            pokemon={displayPokemon}
             ref={ref}
           />
         </motion.div>

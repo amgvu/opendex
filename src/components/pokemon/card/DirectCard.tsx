@@ -1,3 +1,4 @@
+/** @deprecated Use SlideCard / useSlideCard instead. Safe to delete once SlideCard is verified. */
 'use client'
 
 import { useRef } from 'react'
