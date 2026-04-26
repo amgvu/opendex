@@ -27,12 +27,20 @@ function resolveEntry(val) {
   return null
 }
 
-async function downloadAndConvert(remoteUrl, destAbs) {
+async function downloadAndConvert(remoteUrl, destAbs, retries = 3) {
   fs.mkdirSync(path.dirname(destAbs), { recursive: true })
-  const res = await fetch(remoteUrl)
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${remoteUrl}`)
-  const buf = Buffer.from(await res.arrayBuffer())
-  await sharp(buf).webp({ quality: 90 }).toFile(destAbs)
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(remoteUrl)
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${remoteUrl}`)
+      const buf = Buffer.from(await res.arrayBuffer())
+      await sharp(buf).webp({ quality: 90 }).toFile(destAbs)
+      return
+    } catch (err) {
+      if (attempt === retries) throw err
+      await new Promise(r => setTimeout(r, 500 * attempt))
+    }
+  }
 }
 
 async function runPool(tasks, concurrency) {
