@@ -546,7 +546,7 @@ async function main() {
     v => v.variantType !== 'gigantamax'
   )
   console.log(
-    `\nFound ${variantsToProcess.length} variants: ${gmaxVariants.length} Gigantamax, ${separateVariants.length} Mega/Regional`
+    `\nFound ${variantsToProcess.length} variants: ${gmaxVariants.length} Gigantamax, ${separateVariants.length} Mega/Regional/Form`
   )
 
   // ── Gigantamax (embedded in base entry) ──────────────────────────────────
@@ -635,7 +635,7 @@ async function main() {
 
   if (separateVariants.length > 0) {
     console.log(
-      `\nFetching ${separateVariants.length} Mega/Regional variant Pokemon...`
+      `\nFetching ${separateVariants.length} Mega/Regional/Form variant Pokemon...`
     )
 
     // Step A: Fetch raw pokemon data for all separate variants
@@ -745,10 +745,9 @@ async function main() {
       }
     }
 
-    // Step D: Collect and fetch missing move details for regional forms
+    // Step D: Collect and fetch missing move details for all variant forms
     const newMoveUrlMap = new Map()
-    for (const { meta, pkmnData } of rawVariants) {
-      if (!REGIONAL_TYPES.has(meta.variantType)) continue
+    for (const { pkmnData } of rawVariants) {
       for (const m of pkmnData.moves) {
         const name = m.move.name
         if (!moveDetails[name] && !newMoveUrlMap.has(name)) {
@@ -759,7 +758,7 @@ async function main() {
 
     if (newMoveUrlMap.size > 0) {
       console.log(
-        `\nFetching ${newMoveUrlMap.size} new move details for regional forms...`
+        `\nFetching ${newMoveUrlMap.size} new move details for variant forms...`
       )
       const names = [...newMoveUrlMap.keys()]
       for (let i = 0; i < names.length; i += CHUNK_SIZE) {
@@ -807,19 +806,11 @@ async function main() {
           }
         })
 
-      const statsKey = pkmnData.stats.map(s => s.base_stat).join(',')
-      const typesKey = variantTypes.join(',')
-      const abilitiesKey = variantAbilities
-        .map(a => a.name)
-        .sort()
-        .join(',')
-      const dedupeKey = `${baseEntry.id}-${variantType}-${statsKey}-${typesKey}-${abilitiesKey}`
-
-      if (seenVariantKeys.has(dedupeKey)) {
+      if (seenVariantKeys.has(slug)) {
         console.log(`  Skipping duplicate variant: ${slug}`)
         continue
       }
-      seenVariantKeys.add(dedupeKey)
+      seenVariantKeys.add(slug)
 
       const variantEvYield = pkmnData.stats
         .filter(s => s.effort > 0)
@@ -837,11 +828,10 @@ async function main() {
           baseEntry.shiny.officialUrl
       }
 
-      let learnset = baseEntry.learnset
       let evolutionChain = baseEntry.evolutionChain
+      const learnset = resolveLearnset(extractLearnset(pkmnData.moves), moveDetails)
 
       if (isRegional) {
-        learnset = resolveLearnset(extractLearnset(pkmnData.moves), moveDetails)
         const chainUrl = speciesData?.evolution_chain?.url
         evolutionChain = chainUrl
           ? (chainUrlToSteps.get(chainUrl) ?? [])
