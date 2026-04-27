@@ -51,30 +51,11 @@ export type Pokemon = PokemonBase & {
 
 export type PokemonEntry = Pokemon | PokemonVariant
 
-type PokemonListBase = {
-  attack: number
-  blurDataURL?: string
-  defense: number
-  description: string
-  generation: number
-  hp: number
-  id: number
-  imageUrl: string
-  isBaby: boolean
-  isLegendary: boolean
-  isMythical: boolean
-  name: string
-  officialUrl: null | string
-  shiny: SpriteSet
-  specialAttack: number
-  specialDefense: number
-  speed: number
-  types: string[]
-}
-
 export type PokemonList = PokemonListBase & {
   variantType?: never
 }
+
+export type PokemonListEntry = PokemonList | PokemonListVariant
 
 export type PokemonListVariant = PokemonListBase & {
   variantIndex: number
@@ -82,8 +63,6 @@ export type PokemonListVariant = PokemonListBase & {
   variantSlug: string
   variantType: VariantType
 }
-
-export type PokemonListEntry = PokemonList | PokemonListVariant
 
 export type PokemonVariant = PokemonBase & {
   female: null
@@ -174,4 +153,25 @@ type PokemonBase = {
   types: string[]
   weightKg: number
   weightLbs: number
+}
+
+type PokemonListBase = {
+  attack: number
+  blurDataURL?: string
+  defense: number
+  description: string
+  generation: number
+  hp: number
+  id: number
+  imageUrl: string
+  isBaby: boolean
+  isLegendary: boolean
+  isMythical: boolean
+  name: string
+  officialUrl: null | string
+  shiny: SpriteSet
+  specialAttack: number
+  specialDefense: number
+  speed: number
+  types: string[]
 }

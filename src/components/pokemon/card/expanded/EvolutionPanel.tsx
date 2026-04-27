@@ -14,30 +14,6 @@ type TreeNode = {
   name: string
 }
 
-function EvolutionPanelSkeleton() {
-  return (
-    <TabPanelContent className="flex w-full items-center justify-center">
-      <div className="animate-pulse flex items-center">
-        {([0, 1, 2] as const).map(i => (
-          <div className="flex items-center" key={i}>
-            <div className="flex flex-col items-center gap-1">
-              <div className="h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28 rounded-full bg-white/10" />
-              <div className="h-3 xl:h-3.5 w-14 xl:w-20 rounded bg-white/10" />
-              <div className="h-3 xl:h-3.5 w-8 xl:w-10 rounded bg-white/10" />
-            </div>
-            {i < 2 && (
-              <div className="flex flex-col items-center gap-1 px-3 min-w-[52px] xl:min-w-[64px]">
-                <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
-                <div className="h-3 xl:h-3.5 w-4 xl:w-5 rounded bg-white/10" />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </TabPanelContent>
-  )
-}
-
 export function EvolutionPanel({
   large,
   pokemon
@@ -127,6 +103,30 @@ function EvolutionNode({
         </div>
       )}
     </div>
+  )
+}
+
+function EvolutionPanelSkeleton() {
+  return (
+    <TabPanelContent className="flex w-full items-center justify-center">
+      <div className="animate-pulse flex items-center">
+        {([0, 1, 2] as const).map(i => (
+          <div className="flex items-center" key={i}>
+            <div className="flex flex-col items-center gap-1">
+              <div className="h-20 w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28 rounded-full bg-white/10" />
+              <div className="h-3 xl:h-3.5 w-14 xl:w-20 rounded bg-white/10" />
+              <div className="h-3 xl:h-3.5 w-8 xl:w-10 rounded bg-white/10" />
+            </div>
+            {i < 2 && (
+              <div className="flex flex-col items-center gap-1 px-3 min-w-[52px] xl:min-w-[64px]">
+                <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
+                <div className="h-3 xl:h-3.5 w-4 xl:w-5 rounded bg-white/10" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </TabPanelContent>
   )
 }
 

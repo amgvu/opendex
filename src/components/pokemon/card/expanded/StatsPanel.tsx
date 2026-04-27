@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
@@ -34,41 +35,6 @@ const STAT_LABEL_WIDTHS = [
   ['w-10', 'xl:w-12'],
 ]
 
-function StatsPanelSkeleton() {
-  return (
-    <TabPanelContent>
-      <div className="animate-pulse flex flex-col gap-2 sm:gap-3">
-        <div className="flex items-center justify-between">
-          <div className="h-4 xl:h-5 w-20 xl:w-24 rounded bg-white/10" />
-          <div className="h-4 xl:h-5 w-16 xl:w-20 rounded bg-white/10" />
-        </div>
-        <div className="flex flex-row gap-4">
-          <div className="flex flex-col flex-1 gap-1.5">
-            {STAT_LABEL_WIDTHS.map(([w, wxl], i) => (
-              <div className="flex items-center gap-2 sm:gap-3" key={i}>
-                <div className={`h-3.5 xl:h-4 ${w} ${wxl} shrink-0 rounded bg-white/10`} />
-                <div className="h-3.5 xl:h-4 w-6 xl:w-8 shrink-0 rounded bg-white/10" />
-                <div className="h-2 xl:h-2.5 flex-1 rounded-full bg-white/10" />
-              </div>
-            ))}
-          </div>
-          <div className="w-28 xl:w-36 2xl:w-40 shrink-0 flex items-center justify-center">
-            <div className="h-24 w-24 xl:h-32 xl:w-32 2xl:h-36 2xl:w-36 rounded-full bg-white/10" />
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div className="flex flex-col gap-1" key={i}>
-              <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
-              <div className="h-4 xl:h-5 w-16 xl:w-20 rounded bg-white/10" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </TabPanelContent>
-  )
-}
-
 export function StatsPanel({
   bst,
   pokemon
@@ -80,7 +46,6 @@ export function StatsPanel({
 
   const { immunities, resistances, weaknesses } =
     pokemon.typeMatchups ?? getTypeMatchups(pokemon.types)
-  const [expandedAbility, setExpandedAbility] = useState<null | string>(null)
 
   return (
     <TabPanelContent>
@@ -171,57 +136,7 @@ export function StatsPanel({
           </div>
         )}
 
-        {pokemon.abilities && pokemon.abilities.length > 0 && (
-          <div className="flex flex-col gap-1.5">
-            <SectionLabel>Abilities</SectionLabel>
-            <div className="flex flex-col gap-1.5">
-              {pokemon.abilities.map(a => (
-                <div
-                  className="rounded-lg bg-white/10 px-3 py-2 cursor-pointer transition-colors hover:bg-white/15"
-                  key={a.name}
-                  onClick={() =>
-                    setExpandedAbility(expandedAbility === a.name ? null : a.name)
-                  }
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-medium capitalize text-white">
-                      {a.name}
-                    </span>
-                    {a.isHidden && (
-                      <span className={`${PANEL_BADGE_TEXT} text-white/50`}>
-                        HA
-                      </span>
-                    )}
-                  </div>
-                  {a.description && (
-                    <p
-                      className={`mt-0.5 text-white/60 leading-snug ${PANEL_BODY_TEXT}`}
-                    >
-                      {a.description}
-                    </p>
-                  )}
-                  <AnimatePresence>
-                    {expandedAbility === a.name && a.longEffect && (
-                      <motion.div
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        initial={{ height: 0, opacity: 0 }}
-                        style={{ overflow: 'hidden' }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
-                      >
-                        <p
-                          className={`mt-1.5 border-t border-white/10 pt-1.5 text-white/40 leading-snug ${PANEL_BODY_TEXT}`}
-                        >
-                          {a.longEffect}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <AbilitiesSection abilities={pokemon.abilities} />
 
         {(weaknesses.length > 0 || resistances.length > 0 || immunities.length > 0) && (
           <div className="flex flex-col gap-3">
@@ -292,6 +207,109 @@ export function StatsPanel({
             </div>
           </div>
         )}
+      </div>
+    </TabPanelContent>
+  )
+}
+
+function AbilitiesSection({ abilities }: { abilities: PokemonEntry['abilities'] }) {
+  const [expandedAbilities, setExpandedAbilities] = useState<Set<string>>(new Set())
+
+  if (!abilities || abilities.length === 0) return null
+
+  const toggleAbility = (name: string) =>
+    setExpandedAbilities(prev => {
+      const next = new Set(prev)
+      if (next.has(name)) next.delete(name)
+      else next.add(name)
+      return next
+    })
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <SectionLabel>Abilities</SectionLabel>
+      <div className="flex flex-col gap-1.5">
+        {abilities.map(a => {
+          const isExpanded = expandedAbilities.has(a.name)
+          return (
+            <div
+              className={`rounded-lg bg-white/10 px-3 py-2 transition-colors ${a.longEffect ? 'cursor-pointer hover:bg-white/15' : ''}`}
+              key={a.name}
+              onClick={a.longEffect ? () => toggleAbility(a.name) : undefined}
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="font-medium capitalize text-white flex-1">
+                  {a.name}
+                </span>
+                {a.isHidden && (
+                  <span className={`${PANEL_BADGE_TEXT} text-white/50`}>
+                    HA
+                  </span>
+                )}
+                {a.longEffect && (
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-white/30 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                  />
+                )}
+              </div>
+              {a.description && (
+                <p className={`mt-0.5 text-white/60 leading-snug ${PANEL_BODY_TEXT}`}>
+                  {a.description}
+                </p>
+              )}
+              <AnimatePresence>
+                {isExpanded && a.longEffect && (
+                  <motion.div
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    initial={{ height: 0, opacity: 0 }}
+                    style={{ overflow: 'hidden' }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                  >
+                    <p className={`mt-1.5 border-t border-white/10 pt-1.5 text-white/40 leading-snug ${PANEL_BODY_TEXT}`}>
+                      {a.longEffect}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function StatsPanelSkeleton() {
+  return (
+    <TabPanelContent>
+      <div className="animate-pulse flex flex-col gap-2 sm:gap-3">
+        <div className="flex items-center justify-between">
+          <div className="h-4 xl:h-5 w-20 xl:w-24 rounded bg-white/10" />
+          <div className="h-4 xl:h-5 w-16 xl:w-20 rounded bg-white/10" />
+        </div>
+        <div className="flex flex-row gap-4">
+          <div className="flex flex-col flex-1 gap-1.5">
+            {STAT_LABEL_WIDTHS.map(([w, wxl], i) => (
+              <div className="flex items-center gap-2 sm:gap-3" key={i}>
+                <div className={`h-3.5 xl:h-4 ${w} ${wxl} shrink-0 rounded bg-white/10`} />
+                <div className="h-3.5 xl:h-4 w-6 xl:w-8 shrink-0 rounded bg-white/10" />
+                <div className="h-2 xl:h-2.5 flex-1 rounded-full bg-white/10" />
+              </div>
+            ))}
+          </div>
+          <div className="w-28 xl:w-36 2xl:w-40 shrink-0 flex items-center justify-center">
+            <div className="h-24 w-24 xl:h-32 xl:w-32 2xl:h-36 2xl:w-36 rounded-full bg-white/10" />
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div className="flex flex-col gap-1" key={i}>
+              <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
+              <div className="h-4 xl:h-5 w-16 xl:w-20 rounded bg-white/10" />
+            </div>
+          ))}
+        </div>
       </div>
     </TabPanelContent>
   )

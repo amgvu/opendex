@@ -100,12 +100,12 @@ export function ExpandedCard({
             dragListener={false}
             exit={!effectiveId ? { opacity: 0, transition: { duration: 0.15 } } : undefined}
             layoutId={effectiveId ? `card-${pokemon.name}-${effectiveId}` : undefined}
+            onClick={onContainerClick ? e => e.stopPropagation() : undefined}
             onDragEnd={(_, info) => {
               setDragging(false)
               if (info.offset.x < -50) onNext()
               else if (info.offset.x > 50) onPrev()
             }}
-            onClick={onContainerClick ? e => e.stopPropagation() : undefined}
             onDragStart={() => setDragging(true)}
             ref={ref}
             style={{

@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Fragment, useState } from 'react'
 
@@ -22,36 +23,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   physical: 'Phys',
   special: 'Spec',
   status: 'Stat'
-}
-
-function LearnsetPanelSkeleton() {
-  return (
-    <TabPanelContent className="flex flex-col gap-4">
-      <div className="animate-pulse">
-        <div className="h-3 xl:h-3.5 w-14 xl:w-16 rounded bg-white/10 mb-1.5" />
-        <div className="flex gap-2 pb-1 mb-0.5">
-          <div className="h-3 xl:h-3.5 w-5 xl:w-6 rounded bg-white/10" />
-          <div className="h-3 xl:h-3.5 flex-1 rounded bg-white/10" />
-          <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
-          <div className="h-3 xl:h-3.5 w-8 xl:w-10 rounded bg-white/10" />
-          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
-          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
-          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
-        </div>
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div className="flex gap-2 py-1 border-t border-white/5" key={i}>
-            <div className="h-4 xl:h-5 w-5 xl:w-6 rounded bg-white/10" />
-            <div className="h-4 xl:h-5 flex-1 rounded bg-white/10" />
-            <div className="h-4 xl:h-5 w-10 xl:w-12 rounded bg-white/10" />
-            <div className="h-4 xl:h-5 w-8 xl:w-10 rounded bg-white/10" />
-            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
-            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
-            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
-          </div>
-        ))}
-      </div>
-    </TabPanelContent>
-  )
 }
 
 export function LearnsetPanel({ pokemon }: { pokemon: PokemonEntry | undefined }) {
@@ -115,10 +86,18 @@ export function MoveTable({
   moves: LevelUpMove[] | Move[]
   showLevel?: boolean
 }) {
-  const [expandedMove, setExpandedMove] = useState<null | string>(null)
+  const [expandedMoves, setExpandedMoves] = useState<Set<string>>(new Set())
+
+  const toggleMove = (name: string) =>
+    setExpandedMoves(prev => {
+      const next = new Set(prev)
+      if (next.has(name)) next.delete(name)
+      else next.add(name)
+      return next
+    })
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-hidden">
       <table className={`w-full border-collapse ${PANEL_BODY_TEXT}`}>
         <thead>
           <tr className="text-left text-white/40">
@@ -128,76 +107,86 @@ export function MoveTable({
             <th className="pb-1 pr-2 font-medium">Cat</th>
             <th className="pb-1 pr-1 font-medium text-right">Pwr</th>
             <th className="pb-1 pr-1 font-medium text-right">Acc</th>
-            <th className="pb-1 font-medium text-right">PP</th>
+            <th className="pb-1 pr-1 font-medium text-right">PP</th>
+            <th className="pb-1 w-4" />
           </tr>
         </thead>
         <tbody>
-          {moves.map(move => (
-            <Fragment key={move.name}>
-              <tr
-                className="border-t border-white/5 hover:bg-white/5 transition-colors cursor-pointer"
-                onClick={() =>
-                  setExpandedMove(expandedMove === move.name ? null : move.name)
-                }
-              >
-                {showLevel && (
-                  <td className="py-1 pr-2 font-mono tabular-nums text-white/40">
-                    {(move as LevelUpMove).level}
-                  </td>
-                )}
-                <td className="py-1 pr-2 font-medium text-white whitespace-nowrap">
-                  {formatMoveName(move.name)}
-                </td>
-                <td className="py-1 pr-2">
-                  <span
-                    className={`inline-block rounded-full px-1.5 py-px font-medium text-white ${getTypeColor(move.type)} ${PANEL_BADGE_TEXT}`}
-                  >
-                    {move.type}
-                  </span>
-                </td>
-                <td className="py-1 pr-2">
-                  <span
-                    className={`inline-block rounded px-1 py-px font-medium ${CATEGORY_STYLES[move.category] ?? CATEGORY_STYLES.status} ${PANEL_BADGE_TEXT}`}
-                  >
-                    {CATEGORY_LABELS[move.category] ?? move.category}
-                  </span>
-                </td>
-                <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
-                  {move.power ?? '—'}
-                </td>
-                <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
-                  {move.accuracy ?? '—'}
-                </td>
-                <td className="py-1 text-right font-mono tabular-nums text-white/50">
-                  {move.pp}
-                </td>
-              </tr>
-              <AnimatePresence>
-                {expandedMove === move.name && (move.shortEffect || move.effect) && (
-                  <tr className="bg-white/5">
-                    <td className="border-t border-white/5" colSpan={showLevel ? 7 : 6}>
-                      <motion.div
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        initial={{ height: 0, opacity: 0 }}
-                        style={{ overflow: 'hidden' }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
-                      >
-                        <div className="px-1 py-1.5 leading-snug text-xs">
-                          {move.shortEffect && (
-                            <p className="text-white/60">{move.shortEffect}</p>
-                          )}
-                          {move.effect && move.effect !== move.shortEffect && (
-                            <p className="mt-1 text-white/35">{move.effect}</p>
-                          )}
-                        </div>
-                      </motion.div>
+          {moves.map(move => {
+            const hasEffect = !!(move.shortEffect || move.effect)
+            const isExpanded = expandedMoves.has(move.name)
+            return (
+              <Fragment key={move.name}>
+                <tr
+                  className={`border-t border-white/5 transition-colors ${hasEffect ? 'cursor-pointer hover:bg-white/5' : ''}`}
+                  onClick={hasEffect ? () => toggleMove(move.name) : undefined}
+                >
+                  {showLevel && (
+                    <td className="py-1 pr-2 font-mono tabular-nums text-white/40">
+                      {(move as LevelUpMove).level}
                     </td>
-                  </tr>
-                )}
-              </AnimatePresence>
-            </Fragment>
-          ))}
+                  )}
+                  <td className="py-1 pr-2 font-medium text-white whitespace-nowrap">
+                    {formatMoveName(move.name)}
+                  </td>
+                  <td className="py-1 pr-2">
+                    <span
+                      className={`inline-block rounded-full px-1.5 py-px font-medium text-white ${getTypeColor(move.type)} ${PANEL_BADGE_TEXT}`}
+                    >
+                      {move.type}
+                    </span>
+                  </td>
+                  <td className="py-1 pr-2">
+                    <span
+                      className={`inline-block rounded px-1 py-px font-medium ${CATEGORY_STYLES[move.category] ?? CATEGORY_STYLES.status} ${PANEL_BADGE_TEXT}`}
+                    >
+                      {CATEGORY_LABELS[move.category] ?? move.category}
+                    </span>
+                  </td>
+                  <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
+                    {move.power ?? '—'}
+                  </td>
+                  <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/80">
+                    {move.accuracy ?? '—'}
+                  </td>
+                  <td className="py-1 pr-1 text-right font-mono tabular-nums text-white/50">
+                    {move.pp}
+                  </td>
+                  <td className="py-1 w-4 text-right">
+                    {hasEffect && (
+                      <ChevronDown
+                        className={`inline-block w-3 h-3 text-white/30 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                      />
+                    )}
+                  </td>
+                </tr>
+                <AnimatePresence>
+                  {isExpanded && hasEffect && (
+                    <tr className="bg-white/5">
+                      <td className="border-t border-white/5" colSpan={showLevel ? 8 : 7}>
+                        <motion.div
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          initial={{ height: 0, opacity: 0 }}
+                          style={{ overflow: 'hidden' }}
+                          transition={{ duration: 0.2, ease: 'easeOut' }}
+                        >
+                          <div className="px-1 py-1.5 leading-snug text-xs">
+                            {move.shortEffect && (
+                              <p className="text-white/60">{move.shortEffect}</p>
+                            )}
+                            {move.effect && move.effect !== move.shortEffect && (
+                              <p className="mt-1 text-white/35">{move.effect}</p>
+                            )}
+                          </div>
+                        </motion.div>
+                      </td>
+                    </tr>
+                  )}
+                </AnimatePresence>
+              </Fragment>
+            )
+          })}
         </tbody>
       </table>
     </div>
@@ -209,4 +198,34 @@ function formatMoveName(name: string) {
     .split('-')
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ')
+}
+
+function LearnsetPanelSkeleton() {
+  return (
+    <TabPanelContent className="flex flex-col gap-4">
+      <div className="animate-pulse">
+        <div className="h-3 xl:h-3.5 w-14 xl:w-16 rounded bg-white/10 mb-1.5" />
+        <div className="flex gap-2 pb-1 mb-0.5">
+          <div className="h-3 xl:h-3.5 w-5 xl:w-6 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 flex-1 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-10 xl:w-12 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-8 xl:w-10 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
+          <div className="h-3 xl:h-3.5 w-6 xl:w-7 rounded bg-white/10" />
+        </div>
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div className="flex gap-2 py-1 border-t border-white/5" key={i}>
+            <div className="h-4 xl:h-5 w-5 xl:w-6 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 flex-1 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-10 xl:w-12 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-8 xl:w-10 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
+            <div className="h-4 xl:h-5 w-6 xl:w-7 rounded bg-white/10" />
+          </div>
+        ))}
+      </div>
+    </TabPanelContent>
+  )
 }
