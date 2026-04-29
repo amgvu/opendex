@@ -74,7 +74,11 @@ export function ExpandedCard({
     useGifLoader(gifEnabled, shinyEnabled)
   const setSelectedName = useSelectionStore(s => s.setSelectedName)
   const tabSwipe = useTabSwipe(activeTab, setActiveTab)
-  const artworkSwipe = useArtworkSwipe(artworkCollapsed, setArtworkCollapsed, () => setSelectedName(null))
+  const artworkSwipe = useArtworkSwipe(
+    artworkCollapsed,
+    setArtworkCollapsed,
+    () => setSelectedName(null)
+  )
   const { onNext, onPrev } = useNavContext()
   const [gmaxEnabled, setGmaxEnabled] = useState(false)
   const [dragging, setDragging] = useState(false)
@@ -90,7 +94,10 @@ export function ExpandedCard({
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
       {active && (
-        <div className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4" onClick={onContainerClick}>
+        <div
+          className="fixed inset-0 z-50 grid place-items-center p-0 sm:p-4"
+          onClick={onContainerClick}
+        >
           <motion.div
             className={`relative h-full w-full overflow-hidden sm:h-auto sm:aspect-[63/88] sm:max-h-[90svh] sm:max-w-md xl:max-w-xl 2xl:max-w-2xl [clip-path:none] sm:[clip-path:inset(0_round_1rem)] ${typeColor} before:content-[''] before:absolute before:inset-0 before:bg-black/25 before:rounded-none sm:before:rounded-[1rem] before:pointer-events-none`}
             drag="x"
@@ -98,8 +105,14 @@ export function ExpandedCard({
             dragControls={dragControls}
             dragElastic={0.1}
             dragListener={false}
-            exit={!effectiveId ? { opacity: 0, transition: { duration: 0.15 } } : undefined}
-            layoutId={effectiveId ? `card-${pokemon.name}-${effectiveId}` : undefined}
+            exit={
+              !effectiveId
+                ? { opacity: 0, transition: { duration: 0.15 } }
+                : undefined
+            }
+            layoutId={
+              effectiveId ? `card-${pokemon.name}-${effectiveId}` : undefined
+            }
             onClick={onContainerClick ? e => e.stopPropagation() : undefined}
             onDragEnd={(_, info) => {
               setDragging(false)
@@ -142,76 +155,80 @@ export function ExpandedCard({
               </button>
 
               <div {...artworkSwipe}>
-              <CardHeader id={effectiveId} pokemon={pokemon} />
-              {pokemon.officialUrl && (
-                <>
-                  <motion.div
-                    animate={{
-                      height: artworkCollapsed ? 0 : 'auto',
-                      opacity: artworkCollapsed ? 0 : 1
-                    }}
-                    initial={false}
-                    style={{ overflow: 'hidden' }}
-                    transition={ARTWORK_COLLAPSE_TRANSITION}
-                  >
-                    <CardArtwork
-                      detail={detail}
-                      gifError={gifError}
-                      gifMounted={gifMounted}
-                      gifReady={gifReady}
-                      gmaxEnabled={gmaxEnabled}
-                      id={effectiveId}
-                      pokemon={pokemon}
-                      setGifError={setGifError}
-                      setGifReady={setGifReady}
-                    />
-                    <div
-                      className="flex items-center justify-between pb-1 sm:pb-2"
-                      data-no-drag
+                <CardHeader id={effectiveId} pokemon={pokemon} />
+                {pokemon.officialUrl && (
+                  <>
+                    <motion.div
+                      animate={{
+                        height: artworkCollapsed ? 0 : 'auto',
+                        opacity: artworkCollapsed ? 0 : 1
+                      }}
+                      initial={false}
+                      style={{ overflow: 'hidden' }}
+                      transition={ARTWORK_COLLAPSE_TRANSITION}
                     >
-                      <button
-                        className="flex cursor-pointer items-center gap-1 select-none text-xs font-medium text-white/70"
-                        onClick={handleCopy}
-                        type="button"
+                      <CardArtwork
+                        detail={detail}
+                        gifError={gifError}
+                        gifMounted={gifMounted}
+                        gifReady={gifReady}
+                        gmaxEnabled={gmaxEnabled}
+                        id={effectiveId}
+                        pokemon={pokemon}
+                        setGifError={setGifError}
+                        setGifReady={setGifReady}
+                      />
+                      <div
+                        className="flex items-center justify-between pb-1 sm:pb-2"
+                        data-no-drag
                       >
-                        {copied ? <TbCheck size={16} /> : <TbLink size={16} />}
-                        <span>{copied ? 'Copied!' : 'Copy link'}</span>
-                      </button>
-                      <div className="flex items-center gap-1.5">
-                        <ArtworkSwitches
-                          detail={detail}
-                          gifEnabled={gifEnabled}
-                          gifError={gifError}
-                          gmaxEnabled={gmaxEnabled}
-                          pokemon={pokemon}
-                          setGifEnabled={setGifEnabled}
-                          setGmaxEnabled={setGmaxEnabled}
-                          setShinyEnabled={setShinyEnabled}
-                          shinyEnabled={shinyEnabled}
-                        />
+                        <button
+                          className="flex cursor-pointer items-center gap-1 select-none text-xs font-medium text-white/70"
+                          onClick={handleCopy}
+                          type="button"
+                        >
+                          {copied ? (
+                            <TbCheck size={16} />
+                          ) : (
+                            <TbLink size={16} />
+                          )}
+                          <span>{copied ? 'Copied!' : 'Copy link'}</span>
+                        </button>
+                        <div className="flex items-center gap-1.5">
+                          <ArtworkSwitches
+                            detail={detail}
+                            gifEnabled={gifEnabled}
+                            gifError={gifError}
+                            gmaxEnabled={gmaxEnabled}
+                            pokemon={pokemon}
+                            setGifEnabled={setGifEnabled}
+                            setGmaxEnabled={setGmaxEnabled}
+                            setShinyEnabled={setShinyEnabled}
+                            shinyEnabled={shinyEnabled}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                  <button
-                    aria-label={
-                      artworkCollapsed ? 'Show artwork' : 'Hide artwork'
-                    }
-                    className="flex w-full cursor-pointer items-center justify-center py-1 text-white/25 transition-colors hover:text-white/50"
-                    data-no-drag
-                    onClick={() => setArtworkCollapsed(!artworkCollapsed)}
-                    type="button"
-                  >
-                    <TbChevronUp
-                      className={`transition-transform duration-[250ms] ${artworkCollapsed ? 'rotate-180' : ''}`}
-                      size={12}
-                    />
-                  </button>
-                </>
-              )}
+                    </motion.div>
+                    <button
+                      aria-label={
+                        artworkCollapsed ? 'Show artwork' : 'Hide artwork'
+                      }
+                      className="flex w-full cursor-pointer items-center justify-center py-1 text-white/25 transition-colors hover:text-white/50"
+                      data-no-drag
+                      onClick={() => setArtworkCollapsed(!artworkCollapsed)}
+                      type="button"
+                    >
+                      <TbChevronUp
+                        className={`transition-transform duration-[250ms] ${artworkCollapsed ? 'rotate-180' : ''}`}
+                        size={12}
+                      />
+                    </button>
+                  </>
+                )}
               </div>
               <motion.div
                 animate={{ opacity: 1 }}
-                className="flex min-h-0 sm:flex-1 flex-col cursor-auto max-h-[calc(100svh-1rem)] sm:max-h-none overflow-y-auto sm:overflow-y-visible"
+                className="flex min-h-0 sm:flex-1 flex-col cursor-auto max-h-[calc(100svh-1rem)] sm:mr-0 sm:ml-0 -ml-3 -mr-3 sm:max-h-none overflow-y-auto sm:overflow-y-visible"
                 data-no-drag
                 exit={{ opacity: 0 }}
                 initial={{ opacity: 0 }}
@@ -280,9 +297,7 @@ export function ExpandedCard({
                     )}
                   </Tabs.Panel>
                   <Tabs.Panel className={TAB_PANEL_CLASSES} id="evo">
-                    {activeTab === 'evo' && (
-                      <EvolutionPanel pokemon={detail} />
-                    )}
+                    {activeTab === 'evo' && <EvolutionPanel pokemon={detail} />}
                   </Tabs.Panel>
                 </Tabs>
               </motion.div>
