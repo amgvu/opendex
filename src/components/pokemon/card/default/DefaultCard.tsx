@@ -17,12 +17,14 @@ export function DefaultCard({
   id,
   index,
   onClick,
+  onHover,
   pokemon
 }: {
   active: boolean
   id: string
   index: number
   onClick: () => void
+  onHover?: () => void
   pokemon: PokemonListEntry
 }) {
   const priority = index < 10
@@ -41,6 +43,7 @@ export function DefaultCard({
       onHoverEnd={() => setHovered(false)}
       onHoverStart={() => {
         if (!active) setHovered(true)
+        onHover?.()
       }}
       transition={CARD_TRANSITION}
     >

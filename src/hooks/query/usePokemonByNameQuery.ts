@@ -10,13 +10,17 @@ export async function fetchPokemonByName(name: string): Promise<PokemonEntry> {
   return res.json() as Promise<PokemonEntry>
 }
 
+export const pokemonByNameQueryOptions = (name: string) => ({
+  gcTime: Infinity,
+  queryFn: () => fetchPokemonByName(name),
+  queryKey: pokemonByNameQueryKey(name),
+  staleTime: Infinity
+})
+
 export function usePokemonByNameQuery(name: null | string) {
   const { data } = useQuery({
     enabled: name !== null,
-    gcTime: Infinity,
-    queryFn: () => fetchPokemonByName(name!),
-    queryKey: pokemonByNameQueryKey(name!),
-    staleTime: Infinity
+    ...pokemonByNameQueryOptions(name ?? '')
   })
 
   return { pokemon: data ?? null }

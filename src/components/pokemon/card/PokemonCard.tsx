@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { LayoutGroup } from 'motion/react'
 import { memo, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -8,7 +9,7 @@ import type { PokemonEntry, PokemonListEntry } from '@/lib/types'
 
 import { useBodyScrollLock } from '@/hooks/card/useBodyScrollLock'
 import { useOutsideClick } from '@/hooks/card/useOutsideClick'
-import { usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
+import { pokemonByNameQueryOptions, usePokemonByNameQuery } from '@/hooks/query/usePokemonByNameQuery'
 import { useSelectionStore } from '@/stores/selectionStore'
 
 import { DefaultCard } from './default/DefaultCard'
@@ -28,9 +29,13 @@ export const PokemonCard = memo(
   }) {
     const ref = useRef<HTMLDivElement>(null)
     const id = useId()
+    const queryClient = useQueryClient()
     const setSelectedName = useSelectionStore(s => s.setSelectedName)
     const onClose = () => setSelectedName(null)
     const { pokemon: detail } = usePokemonByNameQuery(active ? pokemon.name : null)
+    const handleMouseEnter = useCallback(() => {
+      queryClient.prefetchQuery(pokemonByNameQueryOptions(pokemon.name))
+    }, [queryClient, pokemon.name])
     const [showPortal, setShowPortal] = useState(false)
     const activeRef = useRef(active)
     activeRef.current = active
@@ -64,6 +69,7 @@ export const PokemonCard = memo(
           id={id}
           index={index}
           onClick={onClick}
+          onHover={handleMouseEnter}
           pokemon={pokemon}
         />
       </LayoutGroup>
