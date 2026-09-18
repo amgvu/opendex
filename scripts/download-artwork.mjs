@@ -17,10 +17,11 @@ async function downloadAndConvert(remoteUrl, destAbs, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const res = await fetch(remoteUrl)
+      if (res.status === 404) return false
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${remoteUrl}`)
       const buf = Buffer.from(await res.arrayBuffer())
       await sharp(buf).webp({ quality: 90 }).toFile(destAbs)
-      return
+      return true
     } catch (err) {
       if (attempt === retries) throw err
       await new Promise(r => setTimeout(r, 500 * attempt))
@@ -31,19 +32,25 @@ async function downloadAndConvert(remoteUrl, destAbs, retries = 3) {
 async function main() {
   const pokemon = JSON.parse(fs.readFileSync(POKEMON_JSON, 'utf8'))
 
-  // Collect all unique entries from every officialUrl field
-  const entries = new Map() // localRelative → remoteUrl
+  // Collect each local asset and every data field that depends on it.
+  const entries = new Map()
+  const baseById = new Map(
+    pokemon.filter(p => p.variantOf == null).map(p => [p.id, p])
+  )
   for (const p of pokemon) {
-    for (const val of [
-      p.officialUrl,
-      p.shiny?.officialUrl,
-      p.female?.officialUrl,
-      p.gigantamax?.officialUrl
-    ]) {
-      if (!val) continue
-      const entry = resolveEntry(val)
-      if (entry) entries.set(entry.localRelative, entry.remoteUrl)
-    }
+    addArtworkEntry(entries, p.officialUrl, () => {
+      p.officialUrl = null
+    })
+    addArtworkEntry(entries, p.shiny?.officialUrl, () => {
+      p.shiny.officialUrl =
+        baseById.get(p.variantOf)?.shiny?.officialUrl ?? p.officialUrl
+    })
+    addArtworkEntry(entries, p.female?.officialUrl, () => {
+      p.female.officialUrl = p.officialUrl
+    })
+    addArtworkEntry(entries, p.gigantamax?.officialUrl, () => {
+      p.gigantamax.officialUrl = p.officialUrl
+    })
   }
 
   console.log(`Found ${entries.size} unique artwork images`)
@@ -52,6 +59,7 @@ async function main() {
   const toDownload = [...entries.entries()].filter(([localRelative]) => {
     return !fs.existsSync(path.join(PUBLIC_ARTWORK, localRelative))
   })
+  const missingEntries = new Set()
 
   if (toDownload.length === 0) {
     console.log('All images already present, skipping download.')
@@ -59,17 +67,26 @@ async function main() {
     console.log(
       `Downloading and converting ${toDownload.length} images (${entries.size - toDownload.length} already exist)...`
     )
-    const tasks = toDownload.map(([localRelative, remoteUrl]) => async () => {
-      await downloadAndConvert(
-        remoteUrl,
+    const tasks = toDownload.map(([localRelative, entry]) => async () => {
+      const downloaded = await downloadAndConvert(
+        entry.remoteUrl,
         path.join(PUBLIC_ARTWORK, localRelative)
       )
+      if (!downloaded) {
+        missingEntries.add(localRelative)
+        entry.fallbacks.forEach(fallback => fallback())
+      }
     })
     await runPool(tasks, CONCURRENCY)
+    if (missingEntries.size > 0) {
+      console.log(`Skipped ${missingEntries.size} unavailable artwork image(s).`)
+    }
   }
 
   const PUBLIC_THUMBS = path.join(PUBLIC_ARTWORK, 'thumbs')
-  const allLocal = [...entries.keys()]
+  const allLocal = [...entries.keys()].filter(
+    localRelative => !missingEntries.has(localRelative)
+  )
   const toThumb = allLocal.filter(localRelative => {
     const thumbPath = path.join(PUBLIC_THUMBS, localRelative)
     return !fs.existsSync(thumbPath)
@@ -120,6 +137,19 @@ function resolveEntry(val) {
     return { localRelative, remoteUrl: val }
   }
   return null
+}
+
+function addArtworkEntry(entries, value, fallback) {
+  if (!value) return
+  const entry = resolveEntry(value)
+  if (!entry) return
+
+  const existing = entries.get(entry.localRelative)
+  if (existing) {
+    existing.fallbacks.push(fallback)
+  } else {
+    entries.set(entry.localRelative, { ...entry, fallbacks: [fallback] })
+  }
 }
 
 async function runPool(tasks, concurrency) {
