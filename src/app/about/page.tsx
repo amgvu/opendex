@@ -21,18 +21,9 @@ export default function AboutPage() {
               to ship Opendex and turn it into something people can use.
             </p>
             <p>
-              My goal for this app is to be a comprehensive, easy-to-use
+              My goal for this app was to be a comprehensive, easy-to-use
               resource for Pokemon lore and data, with a strong focus on a
               seamless user experience.
-            </p>
-            <p>
-              I didn&apos;t know much about Pokemon going into this, but I enjoy
-              building in new domains, so I&apos;m shaping Opendex into
-              something even the most passionate fans will enjoy using.
-            </p>
-            <p>
-              Something missing? A feature you&apos;d love to see? Reach out to
-              me directly on Discord at amg00
             </p>
           </div>
         </section>
